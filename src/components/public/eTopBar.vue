@@ -17,7 +17,8 @@
                                 alt="浏览器可查询链上的所有所有信息包括最新爆块，最新交易信息等，区块内的交易等等" title="MNT浏览器">
                 <div class="order">
                     <div class="menu icon-menu"></div>
-                    <img src="../../assets/images/icon/mnt.png" alt="区块链浏览器" class="coinlogo">
+ 
+                     <img src="../../assets/images/icon/mnt.png" alt="区块链浏览器" class="coinlogo">
                     <div class="coin_name">MNT 浏览器</div><!----></div>
             </a>
                 <div class="inner_header">
@@ -26,6 +27,8 @@
                             <li class="item active"><a href="/" alt="" title="MNT浏览器" data-tracking="coins-header-home">首页</a>
                             </li>
                             <li class="item active"><a href="rank" alt="" title="MNT浏览器" data-tracking="coins-header-home">富豪榜</a>
+                            </li>
+                              <li class="item active"><a href="dpos" alt="" title="MNT浏览器" data-tracking="coins-header-home">dpos</a>
                             </li>
                         </ul>
                     </div>
@@ -37,12 +40,20 @@
 
         <div class="mobile_header">
             <div class="head_menu"><a href="/" data-tracking="coins-header-home">
-                <div class="coin_name"><img src="../../assets/images/icon/mnt.png" alt="" class="icon">
+
+                   <div class="coin_name"><img src="../../assets/images/icon/mnt.png" alt="" class="icon">          
+                    
                     MNT 浏览器
                     <!----></div>
             </a>
-                <div class="menu openmenu"></div>
+                <div :class="{'menu':true, 'openmenu':!openFlag, 'closemenu': openFlag}" @click="toggleMenu"></div>
             </div><!---->
+
+            <ul class="smallUl menu-card" v-if="openFlag">
+                <li class="item active"><a href="/" alt="" title="MNT浏览器" data-tracking="coins-header-home">首页</a></li>
+                <li class="item active"><a href="rank" alt="" title="MNT浏览器" data-tracking="coins-header-home">富豪榜</a></li>
+                <li class="item active"><a href="dpos" alt="" title="MNT浏览器" data-tracking="coins-header-home">dpos</a></li>
+            </ul>
         </div>
 
 
@@ -85,7 +96,9 @@
                     label: '交易'
                 }],
                 value: 1,
-                search_text:''
+                search_text:'',
+                openFlag: false,
+              
             }
         },
 
@@ -98,6 +111,10 @@
                 }else{
                     this.$router.push({ path: "tx", query: { txid: this.search_text } });
                 }
+            },
+            toggleMenu(){
+                this.openFlag =!this.openFlag
+   
             }
         },
 
