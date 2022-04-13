@@ -34,7 +34,7 @@
                             </div>
                             <div class="item" data-v-57312e58="">
                                 <div class="key" data-v-57312e58="">{{$t('Tx.txAmount')}}</div>
-                                <div class="value" data-v-57312e58="">{{ amount }} {{this.golbal.virtualCurrencyUnit}}</div>
+                                <div class="value" data-v-57312e58="">{{ amount }} {{virtualCurrencyUnit}}</div>
                             </div>
                             <div class="item" data-v-57312e58="">
                                 <div class="key" data-v-57312e58="">{{$t('Tx.txFee')}}</div>
@@ -63,6 +63,7 @@
                 amount:'',
                 free:'',
                 transtime:'',
+                virtualCurrencyUnit:this.globalString.virtualCurrencyUnit ,
             }
         },
         methods: {

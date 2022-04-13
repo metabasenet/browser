@@ -161,7 +161,7 @@
                                                                                     tabindex="0">{{ timeformat(item.transtime) }}</span></div>
                                     </div>
                                     <div data-v-603f4bbb="" class="item">
-                                        <div data-v-603f4bbb="" class="key">{{$t('Pending.Amount')}}</div>
+                                        <div data-v-603f4bbb="" class="key">{{$t('Pending.amount')}}</div>
                                         <div data-v-603f4bbb="" class="value">
                                             {{ item.amount }}
                                         </div>

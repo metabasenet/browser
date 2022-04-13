@@ -64,8 +64,8 @@ import api from './request/api';
 Vue.prototype.$api = api;
 
 
-import golbal  from './lang/global';
-Vue.prototype.golbal = golbal
+import globalString  from './lang/global';
+Vue.prototype.globalString = globalString
 // import staffapi from './request/staffapi';
 // Vue.prototype.$staffapi = staffapi;
 

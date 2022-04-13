@@ -2,7 +2,7 @@
     <div>
     <div class="person_img" >
        <!-- <img id="person_img" :src="img_url"  @mouseover="person_info()" @mouseleave="cl_person_info()"/>-->
-        <div>{{this.golbal.virtualCurrencyUnit}}</div>
+        <div>{{this.globalString.virtualCurrencyUnit}}</div>
      </div>
     <div v-show="person_con" class="hidden_div" >
          <div>{{userid}}</div>
@@ -63,7 +63,7 @@
         changeLanguages() {
             console.log(this.$i18n.locale) 
             this.$i18n.locale = this.langFlag; 
-            console.log(this.golbal);
+         
            
         },
         

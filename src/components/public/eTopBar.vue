@@ -140,8 +140,9 @@
 
         methods: {
             search(){
+                        console.log("111111" , this.value, '222222',this.search_text)
                 if(this.value == 1){
-                    this.$router.push({ path: "address", query: { address: this.search_text } });
+                    this.$router.push({ path: "address", query: { hash: this.search_text } });
                 }else if(this.value == 2){
                     this.$router.push({ path: "block", query: { hash: this.search_text } });
                 }else{
