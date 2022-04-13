@@ -52,7 +52,7 @@
 
         <div class="mobile_header">
             <div class="head_menu"><a href="/" data-tracking="coins-header-home">
-                    <div class="coin_name"><img src="../../assets/images/custom/logo.jpg" alt="" class="icon"> 
+                    <div class="coin_name"><img src="../../assets/images/custom/logo.png" alt="" class="icon"> 
                     {{$t('common.browser')}}
                     <!----></div>
             </a>
