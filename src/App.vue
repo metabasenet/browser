@@ -13,7 +13,7 @@ export default {
   },
   methods: {
     reload () {
-      console.log("刷新");
+      console.log("Refresh");
       this.isRouterAlive = false
       this.$nextTick(function() {
          this.isRouterAlive = true

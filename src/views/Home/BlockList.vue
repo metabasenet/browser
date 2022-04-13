@@ -2,25 +2,25 @@
     <div>
 
         <div data-v-7b0e1c95="" data-v-520cdd27="" class="content-child"><h1 data-v-7b0e1c95="" class="h1">
-            MNT浏览器查询链上最新爆块，爆块时间，区块大小，播报方。</h1>
-            <h2 data-v-7b0e1c95="" class="h2">MNT浏览器展示最新爆块，包括最新爆块时间，tps, 平均出块时间，区块高度，播报方，大小，奖励，交易笔数，交易总额。</h2>
+            {{$t('BlockList.h1')}}</h1>
+            <h2 data-v-7b0e1c95="" class="h2">{{$t('BlockList.h2')}}</h2>
             <div data-v-7b0e1c95="" class="page-header">
                 <div data-v-7b0e1c95="" class="inner_content">
                     <div data-v-7b0e1c95="" class="header">
-                        <div data-v-7b0e1c95="" class="lt"><span data-v-7b0e1c95="" class="title">最新爆块</span></div>
+                        <div data-v-7b0e1c95="" class="lt"><span data-v-7b0e1c95="" class="title">{{$t('BlockList.newBlock')}}</span></div>
                     </div>
 
                     <div data-v-ce118d7e="" data-v-7b0e1c95="">
 
-                        <!--                                最新爆块列表  开始  -->
+                        <!--                                block pc start -->
                         <div data-v-ce118d7e="" class="block_list">
                             <ul data-v-ce118d7e="" class="item title">
-                                <li data-v-ce118d7e="" class="inner_item miner">区块高度</li>
-                                <li data-v-ce118d7e="" class="inner_item miner">播报方</li>
-                                <li data-v-ce118d7e="" class="inner_item prize">爆块奖励</li>
-                                <li data-v-ce118d7e="" class="inner_item miner">交易数量</li>
-                                <li data-v-ce118d7e="" class="inner_item miner">上一区块</li>
-                                <li data-v-ce118d7e="" class="inner_item time">时间</li>
+                                <li data-v-ce118d7e="" class="inner_item miner">{{$t('BlockList.height')}}</li>
+                                <li data-v-ce118d7e="" class="inner_item miner">{{$t('BlockList.address')}}</li>
+                                <li data-v-ce118d7e="" class="inner_item prize">{{$t('BlockList.reward')}}</li>
+                                <li data-v-ce118d7e="" class="inner_item miner">{{$t('BlockList.amount')}}</li>
+                                <li data-v-ce118d7e="" class="inner_item miner">{{$t('BlockList.previousBlock')}}</li>
+                                <li data-v-ce118d7e="" class="inner_item time">{{$t('BlockList.time')}}</li>
                             </ul>
                             <span data-v-ce118d7e="">
                                         <ul data-v-ce118d7e="" class="item content" v-for="(item,index) in BlocklistDatas" :key="index">
@@ -45,42 +45,43 @@
                                             </li>
                                         </ul></span>
                         </div>
-                        <!--                                最新爆块列表  结束  -->
+                        <!--                                block pc end  -->
 
-                        <!--                                最新爆块手机端列表  开始  -->
+                        <!--                               block mobile start -->
                         <div data-v-ce118d7e="" class="mobileList">
                             <div data-v-ce118d7e="" class="items" v-for="(item,index) in BlocklistDatas" :key="index">
                                 <div data-v-ce118d7e="" class="item">
+                                    {{$t('BlockList.height')}}
                                     <div data-v-ce118d7e="" class="value">
                                         <router-link :to="{ name:'block',query:{height:item.height } }">{{ item.height }}</router-link>
                                     </div>
                                 </div>
                                 <div data-v-ce118d7e="" class="item">
-                                    <div data-v-ce118d7e="" class="key">播报方</div>
+                                    <div data-v-ce118d7e="" class="key">{{$t('BlockList.address')}}</div>
                                     <div data-v-ce118d7e="" class="value"><a data-v-ce118d7e=""
                                                                              href="javascript:void(0)">{{ item.reward_address }}</a>
                                     </div>
                                 </div><!---->
                                 <div data-v-ce118d7e="" class="item">
                                     <div data-v-ce118d7e="" class="key">
-                                        爆块奖励
+                                        {{$t('BlockList.reward')}}
                                     </div>
                                     <div data-v-ce118d7e="" class="value">{{ item.reward_money }}</div>
                                 </div>
                                 <div data-v-ce118d7e="" class="item">
-                                    <div data-v-ce118d7e="" class="key">交易数量</div>
+                                    <div data-v-ce118d7e="" class="key">{{$t('BlockList.amount')}}</div>
                                     <div data-v-ce118d7e="" class="value"><a data-v-ce118d7e=""
                                                                              href="javascript:void(0)">{{ item.txs }}</a>
                                     </div>
                                 </div><!---->
                                 <div data-v-ce118d7e="" class="item">
-                                    <div data-v-ce118d7e="" class="key">上一区块</div>
+                                    <div data-v-ce118d7e="" class="key">{{$t('BlockList.previousBlock')}</div>
                                     <div data-v-ce118d7e="" class="value"><a data-v-ce118d7e=""
                                                                              href="javascript:void(0)">{{ item.prev_hash }}</a>
                                     </div>
                                 </div><!---->
                                 <div data-v-ce118d7e="" class="item">
-                                    <div data-v-ce118d7e="" class="key">时间</div>
+                                    <div data-v-ce118d7e="" class="key">{{$t('BlockList.time')}}</div>
                                     <div data-v-ce118d7e="" class="value">
                                         <div data-v-ce118d7e=""><span class="el-tooltip"
                                                                       aria-describedby="el-tooltip-4340"
@@ -91,7 +92,7 @@
 
                             </div>
                         </div>
-                        <!--                                最新爆块手机端列表  结束  -->
+                        <!--                                block mobile end   -->
 
                     </div>
 

@@ -8,18 +8,18 @@ import {
 
 Vue.prototype.axios = axios
 
-axios.defaults.timeout = 30000; //响应时间
+axios.defaults.timeout = 30000; // response time 
 
-axios.defaults.baseURL = "/api" //默认请求域名
+axios.defaults.baseURL = "/api" // Default request domain name 
 
-//请求拦截器
+// request interceptor 
 axios.interceptors.request.use(request => {
 
-    //提取token 给接口
+    // Extract token to interface 
     request.headers["X-Authorization"] = localStorage.getItem("token") || "";
-    //设置我们的来源
+    // Set our source 
     request.headers["X-Authorization-From"] = 1;
-    //设置我们的版本
+    // Set our version 
     request.headers["X-Authorization-Version"] = "1.0.0";
 
     request.headers["Cache-Control"] = "no-cache";
@@ -33,40 +33,40 @@ axios.interceptors.request.use(request => {
     Message.error("请求错误");
 });
 
-//响应拦截器
+//request interceptor 
 axios.interceptors.response.use(response => {
 
     let data = response.data;
-    //todo 这里还可以做很多的事
+    //todo
     return data;
 
 }, error => {
     console.log(error);
-    Message.error("响应错误！！！！");
+    Message.error("reponse error");
     return "";
 });
 
 const basePost = (url, params, config) => {
     return new Promise((resolve, reject) => {
         axios.post(url, params, config).then(res => {
-            //判断是否有错误
-            //这是与接口配合的，说明当前token 失效了
+            // Determine whether there is an error 
+            // This is coordinated with the interface, indicating that the current token is invalid 
             if (res.code == -1) {
                 localStorage.removeItem("token");
                 MessageBox({
-                    title: "提示",
+                    title: "Tips",
                     message: res.msg,
-                    confirmButtonText: '确定',
+                    confirmButtonText: 'OK',
                     callback: () => {
                         router.replace("/login");
                     }
                 });
-            } else if (res.code == -2) { //员工
+            } else if (res.code == -2) { 
                 localStorage.removeItem("token");
                 MessageBox({
-                    title: "提示",
+                    title: "Tips",
                     message: res.msg,
-                    confirmButtonText: '确定',
+                    confirmButtonText: 'OK',
                     callback: () => {
                         router.replace("/stafflogin");
                     }
@@ -85,25 +85,25 @@ const baseGet = (url, params) => {
         axios.get(url, {
             params: params
         }).then(res => {
-            //判断是否有错误
-            //这是与接口配合的，说明当前token 失效了
+            // Determine whether there is an error 
+            //This is coordinated with the interface, indicating that the current token is invalid 
             if (res.code == -1) {
                 //localStorage.removeItem("token");
                 localStorage.removeItem("token");
                 MessageBox({
-                    title: "提示",
+                    title: "Tips",
                     message: res.msg,
-                    confirmButtonText: '确定',
+                    confirmButtonText: 'OK',
                     callback: () => {
                         router.replace("/login");
                     }
                 });
-            } else if (res.code == -2) { //员工
+            } else if (res.code == -2) { 
                 localStorage.removeItem("token");
                 MessageBox({
-                    title: "提示",
+                    title: "Tips",
                     message: res.msg,
-                    confirmButtonText: '确定',
+                    confirmButtonText: 'OK',
                     callback: () => {
                         router.replace("/stafflogin");
                     }

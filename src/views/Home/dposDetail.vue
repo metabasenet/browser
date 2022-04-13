@@ -1,12 +1,12 @@
 <template>
     <div>
         <div data-v-92014c5c="" data-v-520cdd27="" class="content-child"><h1 data-v-92014c5c="" class="h1">
-           dpos pow</h1>
-            <h2 data-v-92014c5c="" class="h2">浏览器展示dpos明细</h2>
+           {{$t('dposDetail.h1')}}</h1>
+            <h2 data-v-92014c5c="" class="h2">{{$t('dposDetail.h2')}}</h2>
             <div data-v-92014c5c="" class="baseInfoCard">
                 <div data-v-92014c5c="" class="header">
                     <div data-v-92014c5c="" id="rich_list" class="btns" style="width:95%;">
-                        <div data-v-92014c5c="" class="title ontitle">dpos 明细-- {{dposAddress}}</div>                   
+                        <div data-v-92014c5c="" class="title ontitle">{{$t('dposDetail.dposDetail')}} {{dposAddress}}</div>                   
                     </div>
                 </div>
                 <div data-v-18b505e9="" data-v-92014c5c="">
@@ -16,13 +16,13 @@
                                 <div data-v-18b505e9="" class="inner">
                                     <div data-v-18b505e9="" class="rich_list">
                                         <li data-v-18b505e9="" class="item">
-                                           <div data-v-18b505e9="" class="index dposeindex"><b data-v-18b505e9="">序号</b></div>      
-                                            <div data-v-18b505e9="" class="address"><b data-v-18b505e9="">客户地址</b></div>                                        
-                                            <div data-v-18b505e9="" class="type"><b data-v-18b505e9="">金额</b></div>
+                                           <div data-v-18b505e9="" class="index dposeindex"><b data-v-18b505e9="">{{$t('dposDetail.serialNumber')}}</b></div>      
+                                            <div data-v-18b505e9="" class="address"><b data-v-18b505e9="">{{$t('dposDetail.address')}}</b></div>                                        
+                                            <div data-v-18b505e9="" class="type"><b data-v-18b505e9="">{{$t('dposDetail.amount')}}</b></div>
                                    
-                                            <div data-v-18b505e9="" class="time"><b data-v-18b505e9="">时间</b></div> 
-                                            <div data-v-18b505e9="" class="height"><b data-v-18b505e9="">高度</b></div>       
-                                            <div data-v-18b505e9="" class="voteState"><b data-v-18b505e9="">投票类型</b></div>                                           
+                                            <div data-v-18b505e9="" class="time"><b data-v-18b505e9="">{{$t('dposDetail.time')}}</b></div> 
+                                            <div data-v-18b505e9="" class="height"><b data-v-18b505e9="">{{$t('dposDetail.height')}}</b></div>       
+                                            <div data-v-18b505e9="" class="voteState"><b data-v-18b505e9="">{{$t('dposDetail.voteType')}}</b></div>                                           
                                         </li>
                                         
                                         <li data-v-18b505e9="" class="item" v-for="(item,index) in dposlistDetailDatas" :key="index">
@@ -38,7 +38,7 @@
                                  
                                              <div data-v-18b505e9="" class="time">{{ item.time }}</div>
                                               <div data-v-18b505e9="" class="height">{{ item.height }}</div>
-                                               <div data-v-18b505e9="" class="voteState">{{ item.voteState }}</div>
+                                               <div data-v-18b505e9="" class="voteState">{{ $t('dposDetail.data'+item.voteState)}}</div>
                                  
                                         </li>
                                     </div>
@@ -50,7 +50,7 @@
                         <div data-v-18b505e9="" class="mobile">
                             <div data-v-18b505e9="" class="items" v-for="(item,index) in dposlistDetailDatas" :key="index">
                                 <div data-v-18b505e9="" class="item">
-                                    <div data-v-18b505e9="" class="key">序号</div>
+                                    <div data-v-18b505e9="" class="key">{{$t('dposDetail.serialNumber')}}</div>
                                     <div data-v-18b505e9="" class="value">
                                         <div data-v-18b505e9="" class="amount">{{index+1}}</div>
                                     </div>
@@ -58,7 +58,7 @@
 
 
                                 <div data-v-18b505e9="" class="item hash">
-                                    <div data-v-18b505e9="" class="key">客户地址</div>
+                                    <div data-v-18b505e9="" class="key">{{$t('dposDetail.address')}}</div>
                                     <div data-v-18b505e9="" class="value">
                                         <div data-v-18b505e9="" class="client_address"><a data-v-18b505e9=""
                                                                                    href="javascript:void(0)"
@@ -67,7 +67,7 @@
                                     </div>
                                 </div>
                                 <div data-v-18b505e9="" class="item">
-                                    <div data-v-18b505e9="" class="key">金额</div>
+                                    <div data-v-18b505e9="" class="key">{{$t('dposDetail.amount')}}</div>
                                     <div data-v-18b505e9="" class="value">
                                         <div data-v-18b505e9="" class="amount">{{ item.amount }}</div>
                                     </div>
@@ -75,17 +75,17 @@
                            
 
                                 <div data-v-18b505e9="" class="item">
-                                    <div data-v-18b505e9="" class="key">时间</div>
+                                    <div data-v-18b505e9="" class="key">{{$t('dposDetail.time')}}</div>
                                     <div data-v-18b505e9="" class="value">{{ item.time }}</div>
                                 </div>
 
                                 <div data-v-18b505e9="" class="item">
-                                    <div data-v-18b505e9="" class="key">高度</div>
+                                    <div data-v-18b505e9="" class="key">{{$t('dposDetail.height')}}</div>
                                     <div data-v-18b505e9="" class="value">{{ item.height }}</div>
                                 </div>
                              
                                 <div data-v-18b505e9="" class="item">
-                                    <div data-v-18b505e9="" class="key">投票类型</div>
+                                    <div data-v-18b505e9="" class="key">{{$t('dposDetail.voteType')}}</div>
                                     <div data-v-18b505e9="" class="value">{{ item.voteState }}</div>
                                 </div>
 
@@ -109,7 +109,7 @@
 </template>
 
 <script>
-import alertTip from './modal.vue'
+ 
     export default {
         name: "dpos",
         data() {
@@ -163,10 +163,8 @@ import alertTip from './modal.vue'
         created() {
             this.dposAddress = sessionStorage.getItem("dposAddress")     
             this.getList()
-        },
-          components: {
-            'alert-tip':alertTip
         }
+        
     }
 </script>
 

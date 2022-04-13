@@ -6,33 +6,33 @@
                     <div data-v-6f78b530="" data-v-1a6f007e="">
                         <div data-v-6f78b530="" class="baseInfoCard">
                             <div data-v-6f78b530="" class="header">
-                                <div data-v-6f78b530="" class="title">地址信息</div>
+                                <div data-v-6f78b530="" class="title">{{$t('Address.addressInfo')}}</div>
                             </div>
                             <div data-v-6f78b530="" class="content">
                                 <div data-v-6f78b530="" class="item hash">
-                                    <div data-v-6f78b530="" class="key">普通地址<!----></div>
+                                    <div data-v-6f78b530="" class="key">{{$t('Address.address')}}<!----></div>
                                     <div data-v-6f78b530="" class="val">{{ address }}</div>
                                 </div><!----><!---->
                                 <div data-v-6f78b530="" class="item">
-                                    <div data-v-6f78b530="" class="key">余额</div>
+                                    <div data-v-6f78b530="" class="key">{{$t('Address.balance')}}</div>
                                     <div data-v-6f78b530="" class="value">
-                                        {{ balance }} MNT
+                                        {{ balance }} {{this.golbal.virtualCurrencyUnit}}
                                     </div>
                                 </div>
                                 <div data-v-6f78b530="" class="item">
-                                    <div data-v-6f78b530="" class="key">总收入</div>
+                                    <div data-v-6f78b530="" class="key">{{$t('Address.totalRevenue')}}</div>
                                     <div data-v-6f78b530="" class="value">
-                                        {{ income }} MNT
+                                        {{ income }} {{this.golbal.virtualCurrencyUnit}}
                                     </div>
                                 </div>
                                 <div data-v-6f78b530="" class="item">
-                                    <div data-v-6f78b530="" class="key">总转出</div>
+                                    <div data-v-6f78b530="" class="key">{{$t('Address.totalTransferOut')}}</div>
                                     <div data-v-6f78b530="" class="value">
-                                        {{ expend }} MNT
+                                        {{ expend }} {{this.golbal.virtualCurrencyUnit}}
                                     </div>
                                 </div>
                                 <div data-v-6f78b530="" class="item">
-                                    <div data-v-6f78b530="" class="key">排行</div>
+                                    <div data-v-6f78b530="" class="key">{{$t('Address.rank')}}</div>
                                     <div data-v-6f78b530="" class="value">{{ rank }}</div>
                                 </div><!----><!----><!---->
                             </div>
@@ -40,7 +40,7 @@
                     </div>
                     <div data-v-1a6f007e="" class="baseInfoCard">
                         <div data-v-1a6f007e="" class="header">
-                            <div data-v-1a6f007e="" class="title">交易</div>
+                            <div data-v-1a6f007e="" class="title">{{$t('Address.transactions')}}</div>
                         </div><!---->
 
 
@@ -51,11 +51,11 @@
                                 <li data-v-bfa74ae2="" v-for="(item,index) in TxListDatas"><!---->
                                     <div data-v-bfa74ae2="" class="tx_baseinfo">
                                         <div data-v-bfa74ae2="" class="left">
-                                            <div data-v-bfa74ae2="" class="title">交易哈希</div><!---->
+                                            <div data-v-bfa74ae2="" class="title">{{$t('Address.hash')}}</div><!---->
                                             <router-link :to="{ name:'tx',query:{txid:item.txid } }">{{ item.txid }}</router-link>
                                         </div>
                                         <div data-v-bfa74ae2="" class="right">
-                                            <div data-v-bfa74ae2=""><span data-v-bfa74ae2="" class="title">时间</span>{{ timeformat(item.transtime) }}
+                                            <div data-v-bfa74ae2=""><span data-v-bfa74ae2="" class="title">{{$t('Address.time')}}</span>{{ timeformat(item.transtime) }}
                                             </div>
                                         </div>
                                     </div>
@@ -79,7 +79,7 @@
                                                             data-v-4a9378aa="" class="el-tooltip"
                                                             aria-describedby="el-tooltip-2085"
                                                             tabindex="0">{{ item.from }}</span></span></div>
-                                                    <div data-v-4a9378aa="" class="input_value">{{ item.amount }} MNT</div>
+                                                    <div data-v-4a9378aa="" class="input_value">{{ item.amount }} {{this.golbal.virtualCurrencyUnit}}</div>
                                                 </div><!----></div>
                                             <img data-v-4a9378aa=""
                                                  src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMzBweCIgaGVpZ2h0PSIxOHB4IiB2aWV3Qm94PSIwIDAgMzAgMTgiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8IS0tIEdlbmVyYXRvcjogU2tldGNoIDU1LjIgKDc4MTgxKSAtIGh0dHBzOi8vc2tldGNoYXBwLmNvbSAtLT4KICAgIDx0aXRsZT5GaWxsIDHlpIfku70gMzwvdGl0bGU+CiAgICA8ZGVzYz5DcmVhdGVkIHdpdGggU2tldGNoLjwvZGVzYz4KICAgIDxnIGlkPSLpobXpnaIxIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIiBvcGFjaXR5PSIwLjIwMDAwMDAwMyI+CiAgICAgICAgPGcgaWQ9IuW+heehruiupOS6pOaYkyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTYyNy4wMDAwMDAsIC00MjEuMDAwMDAwKSIgZmlsbD0iIzAwMjJBOSI+CiAgICAgICAgICAgIDxwb2x5Z29uIGlkPSJGaWxsLTHlpIfku70tMyIgcG9pbnRzPSI2NTAuNjMxMjgyIDQyOC4zNjM3NjUgNjI3IDQyOC4zNjM3NjUgNjI3IDQzMS42MzY0NzUgNjUwLjYzMTI4MiA0MzEuNjM2NDc1IDY0NS40MzU2MzIgNDM2LjcwOTE2MSA2NDcuNzgyMTEgNDM5IDY1NyA0MzAuMDAwMTIgNjQ3Ljk0OTc0IDQyMSA2NDUuNjAzMjYyIDQyMy4yOTA4MzkiPjwvcG9seWdvbj4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPg=="
@@ -92,7 +92,7 @@
                                                     <div data-v-4a9378aa="" class="output_addr"><span
                                                             data-v-4a9378aa="">{{ item.to }}</span>
                                                     </div>
-                                                    <div data-v-4a9378aa="" class="output_value">{{ item.amount }} MNT</div>
+                                                    <div data-v-4a9378aa="" class="output_value">{{ item.amount }} {{this.golbal.virtualCurrencyUnit}}</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -100,12 +100,12 @@
                                             <div data-v-4a9378aa="" class="left"><!----></div>
                                             <div data-v-4a9378aa="" class="right"><!---->
                                                 <div data-v-4a9378aa=""><span data-v-4a9378aa=""
-                                                                              class="title">所在块</span>
+                                                                              class="title">{{$t('Address.block')}}</span>
                                                     <router-link :to="{ name:'block',query:{hash:item.block_hash } }">{{ item.block_hash }}</router-link>
                                                 </div>
                                                 <!---->
                                                 <div data-v-4a9378aa=""><span data-v-4a9378aa=""
-                                                                              class="title">交易费</span>{{ item.fee }}
+                                                                              class="title">{{$t('Address.txFee')}}</span>{{ item.fee }}
                                                 </div>
                                             </div>
                                         </div>

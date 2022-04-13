@@ -39,3 +39,16 @@
     text-overflow: ellipsis;
     word-break: break-all;
 }
+.language-menu{
+
+    color:#f1b434;
+    position: absolute;
+    left: 210px;
+    top: 38px;
+    font-size:14px;
+    padding-top:12px;
+}
+.language-select{
+    padding-top:12px; 
+}
+

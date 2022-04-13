@@ -6,7 +6,7 @@
                 <section class="section" data-v-57312e58="">
                     <div class="baseInfoCard" data-v-57312e58="">
                         <div class="header" data-v-57312e58="">
-                            <div class="title" data-v-57312e58="">交易信息</div>
+                            <div class="title" data-v-57312e58="">{{$t('Tx.txInfo')}}</div>
                         </div>
                         <div class="content" data-v-57312e58="">
                             <div class="item hash" data-v-57312e58="">
@@ -15,29 +15,29 @@
                                 </div>
                             </div><!----><!---->
                             <div class="item" data-v-57312e58="">
-                                <div class="key" data-v-57312e58="">所在块</div>
+                                <div class="key" data-v-57312e58="">{{$t('Tx.block')}}</div>
                                 <div class="value" data-v-57312e58="">
                                     <router-link :to="{ name:'block',query:{hash:block_hash } }">{{ block_hash }}</router-link>
                                 </div>
                             </div>
                             <div class="item" data-v-57312e58="">
-                                <div class="key" data-v-57312e58="">时间</div>
+                                <div class="key" data-v-57312e58="">{{$t('Tx.time')}}</div>
                                 <div class="value" data-v-57312e58="">{{ transtime }}</div>
                             </div>
                             <div class="item" data-v-57312e58="">
-                                <div class="key" data-v-57312e58="">from地址</div>
+                                <div class="key" data-v-57312e58="">{{$t('Tx.from')}}</div>
                                 <div class="value" data-v-57312e58="">{{ form }}</div>
                             </div>
                             <div class="item" data-v-57312e58="">
-                                <div class="key" data-v-57312e58="">to地址</div>
+                                <div class="key" data-v-57312e58="">{{$t('Tx.to')}}</div>
                                 <div class="value" data-v-57312e58="">{{ to }}</div>
                             </div>
                             <div class="item" data-v-57312e58="">
-                                <div class="key" data-v-57312e58="">转账金额</div>
-                                <div class="value" data-v-57312e58="">{{ amount }} MNT</div>
+                                <div class="key" data-v-57312e58="">{{$t('Tx.txAmount')}}</div>
+                                <div class="value" data-v-57312e58="">{{ amount }} {{this.golbal.virtualCurrencyUnit}}</div>
                             </div>
                             <div class="item" data-v-57312e58="">
-                                <div class="key" data-v-57312e58="">交易费</div>
+                                <div class="key" data-v-57312e58="">{{$t('Tx.txFee')}}</div>
                                 <div class="value" data-v-57312e58="">
                                     {{ free }}
                                 </div>

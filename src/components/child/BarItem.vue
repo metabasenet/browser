@@ -53,7 +53,7 @@ export default {
             //this.$router.push({ path: "/temp", query: { path:this.path,param: { }}});
             this.$router.replace(this.path).catch(
                 err => {
-                    console.log("重复了点击了");
+                    console.log("Repeated Click ");
                 }
             )
         }

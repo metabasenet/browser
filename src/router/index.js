@@ -9,15 +9,15 @@ const router = new VueRouter({
     routes
 })
 
-//设置全局守卫处理
+
 router.beforeEach((to, from, next) => {
     let isLogin = localStorage.getItem("token");
 
-    // 如果访问的是登录界面则直接放行
+    // 
     /*if (to.path === '/login')
         return next()
 
-    // 如果访问的是登录界面则直接放行
+    // 
     if (to.path === '/stafflogin')
         return next()*/
 

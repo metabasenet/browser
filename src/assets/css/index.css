@@ -4490,7 +4490,7 @@
 }
 
 .p-home .page-network .chart_area .line_box .Tabs .active {
-    color: #213654
+    color: #f1b434
 }
 
 .p-home .page-network .chart_area .line_box .Tabs div {
@@ -4658,7 +4658,7 @@
 }
 
 .countdown_box .time .item .number[data-v-a22c83fc] {
-    color: #0022a9;
+    color: #61259e;
     font-size: 32px;
     line-height: 32px;
     font-weight: 500;
@@ -4666,7 +4666,7 @@
 }
 
 .countdown_box .time .item .txt[data-v-a22c83fc] {
-    color: #213654;
+    color: #f1b434;
     font-size: 20px
 }
 
@@ -4679,14 +4679,14 @@
 
 .countdown_box .description .des1[data-v-a22c83fc] {
     font-size: 20px;
-    color: #213654;
+    color: #f1b434;
     font-weight: 500;
     overflow-y: hidden
 }
 
 .countdown_box .description .des2[data-v-a22c83fc] {
     font-size: 16px;
-    color: #213654;
+    color: #f1b434;
     overflow-y: hidden;
     margin-bottom: 20px;
     margin-top: 10px;
@@ -4695,7 +4695,7 @@
 
 .countdown_box .description .btn[data-v-a22c83fc] {
     font-size: 12px;
-    background: #0022a9;
+    background: #61259e;
     border-radius: 4px;
     height: 28px;
     line-height: 28px;
@@ -4838,7 +4838,7 @@
     float: left;
     line-height: 50px;
     font-size: 16px;
-    color: #213654;
+    color: #f1b434;
     overflow: hidden
 }
 
@@ -4862,7 +4862,7 @@
 }
 
 .latest_block .more[data-v-135e9942] {
-    color: #0022a9;
+    color: #61259e;
     height: 58px;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -4959,7 +4959,7 @@
     float: left;
     line-height: 50px;
     font-size: 16px;
-    color: #213654;
+    color: #f1b434;
     overflow: hidden
 }
 
@@ -5010,7 +5010,7 @@
     font-size: 14px;
     height: 58px;
     line-height: 58px;
-    color: #213654;
+    color: #f1b434;
     font-weight: 400
 }
 
@@ -5019,7 +5019,7 @@
 }
 
 .pending_wrap .more[data-v-a7eb4120] {
-    color: #0022a9;
+    color: #61259e;
     height: 58px;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -5169,7 +5169,7 @@
     width: 20%;
     padding-right: 15px;
     font-size: 14px;
-    color: #213654;
+    color: #f1b434;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap
@@ -5276,7 +5276,7 @@
     }
 
     .mobileList .items .item .value[data-v-603f4bbb] {
-        color: #213654;
+        color: #f1b434;
         overflow: hidden;
         text-overflow: ellipsis
     }
@@ -5325,7 +5325,7 @@
 .title[data-v-cd23a578] {
     font-size: 16px;
     font-weight: 600;
-    color: #213654;
+    color: #f1b434;
     margin-bottom: 10px
 }
 
@@ -5346,14 +5346,14 @@
 }
 
 .item a[data-v-cd23a578] {
-    color: #0022a9
+    color: #61259e
 }
 
 .more[data-v-cd23a578] {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    color: #0022a9 !important;
+    color: #61259e !important;
     font-weight: 500;
     -webkit-box-align: center;
     -ms-flex-align: center;
@@ -5414,7 +5414,7 @@
 .baseInfoCard .title[data-v-19e3dea3] {
     font-size: 16px;
     font-weight: 600;
-    color: #213654;
+    color: #f1b434;
     margin-bottom: 10px
 }
 
@@ -5428,7 +5428,7 @@
     margin: 10px 20px 10px 0;
     cursor: pointer;
     font-weight: 400;
-    color: #0022a9
+    color: #61259e
 }
 
 @media screen and (max-width: 500px) {
@@ -5463,7 +5463,7 @@
 .title[data-v-2c877b6a] {
     font-size: 16px;
     font-weight: 600;
-    color: #213654;
+    color: #f1b434;
     margin-bottom: 10px
 }
 
@@ -5485,14 +5485,14 @@
 }
 
 .item a[data-v-2c877b6a] {
-    color: #0022a9
+    color: #61259e
 }
 
 .more[data-v-2c877b6a] {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    color: #0022a9 !important;
+    color: #61259e !important;
     font-weight: 500;
     -webkit-box-align: center;
     -ms-flex-align: center;

@@ -7,7 +7,10 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
 import "@babel/polyfill"
-//兼容IE11
+import i18n from './lang/index'
+
+
+//compatible IE11
 if (!FileReader.prototype.readAsBinaryString) {
     FileReader.prototype.readAsBinaryString = function (fileData) {
         var binary = "";
@@ -39,7 +42,7 @@ import {
 Vue.use(router)
 
 Vue.use(ElementUI)
-//验证
+//validator
 Validator.addLocale(zh_CN);
 /*
 Vue.use(VeeValidate, {
@@ -55,11 +58,14 @@ Vue.use(VeeValidate, configValidator);
 Vue.config.productionTip = false
 
 
-//定义api全局变量
+
+
 import api from './request/api';
 Vue.prototype.$api = api;
 
-// //定义staffapi全局变量
+
+import golbal  from './lang/global';
+Vue.prototype.golbal = golbal
 // import staffapi from './request/staffapi';
 // Vue.prototype.$staffapi = staffapi;
 
@@ -67,5 +73,6 @@ Vue.prototype.$api = api;
 new Vue({
     store,
     router,
+    i18n,    
     render: h => h(App)
 }).$mount('#app')

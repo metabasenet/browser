@@ -1,12 +1,12 @@
 <template>
     <div>
         <div data-v-92014c5c="" data-v-520cdd27="" class="content-child"><h1 data-v-92014c5c="" class="h1">
-           dpos pow</h1>
-            <h2 data-v-92014c5c="" class="h2">浏览器展示dpos，包括地址，投票和类型。</h2>
+           {{$t('dpos.h1')}}</h1>
+            <h2 data-v-92014c5c="" class="h2">{{$t('dpos.h2')}}</h2>
             <div data-v-92014c5c="" class="baseInfoCard">
                 <div data-v-92014c5c="" class="header">
                     <div data-v-92014c5c="" id="rich_list" class="btns">
-                        <div data-v-92014c5c="" class="title ontitle">dpos</div>
+                        <div data-v-92014c5c="" class="title ontitle">{{$t('dpos.dpos')}}</div>
                     </div>
 
                 </div>
@@ -17,10 +17,10 @@
                                 <div data-v-18b505e9="" class="inner">
                                     <div data-v-18b505e9="" class="rich_list">
                                         <li data-v-18b505e9="" class="item">
-                                            <div data-v-18b505e9="" class="index dposeindex"><b data-v-18b505e9="">序号</b></div>        
-                                            <div data-v-18b505e9="" class="address"><b data-v-18b505e9="">地址</b></div>                                        
-                                            <div data-v-18b505e9="" class="votes"><b data-v-18b505e9="">投票</b></div>
-                                            <div data-v-18b505e9="" class="name"><b data-v-18b505e9="">名称</b></div>                                 
+                                            <div data-v-18b505e9="" class="index dposeindex"><b data-v-18b505e9="">{{$t('dpos.serialNumber')}}</b></div>        
+                                            <div data-v-18b505e9="" class="address"><b data-v-18b505e9="">{{$t('dpos.address')}}</b></div>                                        
+                                            <div data-v-18b505e9="" class="votes"><b data-v-18b505e9="">{{$t('dpos.vote')}}</b></div>
+                                            <div data-v-18b505e9="" class="name"><b data-v-18b505e9="">{{$t('dpos.name')}}</b></div>                                 
                                         </li>
                                         <li data-v-18b505e9="" class="item" v-for="(item,index) in dposlistDatas" :key="index">
                                             <div data-v-18b505e9="" class="index dposeindex">{{ index+1}}</div>
@@ -50,7 +50,7 @@
                         <div data-v-18b505e9="" class="mobile">
                             <div data-v-18b505e9="" class="items" v-for="(item,index) in dposlistDatas" :key="index">
                                 <div data-v-18b505e9="" class="item hash">
-                                    <div data-v-18b505e9="" class="key">地址</div>
+                                    <div data-v-18b505e9="" class="key">{{$t('dpos.address')}}</div>
                                     <div data-v-18b505e9="" class="value">
                                         <div data-v-18b505e9="" class="address"><a data-v-18b505e9=""
                                                                                    href="javascript:void(0)" @click="handleWindow(item.address)"
@@ -59,13 +59,13 @@
                                     </div>
                                 </div>
                                 <div data-v-18b505e9="" class="item">
-                                    <div data-v-18b505e9="" class="key">投票</div>
+                                    <div data-v-18b505e9="" class="key">{{$t('dpos.vote')}}</div>
                                     <div data-v-18b505e9="" class="value">
                                         <div data-v-18b505e9="" class="amount">{{ item.votes }}</div>
                                     </div>
                                 </div>
                                 <div data-v-18b505e9="" class="item">
-                                    <div data-v-18b505e9="" class="key">名称</div>
+                                    <div data-v-18b505e9="" class="key">{{$t('dpos.name')}}</div>
                                     <div data-v-18b505e9="" class="value">{{ item.name }}</div>
                                 </div>
                              
@@ -84,7 +84,7 @@
 
 
 <script>
-import alertTip from './modal.vue'
+ 
     export default {
         name: "dpos",
         data() {
@@ -127,9 +127,7 @@ import alertTip from './modal.vue'
         created() {         
             this.getList()               
         },
-          components: {
-            'alert-tip':alertTip
-        }
+      
     }
 </script>
 

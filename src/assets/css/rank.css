@@ -4404,7 +4404,7 @@
 
 .baseInfoCard .header .title[data-v-92014c5c] {
     font-size: 16px;
-    color: #213654;
+    color: #f1b434;
     font-weight: 500
 }
 
@@ -4453,7 +4453,7 @@
 }
 
 .baseInfoCard .content .item .value[data-v-92014c5c] {
-    color: #213654;
+    color: #f1b434;
     font-weight: 700
 }
 
@@ -4519,7 +4519,7 @@
 }
 
 .baseInfoCard .content .hash .val[data-v-92014c5c] {
-    color: #213654;
+    color: #f1b434;
     font-size: 20px;
     font-weight: 700;
     margin-right: 40px
@@ -4550,7 +4550,7 @@
 
 .baseInfoCard .btns .ontitle[data-v-92014c5c] {
     font-size: 16px;
-    color: #213654;
+    color: #f1b434;
     font-weight: 600;
     cursor: pointer
 }
@@ -4789,7 +4789,7 @@
     transition: .5s;
     -webkit-transform: rotate(180deg);
     transform: rotate(180deg);
-    border-top: 5px solid #213654
+    border-top: 5px solid #f1b434
 }
 
 .baseInfoCard .btns .select_box .dropdown[data-v-92014c5c] {
@@ -4877,7 +4877,7 @@
 }
 
 .full .cp-rich .rich_list .item div[data-v-18b505e9] {
-    color: #213654;
+    color: #f1b434;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis
@@ -4908,7 +4908,7 @@
 }
 
 .full .cp-rich .rich_list .item .address .onitem[data-v-18b505e9] {
-    color: #213654
+    color: #f1b434
 }
 
 .full .cp-rich .rich_list .item .address .item[data-v-18b505e9] {
@@ -4979,7 +4979,7 @@
     }
 
     .full .mobile .items .item .value[data-v-18b505e9] {
-        color: #213654
+        color: #f1b434
     }
 
     .full .mobile .items .item .value .address a[data-v-18b505e9], .full .mobile .items .item .value[data-v-18b505e9] {
@@ -5002,7 +5002,7 @@
 .title[data-v-2c877b6a] {
     font-size: 16px;
     font-weight: 600;
-    color: #213654;
+    color: #f1b434;
     margin-bottom: 10px
 }
 
@@ -5024,14 +5024,14 @@
 }
 
 .item a[data-v-2c877b6a] {
-    color: #0022a9
+    color: #61259e
 }
 
 .more[data-v-2c877b6a] {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    color: #0022a9 !important;
+    color: #61259e !important;
     font-weight: 500;
     -webkit-box-align: center;
     -ms-flex-align: center;
@@ -5155,7 +5155,7 @@
 
     .turn_page .page_box .onpage[data-v-5d77fed0] {
         margin: 0 8px;
-        color: #213654;
+        color: #f1b434;
         font-weight: 700;
         cursor: pointer
     }

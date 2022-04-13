@@ -8,7 +8,7 @@ a[data-v-35696748] {
     padding: 23px 0 0;
     width: 100%;
     height: auto;
-    background-color: #213654;
+    background-color: #f1b434;
     font-size: 14px;
     font-family: PingFangSC-Regular
 }
@@ -389,7 +389,7 @@ a[data-v-35696748] {
 
 .search_area .header_tips[data-v-4196e052] {
     font-size: 14px;
-    color: #0022a9;
+    color: #61259e;
     letter-spacing: -.14px;
     line-height: 14px;
     overflow: hidden;
@@ -407,13 +407,13 @@ a[data-v-35696748] {
 }
 
 .search_area .header_tips.txt[data-v-4196e052] {
-    color: #213654;
+    color: #f1b434;
     overflow: hidden;
     font-weight: 600
 }
 
 .search_area .header_tips.txt .link[data-v-4196e052] {
-    color: #0022a9;
+    color: #61259e;
     cursor: pointer
 }
 
@@ -439,7 +439,7 @@ a[data-v-35696748] {
     width: 84%;
     max-width: 1080px;
     border-radius: 4px;
-    border: 2px solid #0022a9;
+    border: 2px solid #61259e;
     overflow: visible;
     z-index: 998
 }
@@ -461,7 +461,7 @@ a[data-v-35696748] {
     -ms-flex-negative: 0;
     flex-shrink: 0;
     width: auto;
-    color: #213654;
+    color: #f1b434;
     cursor: pointer;
     position: relative;
     overflow: visible;
@@ -473,7 +473,7 @@ a[data-v-35696748] {
     height: 0;
     border-left: 4px solid transparent;
     border-right: 4px solid transparent;
-    border-top: 5px solid #213654;
+    border-top: 5px solid #f1b434;
     margin-left: 8px;
     vertical-align: middle;
     display: inline-block;
@@ -536,7 +536,7 @@ a[data-v-35696748] {
     font-size: 14px;
     text-align: center;
     color: #fff;
-    background: #0022a9;
+    background: #61259e;
     cursor: pointer
 }
 
@@ -723,7 +723,7 @@ a[data-v-35696748] {
 }
 
 .ads .txt[data-v-938d0eb4] {
-    color: #213654;
+    color: #f1b434;
     overflow: hidden;
     font-weight: 600
 }
@@ -733,7 +733,7 @@ a[data-v-35696748] {
 }
 
 .ads .txt .link[data-v-938d0eb4] {
-    color: #0022a9;
+    color: #61259e;
     cursor: pointer
 }
 
@@ -795,7 +795,7 @@ a[data-v-35696748] {
 .ads .btns .items .item[data-v-938d0eb4] {
     font-size: 12px;
     line-height: 18px;
-    color: #213654;
+    color: #f1b434;
     cursor: pointer
 }
 
@@ -833,7 +833,7 @@ a[data-v-35696748] {
 }
 
 .ads .txt[data-v-724dfc73] {
-    color: #213654;
+    color: #f1b434;
     overflow: hidden;
     font-weight: 600
 }
@@ -843,7 +843,7 @@ a[data-v-35696748] {
 }
 
 .ads .txt .link[data-v-724dfc73] {
-    color: #0022a9;
+    color: #61259e;
     cursor: pointer
 }
 
@@ -905,7 +905,7 @@ a[data-v-35696748] {
 .ads .btns .items .item[data-v-724dfc73] {
     font-size: 12px;
     line-height: 18px;
-    color: #213654;
+    color: #f1b434;
     cursor: pointer
 }
 
@@ -1005,7 +1005,7 @@ a[data-v-35696748] {
 
 .cp-price-box .coin_info .top .price_info {
     float: left;
-    color: #213654;
+    color: #f1b434;
     width: auto
 }
 
@@ -1025,7 +1025,7 @@ a[data-v-35696748] {
 }
 
 .cp-price-box .coin_info .top .price_info .coin_name .name {
-    color: #213654;
+    color: #f1b434;
     margin-right: 10px;
     cursor: pointer;
     position: relative;
@@ -1111,7 +1111,7 @@ a[data-v-35696748] {
 .cp-price-box .coin_info .top .price_info .price_wrap .exchange .exchange_val {
     cursor: pointer;
     font-size: 16px;
-    color: #213654;
+    color: #f1b434;
     font-weight: 600;
     float: left
 }
@@ -1228,7 +1228,7 @@ a[data-v-35696748] {
     overflow: auto;
     white-space: nowrap;
     font-weight: 600;
-    color: #213654
+    color: #f1b434
 }
 
 .cp-price-box .coin_info .coin-bottom .item .value a {
@@ -4344,7 +4344,7 @@ a[data-v-35696748] {
 }
 
 .err_Card .tips1 {
-    color: #213654;
+    color: #f1b434;
     font-size: 14px;
     padding-bottom: 20px
 }
@@ -4354,7 +4354,7 @@ a[data-v-35696748] {
     height: 28px;
     line-height: 28px;
     border-radius: 4px;
-    background: #0022a9;
+    background: #61259e;
     color: #fff;
     font-size: 12px;
     margin: auto;
@@ -4370,7 +4370,7 @@ a[data-v-35696748] {
 }
 
 .err_Card .content {
-    color: #0022a9;
+    color: #61259e;
     font-size: 16px;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -4390,7 +4390,7 @@ a[data-v-35696748] {
 }
 
 .err_Card .article {
-    color: #0022a9;
+    color: #61259e;
     font-size: 16px;
     margin: 16px 0
 }
@@ -4992,7 +4992,7 @@ input:focus {
 }
 
 .layout-header .head .topMenu {
-    background: #213654
+    background: #f1b434
 }
 
 .layout-header .head .topMenu .box {
@@ -5039,7 +5039,7 @@ input:focus {
     width: auto;
     height: 18px;
     line-height: 18px;
-    color: #0022a9;
+    color: #61259e;
     background: #fff;
     padding: 0 14px;
     border-radius: 4px
@@ -5088,7 +5088,7 @@ input:focus {
     top: 24px;
     background: #fff;
     border: 1px solid #d2d7e1;
-    color: #213654;
+    color: #f1b434;
     cursor: pointer;
     z-index: 1000;
     border-radius: 4px
@@ -5145,7 +5145,7 @@ input:focus {
     align-items: center;
     height: 100%;
     white-space: nowrap;
-    color: #213654;
+    color: #f1b434;
     font-size: 20px;
     font-weight: 600;
     position: relative
@@ -5341,16 +5341,16 @@ input:focus {
 }
 
 .layout-header .header_wrap .box .inner_header .rt .bottom .moreItem.active {
-    border-bottom: 5px solid #213654
+    border-bottom: 5px solid #f1b434
 }
 
 .layout-header .header_wrap .box .inner_header .rt .bottom .active {
     border: none;
-    color: #213654
+    color: #f1b434
 }
 
 .layout-header .header_wrap .box .inner_header .rt .bottom .active a {
-    color: #213654
+    color: #f1b434
 }
 
 .layout-header .header_wrap .box .lang {
@@ -5407,7 +5407,7 @@ input:focus {
     }
 
     .layout-header .header_wrap .order .coin_name {
-        color: #213654;
+        color: #f1b434;
         font-size: 20px;
         font-weight: 600
     }
@@ -5473,7 +5473,7 @@ input:focus {
         -webkit-box-align: center;
         -ms-flex-align: center;
         align-items: center;
-        color: #213654;
+        color: #f1b434;
         font-weight: 600;
         margin-left: 15px;
         position: relative;
@@ -5560,7 +5560,7 @@ input:focus {
     }
 
     .layout-header .mobile_header .menu_card .item .child_items .choosed, .layout-header .mobile_header .menu_card .item .child_items .ontitle {
-        color: #213654;
+        color: #f1b434;
         font-weight: 600
     }
 
@@ -5671,7 +5671,7 @@ input:focus {
     }
 
     .layout-header .mobile_header .menu_card .active {
-        color: #213654;
+        color: #f1b434;
         font-weight: 600
     }
 
@@ -5690,7 +5690,7 @@ input:focus {
         transform: translate(-50%);
         width: 96%;
         border-radius: 4px;
-        border: 2px solid #0022a9;
+        border: 2px solid #61259e;
         overflow: visible;
         z-index: 998
     }
@@ -5714,7 +5714,7 @@ input:focus {
         font-size: 14px;
         text-align: center;
         color: #fff;
-        background: #0022a9
+        background: #61259e
     }
 
     .layout-header .mobile_search_box .jump-to-active {
@@ -6561,7 +6561,7 @@ input:focus {
     background: #fff;
     height: 58px;
     line-height: 58px;
-    color: #213654;
+    color: #f1b434;
     border-bottom: 1px solid #eeeff1
 }
 
@@ -6640,7 +6640,7 @@ input:focus {
     }
 
     .mycard-mobile .items .item .value {
-        color: #213654;
+        color: #f1b434;
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
@@ -10616,7 +10616,7 @@ pre[class*=language-] {
     width: 100%;
     padding: 12px;
     font-size: 14px;
-    color: #213654;
+    color: #f1b434;
     background: #fff
 }
 
@@ -10663,7 +10663,7 @@ pre[class*=language-] {
 }
 
 .coin_detail .coininfo_box .bottom .item .content, .coin_detail .detail_ico .bottom .item .content, .ico_detail .coininfo_box .bottom .item .content, .ico_detail .detail_ico .bottom .item .content {
-    color: #213654
+    color: #f1b434
 }
 
 .coin_detail .coininfo_box .bottom .item .yellow, .coin_detail .detail_ico .bottom .item .yellow, .ico_detail .coininfo_box .bottom .item .yellow, .ico_detail .detail_ico .bottom .item .yellow {
@@ -10727,7 +10727,7 @@ pre[class*=language-] {
     text-overflow: ellipsis;
     white-space: nowrap;
     cursor: pointer;
-    color: #213654
+    color: #f1b434
 }
 
 .notice_list .list .item .name {
@@ -11078,7 +11078,7 @@ pre[class*=language-] {
 
 .baseInfoCard .header .title {
     font-size: 16px;
-    color: #213654;
+    color: #f1b434;
     font-weight: 500
 }
 
@@ -11187,7 +11187,7 @@ pre[class*=language-] {
 }
 
 .baseInfoCard .content .item .value {
-    color: #213654;
+    color: #f1b434;
     font-weight: 700
 }
 
@@ -11204,7 +11204,7 @@ pre[class*=language-] {
 .baseInfoCard .content .item .addressType {
     font-size: 20px;
     font-weight: 500;
-    color: #213654
+    color: #f1b434
 }
 
 .baseInfoCard .content .hash {
@@ -11221,7 +11221,7 @@ pre[class*=language-] {
 }
 
 .baseInfoCard .content .hash .val {
-    color: #213654;
+    color: #f1b434;
     font-size: 20px;
     font-weight: 700;
     word-break: break-all
@@ -11236,7 +11236,7 @@ pre[class*=language-] {
 .baseInfoCard .content .block .key {
     font-size: 20px;
     width: 100%;
-    color: #213654;
+    color: #f1b434;
     font-weight: 700;
     margin-bottom: 10px
 }
@@ -11273,7 +11273,7 @@ pre[class*=language-] {
 
 .baseInfoCard .btns .ontitle {
     font-size: 16px;
-    color: #213654;
+    color: #f1b434;
     font-weight: 600;
     cursor: pointer
 }
@@ -19494,7 +19494,7 @@ pre[class*=language-] {
 .block_list .item .inner_item[data-v-ce118d7e] {
     float: left;
     font-size: 14px;
-    color: #213654;
+    color: #f1b434;
     width: 12%;
     margin-right: 10px;
     text-overflow: ellipsis;
@@ -19565,7 +19565,7 @@ pre[class*=language-] {
 }
 
 .block_list .content .miner[data-v-ce118d7e] {
-    color: #213654
+    color: #f1b434
 }
 
 .block_list .content .miner a[data-v-ce118d7e] {
@@ -19620,7 +19620,7 @@ pre[class*=language-] {
     }
 
     .mobileList .items .item .value[data-v-ce118d7e] {
-        color: #213654;
+        color: #f1b434;
         overflow: hidden;
         text-overflow: ellipsis
     }

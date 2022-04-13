@@ -5,11 +5,11 @@
             <section data-v-4d10a54f="" class="section">
                 <div data-v-4d10a54f="" class="baseInfoCard">
                     <div data-v-4d10a54f="" class="header">
-                        <div data-v-4d10a54f="" class="title">区块信息</div>
+                        <div data-v-4d10a54f="" class="title">{{$t('Block.blockInfo')}}</div>
                         <a data-v-4d10a54f="" href="/cn/blocklist">
                             <div data-v-4d10a54f="" class="back">
 <!--                                <div data-v-4d10a54f="" class="backImg"></div>-->
-<!--                                <div data-v-4d10a54f="">返回爆块首页</div>-->
+<!--                                <div data-v-4d10a54f="">{{$t('Block.returnHome')}}</div>-->
                             </div>
                         </a></div>
                     <div data-v-4d10a54f="" class="content">
@@ -20,26 +20,26 @@
                             </div>
                         </div>
                         <div data-v-4d10a54f="" class="item">
-                            <div data-v-4d10a54f="" class="key">时间</div>
+                            <div data-v-4d10a54f="" class="key">{{$t('Block.time')}}</div>
                             <div data-v-4d10a54f="" class="value">{{ time }}</div>
                         </div>
                         <div data-v-4d10a54f="" class="item">
-                            <div data-v-4d10a54f="" class="key">交易数量</div>
+                            <div data-v-4d10a54f="" class="key">{{$t('Block.transactions')}}</div>
                             <div data-v-4d10a54f="" class="value">{{ txs }}</div>
                         </div>
                         <div data-v-4d10a54f="" class="item">
-                            <div data-v-4d10a54f="" class="key">上一区块</div>
+                            <div data-v-4d10a54f="" class="key">{{$t('Block.previousBlock')}}</div>
                             <div data-v-4d10a54f="" class="value">
 <!--                                {{ prev_hash  }}-->
                                 <router-link :to="{ name:'block',query:{hash:prev_hash } }">{{ prev_hash }}</router-link>
                                <!----></div>
                         </div>
                         <div data-v-4d10a54f="" class="item">
-                            <div data-v-4d10a54f="" class="key">播报方</div>
+                            <div data-v-4d10a54f="" class="key">{{$t('Block.address')}}</div>
                             <div data-v-4d10a54f="" class="value">{{ reward_address }}</div>
                         </div>
                         <div data-v-4d10a54f="" class="item">
-                            <div data-v-4d10a54f="" class="key">爆块奖励</div>
+                            <div data-v-4d10a54f="" class="key">{{$t('Block.reward')}}</div>
                             <div data-v-4d10a54f="" class="value">{{ reward_money }}</div>
                         </div>
                     </div>
@@ -48,7 +48,7 @@
 
                 <div data-v-1a6f007e="" class="baseInfoCard">
                     <div data-v-1a6f007e="" class="header">
-                        <div data-v-1a6f007e="" class="title">交易</div>
+                        <div data-v-1a6f007e="" class="title">{{$t('Block.tx')}}</div>
                     </div><!---->
 
 
@@ -59,11 +59,11 @@
                             <li data-v-bfa74ae2="" v-for="(item,index) in TxListDatas"><!---->
                                 <div data-v-bfa74ae2="" class="tx_baseinfo">
                                     <div data-v-bfa74ae2="" class="left">
-                                        <div data-v-bfa74ae2="" class="title">交易哈希</div><!---->
+                                        <div data-v-bfa74ae2="" class="title">{{$t('Block.hash')}}</div><!---->
                                         <router-link :to="{ name:'tx',query:{txid:item.txid } }">{{ item.txid }}</router-link>
                                     </div>
                                     <div data-v-bfa74ae2="" class="right">
-                                        <div data-v-bfa74ae2=""><span data-v-bfa74ae2="" class="title">时间</span>{{ timeformat(item.transtime) }}
+                                        <div data-v-bfa74ae2=""><span data-v-bfa74ae2="" class="title">{{$t('Block.time')}}</span>{{ timeformat(item.transtime) }}
                                         </div>
                                     </div>
                                 </div>
@@ -87,7 +87,7 @@
                                                         data-v-4a9378aa="" class="el-tooltip"
                                                         aria-describedby="el-tooltip-2085"
                                                         tabindex="0">{{ item.from }}</span></span></div>
-                                                <div data-v-4a9378aa="" class="input_value">{{ item.amount }} MNT</div>
+                                                <div data-v-4a9378aa="" class="input_value">{{ item.amount }} {{this.golbal.virtualCurrencyUnit}}</div>
                                             </div><!----></div>
                                         <img data-v-4a9378aa=""
                                              src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMzBweCIgaGVpZ2h0PSIxOHB4IiB2aWV3Qm94PSIwIDAgMzAgMTgiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8IS0tIEdlbmVyYXRvcjogU2tldGNoIDU1LjIgKDc4MTgxKSAtIGh0dHBzOi8vc2tldGNoYXBwLmNvbSAtLT4KICAgIDx0aXRsZT5GaWxsIDHlpIfku70gMzwvdGl0bGU+CiAgICA8ZGVzYz5DcmVhdGVkIHdpdGggU2tldGNoLjwvZGVzYz4KICAgIDxnIGlkPSLpobXpnaIxIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIiBvcGFjaXR5PSIwLjIwMDAwMDAwMyI+CiAgICAgICAgPGcgaWQ9IuW+heehruiupOS6pOaYkyIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTYyNy4wMDAwMDAsIC00MjEuMDAwMDAwKSIgZmlsbD0iIzAwMjJBOSI+CiAgICAgICAgICAgIDxwb2x5Z29uIGlkPSJGaWxsLTHlpIfku70tMyIgcG9pbnRzPSI2NTAuNjMxMjgyIDQyOC4zNjM3NjUgNjI3IDQyOC4zNjM3NjUgNjI3IDQzMS42MzY0NzUgNjUwLjYzMTI4MiA0MzEuNjM2NDc1IDY0NS40MzU2MzIgNDM2LjcwOTE2MSA2NDcuNzgyMTEgNDM5IDY1NyA0MzAuMDAwMTIgNjQ3Ljk0OTc0IDQyMSA2NDUuNjAzMjYyIDQyMy4yOTA4MzkiPjwvcG9seWdvbj4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPg=="
@@ -100,7 +100,7 @@
                                                 <div data-v-4a9378aa="" class="output_addr"><span
                                                         data-v-4a9378aa="">{{ item.to }}</span>
                                                 </div>
-                                                <div data-v-4a9378aa="" class="output_value">{{ item.amount }} MNT</div>
+                                                <div data-v-4a9378aa="" class="output_value">{{ item.amount }} {{this.golbal.virtualCurrencyUnit}}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -108,12 +108,12 @@
                                         <div data-v-4a9378aa="" class="left"><!----></div>
                                         <div data-v-4a9378aa="" class="right"><!---->
                                             <div data-v-4a9378aa=""><span data-v-4a9378aa=""
-                                                                          class="title">所在块</span>
+                                                                          class="title">{{$t('Block.block')}}</span>
                                                 <router-link :to="{ name:'block',query:{hash:item.block_hash } }">{{ item.block_hash }}</router-link>
                                             </div>
                                             <!---->
                                             <div data-v-4a9378aa=""><span data-v-4a9378aa=""
-                                                                          class="title">交易费</span>{{ item.fee }}
+                                                                          class="title">{{$t('Block.txFee')}}</span>{{ item.fee }}
                                             </div>
                                         </div>
                                     </div>

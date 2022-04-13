@@ -1,12 +1,12 @@
 <template>
     <div>
         <div data-v-92014c5c="" data-v-520cdd27="" class="content-child"><h1 data-v-92014c5c="" class="h1">
-            浏览器查询区块链及代币富豪榜</h1>
-            <h2 data-v-92014c5c="" class="h2">浏览器展示富豪榜，包括富豪排名，富豪地址和交易金额。</h2>
+            {{$t('Rank.h1')}}</h1>
+            <h2 data-v-92014c5c="" class="h2">{{$t('Rank.h2')}}</h2>
             <div data-v-92014c5c="" class="baseInfoCard">
                 <div data-v-92014c5c="" class="header">
                     <div data-v-92014c5c="" id="rich_list" class="btns">
-                        <div data-v-92014c5c="" class="title ontitle">富豪榜</div>
+                        <div data-v-92014c5c="" class="title ontitle">{{$t('Rank.rich')}}</div>
                     </div>
 
                 </div>
@@ -17,11 +17,11 @@
                                 <div data-v-18b505e9="" class="inner">
                                     <div data-v-18b505e9="" class="rich_list">
                                         <li data-v-18b505e9="" class="item">
-                                            <div data-v-18b505e9="" class="rank"><b data-v-18b505e9="">名次</b></div>
+                                            <div data-v-18b505e9="" class="rank"><b data-v-18b505e9="">{{$t('Rank.rank')}}</b></div>
                                             <!---->
-                                            <div data-v-18b505e9="" class="address"><b data-v-18b505e9="">地址</b></div>
-                                            <div data-v-18b505e9="" class="amount"><b data-v-18b505e9="">余额</b></div>
-                                            <div data-v-18b505e9="" class="percent"><b data-v-18b505e9="">收益率</b></div>
+                                            <div data-v-18b505e9="" class="address"><b data-v-18b505e9="">{{$t('Rank.address')}}</b></div>
+                                            <div data-v-18b505e9="" class="amount"><b data-v-18b505e9="">{{$t('Rank.balance')}}</b></div>
+                                            <div data-v-18b505e9="" class="percent"><b data-v-18b505e9="">{{$t('Rank.yield')}}</b></div>
                                         </li>
                                         <li data-v-18b505e9="" class="item" v-for="(item,index) in ranklistDatas" :key="index">
                                             <div data-v-18b505e9="" class="rank">{{ index+1 }}</div>
@@ -44,7 +44,7 @@
                         <div data-v-18b505e9="" class="mobile">
                             <div data-v-18b505e9="" class="items" v-for="(item,index) in ranklistDatas" :key="index">
                                 <div data-v-18b505e9="" class="item hash">
-                                    <div data-v-18b505e9="" class="key">地址</div>
+                                    <div data-v-18b505e9="" class="key">{{$t('Rank.address')}}</div>
                                     <div data-v-18b505e9="" class="value">
                                         <div data-v-18b505e9="" class="address"><a data-v-18b505e9=""
                                                                                    href="javascript:void(0)"
@@ -53,17 +53,17 @@
                                     </div>
                                 </div>
                                 <div data-v-18b505e9="" class="item">
-                                    <div data-v-18b505e9="" class="key">金额</div>
+                                    <div data-v-18b505e9="" class="key">{{$t('Rank.balance')}}</div>
                                     <div data-v-18b505e9="" class="value">
                                         <div data-v-18b505e9="" class="amount">{{ item.balance }}</div>
                                     </div>
                                 </div>
                                 <div data-v-18b505e9="" class="item">
-                                    <div data-v-18b505e9="" class="key">收益率</div>
+                                    <div data-v-18b505e9="" class="key">{{$t('Rank.yield')}}</div>
                                     <div data-v-18b505e9="" class="value">{{ item.yield }}</div>
                                 </div>
                                 <div data-v-18b505e9="" class="item">
-                                    <div data-v-18b505e9="" class="key">名次</div>
+                                    <div data-v-18b505e9="" class="key">{{$t('Rank.rank')}}</div>
                                     <div data-v-18b505e9="" class="value">{{ index+1 }}</div>
                                 </div>
                             </div>
