@@ -17,7 +17,7 @@
                 :label="item.label" :value="item.value">
         </el-option>
     </el-select> 
-
+    <div> {{newArray}}</div>
 
     </div>
     </template>
@@ -47,7 +47,9 @@
                         label: '英文/EN'
                     }
                 ],
-                
+                oldArray:[1,2,2,3],
+
+                newArray:[],
 
             }
         },
@@ -66,6 +68,9 @@
          
            
         },
+        arrayOption(){
+            newArray=oldArray.from(new Set(Array));
+        }
         
         }
        

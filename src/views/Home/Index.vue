@@ -1,7 +1,10 @@
 <template>
-    <div>
 
+    <div>
+      
         <div class="content-child" data-v-02b3c3b7 data-v-02b3c3b7>
+
+     
 <!--            <h1 class="h1"></h1>-->
             <h2 class="h2">
                 	{{$t('Index.h2')}}</h2>
@@ -11,6 +14,9 @@
 
 <!--                                block pc start -->
                     <div>
+                        <div class="latest_block item1" data-v-135e9942>
+                            <div id="chart" style="width:95%;height:400px;"></div>
+                        </div>
                         <div class="latest_block item1" data-v-135e9942>
                             <div class="header" data-v-135e9942>
                                 <div class="title" data-v-135e9942><h2 class="txt" data-v-135e9942>{{$t('BlockList.newBlock')}}</h2></div>
@@ -208,7 +214,11 @@
             return {
                 BlocklistDatas: [],
                 TxlistDatas: [],
-                timer: null  // timer
+                timer: null,  // timer
+                chartInfo:[],
+                legend:"",
+                xAxis:"",
+                series:"",
             }
         },
         methods: {
@@ -223,7 +233,61 @@
                     that.TxlistDatas = res
                 });
             },
-
+            drawChart() { 
+                let myChart = this.$echarts.init(document.getElementById("chart"));
+                
+                let option = {
+                    grid: {
+                        left: '10%',
+                        right: '5%',
+                        bottom: '5%',
+                        top: '5%'
+                     },
+                    title: {
+                    text: ""
+                    },
+                    tooltip: {},
+                    legend: {
+            
+                    data:this.legend
+                    },
+                    xAxis: {
+                
+                    data: this.xAxis
+                
+                    },
+                    yAxis: {},
+                    series:this.series
+                };
+                
+                myChart.setOption(option);
+                console.log("option",option);
+            },
+            getChartData(days) {
+                let params = {
+                     days:days,
+                };
+                let that = this
+                this.$api.blockstatistics(params).then(res => {
+                    that.ranklistDatas = res;
+                    that.legend=res.legend;
+                    that.xAxis=res.xAxis;        
+                    let series= [];
+                    for(let serieIndex =0; serieIndex<res.series.length; serieIndex++){               
+                        let serie=
+                         {
+                          name: res.series[serieIndex].name,
+                          type: "line",
+                          data: res.series[serieIndex].data
+                        }
+                       series.push(serie)
+                    }
+                    that.series =series;
+       
+                   that.drawChart();
+          
+                });
+            },
             timeformat(obj){
                 if (obj == null) {
                     return null
@@ -236,12 +300,25 @@
                 let mm = "0" + date.getMinutes();
                 let s = date.getSeconds();
                 return y + "-" + m.substring(m.length - 2, m.length) + "-" + d.substring(d.length - 2, d.length) + " " + h.substring(h.length - 2, h.length) + ":" + mm.substring(mm.length - 2, mm.length) + ":" + s;
+            },
+            _isMobile() {
+                let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
+                return flag;
             }
         },
         created() {
+          
+        },
+        mounted(){
             this.getList()
+            let days=31;
+            if (this._isMobile()){
+                days=8;
+            }
+            this.getChartData(days)
             this.timer = setInterval(() =>{
                 this.getList()
+                this.getChartData(days)
             },1000 * 10)
         }
     }

@@ -9,7 +9,8 @@ const i18n=new VueI18n({
     messages:{
         'zh-CN':require('./zh.js'),
         'en-US':require('./en.js')
-    }
+    },
+    silentTranslationWarn:true,
 })
 Vue.use(ElementUI,{i18n:(key,value)=>i18n.t(key,value)});
 //locale.i18n((key, value) => i18n.t(key, value)) //为了实现element插件的多语言切换
