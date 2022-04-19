@@ -113,6 +113,10 @@ module.exports = {
     to:"To",
     txAmount:"Transaction amount",
     txFee:"Transaction fee",
+    dpos_in:"Vote node address",
+    dpos_out:"Withdrawal node address",
+    client_in:"Vote customer address",
+    client_out:"Withdrawal customer address",
   },
   el:{
     pagination:{

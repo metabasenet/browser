@@ -110,6 +110,10 @@ module.exports = {
       to:"to地址",
       txAmount:"转账金额",
       txFee:"交易费",
+      dpos_in:"投票节点地址",
+      dpos_out:"撤投节点地址",
+      client_in:"投票客户地址",
+      client_out:"撤投客户地址",
     }, 
     el:{  
       pagination:{

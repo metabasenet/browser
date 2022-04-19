@@ -42,6 +42,36 @@
                                     {{ free }}
                                 </div>
                             </div>
+                             <div class="item" data-v-57312e58="">
+                                <div class="key" data-v-57312e58="">nonce</div>
+                                <div class="value" data-v-57312e58="">
+                                    {{ nonce }}
+                                </div>
+                            </div>
+                             <div class="item" v-if="dpos_in !=null && dpos_in.length !=0" data-v-57312e58="">
+                                <div class="key" data-v-57312e58="">{{$t('Tx.dpos_in')}}</div>
+                                <div class="value" data-v-57312e58="">
+                                    {{ dpos_in }}
+                                </div>
+                            </div>
+                             <div class="item" v-if="dpos_out !=null && dpos_out.length !=0" data-v-57312e58="">
+                                <div class="key" data-v-57312e58="">{{$t('Tx.dpos_out')}}</div>
+                                <div class="value" data-v-57312e58="">
+                                    {{ dpos_out }}
+                                </div>
+                            </div>
+                             <div class="item" v-if="client_in !=null && client_in.length !=0" data-v-57312e58="">
+                                <div class="key" data-v-57312e58="">{{$t('Tx.client_in')}}</div>
+                                <div class="value" data-v-57312e58="">
+                                    {{ client_in }}
+                                </div>
+                            </div>
+                             <div class="item" v-if="client_out !=null && client_out.length !=0" data-v-57312e58="">
+                                <div class="key" data-v-57312e58="">{{$t('Tx.client_out')}}</div>
+                                <div class="value" data-v-57312e58="">
+                                    {{ client_out }}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -63,6 +93,11 @@
                 amount:'',
                 free:'',
                 transtime:'',
+                nonce:'',
+                dpos_in :'',
+                dpos_out :'',
+                client_in :'',
+                client_out :'',
                 virtualCurrencyUnit:this.globalString.virtualCurrencyUnit ,
             }
         },
@@ -78,6 +113,11 @@
                     that.to = res[0].to
                     that.amount = res[0].amount
                     that.free = res[0].fee
+                    that.nonce= res[0].nonce
+                    that.dpos_in = res[0].dpos_in
+                    that.dpos_out = res[0].dpos_out
+                    that.client_in = res[0].client_in
+                    that.client_out = res[0].client_out
                     that.transtime = that.timeformat(res[0].transtime)
                 });
             },
