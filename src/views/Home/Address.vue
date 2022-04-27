@@ -20,6 +20,12 @@
                                     </div>
                                 </div>
                                 <div data-v-6f78b530="" class="item">
+                                    <div data-v-6f78b530="" class="key">{{$t('Address.locked')}}</div>
+                                    <div data-v-6f78b530="" class="value">
+                                        {{ locked }} {{ virtualCurrencyUnit }}
+                                    </div>
+                                </div>
+                                <div data-v-6f78b530="" class="item">
                                     <div data-v-6f78b530="" class="key">{{$t('Address.totalRevenue')}}</div>
                                     <div data-v-6f78b530="" class="value">
                                         {{ income }} {{ virtualCurrencyUnit }}
@@ -34,7 +40,12 @@
                                 <div data-v-6f78b530="" class="item">
                                     <div data-v-6f78b530="" class="key">{{$t('Address.rank')}}</div>
                                     <div data-v-6f78b530="" class="value">{{ rank }}</div>
-                                </div><!----><!----><!---->
+                                </div>
+                                 <div data-v-6f78b530="" class="item">
+                                    <div data-v-6f78b530="" class="key">nonce</div>
+                                    <div data-v-6f78b530="" class="value">{{ nonce }}</div>
+                                </div>
+                                <!----><!----><!---->
                             </div>
                         </div>
                     </div>
@@ -144,6 +155,8 @@
             return {
                 address:'',
                 balance:'',
+                locked:'',
+                nonce:'',
                 income:'',
                 expend:'',
                 rank:'',
@@ -176,7 +189,19 @@
                     that.total = res.data.total
                 });
             },
+            getBalanceInfo(){
+                let params={
+                    address:this.address,
+                    symbol:'MNT',                 
+                };
+                let that=this
+                this.$api.balance(params).then(res=>{
+                    console.log('res',res);
+                    that.locked = res.locked
+                    that.nonce = res.nonce
+                });
 
+            },
             handleSizeChange(newSzie) {
                 this.pageSize = newSzie
                 this.getList()
@@ -206,6 +231,7 @@
          
             //alert(this.address)
             this.getaddressinfo()
+            this.getBalanceInfo()
         }
     }
 

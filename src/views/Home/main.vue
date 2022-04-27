@@ -1,78 +1,62 @@
-    <template>
-    <div>
-    <div class="person_img" >
-       <!-- <img id="person_img" :src="img_url"  @mouseover="person_info()" @mouseleave="cl_person_info()"/>-->
-        <div>{{this.globalString.virtualCurrencyUnit}}</div>
-     </div>
-    <div v-show="person_con" class="hidden_div" >
-         <div>{{userid}}</div>
-         <div>setup</div>
-         <div>user</div>
-         <div>logout</div>
+<template>
+  <div class="app-container">
+    <div class="the-container">
+      <el-radio-group v-model="tabPosition" style="margin-bottom: 30px;">
+        <el-radio-button label="top">top</el-radio-button>
+        <el-radio-button label="right">right</el-radio-button>
+        <el-radio-button label="bottom">bottom</el-radio-button>
+        <el-radio-button label="left">left</el-radio-button>
+      </el-radio-group>
+      <el-tabs v-model="usable" :tab-position="tabPosition" @tab-click="handleClick">
+        <el-tab-pane v-for="(tab,index) in tabs" :key="index" :name="tab.name" :label="tab.label">
+          <div v-show="usable==='1'">
+            <h1>用户管理</h1>
+          </div>
+          <div v-show="usable==='2'">
+            <h1>配置管理</h1>
+          </div>
+          <div v-show="usable==='3'">
+            <h1>角色管理</h1>
+          </div>
+          <div v-show="usable==='4'">
+            <h1>部门管理</h1>
+          </div>
+        </el-tab-pane>
+      </el-tabs>
     </div>
-    <el-select v-model="langFlag" @change="changeLanguages" 
-                :default-first-option="true" :filterable="true"
-                style="width: 130px;" placeholder="please language">
-        <el-option :key="item.value" v-for="item in language"
-                :label="item.label" :value="item.value">
-        </el-option>
-    </el-select> 
-    <div> {{newArray}}</div>
-
-    </div>
-    </template>
-  
+  </div>
+</template>
 
 <script>
-    export default {
-    name:'',
-        data(){
-            return{
-                placeholder:'search',
-                token:'',// Judge whether to load the parameters of the home page directly 
-                person_con:false,
-                userid:'',
-                img_url:'https://btc.tokenview.com/icon/btc.png',
-                langFlag: 'zh',
-                langText:'中文/CN',
-            
-                language: 
-                [
-                    {
-                        value: 'zh',
-                        label: '中文/CN'
-                    },
-                    {
-                        value: 'en',
-                        label: '英文/EN'
-                    }
-                ],
-                oldArray:[1,2,2,3],
-
-                newArray:[],
-
-            }
-        },
-         methods:{
-         person_info(){
-            this.person_con = true;
-            
-        },
-        
-         cl_person_info(){ 
-            this.person_con = false;
-        },
-        changeLanguages() {
-            console.log(this.$i18n.locale) 
-            this.$i18n.locale = this.langFlag; 
-         
-           
-        },
-        arrayOption(){
-            newArray=oldArray.from(new Set(Array));
-        }
-        
-        }
-       
+export default {
+  data() {
+    return {
+      tabPosition: 'top',
+      usable: '1',
+      tabs: [
+        { name: '1', label: '用户管理' },
+        { name: '2', label: '配置管理' },
+        { name: '3', label: '角色管理' },
+        { name: '4', label: '部门管理' }
+      ]
     }
-    </script>
+  },
+  methods: {
+    handleClick(tab) {
+      console.log(tab)
+    }
+  }
+}
+</script>
+
+<style >
+  .app-container{
+    height: 100%;
+    background-color: #f1f1f1;
+  }
+  .the-container{
+    padding: 20px;
+    height: 100%;
+    background-color: #fff;
+  }
+</style>

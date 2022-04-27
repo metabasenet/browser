@@ -106,7 +106,7 @@ const routes = [
                 path: "/main",
                 name: "main",
                 meta: {
-                    parent: "home",
+                    parent: "",
                     needLogin: false,
                     title: i18n.t('routes.main')
                 },
