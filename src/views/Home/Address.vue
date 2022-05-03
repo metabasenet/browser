@@ -174,10 +174,12 @@
                     address:this.address,
                     page: this.pagenum,
                     pagesize: this.pageSize
+                 
                 };
+                console.log('params',params);
                 let that = this
                 this.$api.address(params).then(res => {
-                  
+                  console.log("res",res);
                     that.balance = res.balance
                     that.income = res.income
                     that.expend = res.expend
@@ -192,7 +194,7 @@
             getBalanceInfo(){
                 let params={
                     address:this.address,
-                    symbol:'MNT',                 
+                    symbol:'HAH',                 
                 };
                 let that=this
                 this.$api.balance(params).then(res=>{
@@ -204,11 +206,11 @@
             },
             handleSizeChange(newSzie) {
                 this.pageSize = newSzie
-                this.getList()
+                this.getaddressinfo()
             },
             handleCurrentChange(newPage) {
                 this.pagenum = newPage
-                this.getList()
+                this.getaddressinfo()
             },
 
             timeformat(obj){
