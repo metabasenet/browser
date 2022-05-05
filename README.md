@@ -26,6 +26,8 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ### nginx setup
 ``` bash
 sduo apt install nginx
-sudo cp nginx.conf /etc/nginx/conf.d/
+sudo cp mnt.conf /etc/nginx/sites-available/
+sudo ln -s /etc/nginx/sites-available/mnt.conf /etc/nginx/sites-enabled/mnt
+sudo ln -s ${proj dir} /var/www/mnt
 sudo service nginx restart
 ```
