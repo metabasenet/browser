@@ -136,11 +136,72 @@
                                     </el-pagination>
                                 </div>
                             </div>
+                        </div>  
+                    </div> 
+                    <div data-v-bfa74ae2="" class="baseInfoCard">
+                         <div data-v-1a6f007e="" class="header">
+                            <div data-v-1a6f007e="" class="title">{{$t('relation.relation')}}</div>
                         </div>
+                            <div data-v-ce118d7e="" data-v-135e9942="">
+    <!--                               block pc start -->
+                                <div data-v-ce118d7e="" class="block_list">
+                                    <ul data-v-ce118d7e="" class="item title">
+                                        <li data-v-ce118d7e="" class="inner_item to" style="width:30%;">{{$t('relation.address')}}</li>
+                                        <li data-v-ce118d7e="" class="inner_item fee">{{$t('relation.amount')}}</li>
+                                        <li data-v-ce118d7e="" class="inner_item fee">{{$t('relation.time')}}</li>
+                                        <li data-v-ce118d7e="" class="inner_item height">{{$t('relation.height')}}</li>
+ 
+                                    </ul>
+                                    <span data-v-ce118d7e="">
+                                        <ul data-v-ce118d7e="" class="item content" v-for="(item,index) in defiDatas" :key="index">
+                                       
 
+                                            <li data-v-ce118d7e="" class="inner_item to"  style="width:30%;">
+                                                <router-link :to="{ name:'address',query:{hash:item.to } }" target="_blank">{{ item.to }}</router-link>
+                                            </li>
+                                            <li data-v-ce118d7e="" class="inner_item fee">{{ item.amount }}</li>
+                                            <li data-v-ce118d7e="" class="inner_item fee">
+                                                <a data-v-ce118d7e="" href="javascript:void(0)" class="el-tooltip" aria-describedby="el-tooltip-6541" tabindex="0">{{ item.time }}</a>
+                                            </li>
+                                            <li data-v-ce118d7e="" class="inner_item height">
+                                                <a data-v-ce118d7e="" href="javascript:void(0)" class="el-tooltip" aria-describedby="el-tooltip-6541" tabindex="0">{{ item.height }}</a>
+                                            </li>
+               
+                                        </ul></span>
+                                </div>
 
-            </div>
-        </section>
+                                   <div data-v-603f4bbb="" class="mobileList"><!---->
+                                        <ul data-v-603f4bbb="" class="items" v-for="(item,index) in defiDatas" :key="index">
+                                            <div data-v-603f4bbb="" class="item">
+                                                <div data-v-603f4bbb="" class="key">{{$t('relation.address')}}</div>
+                                                <div data-v-603f4bbb="" class="value">
+                                                    <router-link :to="{ name:'address',query:{hash:item.to } }">{{ item.to }}</router-link>
+                                                </div>
+                                            </div>
+                                            <div data-v-603f4bbb="" class="item">
+                                                <div data-v-603f4bbb="" class="key">{{$t('relation.amount')}}</div>
+                                                <div data-v-603f4bbb="" class="value"><span data-v-603f4bbb=""
+                                                                                            class="el-tooltip"
+                                                                                            aria-describedby="el-tooltip-6781"
+                                                                                            tabindex="0">{{ item.amount }}</span></div>
+                                            </div>
+                                            <div data-v-603f4bbb="" class="item">
+                                                <div data-v-603f4bbb="" class="key">{{$t('relation.time')}}</div>
+                                                <div data-v-603f4bbb="" class="value">
+                                                    {{ item.time }}
+                                                </div>
+                                            </div>
+                                            <div data-v-603f4bbb="" class="item">
+                                                <div data-v-603f4bbb="" class="key">{{$t('relation.height')}}</div>
+                                                <div data-v-603f4bbb="" class="value"><!----><span data-v-603f4bbb="">{{ item.height }}</span>
+                                                    <!----></div>
+                                            </div>
+
+                                        </ul>
+                                    </div>
+                            </div>
+                    </div>          
+                </section>
     </div><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----></div>
 
 
@@ -165,6 +226,8 @@
                 pagenum: 1,
                 total: 0,
                 virtualCurrencyUnit:this.globalString.virtualCurrencyUnit ,
+                defiDatas:[],
+
             }
 
         },
@@ -204,6 +267,19 @@
                 });
 
             },
+            getDefiRelation(){
+                let params={
+                    address:this.address,
+                             
+                };
+                let that=this
+                this.$api.defi_relation(params).then(res=>{
+                    console.log('defi_relation',res);
+                    that.defiDatas=res;
+                });
+
+            },
+ 
             handleSizeChange(newSzie) {
                 this.pageSize = newSzie
                 this.getaddressinfo()
@@ -232,8 +308,9 @@
             this.address = this.$route.query.hash
          
             //alert(this.address)
-            this.getaddressinfo()
-            this.getBalanceInfo()
+            this.getaddressinfo();
+            this.getBalanceInfo();
+            this.getDefiRelation();
         }
     }
 

@@ -32,6 +32,7 @@ module.exports = {
       time:"时间",
       block:"所在块",
       txFee:"交易费",
+      locked:"锁定余额",
     },
     Block:{
       blockInfo:"区块信息",
@@ -131,5 +132,12 @@ module.exports = {
       dpos:"区块链浏览器-dpos",
       dposDetail:"区块链浏览器-dposDetail",
       main:"区块链浏览器-main",
+    },
+    relation:{
+      relation:"推广关系",
+      address:"地址",
+      amount:"金额",
+      time:"时间",
+      height:"高度",
     }
   }

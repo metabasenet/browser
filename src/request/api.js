@@ -40,7 +40,11 @@ export default {
     },
     balance(params){
         return baseGet("/balance",params);
+    },
+    defi_relation(params){
+        return baseGet("/defi_relation",params);
     }
+    
   
 
 }

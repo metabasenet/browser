@@ -35,6 +35,7 @@ module.exports = {
     time:"Time",
     block:"Block",
     txFee:"Transaction fee",
+    locked:"Locked",
   },
   Block:{
     blockInfo:"Block information",
@@ -135,5 +136,12 @@ module.exports = {
     dpos:"Blockchain browser-dpos",
     dposDetail:"Blockchain browser-dposDetail",
     main:"Blockchain browser-main",
+  },
+  relation:{
+    relation:"Promotion relationship",
+    address:"Address",
+    amount:"Amount",
+    time:"Time",
+    height:"Height",
   }
 }
