@@ -304,9 +304,17 @@
             }
         },
         created() {
-              console.log("11111111111", this.$route.query)
+            //console.log("11111111111", this.$route.query)
             this.address = this.$route.query.hash
-         
+            let language =this.$route.query.language;
+            if (language !=null && language!='' && language !=undefined){
+                if (language ==="en"){
+                    this.$i18n.locale="en-US";
+                }
+                if (language === "zh"){
+                    this.$i18n.locale="zh-CN";
+                }
+            }         
             //alert(this.address)
             this.getaddressinfo();
             this.getBalanceInfo();
