@@ -1,5 +1,6 @@
 # MNT-BROWSER
 
+[browser metabasenet](https://www.metabasenet.site/)
 ## Project setup
 ```
 npm install
