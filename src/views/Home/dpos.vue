@@ -22,7 +22,7 @@
                                             <div data-v-18b505e9="" class="votes"><b data-v-18b505e9="">{{$t('dpos.vote')}}</b></div>
                                             <div data-v-18b505e9="" class="name"><b data-v-18b505e9="">{{$t('dpos.name')}}</b></div>                                 
                                         </li>
-                                        <li data-v-18b505e9="" class="item" v-for="(item,index) in dposlistDatas" :key="index">
+                                        <li data-v-18b505e9="" class="item" :class="{'grey':item.votes <10000}" v-for="(item,index) in dposlistDatas" :key="index">
                                             <div data-v-18b505e9="" class="index dposeindex">{{ index+1}}</div>
                                             <!--<div data-v-18b505e9="" class="address" :title="item.address">
                                                 <a data-v-18b505e9="" href="javascript:void(0)" @click="openTip(item.address)" class="hash">
@@ -151,5 +151,8 @@ li {
  
 a {
   color: #2d8cf0;
+}
+.grey{
+    background-color: #E5E4E2;
 }
 </style>
