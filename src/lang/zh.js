@@ -33,6 +33,7 @@ module.exports = {
       block:"所在块",
       txFee:"交易费",
       locked:"锁定余额",
+      weekProfit:"最近7天收益",
     },
     Block:{
       blockInfo:"区块信息",
@@ -65,8 +66,9 @@ module.exports = {
       dpos:"dpos",
       serialNumber:"序号",
       address:"地址",
-      vote:"投票",
+      vote:"投票额",
       name:"名称",
+      voteCount:"投票数量",
     },
     dposDetail:{
       h1:"dpos pow detail",
@@ -139,5 +141,11 @@ module.exports = {
       amount:"金额",
       time:"时间",
       height:"高度",
+    },
+    airDrops:{  
+      name:"空投",     
+      address:"地址",
+      amount:"金额",   
+      closingDate:"截止日期", 
     }
   }

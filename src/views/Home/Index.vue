@@ -39,7 +39,7 @@
                                             </li>
 
                                             <li data-v-ce118d7e="" class="inner_item miner">
-                                                <router-link :to="{ name:'address',query:{hash:item.reward_address } }">{{ item.reward_address }}</router-link>
+                                                <router-link :to="{ name:'address',query:{hash:item.reward_address } }">{{ item.dposName }}</router-link>
                                             </li>
                                             <li data-v-ce118d7e="" class="inner_item prize">{{ item.reward_money }}</li>
                                             <li data-v-ce118d7e="" class="inner_item miner">
@@ -70,7 +70,7 @@
                                         <div data-v-ce118d7e="" class="item">
                                             <div data-v-ce118d7e="" class="key">{{$t('BlockList.address')}}</div>
                                             <div data-v-ce118d7e="" class="value"><a data-v-ce118d7e=""
-                                                                                     href="javascript:void(0)">{{ item.reward_address }}</a>
+                                                                                     href="javascript:void(0)">{{ item.dposName }}</a>
                                             </div>
                                         </div><!---->
                                         <div data-v-ce118d7e="" class="item">

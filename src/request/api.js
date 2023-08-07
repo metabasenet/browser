@@ -43,7 +43,14 @@ export default {
     },
     defi_relation(params){
         return baseGet("/defi_relation",params);
+    },
+    getRewardCountByAddress(params){
+        return baseGet("/getRewardCountByAddress",params);
+    },
+    getReportAddr(params){
+        return baseGet("/getReportAddr",params);
     }
+
     
   
 

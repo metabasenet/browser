@@ -36,6 +36,7 @@ module.exports = {
     block:"Block",
     txFee:"Transaction fee",
     locked:"Locked",
+    weekProfit:"profit in 7 days",
   },
   Block:{
     blockInfo:"Block information",
@@ -68,8 +69,9 @@ module.exports = {
       dpos:"dpos",
       serialNumber:"Serial",
       address:"Address",
-      vote:"Vote",
+      vote:"Vote amount",
       name:"Name",
+      voteCount:"Vote count",
   },
   dposDetail:{
     h1:"dpos pow detail",
@@ -143,5 +145,11 @@ module.exports = {
     amount:"Amount",
     time:"Time",
     height:"Height",
+  },
+  airDrops:{  
+    name:"Airdrops",     
+    address:"Address",
+    amount:"Amount",    
+    closingDate:"Closing Date", 
   }
 }

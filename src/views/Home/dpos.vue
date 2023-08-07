@@ -20,9 +20,10 @@
                                             <div data-v-18b505e9="" class="index dposeindex"><b data-v-18b505e9="">{{$t('dpos.serialNumber')}}</b></div>        
                                             <div data-v-18b505e9="" class="address"><b data-v-18b505e9="">{{$t('dpos.address')}}</b></div>                                        
                                             <div data-v-18b505e9="" class="votes"><b data-v-18b505e9="">{{$t('dpos.vote')}}</b></div>
+                                            <div data-v-18b505e9="" class="name"><b data-v-18b505e9="">{{$t('dpos.voteCount')}}</b></div>   
                                             <div data-v-18b505e9="" class="name"><b data-v-18b505e9="">{{$t('dpos.name')}}</b></div>                                 
                                         </li>
-                                        <li data-v-18b505e9="" class="item" v-for="(item,index) in dposlistDatas" :key="index">
+                                        <li data-v-18b505e9="" class="item" :class="{'grey':item.votes <10000}" v-for="(item,index) in dposlistDatas" :key="index">
                                             <div data-v-18b505e9="" class="index dposeindex">{{ index+1}}</div>
                                             <!--<div data-v-18b505e9="" class="address" :title="item.address">
                                                 <a data-v-18b505e9="" href="javascript:void(0)" @click="openTip(item.address)" class="hash">
@@ -39,6 +40,7 @@
 
                                             </div>
                                             <div data-v-18b505e9="" class="votes">{{ item.votes }}</div>
+                                            <div data-v-18b505e9="" class="name">{{ item.vote_count}}</div>
                                             <div data-v-18b505e9="" class="name">{{ item.name }}</div>
                                         </li>
                                     </div>
@@ -63,6 +65,10 @@
                                     <div data-v-18b505e9="" class="value">
                                         <div data-v-18b505e9="" class="amount">{{ item.votes }}</div>
                                     </div>
+                                </div>
+                                 <div data-v-18b505e9="" class="item">
+                                    <div data-v-18b505e9="" class="key">{{$t('dpos.voteCount')}}</div>
+                                    <div data-v-18b505e9="" class="value">{{ item.vote_count}}</div>
                                 </div>
                                 <div data-v-18b505e9="" class="item">
                                     <div data-v-18b505e9="" class="key">{{$t('dpos.name')}}</div>
@@ -151,5 +157,8 @@ li {
  
 a {
   color: #2d8cf0;
+}
+.grey{
+    background-color: #E5E4E2;
 }
 </style>

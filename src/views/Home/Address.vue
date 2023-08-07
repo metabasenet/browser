@@ -45,6 +45,11 @@
                                     <div data-v-6f78b530="" class="key">nonce</div>
                                     <div data-v-6f78b530="" class="value">{{ nonce }}</div>
                                 </div>
+                                <div data-v-6f78b530="" class="item">
+                                    <div data-v-6f78b530="" class="key">{{$t('Address.weekProfit')}}</div>
+                                    <div data-v-6f78b530="" class="value">{{ profitSeven.total}}</div>
+                                </div>
+                                
                                 <!----><!----><!---->
                             </div>
                         </div>
@@ -200,7 +205,55 @@
                                         </ul>
                                     </div>
                             </div>
-                    </div>          
+                    </div>   
+                    <div data-v-bfa74ae2="" class="baseInfoCard">
+                         <div data-v-1a6f007e="" class="header">
+                            <div data-v-1a6f007e="" class="title">{{$t('airDrops.name')}}</div>
+                            <div style="padding-right: 20px;">{{$t('airDrops.closingDate')}}: 2022-11-27 12:14</div>
+                        </div>
+                            <div data-v-ce118d7e="" data-v-135e9942="">
+    <!--                               block pc start -->
+                                <div data-v-ce118d7e="" class="block_list">
+                                    <ul data-v-ce118d7e="" class="item title">
+                                        <li data-v-ce118d7e="" class="inner_item to" style="width:30%;">{{$t('airDrops.address')}}</li>
+                                        <li data-v-ce118d7e="" class="inner_item fee">{{$t('airDrops.amount')}}</li>
+                                    
+ 
+                                    </ul>
+                                    <span data-v-ce118d7e="">
+                                        <ul data-v-ce118d7e="" class="item content" v-for="(item,index) in reportAddr" :key="index">
+                                       
+
+                                            <li data-v-ce118d7e="" class="inner_item to"  style="width:30%;">
+                                                <router-link :to="{ name:'address',query:{hash:item.addr} }" target="_blank">{{ item.addr }}</router-link>
+                                            </li>
+                                            <li data-v-ce118d7e="" class="inner_item fee">{{ item.balance }}</li>
+                                         
+               
+                                        </ul></span>
+                                </div>
+
+                                   <div data-v-603f4bbb="" class="mobileList"><!---->
+                                        <ul data-v-603f4bbb="" class="items" v-for="(item,index) in reportAddr" :key="index">
+                                            <div data-v-603f4bbb="" class="item">
+                                                <div data-v-603f4bbb="" class="key">{{$t('airDrops.address')}}</div>
+                                                <div data-v-603f4bbb="" class="value">
+                                                    <router-link :to="{ name:'address',query:{hash:item.addr } }">{{ item.addr }}</router-link>
+                                                </div>
+                                            </div>
+                                            <div data-v-603f4bbb="" class="item">
+                                                <div data-v-603f4bbb="" class="key">{{$t('airDrops.amount')}}</div>
+                                                <div data-v-603f4bbb="" class="value"><span data-v-603f4bbb=""
+                                                                                            class="el-tooltip"
+                                                                                            aria-describedby="el-tooltip-6781"
+                                                                                            tabindex="0">{{ item.balance }}</span></div>
+                                            </div>
+                                     
+
+                                        </ul>
+                                    </div>
+                            </div>
+                    </div>         
                 </section>
     </div><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----></div>
 
@@ -227,6 +280,8 @@
                 total: 0,
                 virtualCurrencyUnit:this.globalString.virtualCurrencyUnit ,
                 defiDatas:[],
+                profitSeven:"",
+                reportAddr:[],
 
             }
 
@@ -279,7 +334,24 @@
                 });
 
             },
- 
+            getRewardCountByAddress(){
+                let params={
+                    address:this.address,
+                };
+                let that=this;
+                this.$api.getRewardCountByAddress(params).then(res=>{
+                    console.log("getRewardCountByAddress",res);
+                    that.profitSeven=res;
+                });
+            },
+            getReportAddr(){
+                let params={address: this.address,};
+                let that=this;
+                this.$api.getReportAddr(params).then(res=>{
+                    console.log("getReportAddr",res);
+                    this.reportAddr=res;
+                })
+            }, 
             handleSizeChange(newSzie) {
                 this.pageSize = newSzie
                 this.getaddressinfo()
@@ -319,6 +391,8 @@
             this.getaddressinfo();
             this.getBalanceInfo();
             this.getDefiRelation();
+            this.getRewardCountByAddress();
+            this.getReportAddr();
         }
     }
 

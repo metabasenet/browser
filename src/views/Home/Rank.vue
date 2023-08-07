@@ -26,10 +26,10 @@
                                         <li data-v-18b505e9="" class="item" v-for="(item,index) in ranklistDatas" :key="index">
                                             <div data-v-18b505e9="" class="rank">{{ index+1 }}</div>
                                             <div data-v-18b505e9="" class="address">
-                                                <a data-v-18b505e9="" href="javascript:void(0)" class="hash">
-                                                    <span data-v-18b505e9="" class="el-tooltip" aria-describedby="el-tooltip-6004" tabindex="0">
-                                                        {{ item.address }}
-                                                    </span></a>
+                                                
+                                                    <span data-v-18b505e9="" class="el-tooltip" aria-describedby="el-tooltip-6004" tabindex="0">                                                      
+                                                        <router-link :to="{ name:'address',query:{hash:item.address } }">{{ item.address }}</router-link>
+                                                    </span>
 
                                             </div>
                                             <div data-v-18b505e9="" class="amount">{{ item.balance }}</div>
@@ -46,9 +46,8 @@
                                 <div data-v-18b505e9="" class="item hash">
                                     <div data-v-18b505e9="" class="key">{{$t('Rank.address')}}</div>
                                     <div data-v-18b505e9="" class="value">
-                                        <div data-v-18b505e9="" class="address"><a data-v-18b505e9=""
-                                                                                   href="javascript:void(0)"
-                                                                                   class="hash">{{ item.address }}</a>
+                                        <div data-v-18b505e9="" class="address">
+                                           <router-link :to="{ name:'address',query:{hash:item.address } }">{{ item.address }}</router-link>
                                         </div>
                                     </div>
                                 </div>
