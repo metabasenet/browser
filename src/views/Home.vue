@@ -68,18 +68,24 @@ import moment from 'moment'
 
 const blocks: any = ref([])
 const txs: any = ref([])
-axios.get(`${config.api}block/new`).then((ret: any) => {
-  blocks.value = ret.data
-  console.log('block', ret.data.length)
-})
 
-axios.get(`${config.api}tx/new`).then((ret: any) => {
-  txs.value = ret.data
-  console.log('tx', ret.data.length)
-})
+function load() {
+  axios.get(`${config.api}block/new`).then((ret: any) => {
+    blocks.value = ret.data
+    console.log('block', ret.data.length)
+  })
+
+  axios.get(`${config.api}tx/new`).then((ret: any) => {
+    txs.value = ret.data
+    console.log('tx', ret.data.length)
+  })
+}
 
 function strFormat(str: string): string {
   return `${str.substring(0, 6)}...${str.substring(str.length - 6)}`
 }
+
+load()
+setTimeout(load, 3000)
 
 </script>
