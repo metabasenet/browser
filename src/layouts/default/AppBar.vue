@@ -5,7 +5,7 @@
     </v-app-bar-title>
     价格: 1.1U/MNT
     <v-spacer></v-spacer>
-    <v-btn text @click="dartSwitch">
+    <v-btn @click="dartSwitch">
       <v-icon>{{ dart }}</v-icon>
     </v-btn>
 
