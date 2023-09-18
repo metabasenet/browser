@@ -20,7 +20,7 @@
         </thead>
         <tbody>
           <tr v-for="item in blocks" :key="item.number">
-            <td>{{ strFormat(item.hash) }}</td>
+            <td @click="block(item.hash)">{{ strFormat(item.hash) }}</td>
             <td>{{ item.number }}</td>
             <td>{{ item.txns }}</td>
             <td>{{ moment(item.timestamp * 1000).format('YYYY-MM-DD HH:mm:ss') }}</td>
@@ -49,9 +49,9 @@
         </thead>
         <tbody>
           <tr v-for="item in txs" :key="item.hash">
-            <td>{{ strFormat(item.hash) }}</td>
-            <td>{{ strFormat(item.from) }}</td>
-            <td>{{ strFormat(item.to) }}</td>
+            <td @click="tx(item.hash)">{{ strFormat(item.hash) }}</td>
+            <td @click="address(item.from)">{{ strFormat(item.from) }}</td>
+            <td @click="address(item.to)">{{ strFormat(item.to) }}</td>
             <td>{{ moment(item.timestamp * 1000).format('YYYY-MM-DD HH:mm:ss') }}</td>
           </tr>
         </tbody>
@@ -61,13 +61,14 @@
   </div>
 </template>
 
- 
 <script lang="ts" setup>
 import axios from 'axios'
 import { config } from '@/const/config'
 import { ref } from 'vue'
 import moment from 'moment'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const blocks: any = ref([])
 const txs: any = ref([])
 
@@ -88,6 +89,20 @@ function strFormat(str: string): string {
 }
 
 load()
-setTimeout(load, 3000)
+setInterval(load, 3000)
+
+
+function block(hash: string) {
+  router.push(`/block/${hash}`)
+}
+
+function tx(hash: string) {
+  router.push(`/tx/${hash}`)
+}
+
+
+function address(addr: string) {
+  router.push(`/address/${addr}`)
+}
 
 </script>

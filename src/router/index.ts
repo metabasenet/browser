@@ -17,7 +17,7 @@ const routes = [
         component: () => import('@/views/blocks.vue'),
       },
       {
-        path: '/block',
+        path: '/block/:id',
         name: 'block',
         component: () => import('@/views/block.vue'),
       },
@@ -27,17 +27,17 @@ const routes = [
         component: () => import('@/views/txs.vue'),
       },
       {
-        path: '/tx',
+        path: '/tx/:id',
         name: 'tx',
         component: () => import('@/views/tx.vue'),
       },
       {
-        path: '/address',
+        path: '/address/:id',
         name: 'address',
         component: () => import('@/views/address.vue'),
       },
       {
-        path: '/token',
+        path: '/token/:id',
         name: 'token',
         component: () => import('@/views/token.vue'),
       },

@@ -1,3 +1,7 @@
 <template>
-    token
+    token {{$route.params.id }}
 </template>
+
+<script lang="ts" setup>
+
+</script>
