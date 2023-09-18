@@ -3,7 +3,7 @@
     <template v-slot:prepend>
       <v-img style="margin-left: 300px" :width="30" src="@/assets/logo.png"></v-img>
     </template>
-    <v-app-bar-title>
+    <v-app-bar-title @click="home">
       MNT scan
     </v-app-bar-title>
 
@@ -24,6 +24,8 @@ import { useTheme } from 'vuetify'
 import { ethers } from 'ethers'
 import { config } from '@/const/config'
 import BigNumber from 'bignumber.js'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
 const theme = useTheme()
 const dart = ref('mdi-white-balance-sunny')
@@ -45,6 +47,10 @@ pair.getReserves().then((ret) => {
   price.value = p.toFixed(4)
   console.log('price:', price.value)
 })
+
+function home() {
+  router.push('/')
+}
 </script>
 <style scoped>
 .p {

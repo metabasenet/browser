@@ -27,6 +27,7 @@
           </tr>
         </tbody>
       </v-table>
+      <v-btn style="float: right;" variant="text" to="blocks">更多区块...</v-btn>
     </v-sheet>
     <v-sheet class="pa-12">
       <v-table>
@@ -55,6 +56,7 @@
           </tr>
         </tbody>
       </v-table>
+      <v-btn style="float: right;" variant="text" to="txs">更多交易...</v-btn>
     </v-sheet>
   </div>
 </template>
