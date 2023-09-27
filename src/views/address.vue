@@ -1,14 +1,20 @@
 <template>
     <v-card style="width: 70%; margin-left: auto; margin-right: auto;" title="地址详情">
         <v-divider></v-divider>
-        <v-list dense>
-            <v-list-item>
-                <v-list-item-content class="font-weight-bold">地址余额:</v-list-item-content>
-                <v-list-item-content class="align-end">
-                    {{ balacne }}
-                </v-list-item-content>
-            </v-list-item>
-        </v-list>
+        <v-container>
+            <v-row no-gutters>
+                <v-col cols="2">
+                    <v-sheet class="pa-1 ma-1 font-weight-medium">
+                        地址余额:
+                    </v-sheet>
+                </v-col>
+                <v-col>
+                    <v-sheet class="pa-1 ma-1">
+                        {{ BigNumber(ethers.formatEther(balacne)).toFixed(6) }}
+                    </v-sheet>
+                </v-col>
+            </v-row>
+        </v-container>
     </v-card>
     <v-table style="width: 70%; margin-left: auto; margin-right: auto;">
         <thead>
@@ -50,6 +56,8 @@ import axios from 'axios'
 import { config } from '@/const/config'
 import { useRouter, useRoute } from 'vue-router'
 import { ref, watch } from 'vue'
+import { ethers } from 'ethers'
+import { BigNumber } from 'bignumber.js'
 
 const router = useRouter()
 const route = useRoute()

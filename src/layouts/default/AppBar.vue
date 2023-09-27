@@ -3,7 +3,7 @@
     <template v-slot:prepend>
       <v-img style="margin-left: 300px" :width="30" src="@/assets/logo.png"></v-img>
     </template>
-    <v-app-bar-title @click="home">
+    <v-app-bar-title @click="home" style="cursor:pointer">
       MNT scan
     </v-app-bar-title>
 

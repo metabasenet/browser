@@ -20,7 +20,7 @@
         </thead>
         <tbody>
           <tr v-for="item in blocks" :key="item.number">
-            <td @click="block(item.hash)">{{ strFormat(item.hash) }}</td>
+            <td @click="block(item.hash)" style="cursor:pointer">{{ strFormat(item.hash) }}</td>
             <td>{{ item.number }}</td>
             <td>{{ item.txns }}</td>
             <td>{{ moment(item.timestamp * 1000).format('YYYY-MM-DD HH:mm:ss') }}</td>
@@ -49,9 +49,9 @@
         </thead>
         <tbody>
           <tr v-for="item in txs" :key="item.hash">
-            <td @click="tx(item.hash)">{{ strFormat(item.hash) }}</td>
-            <td @click="address(item.from)">{{ strFormat(item.from) }}</td>
-            <td @click="address(item.to)">{{ strFormat(item.to) }}</td>
+            <td @click="tx(item.hash)" style="cursor:pointer">{{ strFormat(item.hash) }}</td>
+            <td @click="address(item.from)" style="cursor:pointer">{{ strFormat(item.from) }}</td>
+            <td @click="address(item.to)" style="cursor:pointer">{{ strFormat(item.to) }}</td>
             <td>{{ moment(item.timestamp * 1000).format('YYYY-MM-DD HH:mm:ss') }}</td>
           </tr>
         </tbody>
@@ -89,7 +89,7 @@ function strFormat(str: string): string {
 }
 
 load()
-setInterval(load, 3000)
+//setInterval(load, 3000)
 
 
 function block(hash: string) {
