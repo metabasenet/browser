@@ -79,7 +79,7 @@
     </v-card>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import axios from 'axios'
 import { config } from '@/const/config'
 import { useRouter, useRoute } from 'vue-router'
@@ -101,7 +101,7 @@ const gasUsed = ref(0)
 const logs = ref([])
 
 function load() {
-    axios.get(`${config.api}tx/${route.params.id}`).then((ret: any) => {
+    axios.get(`${config.api}tx/${route.params.id}`).then((ret) => {
         const tx_ret = ret.data
         hash.value = tx_ret.tx.hash
         status.value = tx_ret.receipt.status
@@ -117,11 +117,11 @@ function load() {
 }
 load()
 
-function block(hash: string) {
+function block(hash) {
     router.push(`/block/${hash}`)
 }
 
-function tx(hash: string) {
+function tx(hash) {
     router.push(`/tx/${hash}`)
 }
 

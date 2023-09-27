@@ -6,7 +6,6 @@
     <v-app-bar-title @click="home">
       MNT scan
     </v-app-bar-title>
-
     <div>
       <span>价格:<strong class="p">{{ price }}USDT</strong></span>
     </div>
@@ -18,12 +17,12 @@
   </v-app-bar>
 </template>
 
-<script lang="ts" setup>
+<script lang="js" setup>
 import { ref } from 'vue'
 import { useTheme } from 'vuetify'
-import { ethers } from 'ethers'
-import { config } from '@/const/config'
-import BigNumber from 'bignumber.js'
+//import { ethers } from 'ethers'
+//import { config } from '@/const/config'
+//import BigNumber from 'bignumber.js'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 
@@ -39,7 +38,8 @@ function dartSwitch() {
   }
 }
 
-const price = ref('')
+const price = ref('0.5')
+/*
 const provider = new ethers.JsonRpcProvider(config.rpc)
 const pair = new ethers.Contract(config.addr_pair, config.abi_pair, provider)
 pair.getReserves().then((ret) => {
@@ -47,6 +47,7 @@ pair.getReserves().then((ret) => {
   price.value = p.toFixed(4)
   console.log('price:', price.value)
 })
+*/
 
 function home() {
   router.push('/')

@@ -28,7 +28,7 @@
   <v-pagination v-model="page" :length="10" @update:model-value="getBlocks"></v-pagination>
 </template>
 
-<script lang="ts" setup>
+<script lang="js" setup>
 import axios from 'axios'
 import { config } from '@/const/config'
 import { ref } from 'vue'
@@ -36,19 +36,19 @@ import moment from 'moment'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 
-const blocks: any = ref([])
-const page: any = ref(0)
-const total: any = ref(0)
+const blocks = ref([])
+const page = ref(0)
+const total = ref(0)
 
 function getBlocks() {
   const n = total.value - (page.value - 1) * 12
-  axios.get(`${config.api}block/list/${n + 1}`).then((ret: any) => {
+  axios.get(`${config.api}block/list/${n + 1}`).then((ret) => {
     blocks.value = ret.data
   })
 }
 
 function load() {
-  axios.get(`${config.api}block/total`).then((ret: any) => {
+  axios.get(`${config.api}block/total`).then((ret) => {
     total.value = parseInt(ret.data.total)
     page.value = 1
     getBlocks()
@@ -57,8 +57,7 @@ function load() {
 
 load()
 
-function block(hash: string) {
+function block(hash) {
   router.push(`/block/${hash}`)
 }
-
 </script>

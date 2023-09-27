@@ -36,7 +36,7 @@
         </v-row>
     </v-footer>
 </template>
-<script lang="ts" setup>
+<script lang="js" setup>
 import { ref } from 'vue'
 const links = ref([
     'Home',

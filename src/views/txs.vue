@@ -28,7 +28,7 @@
   <v-pagination v-model="page" :length="10" @update:model-value="getTxs"></v-pagination>
 </template>
 
-<script lang="ts" setup>
+<script lang="js" setup>
 import axios from 'axios'
 import { config } from '@/const/config'
 import { ref } from 'vue'
@@ -36,19 +36,19 @@ import moment from 'moment'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 
-const txs: any = ref([])
-const page: any = ref(0)
-const total: any = ref(0)
+const txs = ref([])
+const page = ref(0)
+const total = ref(0)
 
 function getTxs() {
   const n = total.value - (page.value - 1) * 12
-  axios.get(`${config.api}tx/list/${n + 1}`).then((ret: any) => {
+  axios.get(`${config.api}tx/list/${n + 1}`).then((ret) => {
     txs.value = ret.data
   })
 }
 
 function load() {
-  axios.get(`${config.api}tx/total`).then((ret: any) => {
+  axios.get(`${config.api}tx/total`).then((ret) => {
     total.value = parseInt(ret.data.total)
     page.value = 1
     getTxs()
@@ -57,15 +57,15 @@ function load() {
 
 load()
 
-function strFormat(str: string): string {
+function strFormat(str) {
   return `${str.substring(0, 12)}...${str.substring(str.length - 12)}`
 }
 
-function tx(hash: string) {
+function tx(hash) {
   router.push(`/tx/${hash}`)
 }
 
-function address(addr: string) {
+function address(addr) {
   router.push(`/address/${addr}`)
 }
 

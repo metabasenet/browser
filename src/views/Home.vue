@@ -61,7 +61,7 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script lang="js" setup>
 import axios from 'axios'
 import { config } from '@/const/config'
 import { ref } from 'vue'
@@ -69,39 +69,39 @@ import moment from 'moment'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-const blocks: any = ref([])
-const txs: any = ref([])
+const blocks = ref([])
+const txs = ref([])
 
 function load() {
-  axios.get(`${config.api}block/new`).then((ret: any) => {
+  axios.get(`${config.api}block/new`).then((ret) => {
     blocks.value = ret.data
     console.log('block', ret.data.length)
   })
 
-  axios.get(`${config.api}tx/new`).then((ret: any) => {
+  axios.get(`${config.api}tx/new`).then((ret) => {
     txs.value = ret.data
     console.log('tx', ret.data.length)
   })
 }
 
-function strFormat(str: string): string {
+function strFormat(str) {
   return `${str.substring(0, 6)}...${str.substring(str.length - 6)}`
 }
 
 load()
-setInterval(load, 3000)
+//setInterval(load, 3000)
 
 
-function block(hash: string) {
+function block(hash) {
   router.push(`/block/${hash}`)
 }
 
-function tx(hash: string) {
+function tx(hash) {
   router.push(`/tx/${hash}`)
 }
 
 
-function address(addr: string) {
+function address(addr) {
   router.push(`/address/${addr}`)
 }
 

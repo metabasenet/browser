@@ -45,7 +45,7 @@
     </v-table>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import axios from 'axios'
 import { config } from '@/const/config'
 import { useRouter, useRoute } from 'vue-router'
@@ -55,15 +55,15 @@ const router = useRouter()
 const route = useRoute()
 
 const balacne = ref(0)
-const txs: any = ref([])
-const max_id: any = ref(0)
-const min_id: any = ref(0)
+const txs = ref([])
+const max_id = ref(0)
+const min_id = ref(0)
 
 function getNext() {
     if (min_id.value == 0) {
         return
     }
-    axios.get(`${config.api}address/list/${route.params.id}/${min_id.value}/0`).then((ret: any) => {
+    axios.get(`${config.api}address/list/${route.params.id}/${min_id.value}/0`).then((ret) => {
         txs.value = ret.data
         if (ret.data.length > 0) {
             max_id.value = ret.data[0].id
@@ -78,7 +78,7 @@ function getUp() {
     if (max_id.value == 0) {
         return
     }
-    axios.get(`${config.api}address/list/${route.params.id}/${max_id.value}/1`).then((ret: any) => {
+    axios.get(`${config.api}address/list/${route.params.id}/${max_id.value}/1`).then((ret) => {
         txs.value = []
         if (ret.data.length > 0) {
             for (let i = ret.data.length - 1; i >= 0; i--) {
@@ -93,7 +93,7 @@ function getUp() {
 }
 
 function load() {
-    axios.get(`${config.api}address/${route.params.id}`).then((ret: any) => {
+    axios.get(`${config.api}address/${route.params.id}`).then((ret) => {
         balacne.value = ret.data.balance
     })
     min_id.value = Number.MAX_SAFE_INTEGER
@@ -103,19 +103,19 @@ function load() {
 
 load()
 
-function block(hash: string) {
+function block(hash) {
     router.push(`/block/${hash}`)
 }
 
-function tx(hash: string) {
+function tx(hash) {
     router.push(`/tx/${hash}`)
 }
 
-function address(addr: string) {
+function address(addr) {
     router.push(`/address/${addr}`)
 }
 
-function strFormat(str: string): string {
+function strFormat(str) {
     return `${str.substring(0, 6)}...${str.substring(str.length - 6)}`
 }
 

@@ -69,7 +69,7 @@
     </v-card>
 </template>
 
-<script lang="ts" setup>
+<script setup>
 import axios from 'axios'
 import { config } from '@/const/config'
 import { useRouter, useRoute } from 'vue-router'
@@ -92,7 +92,7 @@ const timestamp = ref(0)
 const transactions = ref([])
 
 function load() {
-    axios.get(`${config.api}block/${route.params.id}`).then((ret: any) => {
+    axios.get(`${config.api}block/${route.params.id}`).then((ret) => {
         const b = ret.data
         difficulty.value = b.difficulty
         extraData.value = b.extraData
@@ -110,11 +110,11 @@ function load() {
 }
 load()
 
-function block(hash: string) {
+function block(hash) {
     router.push(`/block/${hash}`)
 }
 
-function tx(hash: string) {
+function tx(hash) {
     router.push(`/tx/${hash}`)
 }
 
