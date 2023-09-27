@@ -3,7 +3,7 @@
         <v-row justify="center" no-gutters>
             <a href="https://metabasenet.club" target="_blank">
                 <v-btn color="white" variant="text" class="mx-2" rounded="xl">
-                    <v-img :width="30" src="@/assets/logo.png"></v-img>
+                    <v-img :width="30" src="./logo.png"></v-img>
                     MNT
                 </v-btn>
             </a>

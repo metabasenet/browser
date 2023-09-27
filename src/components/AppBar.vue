@@ -1,7 +1,7 @@
 <template>
   <v-app-bar app color="primary" fixed>
     <template v-slot:prepend>
-      <v-img style="margin-left: 300px" :width="30" src="@/assets/logo.png"></v-img>
+      <v-img style="margin-left: 300px" :width="30" src="/logo.png"></v-img>
     </template>
     <v-app-bar-title @click="home">
       MNT scan
@@ -17,7 +17,7 @@
   </v-app-bar>
 </template>
 
-<script lang="js" setup>
+<script setup>
 import { ref } from 'vue'
 import { useTheme } from 'vuetify'
 //import { ethers } from 'ethers'

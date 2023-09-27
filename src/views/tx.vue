@@ -13,7 +13,7 @@
             <v-list-item>
                 <v-list-item-content class="font-weight-bold">status:</v-list-item-content>
                 <v-list-item-content class="align-end">
-                    {{ status == '0x1' ? '成功' : '失败'}}
+                    {{ status == '0x1' ? '成功' : '失败' }}
                 </v-list-item-content>
             </v-list-item>
 
@@ -49,7 +49,7 @@
             <v-list-item>
                 <v-list-item-content class="font-weight-bold">value:</v-list-item-content>
                 <v-list-item-content class="align-end">
-                    {{ value }}
+                    {{ ethers.formatEther(value) }} MNT
                 </v-list-item-content>
             </v-list-item>
 
@@ -68,7 +68,7 @@
                 </v-list-item-content>
             </v-list-item>
 
-            <v-list-item v-for="log in logs" :key="log" >
+            <v-list-item v-for="log in logs" :key="log">
                 <v-list-item-content class="font-weight-bold">log:</v-list-item-content>
                 <v-list-item-content class="align-end">
                     {{ JSON.stringify(log) }}
@@ -84,6 +84,8 @@ import axios from 'axios'
 import { config } from '@/const/config'
 import { useRouter, useRoute } from 'vue-router'
 import { ref, watch } from 'vue'
+import { ethers } from 'ethers'
+
 import moment from 'moment'
 
 const router = useRouter()
@@ -106,7 +108,7 @@ function load() {
         hash.value = tx_ret.tx.hash
         status.value = tx_ret.receipt.status
         blockNumber.value = tx_ret.receipt.blockNumber
-        method.value = tx_ret.tx.data.substring(0,10)
+        method.value = tx_ret.tx.data.substring(0, 10)
         from.value = tx_ret.tx.from
         to.value = tx_ret.tx.to
         value.value = tx_ret.tx.value
