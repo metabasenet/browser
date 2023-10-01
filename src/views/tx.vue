@@ -83,7 +83,7 @@
                 </v-col>
                 <v-col>
                     <v-sheet class="pa-1 ma-1">
-                        {{ value }}
+                        {{ ethers.formatEther(value) }} MNT
                     </v-sheet>
                 </v-col>
             </v-row>
@@ -166,7 +166,6 @@ import axios from 'axios'
 import { config } from '@/const/config'
 import { useRouter, useRoute } from 'vue-router'
 import { ref, watch } from 'vue'
-
 import { ethers } from 'ethers'
 import { BigNumber } from 'bignumber.js'
 
