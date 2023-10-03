@@ -2,7 +2,7 @@ import abi_pair from './pair.json'
 
 const config = {
     abi_pair: abi_pair,
-    addr_pair: '0x22D24Fa108856106664f2764145d225f487d46B7',
+    addr_pair: '0x5A820AfcE0f4964e5f78fc7f8c43091929cD946f',
     api: 'https://scan.metabasenet.site/api/',
     rpc: 'https://rpc.metabasenet.site',
 }

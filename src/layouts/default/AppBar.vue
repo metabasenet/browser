@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app color="primary" fixed>
+  <v-app-bar color="teal">
     <template v-slot:prepend>
       <v-img style="margin-left: 300px" :width="30" src="@/assets/logo.png"></v-img>
     </template>
@@ -7,10 +7,16 @@
       MNT scan
     </v-app-bar-title>
 
-    <div>
-      <span>价格:<strong class="p">{{ price }}USDT</strong></span>
-    </div>
+    <v-tabs v-model="tab"  color="deep-purple-accent-4" align-tabs="center">
+      <v-tab :value="0" style="font-size:large;">主页</v-tab>
+      <v-tab :value="1" style="font-size:large;">区块</v-tab>
+      <v-tab :value="2" style="font-size:large;">交易</v-tab>
+      <v-tab :value="3" style="font-size:large;">节点</v-tab>
+    </v-tabs>
     <v-spacer></v-spacer>
+    <div>
+      <span>价格: <strong class="p">{{ price }}USDT</strong></span>
+    </div>
     <template v-slot:append>
       <v-btn style="margin-right: 300px" :icon="dart" @click="dartSwitch">
       </v-btn>
@@ -26,7 +32,7 @@ import { config } from '@/const/config'
 import BigNumber from 'bignumber.js'
 import { useRouter } from 'vue-router'
 const router = useRouter()
-
+const tab = ref(0)
 const theme = useTheme()
 const dart = ref('mdi-white-balance-sunny')
 function dartSwitch() {
@@ -55,5 +61,6 @@ function home() {
 <style scoped>
 .p {
   color: rgba(var(--v-theme-on-something), 0.9);
+  margin-right: 50px;
 }
 </style>
