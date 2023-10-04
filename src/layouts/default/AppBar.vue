@@ -3,20 +3,27 @@
     <template v-slot:prepend>
       <v-img style="margin-left: 300px" :width="30" src="@/assets/logo.png"></v-img>
     </template>
-    <v-app-bar-title @click="home" style="cursor:pointer">
+    <v-app-bar-title @click="home" style="cursor:pointer;">
       MNT scan
     </v-app-bar-title>
+    <v-container style="width: 50%;">
+      <v-row justify="center" align="center">
+        <v-col cols="auto">
+          <v-btn rounded="xl" to="blocks">区块</v-btn>
+        </v-col>
+        <v-col cols="auto">
+          <v-btn rounded="xl" to="txs">交易</v-btn>
+        </v-col>
+        <v-col cols="auto">
+          <v-btn rounded="xl" to="nodes">节点</v-btn>
+        </v-col>
+        <v-col cols="auto">
+          <span>价格: <strong class="p">{{ price }} USDT</strong></span>
+        </v-col>
+      </v-row>
+    </v-container>
 
-    <v-tabs v-model="tab"  color="deep-purple-accent-4" align-tabs="center">
-      <v-tab :value="0" style="font-size:large;">主页</v-tab>
-      <v-tab :value="1" style="font-size:large;">区块</v-tab>
-      <v-tab :value="2" style="font-size:large;">交易</v-tab>
-      <v-tab :value="3" style="font-size:large;">节点</v-tab>
-    </v-tabs>
     <v-spacer></v-spacer>
-    <div>
-      <span>价格: <strong class="p">{{ price }}USDT</strong></span>
-    </div>
     <template v-slot:append>
       <v-btn style="margin-right: 300px" :icon="dart" @click="dartSwitch">
       </v-btn>
