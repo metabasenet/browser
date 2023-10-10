@@ -9,13 +9,13 @@
     <v-container style="width: 50%;">
       <v-row justify="center" align="center">
         <v-col cols="auto">
-          <v-btn rounded="xl" to="blocks">区块</v-btn>
+          <v-btn rounded="xl" to="/blocks">区块</v-btn>
         </v-col>
         <v-col cols="auto">
-          <v-btn rounded="xl" to="txs">交易</v-btn>
+          <v-btn rounded="xl" to="/txs">交易</v-btn>
         </v-col>
         <v-col cols="auto">
-          <v-btn rounded="xl" to="nodes">节点</v-btn>
+          <v-btn rounded="xl" to="/nodes">节点</v-btn>
         </v-col>
         <v-col cols="auto">
           <span>价格: <strong class="p">{{ price }} USDT</strong></span>
