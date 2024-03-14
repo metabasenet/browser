@@ -7,26 +7,26 @@
         </el-col>
     </el-row>
     <el-row class="blocks_heade"> 
-      <el-col :span="5" :xs="24" :sm="12" :md="12" :lg="6"><div class="grid-content ep-bg-purple-dark blocks_header" >
-        <p>NETWORK UTILIZATION(24H)</p>
-        <el-link>12.7%</el-link>
+    <el-col :span="5" :xs="24" :sm="12" :md="12" :lg="6"><div class="grid-content ep-bg-purple-dark blocks_header" >
+      <p>NETWORK UTILIZATION(24H)</p>
+      <el-link>12.7%</el-link>
+    </div>
+    </el-col>
+    <el-col :span="5" align :xs="24" :sm="12" :md="12" :lg="6"><div class="grid-content ep-bg-purple-dark blocks_header" >
+      <p>NETWORK UTILIZATION(24H)</p>
+      <el-link>12.7%</el-link>
+      </div></el-col>
+      <el-col :span="5" align :xs="24" :sm="12" :md="12" :lg="6"><div class="grid-content ep-bg-purple-dark blocks_header" >
+      <p>NETWORK UTILIZATION(24H)</p>
+      <el-link>12.7%</el-link>
       </div>
       </el-col>
       <el-col :span="5" align :xs="24" :sm="12" :md="12" :lg="6"><div class="grid-content ep-bg-purple-dark blocks_header" >
-        <p>NETWORK UTILIZATION(24H)</p>
-        <el-link>12.7%</el-link>
-        </div></el-col>
-        <el-col :span="5" align :xs="24" :sm="12" :md="12" :lg="6"><div class="grid-content ep-bg-purple-dark blocks_header" >
-        <p>NETWORK UTILIZATION(24H)</p>
-        <el-link>12.7%</el-link>
-        </div>
-        </el-col>
-        <el-col :span="5" align :xs="24" :sm="12" :md="12" :lg="6"><div class="grid-content ep-bg-purple-dark blocks_header" >
-        <p>NETWORK UTILIZATION(24H)</p>
-        <el-link>12.7%</el-link>
-        </div>
-        </el-col>
-    </el-row>
+      <p>NETWORK UTILIZATION(24H)</p>
+      <el-link>12.7%</el-link>
+      </div>
+      </el-col>
+  </el-row>
     <el-row class="box-table">
       <div class="demo-pagination-block box-table_header">
       <div class="demonstration">Total of 36,899,505 blocks</div>
@@ -49,8 +49,25 @@
       </el-table-column>
       <el-table-column prop="name" label="Name" width="180" />
       <el-table-column prop="address" label="Address" />
-      <el-table-column prop="validator" label="Validator" />
-      <el-table-column prop="gasused" label="Gasused" />
+      <el-table-column prop="validator" label="Validator" >
+        <template v-slot="{ row }">
+      <!-- 添加Tooltip组件 -->
+      {{ row.validator }}
+      <el-tooltip content="Copy Address" placement="top">
+        <el-button  icon="CopyDocument" @click="copyToClipboard(row.validator)">
+        </el-button>
+      </el-tooltip>
+    </template>
+      </el-table-column>
+      <el-table-column prop="gasused" label="Gasused" >
+        <template v-slot="{ row }">
+      <!-- 添加Tooltip组件 -->
+      {{ row.gasused }}
+      <el-tooltip content="Copy Address" placement="top">
+        <el-icon><Right /></el-icon>
+      </el-tooltip>
+    </template>
+      </el-table-column>
     </el-table>
     <div class="demo-pagination-block box-table_header">
       <el-pagination
@@ -70,6 +87,7 @@
   
   <script setup>
   import { ref } from 'vue'
+  import { ElMessage } from 'element-plus';
   const tableData = ref([
     {
       date: '2016-05-03',
@@ -102,12 +120,24 @@
   ])
   const currentPage4 = ref(1)
   const pageSize4 = ref(20)
+  const copiedText = ref('');
   const handleSizeChange = (val) => {
     console.log(`${val} items per page`)
   }
   const handleCurrentChange = (val) => {
     console.log(`current page: ${val}`)
   }
+  function copyToClipboard(text) {
+      copiedText.value = text;
+      navigator.clipboard.writeText(text)
+        .then(() => {
+          ElMessage.success('Copy successful!');
+        })
+        .catch(err => {
+          console.error('Copy failed:', err);
+          ElMessage.error('Copy failed, please copy manually!');
+        });
+    }
   </script>
   
   <style scoped>
@@ -152,5 +182,53 @@
       flex-wrap: wrap;
     }
   }
-   
+  .ContentPlaceHolder1_mainboxes{
+ width: 100%;
+ border-radius: 15px;
+ margin-bottom: 1.25rem;
+ background-color: #fff;
+ border: 1px solid #dee2e6;
+}
+.ContentPlaceHolder1{
+  margin-right: 5.75rem;
+}
+@media (min-width: 768px) {
+  .card-box {
+    /* flex-direction: row; */
+  }
+}
+/* 在小屏幕下减小间距 */
+@media (max-width: 767px) {
+  .card-ul,
+  .card-li {
+    padding: 5px;
+  }
+  
+  /* 减小字体大小 */
+  .card_p {
+    font-size: 8px;
+  }
+}
+.card-left{
+  display: flex;
+}
+.card_p{
+  font-size: 10px;
+}
+.card{  
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column; 
+  padding: 15px;
+}
+.card-right{
+  margin-top: 13px;
+}
+.card-box {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #e6e6e6;
+  margin-right: 10px;
+  margin-left: 10px;
+}
   </style>

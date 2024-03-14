@@ -29,7 +29,7 @@
   </el-row>
   <el-row class="box-table">
     <div class="demo-pagination-block box-table_header">
-    <div class="demonstration">Total of 36,899,505 blocks</div>
+    <div class="demonstration"><p>Total of 36,899,505 blocks</p><span>(Showing blocks between #36949710 to #36949734)</span></div>
     <el-pagination
       v-model:current-page="currentPage4"
       v-model:page-size="pageSize4"
@@ -42,25 +42,28 @@
     />
   </div>
     <el-table :data="tableData" style="width: 100%" >
-    <el-table-column prop="date" label="Block" width="180">
+    <el-table-column prop="block" label="Block" width="120">
       <template v-slot="scope">
-            <router-link :to="{ path: '/block' }">{{ scope.row.date }}</router-link>
+            <router-link :to="{ path: '/block' }">{{ scope.row.block }}</router-link>
         </template>
     </el-table-column>
-    <el-table-column prop="name" label="Age" width="180" />
-    <el-table-column prop="address" label="Txn" />
+    <el-table-column prop="name" label="Age" width="100" ></el-table-column>
+    <el-table-column prop="address" label="Txn" width="60"/>
     <el-table-column prop="validator" label="Validator">
       <template v-slot="{ row }">
       <!-- 添加Tooltip组件 -->
       {{ row.validator }}
       <el-tooltip content="Copy Address" placement="top">
-        <el-button type="text" icon="CopyDocument" @click="copyToClipboard(row.validator)">
+        <el-button  icon="CopyDocument" @click="copyToClipboard(row.validator)">
         </el-button>
       </el-tooltip>
       
     </template>
     </el-table-column>
     <el-table-column prop="gasused" label="Gasused" />
+    <el-table-column prop="gaslimit" label="Gas Limit" />
+    <el-table-column prop="reward" label="Reward" />
+    <el-table-column prop="burntfees" label="Burnt Fees (BNB)" />
   </el-table>
   <div class="demo-pagination-block box-table_header">
     <el-pagination
@@ -83,32 +86,114 @@ import { ref } from 'vue'
 import { ElMessage } from 'element-plus';
 const tableData = ref([
   {
-    date: '2016-05-03',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
+    block: '36949734',
+    name: '5 secs ago',
+    address: '153',
     validator:'Validator:Legend Il',
-    gasused:'18,990,403 (14%)',
+    gasused:'12,974,406 (9%)',
+    gaslimit:'140,000,000',
+    reward:'0.04062 BNB',
+    burntfees:'0.00406 BNB'
   },
   {
-    date: '2016-05-02',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
+    block: '36949734',
+    name: '5 secs ago',
+    address: '153',
     validator:'Validator:Legend Il',
-    gasused:'18,990,403 (14%)',
-  },
-  {
-    date: '2016-05-04',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
+    gasused:'12,974,406 (9%)',
+    gaslimit:'140,000,000',
+    reward:'0.04062 BNB',
+    burntfees:'0.00406 BNB'
+  },{
+    block: '36949734',
+    name: '5 secs ago',
+    address: '153',
     validator:'Validator:Legend Il',
-    gasused:'18,990,403 (14%)',
-  },
-  {
-    date: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
+    gasused:'12,974,406 (9%)',
+    gaslimit:'140,000,000',
+    reward:'0.04062 BNB',
+    burntfees:'0.00406 BNB'
+  },{
+    block: '36949734',
+    name: '5 secs ago',
+    address: '153',
     validator:'Validator:Legend Il',
-    gasused:'18,990,403 (14%)',
+    gasused:'12,974,406 (9%)',
+    gaslimit:'140,000,000',
+    reward:'0.04062 BNB',
+    burntfees:'0.00406 BNB'
+  },{
+    block: '36949734',
+    name: '5 secs ago',
+    address: '153',
+    validator:'Validator:Legend Il',
+    gasused:'12,974,406 (9%)',
+    gaslimit:'140,000,000',
+    reward:'0.04062 BNB',
+    burntfees:'0.00406 BNB'
+  },{
+    block: '36949734',
+    name: '5 secs ago',
+    address: '153',
+    validator:'Validator:Legend Il',
+    gasused:'12,974,406 (9%)',
+    gaslimit:'140,000,000',
+    reward:'0.04062 BNB',
+    burntfees:'0.00406 BNB'
+  },{
+    block: '36949734',
+    name: '5 secs ago',
+    address: '153',
+    validator:'Validator:Legend Il',
+    gasused:'12,974,406 (9%)',
+    gaslimit:'140,000,000',
+    reward:'0.04062 BNB',
+    burntfees:'0.00406 BNB'
+  },{
+    block: '36949734',
+    name: '5 secs ago',
+    address: '153',
+    validator:'Validator:Legend Il',
+    gasused:'12,974,406 (9%)',
+    gaslimit:'140,000,000',
+    reward:'0.04062 BNB',
+    burntfees:'0.00406 BNB'
+  },{
+    block: '36949734',
+    name: '5 secs ago',
+    address: '153',
+    validator:'Validator:Legend Il',
+    gasused:'12,974,406 (9%)',
+    gaslimit:'140,000,000',
+    reward:'0.04062 BNB',
+    burntfees:'0.00406 BNB'
+  },{
+    block: '36949734',
+    name: '5 secs ago',
+    address: '153',
+    validator:'Validator:Legend Il',
+    gasused:'12,974,406 (9%)',
+    gaslimit:'140,000,000',
+    reward:'0.04062 BNB',
+    burntfees:'0.00406 BNB'
+  },{
+    block: '36949734',
+    name: '5 secs ago',
+    address: '153',
+    validator:'Validator:Legend Il',
+    gasused:'12,974,406 (9%)',
+    gaslimit:'140,000,000',
+    reward:'0.04062 BNB',
+    burntfees:'0.00406 BNB'
+  },{
+    block: '36949734',
+    name: '5 secs ago',
+    address: '153',
+    validator:'Validator:Legend Il',
+    gasused:'12,974,406 (9%)',
+    gaslimit:'140,000,000',
+    reward:'0.04062 BNB',
+    burntfees:'0.00406 BNB'
   },
 ])
 const currentPage4 = ref(1)
@@ -176,5 +261,8 @@ function copyToClipboard(text) {
     flex-wrap: wrap;
   }
 }
- 
+.demonstration span{
+  font-size: 10px;
+  color: #6c757d;
+}
 </style>

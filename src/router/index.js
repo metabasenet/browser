@@ -1,8 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
-const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes: [
+const routes =  [
 
     {
       path: '/',
@@ -47,7 +45,11 @@ const router = createRouter({
       name: 'address',
       component: () => import('../pages/AddressFrom.vue')
     }
-  ]
-})
+  ];
+
+const router = createRouter({
+  history: createWebHistory(import.meta.env.VITE_BASE_URL),
+  routes,
+});
 
 export default router

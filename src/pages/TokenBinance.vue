@@ -50,7 +50,16 @@
     </el-table-column>
     <el-table-column prop="name" label="Method" width="180" />
     <el-table-column prop="address" label="Block" />
-    <el-table-column prop="validator" label="Age" />
+    <el-table-column prop="validator" label="Age" >
+      <template v-slot="{ row }">
+      <!-- 添加Tooltip组件 -->
+      {{ row.validator }}
+      <el-tooltip content="Copy Address" placement="top">
+        <el-button text icon="CopyDocument" @click="copyToClipboard(row.validator)">
+        </el-button>
+      </el-tooltip>
+    </template>
+    </el-table-column>
     <el-table-column prop="gasused" label="From" />
     <el-table-column prop="gasused" label="To" />
     <el-table-column prop="gasused" label="Quantity" />
@@ -79,6 +88,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import { ElMessage } from 'element-plus';
 const tableData = ref([
   {
     date: '2016-05-03',
@@ -111,12 +121,24 @@ const tableData = ref([
 ])
 const currentPage4 = ref(1)
 const pageSize4 = ref(20)
+const copiedText = ref('');
 const handleSizeChange = (val) => {
   console.log(`${val} items per page`)
 }
 const handleCurrentChange = (val) => {
   console.log(`current page: ${val}`)
 }
+function copyToClipboard(text) {
+      copiedText.value = text;
+      navigator.clipboard.writeText(text)
+        .then(() => {
+          ElMessage.success('Copy successful!');
+        })
+        .catch(err => {
+          console.error('Copy failed:', err);
+          ElMessage.error('Copy failed, please copy manually!');
+        });
+    }
 </script>
 
 <style scoped>

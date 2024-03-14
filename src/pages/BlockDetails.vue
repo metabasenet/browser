@@ -22,13 +22,13 @@
                   label-class-name="my-label"
                   class-name="my-content"
                 label-width="30%"
-                  >kooriookami</el-descriptions-item
+                  ><el-icon><InfoFilled /></el-icon> kooriookami</el-descriptions-item
                 >
                 <el-descriptions-item label="Telephone" label-align="center" align="center"
-                  >18100000000</el-descriptions-item
+                  ><el-icon><InfoFilled /></el-icon> 18100000000</el-descriptions-item
                 >
                 <el-descriptions-item label="Place" label-align="center" align="center"
-                  >Suzhou</el-descriptions-item
+                  > <el-icon><InfoFilled /></el-icon>Suzhou</el-descriptions-item
                 >
                 <el-descriptions-item label="Transaction Action:" label-align="center" align="center">
                   <el-tag size="small">School</el-tag>

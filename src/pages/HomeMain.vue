@@ -60,7 +60,7 @@
           <el-col :span="11" :xs="24" :sm="24" :md="10" :lg="11" class="ContentPlaceHolder1_mainboxes ContentPlaceHolder1">
             <div class="card-header">
               <h4>Latest Blocks</h4>
-              <el-button>Customize</el-button>
+              <el-button><el-icon><Star /></el-icon>Customize</el-button>
             </div>
             <ul class="card-ul">
               <li class="card-li">
@@ -76,9 +76,9 @@
                     <div><el-link>210 txns</el-link>
                     <span>in 3 secs</span></div>
                 </div>
-               <div class="c-flex">
+                <el-tooltip content="Copy Address" placement="top"><div class="c-flex">
                 <p>0.04532 BNB</p>
-               </div>
+               </div></el-tooltip>
               </li>
               <li class="card-li">
                 <div class="d-flex">
@@ -93,9 +93,9 @@
                     <div><el-link>210 txns</el-link>
                     <span>in 3 secs</span></div>
                 </div>
-               <div class="c-flex">
+                <el-tooltip content="Copy Address" placement="top"><div class="c-flex">
                 <p>0.04532 BNB</p>
-               </div>
+               </div></el-tooltip>
               </li>
               <li class="card-li">
                 <div class="d-flex">
@@ -110,9 +110,60 @@
                     <div><el-link>210 txns</el-link>
                     <span>in 3 secs</span></div>
                 </div>
-               <div class="c-flex">
+                <el-tooltip content="Copy Address" placement="top"><div class="c-flex">
                 <p>0.04532 BNB</p>
-               </div>
+               </div></el-tooltip>
+              </li>
+              <li class="card-li">
+                <div class="d-flex">
+                  <el-icon size="20px" style="margin-right:10px"><Pointer /></el-icon>
+                  <div>
+                    <el-link>36890859</el-link>
+                    <p>6 secs ago</p>
+                  </div>
+                </div>
+                <div class="b-flex">
+                    <el-link>Validator: Certik</el-link>
+                    <div><el-link>210 txns</el-link>
+                    <span>in 3 secs</span></div>
+                </div>
+                <el-tooltip content="Copy Address" placement="top"><div class="c-flex">
+                <p>0.04532 BNB</p>
+               </div></el-tooltip>
+              </li>
+              <li class="card-li">
+                <div class="d-flex">
+                  <el-icon size="20px" style="margin-right:10px"><Pointer /></el-icon>
+                  <div>
+                    <el-link>36890859</el-link>
+                    <p>6 secs ago</p>
+                  </div>
+                </div>
+                <div class="b-flex">
+                    <el-link>Validator: Certik</el-link>
+                    <div><el-link>210 txns</el-link>
+                    <span>in 3 secs</span></div>
+                </div>
+                <el-tooltip content="Copy Address" placement="top"><div class="c-flex">
+                <p>0.04532 BNB</p>
+               </div></el-tooltip>
+              </li>
+              <li class="card-li">
+                <div class="d-flex">
+                  <el-icon size="20px" style="margin-right:10px"><Pointer /></el-icon>
+                  <div>
+                    <el-link>36890859</el-link>
+                    <p>6 secs ago</p>
+                  </div>
+                </div>
+                <div class="b-flex">
+                    <el-link>Validator: Certik</el-link>
+                    <div><el-link>210 txns</el-link>
+                    <span>in 3 secs</span></div>
+                </div>
+               <el-tooltip content="Copy Address" placement="top"><div class="c-flex">
+                <p>0.04532 BNB</p>
+               </div></el-tooltip>
               </li>
             </ul>
             <div class="card-footer">
@@ -123,65 +174,122 @@
           </el-col>
           <el-col :span="11" :xs="24" :sm="24" :md="10" :lg="11" class="ContentPlaceHolder1_mainboxes">
             <div class="card-header">
-              <h4>Latest Blocks</h4>
-              <el-button>Customize</el-button>
+              <h4>Latest Transactions</h4>
+              <el-button><el-icon><Star /></el-icon>Customize</el-button>
             </div>
             <ul class="card-ul">
               <li class="card-li">
                 <div class="d-flex">
                   <el-icon size="20px" style="margin-right:10px"><Pointer /></el-icon>
                   <div>
-                    <el-link>36890859</el-link>
+                    <el-link>0xc793ba720b7fc6...</el-link>
                     <p>6 secs ago</p>
                   </div>
                 </div>
                 <div class="b-flex">
-                    <el-link>Validator: Certik</el-link>
-                    <div><el-link>210 txns</el-link>
-                    <span>in 3 secs</span></div>
+                 <div class="flex_from"><h4>From</h4>
+                    <el-link>0x70F65716...334f28e18</el-link></div>
+                    <div class="flex_to"><h4>to</h4><el-link>0x00000000...000001000</el-link>
+                    </div>
                 </div>
-               <div class="c-flex">
+               <el-tooltip content="Copy Address" placement="top"><div class="c-flex">
                 <p>0.04532 BNB</p>
-               </div>
+               </div></el-tooltip>
               </li>
               <li class="card-li">
                 <div class="d-flex">
                   <el-icon size="20px" style="margin-right:10px"><Pointer /></el-icon>
                   <div>
-                    <el-link>36890859</el-link>
+                    <el-link>0xc793ba720b7fc6...</el-link>
                     <p>6 secs ago</p>
                   </div>
                 </div>
                 <div class="b-flex">
-                    <el-link>Validator: Certik</el-link>
-                    <div><el-link>210 txns</el-link>
-                    <span>in 3 secs</span></div>
+                 <div class="flex_from"><h4>From</h4>
+                    <el-link>0x70F65716...334f28e18</el-link></div>
+                    <div class="flex_to"><h4>to</h4><el-link>0x00000000...000001000</el-link>
+                    </div>
                 </div>
-               <div class="c-flex">
+               <el-tooltip content="Copy Address" placement="top"><div class="c-flex">
                 <p>0.04532 BNB</p>
-               </div>
+               </div></el-tooltip>
               </li>
               <li class="card-li">
                 <div class="d-flex">
                   <el-icon size="20px" style="margin-right:10px"><Pointer /></el-icon>
                   <div>
-                    <el-link>36890859</el-link>
+                    <el-link>0xc793ba720b7fc6...</el-link>
                     <p>6 secs ago</p>
                   </div>
                 </div>
                 <div class="b-flex">
-                    <el-link>Validator: Certik</el-link>
-                    <div><el-link>210 txns</el-link>
-                    <span>in 3 secs</span></div>
+                 <div class="flex_from"><h4>From</h4>
+                    <el-link>0x70F65716...334f28e18</el-link></div>
+                    <div class="flex_to"><h4>to</h4><el-link>0x00000000...000001000</el-link>
+                    </div>
                 </div>
-               <div class="c-flex">
+               <el-tooltip content="Copy Address" placement="top"><div class="c-flex">
                 <p>0.04532 BNB</p>
-               </div>
+               </div></el-tooltip>
+              </li>
+              <li class="card-li">
+                <div class="d-flex">
+                  <el-icon size="20px" style="margin-right:10px"><Pointer /></el-icon>
+                  <div>
+                    <el-link>0xc793ba720b7fc6...</el-link>
+                    <p>6 secs ago</p>
+                  </div>
+                </div>
+                <div class="b-flex">
+                 <div class="flex_from"><h4>From</h4>
+                    <el-link>0x70F65716...334f28e18</el-link></div>
+                    <div class="flex_to"><h4>to</h4><el-link>0x00000000...000001000</el-link>
+                    </div>
+                </div>
+               <el-tooltip content="Copy Address" placement="top"><div class="c-flex">
+                <p>0.04532 BNB</p>
+               </div></el-tooltip>
+              </li>
+              <li class="card-li">
+                <div class="d-flex">
+                  <el-icon size="20px" style="margin-right:10px"><Pointer /></el-icon>
+                  <div>
+                    <el-link>0xc793ba720b7fc6...</el-link>
+                    <p>6 secs ago</p>
+                  </div>
+                </div>
+                <div class="b-flex">
+                 <div class="flex_from"><h4>From</h4>
+                    <el-link>0x70F65716...334f28e18</el-link></div>
+                    <div class="flex_to"><h4>to</h4><el-link>0x00000000...000001000</el-link>
+                    </div>
+                </div>
+               <el-tooltip content="Copy Address" placement="top"><div class="c-flex">
+                <p>0.04532 BNB</p>
+               </div></el-tooltip>
+              </li>
+              <li class="card-li">
+                <div class="d-flex">
+                  <el-icon size="20px" style="margin-right:10px"><Pointer /></el-icon>
+                  <div>
+                    <el-link>0xc793ba720b7fc6...</el-link>
+                    <p>6 secs ago</p>
+                  </div>
+                </div>
+                <div class="b-flex">
+                 <div class="flex_from"><h4>From</h4>
+                    <el-link>0x70F65716...334f28e18</el-link></div>
+                    <div class="flex_to"><h4>to</h4><el-link>0x00000000...000001000</el-link>
+                    </div>
+                </div>
+               <el-tooltip content="Copy Address" placement="top"><div class="c-flex">
+                <p>0.04532 BNB</p>
+               </div></el-tooltip>
               </li>
             </ul>
             <div class="card-footer">
-              <router-link to="/blocks">
-                VIEW ALL BLOCKS<el-icon><Right /></el-icon>
+              <router-link to="/txs">
+                View all transactions<el-icon><Right /></el-icon>
               </router-link>
             </div>
           </el-col>
@@ -255,15 +363,31 @@
   .card-ul,
   .card-li {
     padding: 5px;
+    /* 换行 */
+    /* flex-wrap: wrap; */
   }
   
   /* 减小字体大小 */
-  .card_p {
+  .card_p, .c-flex p,.b-flex h4 {
+    font-size: 8px;
+  }
+  .el-link {
     font-size: 8px;
   }
 }
 .card-left{
   display: flex;
+}
+/* .el-link {
+    font-size: 12px;
+  } */
+.flex_from{
+  display: flex;
+  flex-wrap: wrap;
+}
+.flex_to{
+  display: flex;
+  flex-wrap: wrap;
 }
 .card-right{
   margin-top: 13px;
@@ -272,7 +396,7 @@
   font-size: 10px;
 }
 .card-header{
-  padding: 10px 0;
+  padding: 15px 0;
   display: flex;
   justify-content: space-between;
   margin-right: 10px;
@@ -285,8 +409,7 @@
 .card-li{
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
-  padding-top: 10px;
+  padding: 10px 0;
   border-top: 1px solid #e6e6e6;
 }
 .d-flex{
@@ -300,7 +423,8 @@
   margin-top: 10px;
 }
 .d-flex p {
-  color: #b88b7d;
+  color: #6c757d;
+  font-size: 11px;
 }
 .b-flex{
   display: flex;
@@ -310,7 +434,12 @@
   color: #0784cf;
 }
 .b-flex span {
-  color: #b88b7d;
+  color: #6c757d;
+  font-size: 11px;
+}
+.b-flex h4{
+  margin-right: 10px;
+  font-size: 12px;
 }
 .c-flex{
   font-weight: bold;
