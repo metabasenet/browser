@@ -57,8 +57,8 @@
       <template v-slot="{ row }">
       <!-- 添加Tooltip组件 -->
       <router-link class="skyblue-text" to="/address" >{{ row.validator }}</router-link>
-      <el-tooltip content="Copy Address" placement="top">
-        <el-button  icon="CopyDocument" @click="copyToClipboard(row.validator)">
+      <el-tooltip  content="Copy Address" placement="top">
+        <el-button style="margin-left:5px" icon="CopyDocument" @click="copyToClipboard(row.validator)">
         </el-button>
       </el-tooltip>
       

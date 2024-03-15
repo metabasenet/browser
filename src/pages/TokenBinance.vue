@@ -21,10 +21,45 @@
   <el-row class="blocks_heade">
     <el-col :span="24">
       <p class="blocks_heade_p">Sponsored:  Shido - Shido Network - One of the fastest Layer 1's launching! Buy SHIDO</p>
+    <div class="ContentPlaceHolder1_lblWarning">
+      <div>
     <el-tag type="info">BEP-20</el-tag>
     <el-tag type="info">Cross-Chain</el-tag>
     <el-tag type="info"># Binance</el-tag>
     <el-tag type="info"># Binance-Peg</el-tag>
+    </div>
+    <div >
+      <el-dropdown style="margin-right:5px">
+      <el-button type="primary">
+        <el-icon class="el-icon--left"><Basketball /></el-icon>
+        ethereum.org<el-icon class="el-icon--right"><arrow-down /></el-icon>
+      </el-button>
+      <template #dropdown>
+        <el-dropdown-menu>
+          <el-dropdown-item>Action 1</el-dropdown-item>
+          <el-dropdown-item>Action 2</el-dropdown-item>
+          <el-dropdown-item>Action 3</el-dropdown-item>
+          <el-dropdown-item>Action 4</el-dropdown-item>
+          <el-dropdown-item>Action 5</el-dropdown-item>
+        </el-dropdown-menu>
+      </template>
+    </el-dropdown>
+    <el-dropdown>
+      <el-button type="primary">
+        <el-icon><Menu /></el-icon><el-icon class="el-icon--right"><arrow-down /></el-icon>
+      </el-button>
+      <template #dropdown>
+        <el-dropdown-menu>
+          <el-dropdown-item>Action 1</el-dropdown-item>
+          <el-dropdown-item>Action 2</el-dropdown-item>
+          <el-dropdown-item>Action 3</el-dropdown-item>
+          <el-dropdown-item>Action 4</el-dropdown-item>
+          <el-dropdown-item>Action 5</el-dropdown-item>
+        </el-dropdown-menu>
+      </template>
+    </el-dropdown>
+    </div>
+    </div>
     </el-col>
   </el-row>
   <el-row class="blocks_heade"> 
@@ -406,5 +441,9 @@ text-overflow: ellipsis; /* 显示省略号 */
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+}
+.ContentPlaceHolder1_lblWarning{
+  display: flex;
+  justify-content: space-between;
 }
 </style>

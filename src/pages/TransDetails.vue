@@ -2,8 +2,48 @@
   <div class="box">
     <el-row>
       <el-col :span="24">
-        <div class="grid-content ep-bg-purple-dark grid-content_h3">
+        <div class="grid-content ep-bg-purple-dark grid-content_h3 darkb_button">
           <h3>Transaction Details</h3>
+          <div >
+      <el-dropdown style="margin-right:5px">
+      <el-button type="primary">
+        <el-icon class="el-icon--left"><Basketball /></el-icon>
+        Buy<el-icon class="el-icon--right"><arrow-down /></el-icon>
+      </el-button>
+      <template #dropdown>
+        <el-dropdown-menu>
+          <el-dropdown-item>Action 1</el-dropdown-item>
+          <el-dropdown-item>Action 2</el-dropdown-item>
+          <el-dropdown-item>Action 3</el-dropdown-item>
+          <el-dropdown-item>Action 4</el-dropdown-item>
+          <el-dropdown-item>Action 5</el-dropdown-item>
+        </el-dropdown-menu>
+      </template>
+    </el-dropdown>
+    <el-dropdown style="margin-right:5px">
+      <el-button type="primary">
+        Play<el-icon class="el-icon--right"><arrow-down /></el-icon>
+      </el-button>
+      <template #dropdown>
+        <el-dropdown-menu>
+          <el-dropdown-item>Action 1</el-dropdown-item>
+          <el-dropdown-item>Action 2</el-dropdown-item>
+        </el-dropdown-menu>
+      </template>
+    </el-dropdown>
+    <el-dropdown>
+      <el-button type="primary">
+        Gaming<el-icon class="el-icon--right"><arrow-down /></el-icon>
+      </el-button>
+      <template #dropdown>
+        <el-dropdown-menu>
+          <el-dropdown-item>Action 1</el-dropdown-item>
+          <el-dropdown-item>Action 2</el-dropdown-item>
+          <el-dropdown-item>Action 2</el-dropdown-item>
+        </el-dropdown-menu>
+      </template>
+    </el-dropdown>
+    </div>
         </div>
       </el-col>
     </el-row>
@@ -53,13 +93,13 @@
               <CaretRight />
             </el-icon>
             Call<el-tooltip content="0xf340fa01 l Deposit" placement="top">
-              <el-button size="small">Deposit</el-button>
+              <el-button style="margin-left:5px;margin-right:5px">Deposit</el-button>
             </el-tooltip>Function by<el-tooltip content="Validator: Certik" placement="top">
               <router-link class="skyblue-text" to="/address">
                 <div class=" mb-2 truncate">Validator: Certik</div>
               </router-link>
             </el-tooltip>on<el-tooltip content="0xf340fa01 l Deposit" placement="top">
-              <el-icon>
+              <el-icon class="el-icon--right el-icon--left">
                 <Document />
               </el-icon>
             </el-tooltip>
@@ -76,7 +116,7 @@
           <el-descriptions-item label="From:" label-align="center" align="center">
            <div class="TransactionAction">
             <router-link class="skyblue-text ellipsis-text" to="/address">0xBe807Dddb074639cD9fA61b47676c064fc50D62C
-              </router-link><span class="text-muted">(Validator: Certik)</span><el-tooltip content="Copy Address" placement="top"><el-button icon="CopyDocument"
+              </router-link><span class="text-muted">(Validator: Certik)</span><el-tooltip content="Copy Address" placement="top"><el-button style="margin-left:5px" icon="CopyDocument"
                 @click="copyToClipboard(Validator)">
               </el-button>
             </el-tooltip>
@@ -94,7 +134,7 @@
               </router-link>
               (BSC: Validator Set)
               <el-tooltip content="Copy Address" placement="top">
-                <el-button icon="CopyDocument" @click="copyToClipboard(Validator)">
+                <el-button style="margin-left:5px" icon="CopyDocument" @click="copyToClipboard(Validator)">
                 </el-button>
               </el-tooltip>
     <el-tooltip content="Copy Address" placement="top">
@@ -102,7 +142,7 @@
     </el-tooltip>
   </div>
   <div class="TransactionAction">
-    <span>L</span>Transfer 0.004435244050238826 BNB <span>From</span>
+    <el-icon><Money /></el-icon>Transfer 0.004435244050238826 BNB <span>From</span>
     <el-tooltip content="BSC: Validator Set" placement="top">
       <router-link class="skyblue-text" to="/address">
         <div class=" mb-2 truncate">BSC: Validator Set</div>
@@ -115,7 +155,7 @@
     </el-tooltip>
   </div>
   <div class="TransactionAction">
-    <span>L</span>Transfer 0.007096390480382122 BNB <span>From</span>
+    <el-icon><Money /></el-icon>Transfer 0.007096390480382122 BNB <span>From</span>
     <el-tooltip content="BSC: Validator Set" placement="top">
       <router-link class="skyblue-text" to="/address">
         <div class=" mb-2 truncate">BSC: Validator Set</div>
@@ -318,5 +358,10 @@ body {
   -webkit-line-clamp: 1; /* 限制显示的行数 */
   -webkit-box-orient: vertical;
   word-break: break-word; /* 或者 overflow-wrap: break-word; */
+}
+.darkb_button{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 </style>
