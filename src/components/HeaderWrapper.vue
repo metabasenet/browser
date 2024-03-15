@@ -6,6 +6,8 @@
     class="el-menu-demo"
     mode="horizontal"
   >
+  <img src="../../public/header_img.png" alt="">
+   <div class="el_menu">
     <el-menu-item index="/home">Home</el-menu-item>
     <el-sub-menu index="2">
       <template #title>Blockchain</template>
@@ -26,6 +28,7 @@
       <el-menu-item index="4-3">item three</el-menu-item>
     </el-sub-menu>
     <el-link><el-icon><User /></el-icon> Sign In</el-link>
+   </div>
   </el-menu>
     </div>
 </template>
@@ -34,6 +37,13 @@
 // import { ref } from 'vue'
 </script>
 
-<style>
-
+<style scoped>
+.el-menu-demo{
+  display: flex;
+  justify-content: space-between;
+  margin:0 2.25rem;
+}
+.el_menu{
+  display: flex;
+}
 </style>

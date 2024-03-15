@@ -2,7 +2,7 @@
   <div class="common-layout">
     <el-container class="container-xxl">
       <el-main >
-        <el-row :gutter="20" class="ContentPlaceHolder1_mainboxes " >
+        <el-row :gutter="20" class="ContentPlaceHolder1_mainboxes " style="margin-left:-1px">
       <el-col :span="12" :xs="24" :sm="12" :md="12" :lg="12" style="padding-right:2.8125rem" >
        <div class="card-box">
         <div class="card-left">
@@ -56,8 +56,8 @@
         </div>
       </el-col>
         </el-row>
-        <el-row :gutter="20">
-          <el-col :span="11" :xs="24" :sm="24" :md="10" :lg="11" class="ContentPlaceHolder1_mainboxes ContentPlaceHolder1">
+        <el-row :gutter="20" class="ContentPlaceHolder1">
+          <el-col :span="11" :xs="24" :sm="24" :md="10" :lg="11" class="ContentPlaceHolder1_mainboxes ">
             <div class="card-header">
               <h4>Latest Blocks</h4>
               <el-button><el-icon><Star /></el-icon>Customize</el-button>
@@ -67,7 +67,9 @@
                 <div class="d-flex">
                   <el-icon size="20px" style="margin-right:10px"><Pointer /></el-icon>
                   <div>
-                    <el-link>36890859</el-link>
+                    <router-link to="/block">
+                      36890859
+      </router-link>
                     <p>6 secs ago</p>
                   </div>
                 </div>
@@ -84,7 +86,9 @@
                 <div class="d-flex">
                   <el-icon size="20px" style="margin-right:10px"><Pointer /></el-icon>
                   <div>
-                    <el-link>36890859</el-link>
+                    <router-link to="/block">
+                      36890859
+      </router-link>
                     <p>6 secs ago</p>
                   </div>
                 </div>
@@ -101,7 +105,9 @@
                 <div class="d-flex">
                   <el-icon size="20px" style="margin-right:10px"><Pointer /></el-icon>
                   <div>
-                    <el-link>36890859</el-link>
+                    <router-link to="/block">
+                      36890859
+      </router-link>
                     <p>6 secs ago</p>
                   </div>
                 </div>
@@ -118,7 +124,9 @@
                 <div class="d-flex">
                   <el-icon size="20px" style="margin-right:10px"><Pointer /></el-icon>
                   <div>
-                    <el-link>36890859</el-link>
+                    <router-link to="/block">
+                      36890859
+      </router-link>
                     <p>6 secs ago</p>
                   </div>
                 </div>
@@ -135,7 +143,9 @@
                 <div class="d-flex">
                   <el-icon size="20px" style="margin-right:10px"><Pointer /></el-icon>
                   <div>
-                    <el-link>36890859</el-link>
+                    <router-link to="/block">
+                      36890859
+      </router-link>
                     <p>6 secs ago</p>
                   </div>
                 </div>
@@ -152,7 +162,9 @@
                 <div class="d-flex">
                   <el-icon size="20px" style="margin-right:10px"><Pointer /></el-icon>
                   <div>
-                    <el-link>36890859</el-link>
+                    <router-link to="/block">
+                      36890859
+      </router-link>
                     <p>6 secs ago</p>
                   </div>
                 </div>
@@ -341,13 +353,14 @@
  border: 1px solid #dee2e6;
 }
 .ContentPlaceHolder1{
-  margin-right: 5.75rem;
+  display: flex;
+  justify-content: space-around;
 }
 .card-box {
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #e6e6e6;
-  margin-right: 10px;
+  /* margin-right: 10px; */
   margin-left: 10px;
 }
 /* .card-boxright{

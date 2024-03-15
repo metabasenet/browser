@@ -9,17 +9,34 @@
   <el-row class="box-table">
     <div class="demo-pagination-block box-table_header">
     <div class="demonstration">A total of 1,363 Token Contracts found</div>
-  </div>
-    <el-table :data="tableData" style="width: 100%" >
-    <el-table-column prop="date" label="Token" width="180">
+    <el-input
+      style="width: 15rem"
+      placeholder="Please enter your search"
+      v-model="searchText"
+      prefix-icon="Search"
+      @input="handleSearchInput"
+    />
+    </div>
+    <el-table :data="filteredData" style="width: 100%" >
+    <el-table-column prop="token" label="Token" width="180">
       <template v-slot="scope">
-            <router-link :to="{ path: '/token' }">{{ scope.row.date }}</router-link>
+        <el-icon><Position /></el-icon>
+            <router-link :to="{ path: '/token' }">{{ scope.row.token }}</router-link>
+            <el-tooltip content="Cross-Chain" placement="top">
+              <el-icon><InfoFilled /></el-icon>
+  </el-tooltip>
         </template>
     </el-table-column>
-    <el-table-column prop="name" label="Price" width="180" />
-    <el-table-column prop="address" label="Change (%)" />
-    <el-table-column prop="validator" label="Volume (24H)" />
-    <el-table-column prop="gasused" label="Circulating Market Cap" />
+    <el-table-column prop="price" label="Price" width="180" />
+    <el-table-column  prop="change" label="Change (%)"  >
+      <template #default="{ row }">
+      <span v-html="formatChangeColor(row.change)" />
+    </template>
+    </el-table-column>
+    <el-table-column prop="volume" label="Volume (24H)" />
+    <el-table-column prop="virculating" label="Circulating Market Cap " />
+    <el-table-column prop="onchain" label="Onchain Market Cap" />
+    <el-table-column prop="holders" label="Holders" />
   </el-table>
   <div class="demo-pagination-block box-table_header">
     <el-pagination
@@ -38,42 +55,112 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref,computed  } from 'vue'
 const tableData = ref([
   {
-    date: '2016-05-03',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-    validator:'Validator:Legend Il',
-    gasused:'18,990,403 (14%)',
+    token: 'Binance-Peg BSC-USD',
+    price: '$3,682.44',
+    change: '-7.93%',
+    volume:'$30,391,575,030.00',
+    virculating:'$449,436,685,432.00',
+    onchain:'$2,227,876,200.00',
+    holders:'1,864,000',
+  },{
+    token: 'Binance-Peg BSC-USD',
+    price: '$3,682.44',
+    change: '-7.93%',
+    volume:'$30,391,575,030.00',
+    virculating:'$449,436,685,432.00',
+    onchain:'$2,227,876,200.00',
+    holders:'1,864,000',
   },
   {
-    date: '2016-05-02',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-    validator:'Validator:Legend Il',
-    gasused:'18,990,403 (14%)',
+    token: 'Binance-Peg BSC-USD',
+    price: '$3,682.44',
+    change: '-7.93%',
+    volume:'$30,391,575,030.00',
+    virculating:'$449,436,685,432.00',
+    onchain:'$2,227,876,200.00',
+    holders:'1,864,000',
   },
   {
-    date: '2016-05-04',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-    validator:'Validator:Legend Il',
-    gasused:'18,990,403 (14%)',
+    token: 'Binance-Peg BSC-USD',
+    price: '$3,682.44',
+    change: '-7.93%',
+    volume:'$30,391,575,030.00',
+    virculating:'$449,436,685,432.00',
+    onchain:'$2,227,876,200.00',
+    holders:'1,864,000',
   },
   {
-    date: '2016-05-01',
-    name: 'Tom',
-    address: 'No. 189, Grove St, Los Angeles',
-    validator:'Validator:Legend Il',
-    gasused:'18,990,403 (14%)',
+    token: 'Binance-Peg BSC-USD',
+    price: '$3,682.44',
+    change: '-7.93%',
+    volume:'$30,391,575,030.00',
+    virculating:'$449,436,685,432.00',
+    onchain:'$2,227,876,200.00',
+    holders:'1,864,000',
   },
+  {
+    token: 'Binance-Peg BSC-USD',
+    price: '$3,682.44',
+    change: '-7.93%',
+    volume:'$30,391,575,030.00',
+    virculating:'$449,436,685,432.00',
+    onchain:'$2,227,876,200.00',
+    holders:'1,864,000',
+  },
+  {
+    token: 'Binance-Peg BSC-USD',
+    price: '$3,682.44',
+    change: '-7.93%',
+    volume:'$30,391,575,030.00',
+    virculating:'$449,436,685,432.00',
+    onchain:'$2,227,876,200.00',
+    holders:'1,864,000',
+  },
+  {
+    token: 'Binance-Peg BSC-USD',
+    price: '$3,682.44',
+    change: '-7.93%',
+    volume:'$30,391,575,030.00',
+    virculating:'$449,436,685,432.00',
+    onchain:'$2,227,876,200.00',
+    holders:'1,864,000',
+  },
+  {
+    token: 'Binance-Peg BSC-USD',
+    price: '$3,682.44',
+    change: '-7.93%',
+    volume:'$30,391,575,030.00',
+    virculating:'$449,436,685,432.00',
+    onchain:'$2,227,876,200.00',
+    holders:'1,864,000',
+  },
+  
 ])
 const currentPage4 = ref(1)
+const searchText = ref('');
 const pageSize4 = ref(20)
 const handleSizeChange = (val) => {
   console.log(`${val} items per page`)
 }
+const filteredData = computed(() => {
+  return tableData.value.filter(item => {
+    if (item.name && searchText.value) {
+      return item.name.toLowerCase().includes(searchText.value.toLowerCase());
+    }
+    // 如果搜索文本为空，则返回所有数据
+    return !searchText.value;
+  });
+});
+const handleSearchInput = (value) => {
+  searchText.value = value;
+};
+const formatChangeColor = (value) => {
+  const color = value >= 0 ? '' : 'red';
+  return `<span style="color: ${color}">${value}%</span>`;
+};
 const handleCurrentChange = (val) => {
   console.log(`current page: ${val}`)
 }
@@ -121,5 +208,5 @@ const handleCurrentChange = (val) => {
     flex-wrap: wrap;
   }
 }
- 
+
 </style>

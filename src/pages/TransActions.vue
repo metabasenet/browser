@@ -9,21 +9,21 @@
     <el-row class="blocks_heade"> 
     <el-col :span="5" :xs="24" :sm="12" :md="12" :lg="6"><div class="grid-content ep-bg-purple-dark blocks_header" >
       <p>NETWORK UTILIZATION(24H)</p>
-      <el-link>12.7%</el-link>
+      <el-link>5,028,546</el-link>
     </div>
     </el-col>
     <el-col :span="5" align :xs="24" :sm="12" :md="12" :lg="6"><div class="grid-content ep-bg-purple-dark blocks_header" >
       <p>NETWORK UTILIZATION(24H)</p>
-      <el-link>12.7%</el-link>
+      <el-link>222(Average)</el-link>
       </div></el-col>
       <el-col :span="5" align :xs="24" :sm="12" :md="12" :lg="6"><div class="grid-content ep-bg-purple-dark blocks_header" >
       <p>NETWORK UTILIZATION(24H)</p>
-      <el-link>12.7%</el-link>
+      <el-link>2,373.55BNB(0.04%)</el-link>
       </div>
       </el-col>
       <el-col :span="5" align :xs="24" :sm="12" :md="12" :lg="6"><div class="grid-content ep-bg-purple-dark blocks_header" >
       <p>NETWORK UTILIZATION(24H)</p>
-      <el-link>12.7%</el-link>
+      <el-link>0.2978 USD(18.64%)</el-link>
       </div>
       </el-col>
   </el-row>
@@ -41,34 +41,56 @@
         @current-change="handleCurrentChange"
       />
     </div>
-      <el-table :data="tableData" style="width: 100%" >
-      <el-table-column prop="date" label="Date" width="180" >
-        <template v-slot="scope">
-            <router-link :to="{ path: '/tx' }">{{ scope.row.date }}</router-link>
+    <el-table :data="tableData" style="width: 100%" >
+    <el-table-column prop="txnhash" label="Txn Hash" width="120">
+      <template v-slot="scope">
+            <router-link class="skyblue-text ellipsis-text" :to="{ path: '/tx' }">{{ scope.row.txnhash }}</router-link>
         </template>
-      </el-table-column>
-      <el-table-column prop="name" label="Name" width="180" />
-      <el-table-column prop="address" label="Address" />
-      <el-table-column prop="validator" label="Validator" >
-        <template v-slot="{ row }">
-      <!-- 添加Tooltip组件 -->
-      {{ row.validator }}
-      <el-tooltip content="Copy Address" placement="top">
-        <el-button  icon="CopyDocument" @click="copyToClipboard(row.validator)">
+    </el-table-column>
+    <el-table-column prop="method" label="Method " width="120" >
+      <template v-slot="scope">
+        <el-tooltip :content="scope.row.method" placement="top">
+          <el-button>{{ scope.row.method}}</el-button>
+        </el-tooltip>
+        </template>
+    </el-table-column>
+    <el-table-column prop="block" label="Block" width="100">
+      <template v-slot="scope">
+            <router-link class="skyblue-text" :to="{ path: '/block' }">{{ scope.row.block }}</router-link>
+        </template>
+    </el-table-column>
+    <el-table-column prop="age" label="Age">
+    </el-table-column>
+    <el-table-column prop="from" label="From" width="250">
+      <template v-slot="scope">
+        <el-tooltip :content="scope.row.from" placement="top">
+          <router-link class="skyblue-text" :to="{ path: '/address' }">{{ scope.row.from }}</router-link>
+        </el-tooltip> 
+        <el-tooltip content="Copy Address" placement="top">
+          <el-button  icon="CopyDocument" @click="copyToClipboard(scope.row.from)">
         </el-button>
-      </el-tooltip>
-    </template>
-      </el-table-column>
-      <el-table-column prop="gasused" label="Gasused" >
-        <template v-slot="{ row }">
-      <!-- 添加Tooltip组件 -->
-      {{ row.gasused }}
-      <el-tooltip content="Copy Address" placement="top">
-        <el-icon><Right /></el-icon>
-      </el-tooltip>
-    </template>
-      </el-table-column>
-    </el-table>
+        </el-tooltip>
+        <el-button style="margin-left:2.5rem" type="success" icon="right" circle plain/>
+        </template>
+    </el-table-column>
+    <el-table-column prop="to" label="To" width="250" >
+      <template v-slot="scope">
+        <el-tooltip content="Contract" placement="top">
+          <el-button style="margin-right:5px"  icon="Document" @click="copyToClipboard(scope.row.to)">
+        </el-button>
+        </el-tooltip>
+        <el-tooltip :content="scope.row.to" placement="top">
+          <router-link class="skyblue-text" :to="{ path: '/address' }">{{ scope.row.to }}</router-link>
+        </el-tooltip> 
+        <el-tooltip content="Copy Address" placement="top">
+          <el-button  icon="CopyDocument" @click="copyToClipboard(scope.row.to)">
+        </el-button>
+        </el-tooltip>
+        </template>
+    </el-table-column>
+    <el-table-column prop="value" label="Value" />
+    <el-table-column prop="gasprice" label="Gas Price" />
+  </el-table>
     <div class="demo-pagination-block box-table_header">
       <el-pagination
         v-model:current-page="currentPage4"
@@ -89,35 +111,134 @@
   import { ref } from 'vue'
   import { ElMessage } from 'element-plus';
   const tableData = ref([
-    {
-      date: '2016-05-03',
-      name: 'Tom',
-      address: 'No. 189, Grove St, Los Angeles',
-      validator:'Validator:Legend Il',
-      gasused:'18,990,403 (14%)',
-    },
-    {
-      date: '2016-05-02',
-      name: 'Tom',
-      address: 'No. 189, Grove St, Los Angeles',
-      validator:'Validator:Legend Il',
-      gasused:'18,990,403 (14%)',
-    },
-    {
-      date: '2016-05-04',
-      name: 'Tom',
-      address: 'No. 189, Grove St, Los Angeles',
-      validator:'Validator:Legend Il',
-      gasused:'18,990,403 (14%)',
-    },
-    {
-      date: '2016-05-01',
-      name: 'Tom',
-      address: 'No. 189, Grove St, Los Angeles',
-      validator:'Validator:Legend Il',
-      gasused:'18,990,403 (14%)',
-    },
-  ])
+  {
+    txnhash: '0x995d8e4d593fd45703c4aa26664606b9ad3de0f021be6586377db86ea45476e3',
+    method : 'Deposit',
+    block: '36956012',
+    age:'7 secs ago',
+    from:'Validator: Legend II',
+    to:'BSC: Validator Set',
+    value:'0.04062 BNB',
+    gasprice:1
+  },{
+    txnhash: '0x995d8e4d593fd45703c4aa26664606b9ad3de0f021be6586377db86ea45476e3',
+    method : 'Deposit',
+    block: '36956012',
+    age:'7 secs ago',
+    from:'Validator: Legend II',
+    to:'BSC: Validator Set',
+    value:'0.04062 BNB',
+    gasprice:1
+  },{
+    txnhash: '0x995d8e4d593fd45703c4aa26664606b9ad3de0f021be6586377db86ea45476e3',
+    method : 'Deposit',
+    block: '36956012',
+    age:'7 secs ago',
+    from:'Validator: Legend II',
+    to:'BSC: Validator Set',
+    value:'0.04062 BNB',
+    gasprice:1
+  },{
+    txnhash: '0x995d8e4d593fd45703c4aa26664606b9ad3de0f021be6586377db86ea45476e3',
+    method : 'Deposit',
+    block: '36956012',
+    age:'7 secs ago',
+    from:'Validator: Legend II',
+    to:'BSC: Validator Set',
+    value:'0.04062 BNB',
+    gasprice:1
+  },{
+    txnhash: '0x995d8e4d593fd45703c4aa26664606b9ad3de0f021be6586377db86ea45476e3',
+    method : 'Deposit',
+    block: '36956012',
+    age:'7 secs ago',
+    from:'Validator: Legend II',
+    to:'BSC: Validator Set',
+    value:'0.04062 BNB',
+    gasprice:1
+  },{
+    txnhash: '0x995d8e4d593fd45703c4aa26664606b9ad3de0f021be6586377db86ea45476e3',
+    method : 'Deposit',
+    block: '36956012',
+    age:'7 secs ago',
+    from:'Validator: Legend II',
+    to:'BSC: Validator Set',
+    value:'0.04062 BNB',
+    gasprice:1
+  },{
+    txnhash: '0x995d8e4d593fd45703c4aa26664606b9ad3de0f021be6586377db86ea45476e3',
+    method : 'Deposit',
+    block: '36956012',
+    age:'7 secs ago',
+    from:'Validator: Legend II',
+    to:'BSC: Validator Set',
+    value:'0.04062 BNB',
+    gasprice:1
+  },{
+    txnhash: '0x995d8e4d593fd45703c4aa26664606b9ad3de0f021be6586377db86ea45476e3',
+    method : 'Deposit',
+    block: '36956012',
+    age:'7 secs ago',
+    from:'Validator: Legend II',
+    to:'BSC: Validator Set',
+    value:'0.04062 BNB',
+    gasprice:1
+  },{
+    txnhash: '0x995d8e4d593fd45703c4aa26664606b9ad3de0f021be6586377db86ea45476e3',
+    method : 'Deposit',
+    block: '36956012',
+    age:'7 secs ago',
+    from:'Validator: Legend II',
+    to:'BSC: Validator Set',
+    value:'0.04062 BNB',
+    gasprice:1
+  },{
+    txnhash: '0x995d8e4d593fd45703c4aa26664606b9ad3de0f021be6586377db86ea45476e3',
+    method : 'Deposit',
+    block: '36956012',
+    age:'7 secs ago',
+    from:'Validator: Legend II',
+    to:'BSC: Validator Set',
+    value:'0.04062 BNB',
+    gasprice:1
+  },{
+    txnhash: '0x995d8e4d593fd45703c4aa26664606b9ad3de0f021be6586377db86ea45476e3',
+    method : 'Deposit',
+    block: '36956012',
+    age:'7 secs ago',
+    from:'Validator: Legend II',
+    to:'BSC: Validator Set',
+    value:'0.04062 BNB',
+    gasprice:1
+  },{
+    txnhash: '0x995d8e4d593fd45703c4aa26664606b9ad3de0f021be6586377db86ea45476e3',
+    method : 'Deposit',
+    block: '36956012',
+    age:'7 secs ago',
+    from:'Validator: Legend II',
+    to:'BSC: Validator Set',
+    value:'0.04062 BNB',
+    gasprice:1
+  },{
+    txnhash: '0x995d8e4d593fd45703c4aa26664606b9ad3de0f021be6586377db86ea45476e3',
+    method : 'Deposit',
+    block: '36956012',
+    age:'7 secs ago',
+    from:'Validator: Legend II',
+    to:'BSC: Validator Set',
+    value:'0.04062 BNB',
+    gasprice:1
+  },{
+    txnhash: '0x995d8e4d593fd45703c4aa26664606b9ad3de0f021be6586377db86ea45476e3',
+    method : 'Deposit',
+    block: '36956012',
+    age:'7 secs ago',
+    from:'Validator: Legend II',
+    to:'BSC: Validator Set',
+    value:'0.04062 BNB',
+    gasprice:1
+  },
+])
   const currentPage4 = ref(1)
   const pageSize4 = ref(20)
   const copiedText = ref('');
@@ -230,5 +351,14 @@
   border-bottom: 1px solid #e6e6e6;
   margin-right: 10px;
   margin-left: 10px;
+}
+.skyblue-text{
+  color: #0693cc;
+  margin-right: 5px;
+}
+.ellipsis-text {
+  white-space: nowrap; /* 防止换行 */
+  overflow: hidden; /* 隐藏超出部分 */
+  text-overflow: ellipsis; /* 显示省略号 */
 }
   </style>

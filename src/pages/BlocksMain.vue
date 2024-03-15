@@ -44,15 +44,19 @@
     <el-table :data="tableData" style="width: 100%" >
     <el-table-column prop="block" label="Block" width="120">
       <template v-slot="scope">
-            <router-link :to="{ path: '/block' }">{{ scope.row.block }}</router-link>
+            <router-link class="skyblue-text" :to="{ path: '/block' }">{{ scope.row.block }}</router-link>
         </template>
     </el-table-column>
     <el-table-column prop="name" label="Age" width="100" ></el-table-column>
-    <el-table-column prop="address" label="Txn" width="60"/>
+    <el-table-column prop="address" label="Txn" width="60">
+      <template v-slot="scope">
+            <router-link class="skyblue-text" :to="{ path: '/txs' }">{{ scope.row.address }}</router-link>
+        </template>
+    </el-table-column>
     <el-table-column prop="validator" label="Validator">
       <template v-slot="{ row }">
       <!-- 添加Tooltip组件 -->
-      {{ row.validator }}
+      <router-link class="skyblue-text" to="/address" >{{ row.validator }}</router-link>
       <el-tooltip content="Copy Address" placement="top">
         <el-button  icon="CopyDocument" @click="copyToClipboard(row.validator)">
         </el-button>
@@ -60,7 +64,12 @@
       
     </template>
     </el-table-column>
-    <el-table-column prop="gasused" label="Gasused" />
+    <el-table-column prop="gasused" label="Gas used" >
+      <template v-slot="{ row }">
+      {{ row.gasused }}
+      <el-progress :percentage="50" /> 
+    </template>
+    </el-table-column>
     <el-table-column prop="gaslimit" label="Gas Limit" />
     <el-table-column prop="reward" label="Reward" />
     <el-table-column prop="burntfees" label="Burnt Fees (BNB)" />
@@ -264,5 +273,8 @@ function copyToClipboard(text) {
 .demonstration span{
   font-size: 10px;
   color: #6c757d;
+}
+.skyblue-text{
+  color: #0693cc;
 }
 </style>

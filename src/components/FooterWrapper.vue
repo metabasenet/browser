@@ -17,37 +17,33 @@
     </el-col>
   </el-row>
   <el-row  class="footerbox-center">
-    <el-col :span="6"><div class="grid-content ep-bg-purple footer-center" >
-        <el-text class="mx-1">Default</el-text>
-        <el-link href="https://element-plus.org" :underline="false">About Us</el-link>
+    <el-col :span="8">
+        <div class="grid-content ep-bg-purple footer-center" >
+       <h4>Company</h4>
+        <el-link href="https://element-plus.org" :underline="false">Delegate to BscScan</el-link>
         <el-link href="https://element-plus.org" :underline="false">Brand Assets</el-link>
         <el-link href="https://element-plus.org" :underline="false">Contact Us</el-link>
-        <el-link href="https://element-plus.org" :underline="false">Careers </el-link>
+        <el-link href="https://element-plus.org" :underline="false">Terms & Privacy </el-link>
+        <el-link href="https://element-plus.org" :underline="false">Bug Bounty<el-icon><Promotion /></el-icon> </el-link>
     </div>
     </el-col>
-    <el-col :span="6"><div class="grid-content ep-bg-purple footer-center" >
-        <el-text class="mx-1">Default</el-text>
-        <el-link href="https://element-plus.org" :underline="false">About Us</el-link>
-        <el-link href="https://element-plus.org" :underline="false">Brand Assets</el-link>
-        <el-link href="https://element-plus.org" :underline="false">Contact Us</el-link>
-        <el-link href="https://element-plus.org" :underline="false">Careers </el-link>
+    <el-col :span="8">
+        <div class="grid-content ep-bg-purple footer-center" >
+       <h4>Community</h4>
+        <el-link href="https://element-plus.org" :underline="false">API Documentation</el-link>
+        <el-link href="https://element-plus.org" :underline="false">Knowledge Base</el-link>
+        <el-link href="https://element-plus.org" :underline="false">Network Status</el-link>
+        <el-link href="https://element-plus.org" :underline="false">Learn BSC <el-icon><Promotion /></el-icon> </el-link>
     </div>
     </el-col>
-    <el-col :span="6"><div class="grid-content ep-bg-purple footer-center" >
-        <el-text class="mx-1">Default</el-text>
-        <el-link href="https://element-plus.org" :underline="false">About Us</el-link>
-        <el-link href="https://element-plus.org" :underline="false">Brand Assets</el-link>
-        <el-link href="https://element-plus.org" :underline="false">Contact Us</el-link>
-        <el-link href="https://element-plus.org" :underline="false">Careers </el-link>
-    </div>
-        
-        </el-col>
-    <el-col :span="6"><div class="grid-content ep-bg-purple footer-center" >
-        <el-text class="mx-1">Default</el-text>
-        <el-link href="https://element-plus.org" :underline="false">About Us</el-link>
-        <el-link href="https://element-plus.org" :underline="false">Brand Assets</el-link>
-        <el-link href="https://element-plus.org" :underline="false">Contact Us</el-link>
-        <el-link href="https://element-plus.org" :underline="false">Careers </el-link>
+    <el-col :span="8">
+        <div class="grid-content ep-bg-purple footer-center" >
+       <h4>Products & Services</h4>
+        <el-link href="https://element-plus.org" :underline="false">Advertise<el-icon><Position /></el-icon></el-link>
+        <el-link href="https://element-plus.org" :underline="false">Explorer-as-a-Service (EaaS)<el-icon><Position /></el-icon></el-link>
+        <el-link href="https://element-plus.org" :underline="false">API Plans </el-link>
+        <el-link href="https://element-plus.org" :underline="false">Priority Support</el-link>
+        <el-link href="https://element-plus.org" :underline="false">Blockscan <el-icon><Promotion /></el-icon> </el-link>
     </div>
     </el-col>
   </el-row>
@@ -75,7 +71,7 @@ export default {
     background-color: #f8f9fa;
 }
 .footer-box{
-    margin-top: 1.25rem;
+    /* margin-top: 1.25rem; */
     margin-left: 1.25rem;
     margin-right: 1.25rem;
     /* background-color: #f8f9fa; */
@@ -86,6 +82,7 @@ export default {
 .footer-center{
     display: flex;
     flex-direction: column;
+    text-align: center;
 }
 .footer-center .el-text{
     font-weight: bold;
@@ -94,7 +91,7 @@ export default {
 }
 .footer-center .el-link{
     margin-top: 10px;
-    font-size: small;
+    font-size: 11px;
 }
 .footertop{
     display: flex;
