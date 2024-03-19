@@ -17,7 +17,7 @@
       @input="handleSearchInput"
     />
     </div>
-    <el-table :data="filteredData" style="width: 100%" >
+    <el-table :header-cell-style="{ color: '#0784c3' }" :data="filteredData" :default-sort="{ prop: ['price','chage','volume','virculating'], order: 'descending' }" style="width: 100%" >
     <el-table-column prop="token" label="Token" width="180">
       <template v-slot="scope">
         <el-icon><Position /></el-icon>
@@ -27,16 +27,60 @@
   </el-tooltip>
         </template>
     </el-table-column>
-    <el-table-column prop="price" label="Price" width="180" />
-    <el-table-column  prop="change" label="Change (%)"  >
+    <el-table-column prop="price" sortable  label="Price" width="180" >
+      <template #header>
+        <el-tooltip content="Click for descending sort" placement="top">
+          <span>Price</span>
+        </el-tooltip>
+      </template>
+    </el-table-column>
+    <el-table-column  prop="change" sortable  label="Change (%)"  >
+      <template #header>
+        <el-tooltip content="Click for descending sort" placement="top">
+          <span>Change (%)</span>
+        </el-tooltip>
+      </template>
       <template #default="{ row }">
       <span v-html="formatChangeColor(row.change)" />
     </template>
     </el-table-column>
-    <el-table-column prop="volume" label="Volume (24H)" />
-    <el-table-column prop="virculating" label="Circulating Market Cap " />
-    <el-table-column prop="onchain" label="Onchain Market Cap" />
-    <el-table-column prop="holders" label="Holders" />
+    <el-table-column prop="volume" sortable  label="Volume (24H)" >
+      <template #header>
+        <el-tooltip content="Click for descending sort" placement="top">
+          <span>Volume (24H)</span>
+        </el-tooltip>
+      </template>
+    </el-table-column>
+    <el-table-column prop="virculating" sortable  label="Circulating Market Cap " >
+      <template #header>
+        <el-tooltip content="Click for descending sort" placement="top">
+          <span>Circulating Market Cap</span>
+        </el-tooltip>
+        <el-tooltip content="Calculated by multiplying the number of tokens in
+circulating supply across all chains with the current market
+price per token." placement="top">
+            <el-icon class="el-icon--right"><QuestionFilled /></el-icon>
+        </el-tooltip>
+      </template>
+    </el-table-column>
+    <el-table-column prop="onchain" label="Onchain Market Cap" >
+      <template #header>
+          <span>Onchain Market Cap</span>
+        <el-tooltip content="Calculated by multiplying the token's Total Supply on BNB
+Smart Chain with the current market price per token.
+Numbers may be unrealistic if the onchain supply is much
+larger than the reported circulating supply." placement="top">
+            <el-icon class="el-icon--right"><QuestionFilled /></el-icon>
+        </el-tooltip>
+      </template>
+    </el-table-column>
+    <el-table-column prop="holders" label="Holders" >
+      <template #header>
+        <el-tooltip content="Click for descending sort" placement="top">
+          <span>Holders</span>
+        </el-tooltip>
+      </template>
+    </el-table-column>
   </el-table>
   <div class="demo-pagination-block box-table_header">
     <el-pagination
@@ -59,7 +103,7 @@ import { ref,computed  } from 'vue'
 const tableData = ref([
   {
     token: 'Binance-Peg BSC-USD',
-    price: '$3,682.44',
+    price: '$3,681.44',
     change: '-7.93%',
     volume:'$30,391,575,030.00',
     virculating:'$449,436,685,432.00',
@@ -76,7 +120,7 @@ const tableData = ref([
   },
   {
     token: 'Binance-Peg BSC-USD',
-    price: '$3,682.44',
+    price: '$3,683.44',
     change: '-7.93%',
     volume:'$30,391,575,030.00',
     virculating:'$449,436,685,432.00',
@@ -85,7 +129,7 @@ const tableData = ref([
   },
   {
     token: 'Binance-Peg BSC-USD',
-    price: '$3,682.44',
+    price: '$3,687.44',
     change: '-7.93%',
     volume:'$30,391,575,030.00',
     virculating:'$449,436,685,432.00',
@@ -94,7 +138,7 @@ const tableData = ref([
   },
   {
     token: 'Binance-Peg BSC-USD',
-    price: '$3,682.44',
+    price: '$3,685.44',
     change: '-7.93%',
     volume:'$30,391,575,030.00',
     virculating:'$449,436,685,432.00',
@@ -103,7 +147,7 @@ const tableData = ref([
   },
   {
     token: 'Binance-Peg BSC-USD',
-    price: '$3,682.44',
+    price: '$3,632.44',
     change: '-7.93%',
     volume:'$30,391,575,030.00',
     virculating:'$449,436,685,432.00',
@@ -112,7 +156,7 @@ const tableData = ref([
   },
   {
     token: 'Binance-Peg BSC-USD',
-    price: '$3,682.44',
+    price: '$3,622.44',
     change: '-7.93%',
     volume:'$30,391,575,030.00',
     virculating:'$449,436,685,432.00',
@@ -121,7 +165,7 @@ const tableData = ref([
   },
   {
     token: 'Binance-Peg BSC-USD',
-    price: '$3,682.44',
+    price: '$3,612.44',
     change: '-7.93%',
     volume:'$30,391,575,030.00',
     virculating:'$449,436,685,432.00',
@@ -130,7 +174,7 @@ const tableData = ref([
   },
   {
     token: 'Binance-Peg BSC-USD',
-    price: '$3,682.44',
+    price: '$3,689.44',
     change: '-7.93%',
     volume:'$30,391,575,030.00',
     virculating:'$449,436,685,432.00',

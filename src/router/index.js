@@ -44,6 +44,16 @@ const routes =  [
       path: '/address',
       name: 'address',
       component: () => import('../pages/AddressFrom.vue')
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('../pages/Login.vue')
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: () => import('../pages/Register.vue')
     }
   ];
 

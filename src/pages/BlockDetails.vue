@@ -8,7 +8,7 @@
   </el-row>
   <el-row>
     <el-col :span="24"><div class="grid-content ep-bg-purple-dark grid-content_h1">
-        <el-button type="primary" round>OverView</el-button>
+        <el-button type="primary">OverView</el-button>
       </div>
       </el-col>
   </el-row>
@@ -22,8 +22,12 @@
                   label-class-name="my-label"
                   class-name="my-content"
                 label-width="30%"
-                  > 36949734</el-descriptions-item
-                >
+                  > 36949734 <el-tooltip content="View previous block" placement="top">
+                    <el-button icon="ArrowLeft" />
+                      </el-tooltip><el-tooltip content="View next block" placement="top">
+                        <el-button icon="ArrowRight" />
+                      </el-tooltip>
+                  </el-descriptions-item>
                 <el-descriptions-item label=" Timestamp:" label-align="center" align="center"
                   ><el-icon><Timer /></el-icon> 4 hrs ago (Mar-14-2024 02:24:33 AM +UTC)</el-descriptions-item
                 >
@@ -157,7 +161,7 @@ function copyToClipboard(text) {
 .grid-content_row{
     background-color: #f9fafc;
 }
-:deep().my-label{
+:deep(.my-label){
   width: 24%;
 }
 .header_span{

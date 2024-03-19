@@ -6,7 +6,9 @@
     class="el-menu-demo"
     mode="horizontal"
   >
-  <img src="../../public/header_img.png" alt="">
+  <div class="el-img">
+    <img width="135" height="37" src="/header_img.png" alt="">
+  </div>
    <div class="el_menu">
     <el-menu-item index="/home">Home</el-menu-item>
     <el-sub-menu index="2">
@@ -27,7 +29,7 @@
       <el-menu-item index="4-2">item two</el-menu-item>
       <el-menu-item index="4-3">item three</el-menu-item>
     </el-sub-menu>
-    <el-link><el-icon><User /></el-icon> Sign In</el-link>
+    <el-menu-item index="/login"><el-icon><User /></el-icon>Sign In</el-menu-item>
    </div>
   </el-menu>
     </div>
@@ -45,5 +47,9 @@
 }
 .el_menu{
   display: flex;
+}
+.el-img{
+  display: flex;
+  align-items: center;
 }
 </style>
