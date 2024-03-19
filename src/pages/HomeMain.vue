@@ -14,7 +14,7 @@
               <el-input v-model="input3" placeholder="Search by Address Txn Hash Block Token Domain Name"
                 style="max-width: 100%;height:100%;border:none" class="input-with-select">
                 <template #prepend>
-                  <el-select v-model="select"  placeholder="Select" style="width: 115px;height:100%">
+                  <el-select v-model="select" placeholder="Select" style="width: 115px;height:100%">
                     <el-option label="Restaurant" value="1" />
                     <el-option label="Order No." value="2" />
                     <el-option label="Tel" value="3" />
@@ -30,7 +30,9 @@
 
           <el-row justify="center" align="middle">
             <el-col :span="12">
-              <span >Featured: Bscscan API - Need higher call rates ? <el-link style="color:aqua" href="#" target="_blank">Sign-up for a
+              <span>Featured: Bscscan API - Need higher call rates ? <el-link style="color:aqua" href="#"
+                  target="_blank">Sign-up
+                  for a
                   dedicated plan
                   today!</el-link></span>
 
@@ -41,9 +43,11 @@
           <el-col :span="11" :xs="24" :sm="24" :md="11" :lg="11" class="ContentPlaceHolder1_mainboxes">
             <div class="card-box">
               <div class="card-left">
-                <el-icon :size="30" style="margin-right: 10px; margin-top: 10px">
+                <svg-icon name="phone" width="2.5rem" height="2.5rem" style="margin-right: 10px; margin-top: 10px">
+                </svg-icon>
+                <!-- <el-icon :size="30" style="margin-right: 10px; margin-top: 10px">
                   <Compass />
-                </el-icon>
+                </el-icon> -->
                 <div class="card">
                   <p class="card_p">BNB PRICE</p>
                   <el-link> $524.59 @ 0.007508 BTC (+4.02%)</el-link>
@@ -521,9 +525,17 @@ const select = ref('');
   flex-wrap: wrap;
 }
 
+.flex_from h4 {
+  font-weight: normal;
+}
+
 .flex_to {
   display: flex;
   flex-wrap: wrap;
+}
+
+.flex_to h4 {
+  font-weight: normal;
 }
 
 .card-right {
@@ -625,12 +637,14 @@ const select = ref('');
 .container h2 {
   text-align: center;
 }
+
 .drop_search {
   background-color: #fff;
   height: 4vh;
   border-radius: 15px;
 }
-:deep(.el-select__wrapper){
+
+:deep(.el-select__wrapper) {
   height: 100%;
 }
 </style>
