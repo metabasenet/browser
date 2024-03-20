@@ -7,6 +7,25 @@ const routes =  [
       redirect: '/home'
     },
     {
+      path: '/login',
+      name: 'login',
+      component: () => import('@/views/login/index.vue')
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: () => import('../views/register/index.vue')
+    },
+    {
+      path: '/404',
+      name: '404',
+      component: () => import('@/views/404/index.vue'),
+      meta: {
+        hideHeader: true,
+        hideFooter: true,
+      },
+    },
+    {
       path: '/home',
       name: 'home',
       component: () => import('../pages/HomeMain.vue')
@@ -46,20 +65,21 @@ const routes =  [
       component: () => import('../pages/AddressFrom.vue')
     },
     {
-      path: '/login',
-      name: 'login',
-      component: () => import('../pages/Login.vue')
-    },
-    {
-      path: '/register',
-      name: 'register',
-      component: () => import('../pages/Register.vue')
+      path: '/:pathMatch(.*)*',
+      redirect: '/404',
+      name: 'notFound',
     }
   ];
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.VITE_BASE_URL),
   routes,
+  scrollBehavior () {
+    return {
+      left:0,
+      top:0
+    }
+  }
 });
 
 export default router

@@ -1,9 +1,9 @@
 <template>
   <div>
-    <HeaderWrapper></HeaderWrapper>
+    <HeaderWrapper v-if="!shouldHideHeader"></HeaderWrapper>
      <!-- 路由出口，根据路径匹配到的组件将在这里被渲染 -->
      <router-view/>
-  <FooterWrapper></FooterWrapper>
+  <FooterWrapper v-if="!shouldHideFooter"></FooterWrapper>
   </div>
 </template>
 
@@ -15,7 +15,16 @@ export default {
   components: {
     HeaderWrapper,
     FooterWrapper
-  }
+  },
+  computed: {
+    shouldHideHeader() {
+      return this.$route.meta.hideHeader || this.$route.path === '/404';
+    },
+    shouldHideFooter() {
+      return this.$route.meta.hideFooter || this.$route.path === '/404';
+    },
+  },
+
 }
 </script>
 
