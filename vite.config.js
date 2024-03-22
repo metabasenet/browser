@@ -12,14 +12,24 @@ export default defineConfig(({ mode }) => ({
   // 使用加载的环境变量
   base: env.BASE_URL || '',
   plugins: [vue(),
-    createSvgIconsPlugin({
-    iconDirs:[path.resolve(process.cwd(),'src/assets/icons')],
-    symbolId:'icon-[dir]-[name]'
-})
+  createSvgIconsPlugin({
+    iconDirs: [path.resolve(process.cwd(), 'src/assets/icons')],
+    symbolId: 'icon-[dir]-[name]'
+  })
   ],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
     },
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://192.168.0.104:9003/',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    },
+    port: 8081,
   }
 }))

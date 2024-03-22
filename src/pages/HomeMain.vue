@@ -497,7 +497,6 @@ const select = ref('');
   .card-ul,
   .card-li {
     padding: 5px;
-    /* 换行 */
     /* flex-wrap: wrap; */
   }
 

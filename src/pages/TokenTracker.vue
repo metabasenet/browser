@@ -194,7 +194,6 @@ const filteredData = computed(() => {
     if (item.name && searchText.value) {
       return item.name.toLowerCase().includes(searchText.value.toLowerCase());
     }
-    // 如果搜索文本为空，则返回所有数据
     return !searchText.value;
   });
 });
@@ -248,7 +247,6 @@ const handleCurrentChange = (val) => {
 }
 @media (max-width: 768px) {
   .box-table_header{
-    /* 自动换行 */
     flex-wrap: wrap;
   }
 }

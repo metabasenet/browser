@@ -1,7 +1,6 @@
 <template>
   <div>
     <HeaderWrapper v-if="!shouldHideHeader"></HeaderWrapper>
-     <!-- 路由出口，根据路径匹配到的组件将在这里被渲染 -->
      <router-view/>
   <FooterWrapper v-if="!shouldHideFooter"></FooterWrapper>
   </div>

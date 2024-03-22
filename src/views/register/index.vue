@@ -47,7 +47,7 @@
         <el-button :link="true" @click="handleSignUp">Don't have an account? Sign Up</el-button>
       </el-row> -->
       <!-- <el-row justify="center">
-        <el-button :link="true" @click="handleCaptcha">进行人机身份验证</el-button>
+        <el-button :link="true" @click="handleCaptcha">Perform man-machine authentication</el-button>
       </el-row> -->
     </el-card>
   </div>

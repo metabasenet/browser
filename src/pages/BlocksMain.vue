@@ -42,20 +42,21 @@
     />
   </div>
     <el-table :data="tableData" style="width: 100%" >
-    <el-table-column prop="block" label="Block" width="120">
+    <el-table-column prop="number" label="Block" width="120">
       <template v-slot="scope">
-            <router-link class="skyblue-text" :to="{ path: '/block' }">{{ scope.row.block }}</router-link>
+            <router-link class="skyblue-text" 
+            :to="{ name:'block',params:{blockNumber:scope.row.number} }">
+            {{ scope.row.number }}</router-link>
         </template>
     </el-table-column>
-    <el-table-column prop="name" label="Age" width="100" ></el-table-column>
-    <el-table-column prop="address" label="Txn" width="60">
+    <el-table-column prop="formattedTime" label="Age" width="100" ></el-table-column>
+    <el-table-column prop="transactioncount" label="Txn" width="60">
       <template v-slot="scope">
-            <router-link class="skyblue-text" :to="{ path: '/txs' }">{{ scope.row.address }}</router-link>
+            <router-link class="skyblue-text" :to="{ path: '/txs' }">{{ scope.row.transactioncount }}</router-link>
         </template>
     </el-table-column>
     <el-table-column prop="validator" label="Validator">
       <template v-slot="{ row }">
-      <!-- 添加Tooltip组件 -->
       <router-link class="skyblue-text" to="/address" >{{ row.validator }}</router-link>
       <el-tooltip  content="Copy Address" placement="top">
         <el-button style="margin-left:5px" icon="CopyDocument" @click="copyToClipboard(row.validator)">
@@ -67,7 +68,7 @@
     <el-table-column prop="gasused" label="Gas used" >
       <template v-slot="{ row }">
       {{ row.gasused }}
-      <el-progress :percentage="50" /> 
+      <el-progress :percentage="row.percentage" /> 
     </template>
     </el-table-column>
     <el-table-column prop="gaslimit" label="Gas Limit" />
@@ -91,123 +92,48 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref,onMounted} from 'vue'
 import { ElMessage } from 'element-plus';
-const tableData = ref([
-  {
-    block: '36949734',
-    name: '5 secs ago',
-    address: '153',
-    validator:'Validator:Legend Il',
-    gasused:'12,974,406 (9%)',
-    gaslimit:'140,000,000',
-    reward:'0.04062 BNB',
-    burntfees:'0.00406 BNB'
-  },
-  {
-    block: '36949734',
-    name: '5 secs ago',
-    address: '153',
-    validator:'Validator:Legend Il',
-    gasused:'12,974,406 (9%)',
-    gaslimit:'140,000,000',
-    reward:'0.04062 BNB',
-    burntfees:'0.00406 BNB'
-  },{
-    block: '36949734',
-    name: '5 secs ago',
-    address: '153',
-    validator:'Validator:Legend Il',
-    gasused:'12,974,406 (9%)',
-    gaslimit:'140,000,000',
-    reward:'0.04062 BNB',
-    burntfees:'0.00406 BNB'
-  },{
-    block: '36949734',
-    name: '5 secs ago',
-    address: '153',
-    validator:'Validator:Legend Il',
-    gasused:'12,974,406 (9%)',
-    gaslimit:'140,000,000',
-    reward:'0.04062 BNB',
-    burntfees:'0.00406 BNB'
-  },{
-    block: '36949734',
-    name: '5 secs ago',
-    address: '153',
-    validator:'Validator:Legend Il',
-    gasused:'12,974,406 (9%)',
-    gaslimit:'140,000,000',
-    reward:'0.04062 BNB',
-    burntfees:'0.00406 BNB'
-  },{
-    block: '36949734',
-    name: '5 secs ago',
-    address: '153',
-    validator:'Validator:Legend Il',
-    gasused:'12,974,406 (9%)',
-    gaslimit:'140,000,000',
-    reward:'0.04062 BNB',
-    burntfees:'0.00406 BNB'
-  },{
-    block: '36949734',
-    name: '5 secs ago',
-    address: '153',
-    validator:'Validator:Legend Il',
-    gasused:'12,974,406 (9%)',
-    gaslimit:'140,000,000',
-    reward:'0.04062 BNB',
-    burntfees:'0.00406 BNB'
-  },{
-    block: '36949734',
-    name: '5 secs ago',
-    address: '153',
-    validator:'Validator:Legend Il',
-    gasused:'12,974,406 (9%)',
-    gaslimit:'140,000,000',
-    reward:'0.04062 BNB',
-    burntfees:'0.00406 BNB'
-  },{
-    block: '36949734',
-    name: '5 secs ago',
-    address: '153',
-    validator:'Validator:Legend Il',
-    gasused:'12,974,406 (9%)',
-    gaslimit:'140,000,000',
-    reward:'0.04062 BNB',
-    burntfees:'0.00406 BNB'
-  },{
-    block: '36949734',
-    name: '5 secs ago',
-    address: '153',
-    validator:'Validator:Legend Il',
-    gasused:'12,974,406 (9%)',
-    gaslimit:'140,000,000',
-    reward:'0.04062 BNB',
-    burntfees:'0.00406 BNB'
-  },{
-    block: '36949734',
-    name: '5 secs ago',
-    address: '153',
-    validator:'Validator:Legend Il',
-    gasused:'12,974,406 (9%)',
-    gaslimit:'140,000,000',
-    reward:'0.04062 BNB',
-    burntfees:'0.00406 BNB'
-  },{
-    block: '36949734',
-    name: '5 secs ago',
-    address: '153',
-    validator:'Validator:Legend Il',
-    gasused:'12,974,406 (9%)',
-    gaslimit:'140,000,000',
-    reward:'0.04062 BNB',
-    burntfees:'0.00406 BNB'
-  },
-])
+import {getBlockPage} from '@/api/block';
+const tableData = ref([])
 const currentPage4 = ref(1)
-const pageSize4 = ref(20)
+const pageSize4 = ref(10)
 const copiedText = ref('');
+
+onMounted(async () => {
+  try {
+    const response = await getBlockPage(currentPage4.value, pageSize4.value)
+    tableData.value = response.data.list;
+    tableData.value.forEach(item => {
+      const percentage = (item.gasused / item.gaslimit) * 100;
+      item.percentage = percentage;
+    })
+
+    const currentTime = Math.floor(Date.now() / 1000);
+    tableData.value.forEach(item => {
+      const timestamp = item.timestamp;
+      const timeDifferenceInSeconds  = currentTime - timestamp;
+      let formattedTime;
+      if(timeDifferenceInSeconds < 60) {
+        const absoluteTimeDifference = Math.abs(timeDifferenceInSeconds);
+        formattedTime = `${absoluteTimeDifference} seconds ago`;
+      }else if(timeDifferenceInSeconds>=60 && timeDifferenceInSeconds < 3600) {
+        const minutes = Math.floor(timeDifferenceInSeconds / 60);
+        formattedTime = `${minutes} minutes ago`;
+      }else if(timeDifferenceInSeconds >= 3600 && timeDifferenceInSeconds < 86400) {
+        const hours = Math.floor(timeDifferenceInSeconds / 3600);
+        formattedTime = `${hours} hours ago`;
+      }else{
+        const days = Math.floor(timeDifferenceInSeconds / 86400);
+        formattedTime = `${days} days ago`;
+      }
+      item.formattedTime = formattedTime;
+    });
+  } catch (error) {
+    console.error('Error fetching data:',error)
+  }
+})
+
 const handleSizeChange = (val) => {
   console.log(`${val} items per page`)
 }
@@ -266,7 +192,6 @@ function copyToClipboard(text) {
 }
 @media (max-width: 768px) {
   .box-table_header{
-    /* 自动换行 */
     flex-wrap: wrap;
   }
 }

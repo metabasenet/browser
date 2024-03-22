@@ -35,9 +35,10 @@ const routes =  [
       name: 'blocks',
       component: () => import('../pages/BlocksMain.vue')
     },{
-      path: '/block',
+      path: '/block/:blockNumber',
       name: 'block',
-      component: () => import('../pages/BlockDetails.vue')
+      component: () => import('../pages/BlockDetails.vue'),
+      props:true
     },
     {
       path: '/txs',
@@ -45,9 +46,10 @@ const routes =  [
       component: () => import('../pages/TransActions.vue')
     },
     {
-      path: '/tx',
+      path: '/tx/:hash',
       name: 'tx',
-      component: () => import('../pages/TransDetails.vue')
+      component: () => import('../pages/TransDetails.vue'),
+      props:true
     },
     {
       path: '/tokens',

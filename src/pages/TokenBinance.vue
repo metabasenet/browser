@@ -367,7 +367,6 @@ function copyToClipboard(text) {
 }
 @media (max-width: 768px) {
   .box-table_header{
-    /* 自动换行 */
     flex-wrap: wrap;
   }
 }
@@ -386,14 +385,13 @@ margin-right: 5.75rem;
   /* flex-direction: row; */
 }
 }
-/* 在小屏幕下减小间距 */
+
 @media (max-width: 767px) {
 .card-ul,
 .card-li {
   padding: 5px;
 }
 
-/* 减小字体大小 */
 .card_p {
   font-size: 8px;
 }
@@ -425,9 +423,9 @@ color: #0693cc;
 margin-right: 5px;
 }
 .ellipsis-text {
-white-space: nowrap; /* 防止换行 */
-overflow: hidden; /* 隐藏超出部分 */
-text-overflow: ellipsis; /* 显示省略号 */
+white-space: nowrap; 
+overflow: hidden;
+text-overflow: ellipsis; 
 }
 .blocks_heade_p{
   color: #6c757d;
