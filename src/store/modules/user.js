@@ -1,10 +1,13 @@
 import { defineStore } from 'pinia';
-// import {reqLogin} from '@/api/user'
+// import {reqLogin,reqUserInfo} from '@/api/user'
 import { SET_TOKEN,SET_USER } from '@/utils/token';
 export const useUserStore = defineStore('user', {
     state: () => {
         return {
             token: SET_USER(),
+            // username:'',
+            // avatar:'',
+
         }
     },
     actions: {
@@ -18,8 +21,15 @@ export const useUserStore = defineStore('user', {
                 return Promise.reject(new Error('faile'))
             }
         },
-        getters: {
-
+        async userInfo(){
+            let reuslt = await reqUserInfo();
+            if(reuslt.code == 200){
+                this.username = reuslt.data.name;
+                this.avatar = reuslt.data.avatar;
+            }
         }
+    },
+    getters: {
+
     }
 })

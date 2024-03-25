@@ -6,7 +6,8 @@ import App from './App.vue'
 import router from './router';
 import 'virtual:svg-icons-register'
 import MyGlobalComponentsPlugin from './components/index.js';
-import pinia from './store'
+import pinia from './store';
+import './permisstion';
 const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)

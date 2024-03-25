@@ -5,7 +5,7 @@
         <div class="container">
           <el-row justify="center" align="middle">
             <el-col :span="12" :xs="24">
-              <h2>BNB Smart Chain Explorer</h2>
+              <h2>MNT Smart Chain Explorer</h2>
             </el-col>
           </el-row>
 
@@ -43,13 +43,13 @@
           <el-col :span="11" :xs="24" :sm="24" :md="11" :lg="11" class="ContentPlaceHolder1_mainboxes">
             <div class="card-box">
               <div class="card-left">
-                <svg-icon name="phone" width="2.5rem" height="2.5rem" style="margin-right: 10px; margin-top: 10px">
+                <svg-icon name="phone" width="2rem" height="2rem" style="margin-right: 10px; margin-top: 10px">
                 </svg-icon>
                 <!-- <el-icon :size="30" style="margin-right: 10px; margin-top: 10px">
                   <Compass />
                 </el-icon> -->
                 <div class="card">
-                  <p class="card_p">BNB PRICE</p>
+                  <p class="card_p">MNT PRICE</p>
                   <el-link> $524.59 @ 0.007508 BTC (+4.02%)</el-link>
                 </div>
               </div>
@@ -75,12 +75,11 @@
           <el-col class="ContentPlaceHolder1_mainboxes" :span="11" :xs="24" :sm="24" :md="11" :lg="11">
             <div class="card-box">
               <div class="card-left">
-                <el-icon :size="30" style="margin-right: 10px; margin-top: 10px">
-                  <Clock />
-                </el-icon>
+                <svg-icon name="globe" width="2rem" height="2rem" style="margin-right: 10px; margin-top: 10px">
+                </svg-icon>
                 <div class="card">
-                  <p class="card_p">BNB MARKET CAP ON BSC</p>
-                  <el-link> $12,653,201,507.00 (23,985,641 BNB)</el-link>
+                  <p class="card_p">MNT MARKET CAP ON BSC</p>
+                  <el-link> $12,653,201,507.00 (23,985,641 MNT)</el-link>
                 </div>
               </div>
             </div>
@@ -128,7 +127,7 @@
                 </div>
                 <el-tooltip content="Copy Address" placement="top">
                   <div class="c-flex">
-                    <p>0.04532 BNB</p>
+                    <p>0.04532 MNT</p>
                   </div>
                 </el-tooltip>
               </li>
@@ -148,7 +147,7 @@
                 </div>
                 <el-tooltip content="Copy Address" placement="top">
                   <div class="c-flex">
-                    <p>0.04532 BNB</p>
+                    <p>0.04532 MNT</p>
                   </div>
                 </el-tooltip>
               </li>
@@ -168,7 +167,7 @@
                 </div>
                 <el-tooltip content="Copy Address" placement="top">
                   <div class="c-flex">
-                    <p>0.04532 BNB</p>
+                    <p>0.04532 MNT</p>
                   </div>
                 </el-tooltip>
               </li>
@@ -188,7 +187,7 @@
                 </div>
                 <el-tooltip content="Copy Address" placement="top">
                   <div class="c-flex">
-                    <p>0.04532 BNB</p>
+                    <p>0.04532 MNT</p>
                   </div>
                 </el-tooltip>
               </li>
@@ -208,7 +207,7 @@
                 </div>
                 <el-tooltip content="Copy Address" placement="top">
                   <div class="c-flex">
-                    <p>0.04532 BNB</p>
+                    <p>0.04532 MNT</p>
                   </div>
                 </el-tooltip>
               </li>
@@ -228,7 +227,7 @@
                 </div>
                 <el-tooltip content="Copy Address" placement="top">
                   <div class="c-flex">
-                    <p>0.04532 BNB</p>
+                    <p>0.04532 MNT</p>
                   </div>
                 </el-tooltip>
               </li>
@@ -271,7 +270,7 @@
                 </div>
                 <el-tooltip content="Copy Address" placement="top">
                   <div class="c-flex">
-                    <p>0.04532 BNB</p>
+                    <p>0.04532 MNT</p>
                   </div>
                 </el-tooltip>
               </li>
@@ -297,7 +296,7 @@
                 </div>
                 <el-tooltip content="Copy Address" placement="top">
                   <div class="c-flex">
-                    <p>0.04532 BNB</p>
+                    <p>0.04532 MNT</p>
                   </div>
                 </el-tooltip>
               </li>
@@ -323,7 +322,7 @@
                 </div>
                 <el-tooltip content="Copy Address" placement="top">
                   <div class="c-flex">
-                    <p>0.04532 BNB</p>
+                    <p>0.04532 MNT</p>
                   </div>
                 </el-tooltip>
               </li>
@@ -349,7 +348,7 @@
                 </div>
                 <el-tooltip content="Copy Address" placement="top">
                   <div class="c-flex">
-                    <p>0.04532 BNB</p>
+                    <p>0.04532 MNT</p>
                   </div>
                 </el-tooltip>
               </li>
@@ -375,7 +374,7 @@
                 </div>
                 <el-tooltip content="Copy Address" placement="top">
                   <div class="c-flex">
-                    <p>0.04532 BNB</p>
+                    <p>0.04532 MNT</p>
                   </div>
                 </el-tooltip>
               </li>
@@ -401,7 +400,7 @@
                 </div>
                 <el-tooltip content="Copy Address" placement="top">
                   <div class="c-flex">
-                    <p>0.04532 BNB</p>
+                    <p>0.04532 MNT</p>
                   </div>
                 </el-tooltip>
               </li>
@@ -421,9 +420,15 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+// import useUserStore from '@/store/modules/user'
+// let userStore = useUserStore()
 const input3 = ref('')
 const select = ref('');
+
+onMounted(()=>{ 
+  // userStore.userInfo()
+})
 </script>
 
 <style scoped>

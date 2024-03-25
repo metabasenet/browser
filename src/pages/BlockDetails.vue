@@ -45,7 +45,7 @@
             <span> in 3 secs</span>
           </el-descriptions-item>
           <el-descriptions-item label="Block Reward:" label-align="center" align="center">0.040627555889411223
-            BNB</el-descriptions-item>
+            MNT</el-descriptions-item>
           <el-descriptions-item label="Difficulty:" label-align="center" align="center">
             2
           </el-descriptions-item>
@@ -62,7 +62,7 @@
             {{ blockDetails.gasLimit }}
           </el-descriptions-item>
           <el-descriptions-item label="Burnt Fees:" label-align="center" align="center">
-            0.004062755588941122 BNB
+            0.004062755588941122 MNT
             <el-tooltip content="open fee burn transaction" placement="top"><el-button
                 icon="Share"></el-button></el-tooltip>
           </el-descriptions-item>
@@ -75,7 +75,6 @@
     </el-row>
     <el-row class="grid-content_h2">
       <el-col :span="24">
-        {{ blockDetails }}
         <el-collapse @change="handleChange">
           <el-collapse-item title="More Details:" name="1">
             <el-descriptions :column="1" align="center" border v-model="blockDetails">
@@ -110,8 +109,10 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import { useRouter } from "vue-router";
+import { ElMessage } from 'element-plus';
 import { getBlockDetail } from '@/api/block';
 const blockDetails = ref({});
+const copiedText = ref('');
 const router = useRouter(); 
 const route  = useRouter();
 const { blockNumber } = defineProps({

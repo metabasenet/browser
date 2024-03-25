@@ -74,7 +74,7 @@
     </div></el-col>
     <el-col :span="5" align :xs="24" :sm="12" :md="12" :lg="6"><div class="grid-content ep-bg-purple-dark blocks_header" >
     <p>NETWORK UTILIZATION(24H)</p>
-    <el-link>2,373.55BNB(0.04%)</el-link>
+    <el-link>2,373.55MNT(0.04%)</el-link>
     </div>
     </el-col>
     <el-col :span="5" align :xs="24" :sm="12" :md="12" :lg="6"><div class="grid-content ep-bg-purple-dark blocks_header" >

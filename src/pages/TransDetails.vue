@@ -58,24 +58,27 @@
     </el-row>
     <el-row class="grid-content_row">
       <el-col :span="24" :xs="24">
-        <el-descriptions class="grid-content_h2" :column="1" align="center" border>
+        <el-descriptions class="grid-content_h2" v-model="transDetails" :column="1" align="center" border>
           <el-descriptions-item label="Transaction Hash:" label-align="center" align="center"
             label-class-name="my-label" class-name="my-content" label-width="30%">
-            0x17c4ed9a8196e44747cecb
+           {{transDetails.hash}}
             <el-tooltip content="Copy TxHash to clipboard" placement="top"><el-button icon="CopyDocument"
-                @click="copyToClipboard(Validator)">
+                @click="copyToClipboard(transDetails.hash)">
               </el-button>
             </el-tooltip></el-descriptions-item>
-          <el-descriptions-item label="Status:" label-align="center" align="center"><el-button type="success"
+          <el-descriptions-item label="Status:" label-align="center" align="center">
+            <el-button v-if="transDetails.status == 1" type="success"
               plain><el-icon>
                 <CircleCheckFilled />
               </el-icon>Success</el-button>
+              <el-button v-else type="danger"
+              plain><el-icon><CloseBold /></el-icon>Lose</el-button>
           </el-descriptions-item>
           <el-descriptions-item label="Block:" label-align="center" align="center">
             <div style="display: flex; justify-content: center; align-items: center;">
               <router-link class="skyblue-text" to="/block">
                 <div class=" mb-2 truncate">
-                  36957745
+                  {{transDetails.blockNumber}}
                 </div>
               </router-link>
               <el-tooltip content="Number of blocks validated since" placement="top">
@@ -87,7 +90,7 @@
             <el-icon>
               <Timer />
             </el-icon>
-            32 secs ago (Mar-14-2024 09:05:46 AM +UTC)
+            {{transDetails.formattedTime}}(Mar-14-2024 09:05:46 AM +UTC)
           </el-descriptions-item>
           <el-descriptions-item label="Transaction Action:" label-align="center" align="center">
             <div class="TransactionAction">
@@ -119,10 +122,10 @@
           </el-descriptions-item>
           <el-descriptions-item label="From:" label-align="center" align="center">
             <div class="TransactionAction">
-              <router-link class="skyblue-text ellipsis-text" to="/address">0xBe807Dddb074639cD9fA61b47676c064fc50D62C
+              <router-link class="skyblue-text ellipsis-text" to="/address">{{ transDetails.from }}
               </router-link><span class="text-muted">(Validator: Certik)</span><el-tooltip content="Copy Address"
                 placement="top"><el-button style="margin-left:5px" icon="CopyDocument"
-                  @click="copyToClipboard(Validator)">
+                  @click="copyToClipboard(transDetails.from)">
                 </el-button>
               </el-tooltip>
             </div>
@@ -135,21 +138,21 @@
                 </el-icon>
               </el-tooltip>
               <router-link class="skyblue-text ellipsis-text" to="/address">
-                <div class=" mb-2 truncate">0x0000000000000000000000000000000000001000</div>
+                <div class=" mb-2 truncate">{{ transDetails.to }}</div>
               </router-link>
               (BSC: Validator Set)
               <el-tooltip content="Copy Address" placement="top">
-                <el-button style="margin-left:5px" icon="CopyDocument" @click="copyToClipboard(Validator)">
+                <el-button style="margin-left:5px" icon="CopyDocument" @click="copyToClipboard(transDetails.to)">
                 </el-button>
               </el-tooltip>
-              <el-tooltip content="Copy Address" placement="top">
+              <el-tooltip content="Contract Execution Completed" placement="top">
                 <el-button type="success" icon="Check" circle />
               </el-tooltip>
             </div>
             <div class="TransactionAction">
               <el-icon>
                 <Money />
-              </el-icon>Transfer 0.004435244050238826 BNB <span>From</span>
+              </el-icon>Transfer 0.004435244050238826 MNT <span>From</span>
               <el-tooltip content="BSC: Validator Set" placement="top">
                 <router-link class="skyblue-text" to="/address">
                   <div class=" mb-2 truncate">BSC: Validator Set</div>
@@ -164,7 +167,7 @@
             <div class="TransactionAction">
               <el-icon>
                 <Money />
-              </el-icon>Transfer 0.007096390480382122 BNB <span>From</span>
+              </el-icon>Transfer 0.007096390480382122 MNT <span>From</span>
               <el-tooltip content="BSC: Validator Set" placement="top">
                 <router-link class="skyblue-text" to="/address">
                   <div class=" mb-2 truncate">BSC: Validator Set</div>
@@ -181,33 +184,33 @@
             <el-icon>
               <Timer />
             </el-icon>
-            0.070963904803821224 BNB <span>($43.24)</span>
+            {{transDetails.value}} <span>($43.24)</span>
           </el-descriptions-item>
           <el-descriptions-item label="Transaction Fee::" label-align="center" align="center">
-            0 BNB <span>($0.00)</span>
+            {{transDetails.TransactionFee}} MNT <span>(${{transDetails.TransactionFee}})</span>
           </el-descriptions-item>
           <el-descriptions-item label="Gas Price:" label-align="center" align="center">
-            0 BNB <span> (0 BNB)</span>
+            {{transDetails.gasPrice}} MNT<span> ({{transDetails.gasPrice}}) MNT</span>
           </el-descriptions-item>
         </el-descriptions>
       </el-col>
     </el-row>
     <el-row class="grid-content_h2">
       <el-col :span="24" :xs="24">
-        <el-collapse v-model="activeNames" @change="handleChange">
+        <el-collapse  @change="handleChange">
           <el-collapse-item title="More Details:" name="1">
-            <el-descriptions :column="1" align="center" border>
+            <el-descriptions :column="1" align="center" border v-model="transDetails">
               <el-descriptions-item label="Gas Limit & Usage by Txn:" label-align="center" align="center"
                 label-class-name="my-label" class-name="my-content">9,223,372,036,854,775,807 | 51,008
                 (0%)</el-descriptions-item>
-              <el-descriptions-item label="Burnt Fees:" label-align="center" align="center"> 0.005224500901272524 BNB
+              <el-descriptions-item label="Burnt Fees:" label-align="center" align="center"> 0.005224500901272524 MNT
                 ($3.15)</el-descriptions-item>
               <el-descriptions-item label="Other Attributes:" label-align="center" align="center">
                 <el-button>Nonce: 1607650</el-button><el-button>Position In Block: 208</el-button>
               </el-descriptions-item>
               <el-descriptions-item label="Input Data:" label-align="center" align="center">
-                <el-input v-model="textarea" style="width: 100%" :rows="2" type="textarea" disabled
-                  placeholder="Please input" />
+                <el-input  style="width: 100%" :rows="2" type="textarea" disabled
+                  :placeholder="transDetails.data" />
                 <el-select v-model="value" placeholder="View Input As" style="width: 150px">
                   <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
                 </el-select>
@@ -246,10 +249,12 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { ElMessage } from 'element-plus';
 import { getTransactionDetail } from '@/api/transaction';
 const activeNames = ref([])
+const transDetails = ref({})
 const value = ref('')
-const textarea = ref('Function: deposit(address valAddr)')
+const copiedText = ref('');
 const options = [
   {
     value: 'Default View',
@@ -270,14 +275,34 @@ const { hash } = defineProps({
     required: true,
   }
 });
+const timestamps = () => {
+  const currentTime = Math.floor(Date.now() / 1000);
+  const timestamp = transDetails.value.timestamp;
+  const timeDifferenceInSeconds = currentTime - timestamp;
+  let formattedTime;
+  if (timeDifferenceInSeconds < 60) {
+    const absoluteTimeDifference = Math.abs(timeDifferenceInSeconds);
+    formattedTime = `${absoluteTimeDifference} seconds ago`;
+  } else if (timeDifferenceInSeconds >= 60 && timeDifferenceInSeconds < 3600) {
+    const minutes = Math.floor(timeDifferenceInSeconds / 60);
+    formattedTime = `${minutes} minutes ago`;
+  } else if (timeDifferenceInSeconds >= 3600 && timeDifferenceInSeconds < 86400) {
+    const hours = Math.floor(timeDifferenceInSeconds / 3600);
+    formattedTime = `${hours} hours ago`;
+  } else {
+    const days = Math.floor(timeDifferenceInSeconds / 86400);
+    formattedTime = `${days} days ago`;
+  }
+  transDetails.value.formattedTime = formattedTime;
+}
 const fetchTransactionDetails = async () => {
   try {
     if (hash !== null) {
       const response = await getTransactionDetail(hash);
-      console.log(response.data);
-      blockDetails.value = response.data;
+      transDetails.value = response.data;
+      transDetails.value.TransactionFee = transDetails.value.cumulativeGasUsed * transDetails.value.effectiveGasPrice
+      timestamps()
     }
-    timestamps()
   } catch (error) {
     console.error('Error fetching block details:', error);
   }

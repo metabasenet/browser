@@ -73,7 +73,7 @@
     </el-table-column>
     <el-table-column prop="gaslimit" label="Gas Limit" />
     <el-table-column prop="reward" label="Reward" />
-    <el-table-column prop="burntfees" label="Burnt Fees (BNB)" />
+    <el-table-column prop="burntfees" label="Burnt Fees (MNT)" />
   </el-table>
   <div class="demo-pagination-block box-table_header">
     <el-pagination

@@ -7,7 +7,7 @@
     mode="horizontal"
   >
   <div class="el-img">
-    <img width="135" height="37" src="/header_img.png" alt="">
+    <img width="40" height="37" src="/header_img.png" alt="">
   </div>
    <div class="el_menu">
     <el-menu-item index="/home">Home</el-menu-item>
