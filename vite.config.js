@@ -24,8 +24,8 @@ export default defineConfig(({ mode }) => ({
   },
   server: {
     proxy: {
-      '/api': {
-        target: 'http://39.106.251.173:9003/',
+      [env.BASE_URL]: {
+        target: env.VITE_APP_API_URL,
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
       }

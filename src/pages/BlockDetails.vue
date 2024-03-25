@@ -16,21 +16,23 @@
     </el-row>
     <el-row class="grid-content_row">
       <el-col :span="24">
-        <el-descriptions v-model="blockDetails" class="grid-content_h2" :column="1" align="center" border>
+        <el-descriptions v-model="blockDetails" class="grid-content_h2 grid-content_h1" :column="1" align="center"
+          border>
           <el-descriptions-item label="Block Height:" label-align="center" align="center" label-class-name="my-label"
-            class-name="my-content" label-width="30%"> {{ blockDetails.number }}
+            class-name="my-content" label-width="30%"> <span>{{ blockDetails.number }}</span>
             <el-tooltip content="View previous block" placement="top">
               <el-button icon="ArrowLeft" @click="ArrowLeft" />
             </el-tooltip><el-tooltip content="View next block" placement="top">
-              <el-button icon="ArrowRight"  @click="ArrowRight"/>
+              <el-button icon="ArrowRight" @click="ArrowRight" />
             </el-tooltip>
           </el-descriptions-item>
           <el-descriptions-item label=" Timestamp:" label-align="center" align="center"><el-icon>
               <Timer />
-            </el-icon> {{ blockDetails.formattedTime }}</el-descriptions-item>
+            </el-icon> <span>{{ blockDetails.formattedTime }}</span></el-descriptions-item>
           <el-descriptions-item label="Transactions:" label-align="center" align="center">
-            <el-tooltip content="Copy Address" placement="top"><router-link class="skyblue-text" to="/txs">{{
-        blockDetails.transactioncount }}</router-link></el-tooltip>
+            <el-tooltip content="Copy Address" placement="top"><router-link class="skyblue-text" to="/txs">
+                <span>{{
+        blockDetails.transactioncount }}</span></router-link></el-tooltip>
             <!-- <span>and </span>
             <el-tooltip content="Copy Address" placement="top"><router-link class="skyblue-text" to="/address">29
                 contract internal transactions</router-link></el-tooltip> <span>in this block</span> -->
@@ -44,25 +46,25 @@
             </el-tooltip>
             <span> in 3 secs</span>
           </el-descriptions-item>
-          <el-descriptions-item label="Block Reward:" label-align="center" align="center">0.040627555889411223
-            MNT</el-descriptions-item>
+          <el-descriptions-item label="Block Reward:" label-align="center" align="center"><span>0.040627555889411223
+            MNT</span></el-descriptions-item>
           <el-descriptions-item label="Difficulty:" label-align="center" align="center">
-            2
+            <span>2</span>
           </el-descriptions-item>
           <el-descriptions-item label="Total Difficulty:" label-align="center" align="center">
-            73,408,936
+            <span>73,408,936</span>
           </el-descriptions-item>
           <el-descriptions-item label="Size:" label-align="center" align="center">
-            39,635 bytes
+            <span>39,635 bytes</span>
           </el-descriptions-item>
           <el-descriptions-item label="Gas Used:" label-align="center" align="center">
-            {{ blockDetails.gasUsed }}
+            <span>{{ blockDetails.gasUsed }}</span>
           </el-descriptions-item>
           <el-descriptions-item label="Gas Limit:" label-align="center" align="center">
-            {{ blockDetails.gasLimit }}
+            <span>{{ blockDetails.gasLimit }}</span>
           </el-descriptions-item>
           <el-descriptions-item label="Burnt Fees:" label-align="center" align="center">
-            0.004062755588941122 MNT
+            <span>0.004062755588941122 MNT</span>
             <el-tooltip content="open fee burn transaction" placement="top"><el-button
                 icon="Share"></el-button></el-tooltip>
           </el-descriptions-item>
@@ -77,15 +79,15 @@
       <el-col :span="24">
         <el-collapse @change="handleChange">
           <el-collapse-item title="More Details:" name="1">
-            <el-descriptions :column="1" align="center" border v-model="blockDetails">
+            <el-descriptions class="grid-content" :column="1" align="center" border v-model="blockDetails">
               <el-descriptions-item label="Hash:" label-align="center" align="center" label-class-name="my-label"
-                class-name="my-content">{{ blockDetails.hash }}</el-descriptions-item>
+                class-name="my-content"><span>{{ blockDetails.hash }}</span></el-descriptions-item>
               <el-descriptions-item label="Parent Hash:" label-align="center" align="center"><router-link
                   class="skyblue-text" to="/address">{{ blockDetails.parenthash }}</router-link></el-descriptions-item>
               <el-descriptions-item label="Sha3Uncles:" label-align="center"
-                align="center">0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347</el-descriptions-item>
+                align="center"><span>0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347</span></el-descriptions-item>
               <el-descriptions-item label="Nonce:" label-align="center" align="center">
-                0x0000000000000000
+                <span>0x0000000000000000</span>
               </el-descriptions-item>
             </el-descriptions>
           </el-collapse-item>
@@ -113,8 +115,8 @@ import { ElMessage } from 'element-plus';
 import { getBlockDetail } from '@/api/block';
 const blockDetails = ref({});
 const copiedText = ref('');
-const router = useRouter(); 
-const route  = useRouter();
+const router = useRouter();
+const route = useRouter();
 const { blockNumber } = defineProps({
   blockNumber: {
     type: [Number, String],
@@ -210,10 +212,13 @@ onMounted(() => {
 }
 
 .grid-content_h1 span {
-  font-size: 10px;
+  font-size: 12px;
   color: #6c757d;
 }
-
+.grid-content span{
+  font-size: 12px;
+  color: #6c757d;
+}
 .grid-content_h3 {
   margin: 0 2rem;
   padding: 19px 0;

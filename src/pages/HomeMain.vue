@@ -506,15 +506,15 @@ onMounted(()=>{
   }
 
   /* 减小字体大小 */
-  .card_p,
+  /* .card_p,
   .c-flex p,
   .b-flex h4 {
-    font-size: 8px;
+    font-size: 10px;
   }
 
   .el-link {
-    font-size: 8px;
-  }
+    font-size: 10px;
+  } */
 }
 
 .card-left {
