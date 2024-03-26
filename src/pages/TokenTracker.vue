@@ -3,7 +3,7 @@
     <el-row>
       <el-col :span="24">
         <div class="grid-content ep-bg-purple-dark grid-content_h3">
-          <h3>Token Tracker(BEP-20)</h3>
+          <h3>Token Tracker(ERC-20)</h3>
         </div>
       </el-col>
     </el-row>
@@ -15,18 +15,42 @@
       </div>
       <el-table :header-cell-style="{ color: '#0784c3' }" :data="filteredData"
         :default-sort="{ prop: ['price', 'chage', 'volume', 'virculating'], order: 'descending' }" style="width: 100%">
-        <el-table-column prop="token" label="Token" width="180">
+        <el-table-column prop="contractaddress" label="Token" width="200" >
           <template v-slot="scope">
             <el-icon>
               <Position />
             </el-icon>
-            <router-link :to="{ path: '/token' }">{{ scope.row.token }}</router-link>
+            <router-link :to="{ name:'token',params:{address:scope.row.contractaddress} }">{{ scope.row.contractaddress }}</router-link>
             <el-tooltip content="Cross-Chain" placement="top">
               <el-icon>
                 <InfoFilled />
               </el-icon>
             </el-tooltip>
           </template>
+        </el-table-column>
+        <el-table-column
+          header-align="center"
+          align="center"
+          prop="ercname"
+          label="Token name" >
+        </el-table-column>
+        <el-table-column
+          header-align="center"
+          align="center"
+          prop="ercsymbol"
+          label="Token symbol" >
+        </el-table-column>
+        <el-table-column
+          header-align="center"
+          align="center"
+          prop="totalsupply"
+          label="totalsupply" >
+        </el-table-column>
+        <el-table-column
+          header-align="center"
+          align="center"
+          prop="decimals"
+          label="decimals" >
         </el-table-column>
         <el-table-column prop="price" sortable label="Price" width="180">
           <template #header>
@@ -88,9 +112,9 @@ larger than the reported circulating supply." placement="top">
         </el-table-column>
       </el-table>
       <div class="demo-pagination-block box-table_header">
-        <el-pagination v-model:current-page="currentPage4" v-model:page-size="pageSize4" :page-sizes="[10, 20, 30, 40]"
-          small layout=" sizes, prev, pager, next" :total="20" @size-change="handleSizeChange"
-          @current-change="handleCurrentChange" />
+        <el-pagination background v-model:current-page="currentPage4" v-model:page-size="pageSize4" :page-sizes="[10, 25, 50, 100]"
+          small layout=" sizes, prev, pager, next" :total="total" @size-change="handleSizeChange"
+          @current-change="getTokenList" />
       </div>
     </el-row>
   </div>
@@ -101,15 +125,18 @@ import { ref, computed,onMounted } from 'vue'
 import { getTokenPage } from '@/api/toTokens';
 const tableData = ref([])
 const currentPage4 = ref(1)
+const total = ref(0)
 const searchText = ref('');
 const pageSize4 = ref(10)
 const handleSizeChange = (val) => {
-  console.log(`${val} items per page`)
+  getTokenList()
 }
-const getTokenList = async () => {
+const getTokenList = async (pager = 1) => {
   try {
+    currentPage4.value = pager;
     const response = await getTokenPage(currentPage4.value, pageSize4.value)
     tableData.value = response.data.list;
+    total.value = response.data.total;
     console.log(tableData.value);
   } catch (error) {
     console.error('Error fetching data:', error)

@@ -15,7 +15,7 @@
       <template #title>Blockchain</template>
       <el-menu-item index="/blocks">View Blocks</el-menu-item>
       <el-menu-item index="/txs">Transactions</el-menu-item>
-      <el-menu-item index="2-3">item three</el-menu-item>
+      <el-menu-item index="/accounts">Top Accounts</el-menu-item>
     </el-sub-menu>
     <el-sub-menu index="3">
       <template #title>Tokens</template>

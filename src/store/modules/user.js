@@ -17,7 +17,7 @@ export const useUserStore = defineStore('user', {
                 this.token = result.data.token
                  SET_TOKEN(result.data.token)
                 return 'ok'
-            }else{
+            }else{ 
                 return Promise.reject(new Error('faile'))
             }
         },

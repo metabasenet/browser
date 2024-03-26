@@ -33,12 +33,14 @@
     <el-pagination
       v-model:current-page="currentPage4"
       v-model:page-size="pageSize4"
-      :page-sizes="[10, 20, 30, 40]"
+      :page-sizes="[10, 25, 50, 100]"
       layout=" sizes, prev, pager, next, "
-      :total="10"
+      :total="total"
+      :pager-count="5"
+      background
       small
       @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
+      @current-change="getBlockPageData"
     />
   </div>
     <el-table :data="tableData" style="width: 100%" >
@@ -75,16 +77,19 @@
     <el-table-column prop="reward" label="Reward" />
     <el-table-column prop="burntfees" label="Burnt Fees (MNT)" />
   </el-table>
-  <div class="demo-pagination-block box-table_header">
+  <div class="demo-pagination-block table_header">
+    <span>Show rows:</span>
     <el-pagination
       v-model:current-page="currentPage4"
       v-model:page-size="pageSize4"
-      :page-sizes="[10, 20, 30, 40]"
+      :page-sizes="[10, 25, 50, 100]"
+      background
       small
-      layout=" sizes, prev, pager, next"
-      :total="20"
+      :pager-count="5"
+      layout=" sizes,prev, pager, next"
+      :total="total"
       @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
+      @current-change="getBlockPageData"
     />
   </div>
   </el-row>
@@ -97,13 +102,16 @@ import { ElMessage } from 'element-plus';
 import {getBlockPage} from '@/api/block';
 const tableData = ref([])
 const currentPage4 = ref(1)
+const total = ref(0)
 const pageSize4 = ref(10)
 const copiedText = ref('');
 
-onMounted(async () => {
+const getBlockPageData = async (pager = 1) => {
   try {
+    currentPage4.value = pager;
     const response = await getBlockPage(currentPage4.value, pageSize4.value)
     tableData.value = response.data.list;
+    total.value = response.data.total;
     tableData.value.forEach(item => {
       const percentage = (item.gasused / item.gaslimit) * 100;
       item.percentage = percentage;
@@ -132,14 +140,15 @@ onMounted(async () => {
   } catch (error) {
     console.error('Error fetching data:',error)
   }
-})
+}
+
 
 const handleSizeChange = (val) => {
-  console.log(`${val} items per page`)
+  getBlockPageData()
 }
-const handleCurrentChange = (val) => {
-  console.log(`current page: ${val}`)
-}
+// const handleCurrentChange = (val) => {
+//   getBlockPageData()
+// }
 function copyToClipboard(text) {
       copiedText.value = text;
       navigator.clipboard.writeText(text)
@@ -151,7 +160,9 @@ function copyToClipboard(text) {
           ElMessage.error('Copy failed, please copy manually!');
         });
     }
-
+    onMounted( () => {
+  getBlockPageData()
+})
 </script>
 
 <style scoped>
@@ -189,6 +200,18 @@ function copyToClipboard(text) {
   display: flex;
   justify-content: space-between;
   margin: 10px 0;
+}
+.table_header{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 10px 0;
+  color: #6c757d;
+  font-size: 12px;
+}
+.table_header span{
+  margin-right: 5px;
 }
 @media (max-width: 768px) {
   .box-table_header{

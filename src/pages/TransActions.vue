@@ -36,15 +36,14 @@
     <el-row class="box-table">
       <div class="demo-pagination-block box-table_header">
         <div class="demonstration">Total of 36,899,505 blocks</div>
-        <el-pagination v-model:current-page="currentPage4" v-model:page-size="pageSize4" :page-sizes="[10, 20, 30, 40]"
-          layout=" sizes, prev, pager, next, " :total="10" small @size-change="handleSizeChange"
-          @current-change="handleCurrentChange" />
+        <el-pagination background v-model:current-page="currentPage4" v-model:page-size="pageSize4"
+          :page-sizes="[10, 25, 50, 100]" layout="sizes,prev, pager, next" :total="total" small
+          @size-change="handleSizeChange" @current-change="getTransAction" />
       </div>
-      <el-table :data="tableData" style="width: 100%">
+      <el-table :data="tableData" style="width: 100%"> 
         <el-table-column prop="hash" label="Txn Hash" width="120">
           <template v-slot="scope">
-            <router-link class="skyblue-text ellipsis-text"
-              :to="{ name: 'tx', params: { hash: scope.row.hash } }">
+            <router-link class="skyblue-text ellipsis-text" :to="{ name: 'tx', params: { hash: scope.row.hash } }">
               {{ scope.row.hash }}
             </router-link>
           </template>
@@ -93,10 +92,11 @@
         <el-table-column prop="value" label="Value" />
         <el-table-column prop="gasPrice" label="Gas Price" />
       </el-table>
-      <div class="demo-pagination-block box-table_header">
-        <el-pagination v-model:current-page="currentPage4" v-model:page-size="pageSize4" :page-sizes="[10, 20, 30, 40]"
-          small layout=" sizes, prev, pager, next" :total="20" @size-change="handleSizeChange"
-          @current-change="handleCurrentChange" />
+      <div class="demo-pagination-block table_header">
+        <span>Show rows:</span>
+        <el-pagination background v-model:current-page="currentPage4" v-model:page-size="pageSize4"
+          :page-sizes="[10, 25, 50, 100]" small layout="sizes,prev, pager, next" :total="total"
+          @size-change="handleSizeChange" @current-change="getTransAction"/>
       </div>
     </el-row>
   </div>
@@ -109,21 +109,20 @@ import { getTransactionPage } from '@/api/transaction';
 const tableData = ref([])
 const currentPage4 = ref(1)
 const pageSize4 = ref(10)
+const total = ref(0)
 const copiedText = ref('');
 const handleSizeChange = (val) => {
-  console.log(`${val} items per page`)
+  getTransAction()
 }
-const getTransAction = async () => {
+const getTransAction = async (pager = 1) => {
   try {
+    currentPage4.value = pager;
     const response = await getTransactionPage(currentPage4.value, pageSize4.value)
     tableData.value = response.data.list;
-    console.log(tableData.value);
+    total.value = response.data.total;
   } catch (error) {
     console.error('Error fetching data:', error)
   }
-}
-const handleCurrentChange = (val) => {
-  console.log(`current page: ${val}`)
 }
 function copyToClipboard(text) {
   copiedText.value = text;
@@ -183,6 +182,20 @@ onMounted(() => {
   display: flex;
   justify-content: space-between;
   margin: 10px 0;
+}
+
+.table_header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 10px 0;
+  color: #6c757d;
+  font-size: 12px;
+}
+
+.table_header span {
+  margin-right: 5px;
 }
 
 @media (max-width: 768px) {

@@ -108,9 +108,9 @@
     />
   </div>
   <el-table :data="tableData" style="width: 100%" >
-  <el-table-column prop="txnhash" label="Txn Hash" width="120">
+  <el-table-column prop="transactionHash" label="Txn Hash" width="120">
     <template v-slot="scope">
-          <router-link class="skyblue-text ellipsis-text" :to="{ path: '/tx' }">{{ scope.row.txnhash }}</router-link>
+          <router-link class="skyblue-text ellipsis-text" :to="{ name: 'tx', params: { hash: scope.row.transactionHash } }">{{ scope.row.transactionHash }}</router-link>
       </template>
   </el-table-column>
   <el-table-column prop="method" label="Method " width="120" >
@@ -120,42 +120,46 @@
       </el-tooltip>
       </template>
   </el-table-column>
-  <el-table-column prop="block" label="Block" width="100">
+  <el-table-column prop="blockNumber" label="Block" width="100">
     <template v-slot="scope">
-          <router-link class="skyblue-text" :to="{ path: '/block' }">{{ scope.row.block }}</router-link>
+          <router-link class="skyblue-text" :to="{ path: '/block' }">{{ scope.row.blockNumber }}</router-link>
       </template>
   </el-table-column>
-  <el-table-column prop="age" label="Age">
+  <el-table-column prop="formattedTime" label="Age">
   </el-table-column>
-  <el-table-column prop="from" label="From" width="250">
+  <el-table-column prop="from" label="From" width="350">
     <template v-slot="scope">
-      <el-tooltip :content="scope.row.from" placement="top">
-        <router-link class="skyblue-text" :to="{ path: '/address' }">{{ scope.row.from }}</router-link>
-      </el-tooltip> 
-      <el-tooltip content="Copy Address" placement="top">
-        <el-button  icon="CopyDocument" @click="copyToClipboard(scope.row.from)">
-      </el-button>
-      </el-tooltip>
-      <el-button style="margin-left:2.5rem" type="success" icon="right" circle plain/>
+            <div class="router_box">
+              <el-tooltip :content="scope.row.from" placement="top">
+              <router-link class="skyblue-text ellipsis-text" :to="{ path: '/address' }">{{ scope.row.from }}</router-link>
+            </el-tooltip>
+            <el-tooltip content="Copy Address" placement="top">
+              <el-button icon="CopyDocument" @click="copyToClipboard(scope.row.from)">
+              </el-button>
+            </el-tooltip>
+            <el-button style="margin-left:2.5rem" type="success" icon="right" circle plain />
+            </div>
       </template>
   </el-table-column>
-  <el-table-column prop="to" label="To" width="250" >
+  <el-table-column prop="to" label="To" width="350" >
     <template v-slot="scope">
-      <el-tooltip content="Contract" placement="top">
+      <div class="router_box">
+        <el-tooltip content="Contract" placement="top">
         <el-button style="margin-right:5px"  icon="Document" @click="copyToClipboard(scope.row.to)">
       </el-button>
       </el-tooltip>
       <el-tooltip :content="scope.row.to" placement="top">
-        <router-link class="skyblue-text" :to="{ path: '/address' }">{{ scope.row.to }}</router-link>
+        <router-link class="skyblue-text ellipsis-text" :to="{ path: '/address' }">{{ scope.row.to }}</router-link>
       </el-tooltip> 
       <el-tooltip content="Copy Address" placement="top">
         <el-button  icon="CopyDocument" @click="copyToClipboard(scope.row.to)">
       </el-button>
       </el-tooltip>
+      </div>
       </template>
   </el-table-column>
   <el-table-column prop="value" label="Value" />
-  <el-table-column prop="gasprice" label="Gas Price" />
+  <el-table-column prop="TransactionFee" label="Gas Price" />
 </el-table>
   <div class="demo-pagination-block box-table_header">
     <el-pagination
@@ -174,140 +178,57 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref,onMounted } from 'vue'
 import { ElMessage } from 'element-plus';
-const tableData = ref([
-{
-  txnhash: '0x995d8e4d593fd45703c4aa26664606b9ad3de0f021be6586377db86ea45476e3',
-  method : 'Deposit',
-  block: '36956012',
-  age:'7 secs ago',
-  from:'Validator: Legend II',
-  to:'BSC: Validator Set',
-  value:'0.04062 BNB',
-  gasprice:1
-},{
-  txnhash: '0x995d8e4d593fd45703c4aa26664606b9ad3de0f021be6586377db86ea45476e3',
-  method : 'Deposit',
-  block: '36956012',
-  age:'7 secs ago',
-  from:'Validator: Legend II',
-  to:'BSC: Validator Set',
-  value:'0.04062 BNB',
-  gasprice:1
-},{
-  txnhash: '0x995d8e4d593fd45703c4aa26664606b9ad3de0f021be6586377db86ea45476e3',
-  method : 'Deposit',
-  block: '36956012',
-  age:'7 secs ago',
-  from:'Validator: Legend II',
-  to:'BSC: Validator Set',
-  value:'0.04062 BNB',
-  gasprice:1
-},{
-  txnhash: '0x995d8e4d593fd45703c4aa26664606b9ad3de0f021be6586377db86ea45476e3',
-  method : 'Deposit',
-  block: '36956012',
-  age:'7 secs ago',
-  from:'Validator: Legend II',
-  to:'BSC: Validator Set',
-  value:'0.04062 BNB',
-  gasprice:1
-},{
-  txnhash: '0x995d8e4d593fd45703c4aa26664606b9ad3de0f021be6586377db86ea45476e3',
-  method : 'Deposit',
-  block: '36956012',
-  age:'7 secs ago',
-  from:'Validator: Legend II',
-  to:'BSC: Validator Set',
-  value:'0.04062 BNB',
-  gasprice:1
-},{
-  txnhash: '0x995d8e4d593fd45703c4aa26664606b9ad3de0f021be6586377db86ea45476e3',
-  method : 'Deposit',
-  block: '36956012',
-  age:'7 secs ago',
-  from:'Validator: Legend II',
-  to:'BSC: Validator Set',
-  value:'0.04062 BNB',
-  gasprice:1
-},{
-  txnhash: '0x995d8e4d593fd45703c4aa26664606b9ad3de0f021be6586377db86ea45476e3',
-  method : 'Deposit',
-  block: '36956012',
-  age:'7 secs ago',
-  from:'Validator: Legend II',
-  to:'BSC: Validator Set',
-  value:'0.04062 BNB',
-  gasprice:1
-},{
-  txnhash: '0x995d8e4d593fd45703c4aa26664606b9ad3de0f021be6586377db86ea45476e3',
-  method : 'Deposit',
-  block: '36956012',
-  age:'7 secs ago',
-  from:'Validator: Legend II',
-  to:'BSC: Validator Set',
-  value:'0.04062 BNB',
-  gasprice:1
-},{
-  txnhash: '0x995d8e4d593fd45703c4aa26664606b9ad3de0f021be6586377db86ea45476e3',
-  method : 'Deposit',
-  block: '36956012',
-  age:'7 secs ago',
-  from:'Validator: Legend II',
-  to:'BSC: Validator Set',
-  value:'0.04062 BNB',
-  gasprice:1
-},{
-  txnhash: '0x995d8e4d593fd45703c4aa26664606b9ad3de0f021be6586377db86ea45476e3',
-  method : 'Deposit',
-  block: '36956012',
-  age:'7 secs ago',
-  from:'Validator: Legend II',
-  to:'BSC: Validator Set',
-  value:'0.04062 BNB',
-  gasprice:1
-},{
-  txnhash: '0x995d8e4d593fd45703c4aa26664606b9ad3de0f021be6586377db86ea45476e3',
-  method : 'Deposit',
-  block: '36956012',
-  age:'7 secs ago',
-  from:'Validator: Legend II',
-  to:'BSC: Validator Set',
-  value:'0.04062 BNB',
-  gasprice:1
-},{
-  txnhash: '0x995d8e4d593fd45703c4aa26664606b9ad3de0f021be6586377db86ea45476e3',
-  method : 'Deposit',
-  block: '36956012',
-  age:'7 secs ago',
-  from:'Validator: Legend II',
-  to:'BSC: Validator Set',
-  value:'0.04062 BNB',
-  gasprice:1
-},{
-  txnhash: '0x995d8e4d593fd45703c4aa26664606b9ad3de0f021be6586377db86ea45476e3',
-  method : 'Deposit',
-  block: '36956012',
-  age:'7 secs ago',
-  from:'Validator: Legend II',
-  to:'BSC: Validator Set',
-  value:'0.04062 BNB',
-  gasprice:1
-},{
-  txnhash: '0x995d8e4d593fd45703c4aa26664606b9ad3de0f021be6586377db86ea45476e3',
-  method : 'Deposit',
-  block: '36956012',
-  age:'7 secs ago',
-  from:'Validator: Legend II',
-  to:'BSC: Validator Set',
-  value:'0.04062 BNB',
-  gasprice:1
-},
-])
+import { getContactPage } from '@/api/toTokens';
+const tableData = ref([])
+const transDetails = ref({})
 const currentPage4 = ref(1)
-const pageSize4 = ref(20)
+const pageSize4 = ref(10)
 const copiedText = ref('');
+const { address } = defineProps({
+  address: {
+    type: [String],
+    required: true,
+  }
+});
+const getContactList = async () => {
+  console.log(address);
+  try {
+    if (address !== null) {
+      const response = await getContactPage(address,currentPage4.value,pageSize4.value);
+      tableData.value = response.data.list;
+      timestamps();
+      tableData.value.forEach(item => {
+        item.TransactionFee = item.cumulativeGasUsed * item.effectiveGasPrice
+      })
+    }
+  } catch (error) {
+    console.error('Error fetching block details:', error);
+  }
+}
+const timestamps = () => {
+  const currentTime = Math.floor(Date.now() / 1000);
+    tableData.value.forEach(item => {
+      const timestamp = item.timestamp;
+      const timeDifferenceInSeconds  = currentTime - timestamp;
+      let formattedTime;
+      if(timeDifferenceInSeconds < 60) {
+        const absoluteTimeDifference = Math.abs(timeDifferenceInSeconds);
+        formattedTime = `${absoluteTimeDifference} seconds ago`;
+      }else if(timeDifferenceInSeconds>=60 && timeDifferenceInSeconds < 3600) {
+        const minutes = Math.floor(timeDifferenceInSeconds / 60);
+        formattedTime = `${minutes} minutes ago`;
+      }else if(timeDifferenceInSeconds >= 3600 && timeDifferenceInSeconds < 86400) {
+        const hours = Math.floor(timeDifferenceInSeconds / 3600);
+        formattedTime = `${hours} hours ago`;
+      }else{
+        const days = Math.floor(timeDifferenceInSeconds / 86400);
+        formattedTime = `${days} days ago`;
+      }
+      item.formattedTime = formattedTime;
+    });
+}
 const handleSizeChange = (val) => {
   console.log(`${val} items per page`)
 }
@@ -325,6 +246,9 @@ function copyToClipboard(text) {
         ElMessage.error('Copy failed, please copy manually!');
       });
   }
+  onMounted(() => {
+    getContactList();
+})
 </script>
 
 <style scoped>
@@ -423,9 +347,15 @@ color: #0693cc;
 margin-right: 5px;
 }
 .ellipsis-text {
+  width: 7.125rem;
 white-space: nowrap; 
 overflow: hidden;
 text-overflow: ellipsis; 
+}
+.router_box{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 .blocks_heade_p{
   color: #6c757d;

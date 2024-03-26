@@ -57,14 +57,20 @@ const routes =  [
       component: () => import('../pages/TokenTracker.vue')
     },
     {
-      path: '/token',
+      path: '/token/:address',
       name: 'token',
-      component: () => import('../pages/TokenBinance.vue')
+      component: () => import('../pages/TokenBinance.vue'),
+      props:true
     },
     {
       path: '/address',
       name: 'address',
       component: () => import('../pages/AddressFrom.vue')
+    },
+    {
+      path: '/accounts',
+      name: 'accounts',
+      component: () => import('../pages/Accounts.vue')
     },
     {
       path: '/:pathMatch(.*)*',
