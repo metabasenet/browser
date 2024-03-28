@@ -60,12 +60,12 @@
             <router-link class="skyblue-text" :to="{ path: '/block' }">{{ scope.row.blockNumber }}</router-link>
           </template>
         </el-table-column>
-        <el-table-column prop="age" label="Age">
+        <el-table-column prop="formattedTime" label="Age">
         </el-table-column>
         <el-table-column prop="from" label="From" width="250">
           <template v-slot="scope">
             <el-tooltip :content="scope.row.from" placement="top">
-              <router-link class="skyblue-text" :to="{ path: '/address' }">{{ scope.row.from }}</router-link>
+              <router-link class="skyblue-text" :to="{ name: 'address', params: { address: scope.row.from } }">{{ scope.row.from }}</router-link>
             </el-tooltip>
             <el-tooltip content="Copy Address" placement="top">
               <el-button icon="CopyDocument" @click="copyToClipboard(scope.row.from)">
@@ -81,7 +81,7 @@
               </el-button>
             </el-tooltip>
             <el-tooltip :content="scope.row.to" placement="top">
-              <router-link class="skyblue-text" :to="{ path: '/address' }">{{ scope.row.to }}</router-link>
+              <router-link class="skyblue-text" :to="{ name: 'address', params: { address: scope.row.from } }">{{ scope.row.to }}</router-link>
             </el-tooltip>
             <el-tooltip v-if="scope.row.to" content="Copy Address" placement="top">
               <el-button icon="CopyDocument" @click="copyToClipboard(scope.row.to)">
@@ -120,6 +120,26 @@ const getTransAction = async (pager = 1) => {
     const response = await getTransactionPage(currentPage4.value, pageSize4.value)
     tableData.value = response.data.list;
     total.value = response.data.total;
+    const currentTime = Math.floor(Date.now() / 1000);
+    tableData.value.forEach(item => {
+      const timestamp = item.timestamp;
+      const timeDifferenceInSeconds = currentTime - timestamp;
+      let formattedTime;
+      if (timeDifferenceInSeconds < 60) {
+        const absoluteTimeDifference = Math.abs(timeDifferenceInSeconds);
+        formattedTime = `${absoluteTimeDifference} seconds ago`;
+      } else if (timeDifferenceInSeconds >= 60 && timeDifferenceInSeconds < 3600) {
+        const minutes = Math.floor(timeDifferenceInSeconds / 60);
+        formattedTime = `${minutes} minutes ago`;
+      } else if (timeDifferenceInSeconds >= 3600 && timeDifferenceInSeconds < 86400) {
+        const hours = Math.floor(timeDifferenceInSeconds / 3600);
+        formattedTime = `${hours} hours ago`;
+      } else {
+        const days = Math.floor(timeDifferenceInSeconds / 86400);
+        formattedTime = `${days} days ago`;
+      }
+      item.formattedTime = formattedTime;
+    });
   } catch (error) {
     console.error('Error fetching data:', error)
   }

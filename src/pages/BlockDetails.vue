@@ -16,60 +16,79 @@
     </el-row>
     <el-row class="grid-content_row">
       <el-col :span="24">
-        <el-descriptions v-model="blockDetails" class="grid-content_h2 grid-content_h1" :column="1" align="center"
-          border>
-          <el-descriptions-item label="Block Height:" label-align="center" align="center" label-class-name="my-label"
-            class-name="my-content" label-width="30%"> <span>{{ blockDetails.number }}</span>
+        <el-descriptions v-model="blockDetails" class="grid-content_h2 grid-content_h1" :column="1" align="left"
+          >
+          <el-descriptions-item label="Block Height:"  label-align="left" label-class-name="my-label"
+            class-name="my-content" label-width="30%">
+            <div class="block_height"> <span>{{ blockDetails.number }}</span>
             <el-tooltip content="View previous block" placement="top">
               <el-button icon="ArrowLeft" @click="ArrowLeft" />
             </el-tooltip><el-tooltip content="View next block" placement="top">
               <el-button icon="ArrowRight" @click="ArrowRight" />
-            </el-tooltip>
+            </el-tooltip></div>
           </el-descriptions-item>
-          <el-descriptions-item label=" Timestamp:" label-align="center" align="center"><el-icon>
+          <el-descriptions-item label=" Timestamp:" label-align="center" align="left" label-class-name="my-label">
+            <div class="block_height">
+              <el-icon>
               <Timer />
-            </el-icon> <span>{{ blockDetails.formattedTime }}</span></el-descriptions-item>
-          <el-descriptions-item label="Transactions:" label-align="center" align="center">
-            <el-tooltip content="Copy Address" placement="top"><router-link class="skyblue-text" to="/txs">
+            </el-icon> <span>{{ blockDetails.formattedTime }}</span>
+            </div>
+          </el-descriptions-item>
+          <el-descriptions-item label="Transactions:" label-align="center" align="left" label-class-name="my-label">
+            <div class="block_height">
+              <el-tooltip content="Copy Address" placement="top"><router-link class="skyblue-text" to="/txs">
                 <span>{{
         blockDetails.transactioncount }}</span></router-link></el-tooltip>
+            </div>
             <!-- <span>and </span>
             <el-tooltip content="Copy Address" placement="top"><router-link class="skyblue-text" to="/address">29
                 contract internal transactions</router-link></el-tooltip> <span>in this block</span> -->
           </el-descriptions-item>
-          <el-descriptions-item label="Validated By:" label-align="center" align="center">
-            <el-tooltip content="Copy Address" placement="top"><router-link class="skyblue-text"
+          <el-descriptions-item label="Validated By:" label-align="center" align="left" label-class-name="my-label">
+            <div class="block_height">
+              <el-tooltip content="Copy Address" placement="top"><router-link class="skyblue-text"
                 to="/address">Validator: Legend II</router-link></el-tooltip>
             <el-tooltip content="Copy Address" placement="top">
               <el-button icon="CopyDocument" @click="copyToClipboard(Validator)">
               </el-button>
             </el-tooltip>
             <span> in 3 secs</span>
+            </div>
           </el-descriptions-item>
-          <el-descriptions-item label="Block Reward:" label-align="center" align="center"><span>0.040627555889411223
-            MNT</span></el-descriptions-item>
-          <el-descriptions-item label="Difficulty:" label-align="center" align="center">
-            <span>2</span>
+          <el-descriptions-item label="Block Reward:" label-align="center" align="left" label-class-name="my-label">
+            <div class="block_height">
+              <span>0.040627555889411223
+            MNT</span>
+            </div>
           </el-descriptions-item>
-          <el-descriptions-item label="Total Difficulty:" label-align="center" align="center">
-            <span>73,408,936</span>
+          <el-descriptions-item label="Difficulty:" label-align="center" align="left" label-class-name="my-label">
+            <div class="block_height"> <span>2</span></div>
+           
           </el-descriptions-item>
-          <el-descriptions-item label="Size:" label-align="center" align="center">
-            <span>39,635 bytes</span>
+          <el-descriptions-item label="Total Difficulty:" label-align="center" align="left" label-class-name="my-label">
+            <div class="block_height"><span>73,408,936</span> </div>
+            
           </el-descriptions-item>
-          <el-descriptions-item label="Gas Used:" label-align="center" align="center">
-            <span>{{ blockDetails.gasUsed }}</span>
+          <el-descriptions-item label="Size:" label-align="center" align="left" label-class-name="my-label">
+            <div class="block_height"><span>39,635 bytes</span></div>
+            
           </el-descriptions-item>
-          <el-descriptions-item label="Gas Limit:" label-align="center" align="center">
-            <span>{{ blockDetails.gasLimit }}</span>
+          <el-descriptions-item label="Gas Used:" label-align="center" align="left" label-class-name="my-label">
+            <div class="block_height"><span>{{ blockDetails.gasUsed }}</span></div>
+            
           </el-descriptions-item>
-          <el-descriptions-item label="Burnt Fees:" label-align="center" align="center">
-            <span>0.004062755588941122 MNT</span>
+          <el-descriptions-item label="Gas Limit:" label-align="center" align="left" label-class-name="my-label">
+            <div class="block_height"><span>{{ blockDetails.gasLimit }}</span></div>
+            
+          </el-descriptions-item>
+          <el-descriptions-item label="Burnt Fees:" label-align="center" align="left" label-class-name="my-label">
+            <div class="block_height"><span>0.004062755588941122 MNT</span>
             <el-tooltip content="open fee burn transaction" placement="top"><el-button
-                icon="Share"></el-button></el-tooltip>
+                icon="Share"></el-button></el-tooltip></div>
+            
           </el-descriptions-item>
-          <el-descriptions-item label="Extra Data:" label-align="center" align="center">
-            <el-input type="textarea" :disabled="true" :placeholder="blockDetails.extradata">
+          <el-descriptions-item label="Extra Data:" label-align="center" align="left" label-class-name="my-label">
+            <el-input style="height:40px" type="textarea" :disabled="true" :placeholder="blockDetails.extradata">
             </el-input>
           </el-descriptions-item>
         </el-descriptions>
@@ -79,15 +98,27 @@
       <el-col :span="24">
         <el-collapse @change="handleChange">
           <el-collapse-item title="More Details:" name="1">
-            <el-descriptions class="grid-content" :column="1" align="center" border v-model="blockDetails">
-              <el-descriptions-item label="Hash:" label-align="center" align="center" label-class-name="my-label"
-                class-name="my-content"><span>{{ blockDetails.hash }}</span></el-descriptions-item>
-              <el-descriptions-item label="Parent Hash:" label-align="center" align="center"><router-link
-                  class="skyblue-text" to="/address">{{ blockDetails.parenthash }}</router-link></el-descriptions-item>
-              <el-descriptions-item label="Sha3Uncles:" label-align="center"
-                align="center"><span>0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347</span></el-descriptions-item>
-              <el-descriptions-item label="Nonce:" label-align="center" align="center">
-                <span>0x0000000000000000</span>
+            <el-descriptions class="grid-content" :column="1" align="left" v-model="blockDetails">
+              <el-descriptions-item label="Hash:" label-align="left" align="left" label-class-name="my-label"
+                class-name="my-content">
+                <div class="block_height"><span>{{ blockDetails.hash }}</span></div>
+                </el-descriptions-item>
+              <el-descriptions-item label="Parent Hash:" label-align="center" align="left" label-class-name="my-label">
+                <div class="block_height">
+                  <router-link
+                  class="skyblue-text" to="/address">{{ blockDetails.parenthash }}</router-link>
+                </div>
+                </el-descriptions-item>
+              <el-descriptions-item label="Sha3Uncles:" label-align="left" label-class-name="my-label"
+                align="left">
+                <div class="block_height">
+                  <span>0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347</span>
+                  </div></el-descriptions-item>
+              <el-descriptions-item label="Nonce:" label-align="left" align="left" label-class-name="my-label">
+                <div class="block_height">
+                  <span>0x0000000000000000</span>
+                </div>
+               
               </el-descriptions-item>
             </el-descriptions>
           </el-collapse-item>
@@ -240,9 +271,18 @@ onMounted(() => {
 .grid-content_row {
   background-color: #f9fafc;
 }
-
+/* .my-label{
+  width: 120px; 
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
+  white-space: nowrap;
+} */
 :deep(.my-label) {
-  width: 24%;
+  width: 120px;
+  display: inline-block;
 }
 
 .header_span {
@@ -254,5 +294,16 @@ onMounted(() => {
 .skyblue-text {
   color: #0693cc;
   margin-right: 5px;
+}
+
+.block_height{
+  display: inline-block;
+  margin-left: 5rem;
+}
+@media (max-width: 768px){
+  .block_height{
+  display: block;
+  margin-left: 0;
+}
 }
 </style>

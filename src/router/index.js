@@ -63,14 +63,20 @@ const routes =  [
       props:true
     },
     {
-      path: '/address',
+      path: '/address/:address',
       name: 'address',
-      component: () => import('../pages/AddressFrom.vue')
+      component: () => import('../pages/AddressFrom.vue'),
+      props:true
     },
     {
       path: '/accounts',
       name: 'accounts',
       component: () => import('../pages/Accounts.vue')
+    },
+    {
+      path: '/tokentxns',
+      name: 'tokentxns',
+      component: () => import('../pages/TokenTransfers.vue')
     },
     {
       path: '/:pathMatch(.*)*',

@@ -8,23 +8,22 @@
               <h2>MNT Smart Chain Explorer</h2>
             </el-col>
           </el-row>
-
           <el-row justify="center" align="middle">
             <el-col :span="12" class="drop_search" :xs="20" :sm="18" :md="12" :lg="12">
-              <el-input v-model="input3" placeholder="Search by Address Txn Hash Block Token Domain Name"
+              <el-input v-model="homeSearch" placeholder="Search by Address / Txn Hash / Block / Token / Domain Name"
                 style="max-width: 100%;height:100%;border:none" class="input-with-select">
                 <template #prepend>
-                  <el-select v-model="select" placeholder="Select" style="width: 115px;height:100%">
-                    <el-option label="Restaurant" value="1" />
-                    <el-option label="Order No." value="2" />
-                    <el-option label="Tel" value="3" />
+                  <el-select v-model="select" placeholder="All Filters" style="width: 115px;height:100%">
+                    <el-option label="Block" value="1" />
+                    <el-option label="Txn Hash" value="2" />
+                    <el-option label="Address" value="3" />
+                    <el-option label="Contract" value="4" />
                   </el-select>
                 </template>
                 <template #append>
-                  <el-button type="primary" icon="Search" />
+                  <el-button @click="getSearch" type="primary" icon="Search" />
                 </template>
               </el-input>
-
             </el-col>
           </el-row>
 
@@ -110,128 +109,57 @@
                   <Star />
                 </el-icon>Customize</el-button>
             </div>
-            <ul class="card-ul">
-              <li class="card-li">
-                <div class="d-flex">
-                  <el-icon size="20px" style="margin-right: 10px">
-                    <Document />
-                  </el-icon>
-                  <div>
-                    <router-link to="/block"> 36890859 </router-link>
-                    <p>6 secs ago</p>
+            <el-table :data="tableData" style="width: 100%" >
+              <el-table-column prop="number">
+                <template v-slot="scope">
+                 <div style="display:flex;align-items: center;" >
+                  <svg-icon name="box" width="1.8rem" height="1.8rem" >
+                  </svg-icon>
+                  <div style="margin-left:8px">
+                    <div>
+                    <router-link class="skyblue-text" :to="{ name: 'block', params: { blockNumber: scope.row.number } }">
+                      {{ scope.row.number }}
+                    </router-link>
                   </div>
-                </div>
-                <div class="b-flex">
-                  <el-link>Validator: Certik</el-link>
-                  <div><el-link>210 txns</el-link> <span>in 3 secs</span></div>
-                </div>
-                <el-tooltip content="Copy Address" placement="top">
+                  <div>
+                    <span class="b-flex_span">{{scope.row.formattedTime}}</span>
+                  </div>
+                  </div>
+                 </div>
+                </template>
+              </el-table-column>
+              <el-table-column prop="number" >
+                <template v-slot="scope">
+                  <div>
+                    <span>Validated By</span>
+                    <router-link class="skyblue-text" :to="{ name: 'block', params: { blockNumber: scope.row.number } }">
+                      {{ scope.row.number }}
+                    </router-link>
+                  </div>
+                  <div>
+                    <router-link class="skyblue-text" :to="{ name: 'block', params: { blockNumber: scope.row.number } }">
+                      {{ scope.row.number }}
+                    </router-link>
+                    <span class="b-flex_span">in 3 secs</span>
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column
+                header-align="center"
+                align="center"
+                prop="number"
+                width="150">
+                <template v-slot="scope" >
+                  <div>
+                    <el-tooltip content="Copy Address" placement="top">
                   <div class="c-flex">
-                    <p>0.04532 MNT</p>
+                    <p>{{ scope.row.number }}MNT</p>
                   </div>
                 </el-tooltip>
-              </li>
-              <li class="card-li">
-                <div class="d-flex">
-                  <el-icon size="20px" style="margin-right: 10px">
-                    <Document />
-                  </el-icon>
-                  <div>
-                    <router-link to="/block"> 36890859 </router-link>
-                    <p>6 secs ago</p>
                   </div>
-                </div>
-                <div class="b-flex">
-                  <el-link>Validator: Certik</el-link>
-                  <div><el-link>210 txns</el-link> <span>in 3 secs</span></div>
-                </div>
-                <el-tooltip content="Copy Address" placement="top">
-                  <div class="c-flex">
-                    <p>0.04532 MNT</p>
-                  </div>
-                </el-tooltip>
-              </li>
-              <li class="card-li">
-                <div class="d-flex">
-                  <el-icon size="20px" style="margin-right: 10px">
-                    <Document />
-                  </el-icon>
-                  <div>
-                    <router-link to="/block"> 36890859 </router-link>
-                    <p>6 secs ago</p>
-                  </div>
-                </div>
-                <div class="b-flex">
-                  <el-link>Validator: Certik</el-link>
-                  <div><el-link>210 txns</el-link> <span>in 3 secs</span></div>
-                </div>
-                <el-tooltip content="Copy Address" placement="top">
-                  <div class="c-flex">
-                    <p>0.04532 MNT</p>
-                  </div>
-                </el-tooltip>
-              </li>
-              <li class="card-li">
-                <div class="d-flex">
-                  <el-icon size="20px" style="margin-right: 10px">
-                    <Document />
-                  </el-icon>
-                  <div>
-                    <router-link to="/block"> 36890859 </router-link>
-                    <p>6 secs ago</p>
-                  </div>
-                </div>
-                <div class="b-flex">
-                  <el-link>Validator: Certik</el-link>
-                  <div><el-link>210 txns</el-link> <span>in 3 secs</span></div>
-                </div>
-                <el-tooltip content="Copy Address" placement="top">
-                  <div class="c-flex">
-                    <p>0.04532 MNT</p>
-                  </div>
-                </el-tooltip>
-              </li>
-              <li class="card-li">
-                <div class="d-flex">
-                  <el-icon size="20px" style="margin-right: 10px">
-                    <Document />
-                  </el-icon>
-                  <div>
-                    <router-link to="/block"> 36890859 </router-link>
-                    <p>6 secs ago</p>
-                  </div>
-                </div>
-                <div class="b-flex">
-                  <el-link>Validator: Certik</el-link>
-                  <div><el-link>210 txns</el-link> <span>in 3 secs</span></div>
-                </div>
-                <el-tooltip content="Copy Address" placement="top">
-                  <div class="c-flex">
-                    <p>0.04532 MNT</p>
-                  </div>
-                </el-tooltip>
-              </li>
-              <li class="card-li">
-                <div class="d-flex">
-                  <el-icon size="20px" style="margin-right: 10px">
-                    <Document />
-                  </el-icon>
-                  <div>
-                    <el-link to="/block"> 36890859 </el-link>
-                    <p>6 secs ago</p>
-                  </div>
-                </div>
-                <div class="b-flex">
-                  <el-link>Validator: Certik</el-link>
-                  <div><el-link>210 txns</el-link> <span>in 3 secs</span></div>
-                </div>
-                <el-tooltip content="Copy Address" placement="top">
-                  <div class="c-flex">
-                    <p>0.04532 MNT</p>
-                  </div>
-                </el-tooltip>
-              </li>
-            </ul>
+                </template>
+              </el-table-column>
+            </el-table>
             <div class="card-footer">
               <router-link to="/blocks">
                 VIEW ALL BLOCKS<el-icon>
@@ -247,7 +175,58 @@
                   <Star />
                 </el-icon>Customize</el-button>
             </div>
-            <ul class="card-ul">
+            <el-table :data="tableDatas" style="width: 100%" >
+              <el-table-column prop="number">
+                <template v-slot="scope">
+                 <div style="display:flex;align-items: center;" >
+                  <svg-icon name="document" width="1.8rem" height="1.8rem" >
+                  </svg-icon>
+                  <div style="margin-left:8px;">
+                    <div class="skyblue-text">
+                    <router-link class="skyblue-text" :to="{ name: 'tx', params: { hash: scope.row.hash } }">
+                      {{ scope.row.hash }}
+                    </router-link>
+                  </div>
+                  <div>
+                    <span class="b-flex_span">{{scope.row.formattedTime}}</span>
+                  </div>
+                  </div>
+                 </div>
+                </template>
+              </el-table-column>
+              <el-table-column prop="number" width="300">
+                <template v-slot="scope">
+                  <div class="skyblue-text" style="width:11.25rem">
+                    <span style="color:black">From </span>
+                    <router-link class="skyblue-text" :to="{ name: 'address', params: { address: scope.row.from } }">
+                      {{ scope.row.from }}
+                    </router-link>
+                  </div>
+                  <div class="skyblue-text" style="width:11.25rem">
+                    <span style="color:black">To </span>
+                    <router-link class="skyblue-text" :to="{ name: 'address', params: { address: scope.row.from} }">
+                      {{ scope.row.to }}
+                    </router-link>
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column
+                header-align="center"
+                align="center"
+                prop="number"
+                width="150">
+                <template v-slot="scope" >
+                  <div>
+                    <el-tooltip content="Copy Address" placement="top">
+                  <div class="c-flex">
+                    <p>{{ scope.row.number }}MNT</p>
+                  </div>
+                </el-tooltip>
+                  </div>
+                </template>
+              </el-table-column>
+            </el-table>
+            <!-- <ul class="card-ul">
               <li class="card-li">
                 <div class="d-flex">
                   <el-icon size="20px" style="margin-right: 10px">
@@ -274,137 +253,7 @@
                   </div>
                 </el-tooltip>
               </li>
-              <li class="card-li">
-                <div class="d-flex">
-                  <el-icon size="20px" style="margin-right: 10px">
-                    <Document />
-                  </el-icon>
-                  <div>
-                    <el-link>0xc793ba720b7fc6...</el-link>
-                    <p>6 secs ago</p>
-                  </div>
-                </div>
-                <div class="b-flex">
-                  <div class="flex_from">
-                    <h4>From</h4>
-                    <el-link>0x70F65716...334f28e18</el-link>
-                  </div>
-                  <div class="flex_to">
-                    <h4>to</h4>
-                    <el-link>0x00000000...000001000</el-link>
-                  </div>
-                </div>
-                <el-tooltip content="Copy Address" placement="top">
-                  <div class="c-flex">
-                    <p>0.04532 MNT</p>
-                  </div>
-                </el-tooltip>
-              </li>
-              <li class="card-li">
-                <div class="d-flex">
-                  <el-icon size="20px" style="margin-right: 10px">
-                    <Document />
-                  </el-icon>
-                  <div>
-                    <el-link>0xc793ba720b7fc6...</el-link>
-                    <p>6 secs ago</p>
-                  </div>
-                </div>
-                <div class="b-flex">
-                  <div class="flex_from">
-                    <h4>From</h4>
-                    <el-link>0x70F65716...334f28e18</el-link>
-                  </div>
-                  <div class="flex_to">
-                    <h4>to</h4>
-                    <el-link>0x00000000...000001000</el-link>
-                  </div>
-                </div>
-                <el-tooltip content="Copy Address" placement="top">
-                  <div class="c-flex">
-                    <p>0.04532 MNT</p>
-                  </div>
-                </el-tooltip>
-              </li>
-              <li class="card-li">
-                <div class="d-flex">
-                  <el-icon size="20px" style="margin-right: 10px">
-                    <Document />
-                  </el-icon>
-                  <div>
-                    <el-link>0xc793ba720b7fc6...</el-link>
-                    <p>6 secs ago</p>
-                  </div>
-                </div>
-                <div class="b-flex">
-                  <div class="flex_from">
-                    <h4>From</h4>
-                    <el-link>0x70F65716...334f28e18</el-link>
-                  </div>
-                  <div class="flex_to">
-                    <h4>to</h4>
-                    <el-link>0x00000000...000001000</el-link>
-                  </div>
-                </div>
-                <el-tooltip content="Copy Address" placement="top">
-                  <div class="c-flex">
-                    <p>0.04532 MNT</p>
-                  </div>
-                </el-tooltip>
-              </li>
-              <li class="card-li">
-                <div class="d-flex">
-                  <el-icon size="20px" style="margin-right: 10px">
-                    <Document />
-                  </el-icon>
-                  <div>
-                    <el-link>0xc793ba720b7fc6...</el-link>
-                    <p>6 secs ago</p>
-                  </div>
-                </div>
-                <div class="b-flex">
-                  <div class="flex_from">
-                    <h4>From</h4>
-                    <el-link>0x70F65716...334f28e18</el-link>
-                  </div>
-                  <div class="flex_to">
-                    <h4>to</h4>
-                    <el-link>0x00000000...000001000</el-link>
-                  </div>
-                </div>
-                <el-tooltip content="Copy Address" placement="top">
-                  <div class="c-flex">
-                    <p>0.04532 MNT</p>
-                  </div>
-                </el-tooltip>
-              </li>
-              <li class="card-li">
-                <div class="d-flex">
-                  <el-icon size="20px" style="margin-right: 10px">
-                    <Document />
-                  </el-icon>
-                  <div>
-                    <el-link>0xc793ba720b7fc6...</el-link>
-                    <p>6 secs ago</p>
-                  </div>
-                </div>
-                <div class="b-flex">
-                  <div class="flex_from">
-                    <h4>From</h4>
-                    <el-link>0x70F65716...334f28e18</el-link>
-                  </div>
-                  <div class="flex_to">
-                    <h4>to</h4>
-                    <el-link>0x00000000...000001000</el-link>
-                  </div>
-                </div>
-                <el-tooltip content="Copy Address" placement="top">
-                  <div class="c-flex">
-                    <p>0.04532 MNT</p>
-                  </div>
-                </el-tooltip>
-              </li>
-            </ul>
+            </ul> -->
             <div class="card-footer">
               <router-link to="/txs">
                 View all transactions<el-icon>
@@ -421,12 +270,116 @@
 
 <script setup>
 import { onMounted, ref } from 'vue'
+import router from '@/router'
+import { getSearchInfo } from '@/api/home';
+import { getBlockPage } from '@/api/block';
+import { getTransactionPage } from '@/api/transaction';
+import { ElMessage } from 'element-plus'
 // import useUserStore from '@/store/modules/user'
 // let userStore = useUserStore()
-const input3 = ref('')
+const tableData = ref([])
+const tableDatas = ref([])
+const homeSearch = ref('')
 const select = ref('');
+const currentPage4 = ref(1)
+const pageSize4 = ref(6)
+const getSearch = async () => {
+  if (!homeSearch.value) {
+    ElMessage.warning('Please enter your search')
+    return
+  }
+  try {
+    const response = await getSearchInfo(homeSearch.value, select.value);
+    if (!response.data || Object.keys(response.data).length === 0) {
+      ElMessage.warning('No data found')
+      return
+    } else if (select.value === '1' || response.data.block) {
+      let number = response.data.block.number
+      router.push({ name: 'block', params: { blockNumber: number } });
+    } else if (select.value === '2' || response.data.transaction) {
+      let hash = response.data.transaction.hash
+      router.push({ name: 'tx', params: { hash: hash } });
+    } else if (select.value === '3' || response.data.address) {
+      let address = response.data.address.address
+      // router.push({ name: 'address'});
+      router.push({ name: 'address', params: { address: address } });
+    } else if (select.value === '4' || response.data.contract) {
+      let contractAddress = response.data.contract.contractaddress
+      router.push({ name: 'token', params: { address: contractAddress } });
+    } else {
+      ElMessage.warning('No data found')
+    }
+  } catch (error) {
 
-onMounted(()=>{ 
+  }
+}
+
+const getBlockPageData = async (pager = 1) => {
+  try {
+    currentPage4.value = pager;
+    const response = await getBlockPage(currentPage4.value, pageSize4.value)
+    tableData.value = response.data.list;
+    tableData.value.forEach(item => {
+      const percentage = (item.gasused / item.gaslimit) * 100;
+      item.percentage = percentage;
+    })
+
+    const currentTime = Math.floor(Date.now() / 1000);
+    tableData.value.forEach(item => {
+      const timestamp = item.timestamp;
+      const timeDifferenceInSeconds = currentTime - timestamp;
+      let formattedTime;
+      if (timeDifferenceInSeconds < 60) {
+        const absoluteTimeDifference = Math.abs(timeDifferenceInSeconds);
+        formattedTime = `${absoluteTimeDifference} seconds ago`;
+      } else if (timeDifferenceInSeconds >= 60 && timeDifferenceInSeconds < 3600) {
+        const minutes = Math.floor(timeDifferenceInSeconds / 60);
+        formattedTime = `${minutes} minutes ago`;
+      } else if (timeDifferenceInSeconds >= 3600 && timeDifferenceInSeconds < 86400) {
+        const hours = Math.floor(timeDifferenceInSeconds / 3600);
+        formattedTime = `${hours} hours ago`;
+      } else {
+        const days = Math.floor(timeDifferenceInSeconds / 86400);
+        formattedTime = `${days} days ago`;
+      }
+      item.formattedTime = formattedTime;
+    });
+  } catch (error) {
+    console.error('Error fetching data:', error)
+  }
+}
+const getTransAction = async (pager = 1) => {
+  try {
+    currentPage4.value = pager;
+    const response = await getTransactionPage(currentPage4.value, pageSize4.value)
+    tableDatas.value = response.data.list;
+    const currentTime = Math.floor(Date.now() / 1000);
+    tableDatas.value.forEach(item => {
+      const timestamp = item.timestamp;
+      const timeDifferenceInSeconds = currentTime - timestamp;
+      let formattedTime;
+      if (timeDifferenceInSeconds < 60) {
+        const absoluteTimeDifference = Math.abs(timeDifferenceInSeconds);
+        formattedTime = `${absoluteTimeDifference} seconds ago`;
+      } else if (timeDifferenceInSeconds >= 60 && timeDifferenceInSeconds < 3600) {
+        const minutes = Math.floor(timeDifferenceInSeconds / 60);
+        formattedTime = `${minutes} minutes ago`;
+      } else if (timeDifferenceInSeconds >= 3600 && timeDifferenceInSeconds < 86400) {
+        const hours = Math.floor(timeDifferenceInSeconds / 3600);
+        formattedTime = `${hours} hours ago`;
+      } else {
+        const days = Math.floor(timeDifferenceInSeconds / 86400);
+        formattedTime = `${days} days ago`;
+      }
+      item.formattedTime = formattedTime;
+    });
+  } catch (error) {
+    console.error('Error fetching data:', error)
+  }
+}
+onMounted(() => {
+  getBlockPageData()
+  getTransAction()
   // userStore.userInfo()
 })
 </script>
@@ -597,7 +550,7 @@ onMounted(()=>{
   color: #0784cf;
 }
 
-.b-flex span {
+.b-flex_span {
   color: #6c757d;
   font-size: 11px;
 }
@@ -650,5 +603,14 @@ onMounted(()=>{
 
 :deep(.el-select__wrapper) {
   height: 100%;
+}
+
+.skyblue-text {
+  width: 7.5rem;
+  color: #0693cc;
+  margin-right: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
