@@ -1,6 +1,10 @@
 <template>
   <div class="box">
-    <el-row>
+    
+    <el-container class="container-xxl">
+      <el-aside class="responsive-aside" ></el-aside>
+      <el-main>
+        <el-row>
       <el-col :span="24">
         <div class="grid-content darkb_button grid-content_h3">
           <h3>Token {{ individualQueryDetails.ercname }} ({{ individualQueryDetails.ercsymbol }}) <el-button
@@ -185,7 +189,7 @@
         </div>
       </el-col>
     </el-row>
-    <el-row class="blocks_heade">
+    <!-- <el-row class="blocks_heade">
       <el-col :span="24">
         <el-button type="primary">Transfers</el-button>
         <el-button>Holders</el-button>
@@ -194,8 +198,12 @@
         <el-button>Contract</el-button>
         <el-button>Analytics</el-button>
       </el-col>
-    </el-row>
-    <el-row class="box-table">
+    </el-row> -->
+    <el-row class="blocks_heade">
+      <el-col :span="24">
+        <el-tabs v-model="activeName" type="card" class="demo-tabs" @tab-click="handleClick">
+          <el-tab-pane label="Transfers" name="tab1">
+            <el-row class="box-table">
       <div class="demo-pagination-block box-table_header">
         <div class="demonstration">Total of 36,899,505 blocks</div>
         <el-pagination v-model:current-page="currentPage4" v-model:page-size="pageSize4" :page-sizes="[10, 20, 30, 40]"
@@ -266,6 +274,87 @@
           @current-change="handleCurrentChange" />
       </div>
     </el-row>
+          </el-tab-pane>
+          <el-tab-pane label="Holders" name="tab2">Config</el-tab-pane>
+          <!-- <el-tab-pane label="info" name="tab3"><el-row class="box-table">
+              <div class="demo-pagination-block box-table_header">
+                <div class="demonstration">Total of 36,899,505 blocks</div>
+                <el-pagination v-model:current-page="currentPage4" v-model:page-size="pageSize4"
+                  :page-sizes="[10, 20, 30, 40]" layout=" sizes, prev, pager, next, " :total="10" small
+                  @size-change="handleSizeChange" @current-change="handleCurrentChange" />
+              </div>
+              <el-table :data="tableDatas" style="width: 100%">
+                <el-table-column prop="transactionHash" label="Txn Hash">
+                  <template v-slot="scope">
+                    <el-tooltip :content="scope.row.to" placement="top">
+                        <router-link class="skyblue-text ellipsis-text" :to="{ path: '/address' }">{{ scope.row.transactionHash
+                          }}</router-link>
+                      </el-tooltip>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="method" label="Method" align="center" width="120">
+                  <template v-slot="scope">
+                    <el-tooltip :content="scope.row.method" placement="top">
+                      <el-button>{{ scope.row.method }}</el-button>
+                    </el-tooltip>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="blockNumber" label="Block" align="center" width="100">
+                  <template v-slot="scope">
+                    <router-link class="skyblue-text" :to="{ path: '/block' }">{{ scope.row.blockNumber }}</router-link>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="formattedTime" label="Age" align="center">
+                </el-table-column>
+                <el-table-column prop="from" label="From" align="center" width="280">
+                  <template v-slot="scope">
+                    <div class="router_box">
+                      <el-tooltip :content="scope.row.from" placement="top">
+                        <router-link class="skyblue-text ellipsis-text" :to="{ name: 'address', params: { address: scope.row.from } }">{{ scope.row.from
+                          }}</router-link>
+                      </el-tooltip>
+                      <el-tooltip content="Copy Address" placement="top">
+                        <el-button icon="CopyDocument" @click="copyToClipboard(scope.row.from)">
+                        </el-button>
+                      </el-tooltip>
+                      <el-button style="margin-left:2.5rem" type="success" icon="right" circle plain />
+                    </div>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="to" align="center" label="To" width="280">
+                  <template v-slot="scope">
+                    <div class="router_box">
+                      <el-tooltip content="Contract" placement="top">
+                        <el-button style="margin-right:5px" icon="Document" @click="copyToClipboard(scope.row.to)">
+                        </el-button>
+                      </el-tooltip>
+                      <el-tooltip :content="scope.row.to" placement="top">
+                        <router-link class="skyblue-text ellipsis-text" :to="{ name: 'address', params: { address: scope.row.to } }">{{ scope.row.to
+                          }}</router-link>
+                      </el-tooltip>
+                      <el-tooltip content="Copy Address" placement="top">
+                        <el-button icon="CopyDocument" @click="copyToClipboard(scope.row.to)">
+                        </el-button>
+                      </el-tooltip>
+                    </div>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="value" align="center" label="Value" />
+                <el-table-column prop="ercName" align="center" label="Token" />
+              </el-table>
+              <div class="demo-pagination-block box-table_header">
+                <el-pagination v-model:current-page="currentPage4" v-model:page-size="pageSize4"
+                  :page-sizes="[10, 20, 30, 40]" small layout=" sizes, prev, pager, next" :total="20"
+                  @size-change="handleSizeChange" @current-change="handleCurrentChange" />
+              </div>
+            </el-row></el-tab-pane> -->
+          <el-tab-pane label="NFT Transfers" name="tab4">Task</el-tab-pane>
+        </el-tabs>
+      </el-col>
+    </el-row>
+      </el-main>
+      <el-aside class="responsive-aside" ></el-aside>
+    </el-container>
   </div>
 </template>
 
@@ -278,12 +367,23 @@ const individualQueryDetails = ref({})
 const currentPage4 = ref(1)
 const pageSize4 = ref(10)
 const copiedText = ref('');
+const activeName = ref('tab1')
 const { address } = defineProps({
   address: {
     type: [String],
     required: true,
   }
 });
+const handleClick = (tab, event) => {
+  console.log(tab.props.name)
+  if(tab.props.name === 'tab1'){
+    getContactList();
+  }else if(tab.props.name === 'tab2'){
+    console.log(tab.props.name);
+  }else if(tab.props.name === 'tab3'){
+    // getContractList()
+  }
+}
 const getIndividualQuery = async () => {
   try {
     if (address !== null) {
@@ -355,6 +455,17 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.responsive-aside {
+  width: 0rem;
+  transition: width 0.5s ease; 
+}
+@media (min-width: 768px) {
+  .responsive-aside {
+    width: 10rem;
+    opacity: 0.5;
+    /* background-color: #fff;  */
+  }
+}
 .box {
   background-color: #f9fafc;
 }

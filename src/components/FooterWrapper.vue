@@ -1,6 +1,9 @@
 <template>
     <div class="footer">
-  <el-row  class="footer-box">
+        <el-container class="container-xxl">
+      <el-aside class="responsive-aside" ></el-aside>
+      <el-main>
+        <el-row  class="footer-box">
     <el-col :span="24">
         <div class="grid-content ep-bg-purple footertop">
             <div class="footertop-left">
@@ -54,6 +57,9 @@
     </div>
     </el-col>
   </el-row>
+      </el-main>
+      <el-aside class="responsive-aside" ></el-aside>
+    </el-container>
     </div>
 </template>
 
@@ -64,6 +70,17 @@ export default {
 </script>
 
 <style scoped>
+.responsive-aside {
+  width: 0rem;
+  transition: width 0.5s ease; 
+}
+@media (min-width: 768px) {
+  .responsive-aside {
+    width: 10rem;
+    opacity: 0.5;
+    /* background-color: #fff;  */
+  }
+}
 .footer{
     width: 100%;
     /* position: fixed;

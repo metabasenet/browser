@@ -1,6 +1,10 @@
 <template>
   <div class="box">
-    <el-row>
+    
+    <el-container class="container-xxl">
+      <el-aside class="responsive-aside" ></el-aside>
+      <el-main>
+        <el-row>
       <el-col :span="24">
         <div class="grid-content darkb_button grid-content_h3">
           <div>
@@ -215,7 +219,7 @@
                   <template v-slot="scope">
                     <div class="router_box">
                       <el-tooltip :content="scope.row.from" placement="top">
-                        <router-link class="skyblue-text ellipsis-text" :to="{ path: '/address' }">{{ scope.row.from
+                        <router-link class="skyblue-text ellipsis-text" :to="{ name: 'address', params: { address: scope.row.from } }">{{ scope.row.from
                           }}</router-link>
                       </el-tooltip>
                       <el-tooltip content="Copy Address" placement="top">
@@ -234,7 +238,7 @@
                         </el-button>
                       </el-tooltip>
                       <el-tooltip :content="scope.row.to" placement="top">
-                        <router-link class="skyblue-text ellipsis-text" :to="{ path: '/address' }">{{ scope.row.to
+                        <router-link class="skyblue-text ellipsis-text" :to="{ name: 'address', params: { address: scope.row.to } }">{{ scope.row.to
                           }}</router-link>
                       </el-tooltip>
                       <el-tooltip content="Copy Address" placement="top">
@@ -289,7 +293,7 @@
                   <template v-slot="scope">
                     <div class="router_box">
                       <el-tooltip :content="scope.row.from" placement="top">
-                        <router-link class="skyblue-text ellipsis-text" :to="{ path: '/address' }">{{ scope.row.from
+                        <router-link class="skyblue-text ellipsis-text" :to="{ name: 'address', params: { address: scope.row.from } }">{{ scope.row.from
                           }}</router-link>
                       </el-tooltip>
                       <el-tooltip content="Copy Address" placement="top">
@@ -308,7 +312,7 @@
                         </el-button>
                       </el-tooltip>
                       <el-tooltip :content="scope.row.to" placement="top">
-                        <router-link class="skyblue-text ellipsis-text" :to="{ path: '/address' }">{{ scope.row.to
+                        <router-link class="skyblue-text ellipsis-text" :to="{ name: 'address', params: { address: scope.row.to } }">{{ scope.row.to
                           }}</router-link>
                       </el-tooltip>
                       <el-tooltip content="Copy Address" placement="top">
@@ -331,7 +335,9 @@
         </el-tabs>
       </el-col>
     </el-row>
-
+      </el-main>
+      <el-aside class="responsive-aside" ></el-aside>
+    </el-container>
   </div>
 </template>
 
@@ -465,6 +471,17 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.responsive-aside {
+  width: 0rem;
+  transition: width 0.5s ease; 
+}
+@media (min-width: 768px) {
+  .responsive-aside {
+    width: 10rem;
+    opacity: 0.5;
+    /* background-color: #fff;  */
+  }
+}
 .box {
   background-color: #f9fafc;
 }

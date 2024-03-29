@@ -1,6 +1,10 @@
 <template>
   <div class="box">
-    <el-row>
+    
+    <el-container class="container-xxl">
+      <el-aside class="responsive-aside" ></el-aside>
+      <el-main>
+        <el-row>
       <el-col :span="24">
         <div class="grid-content ep-bg-purple-dark grid-content_h3">
           <h3>Block<span class="header_span">#36901236</span></h3>
@@ -136,6 +140,9 @@
           Base.</span>
       </el-col>
     </el-row>
+      </el-main>
+      <el-aside class="responsive-aside" ></el-aside>
+    </el-container>
   </div>
 </template>
 
@@ -233,6 +240,17 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.responsive-aside {
+  width: 0rem;
+  transition: width 0.5s ease; 
+}
+@media (min-width: 768px) {
+  .responsive-aside {
+    width: 10rem;
+    opacity: 0.5;
+    /* background-color: #fff;  */
+  }
+}
 .box {
   background-color: #f9fafc;
 }

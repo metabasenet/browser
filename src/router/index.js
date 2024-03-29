@@ -63,7 +63,7 @@ const routes =  [
       props:true
     },
     {
-      path: '/address/:address',
+      path: '/address/:address?',
       name: 'address',
       component: () => import('../pages/AddressFrom.vue'),
       props:true

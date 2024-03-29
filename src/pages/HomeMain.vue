@@ -1,6 +1,8 @@
 <template>
   <div class="common-layout">
-    <el-container class="container-xxl">
+      <el-container class="container-xxl">
+        <div class="container_bgc"></div>
+        <el-aside class="responsive-aside"></el-aside>
       <el-main>
         <div class="container">
           <el-row justify="center" align="middle">
@@ -9,7 +11,7 @@
             </el-col>
           </el-row>
           <el-row justify="center" align="middle">
-            <el-col :span="12" class="drop_search" :xs="20" :sm="18" :md="12" :lg="12">
+            <el-col :span="12" class="drop_search" :xs="22" :sm="22" :md="20" :lg="12">
               <el-input v-model="homeSearch" placeholder="Search by Address / Txn Hash / Block / Token / Domain Name"
                 style="max-width: 100%;height:100%;border:none" class="input-with-select">
                 <template #prepend>
@@ -26,7 +28,6 @@
               </el-input>
             </el-col>
           </el-row>
-
           <el-row justify="center" align="middle">
             <el-col :span="12">
               <span>Featured: Bscscan API - Need higher call rates ? <el-link style="color:aqua" href="#"
@@ -105,9 +106,7 @@
           <el-col :span="11" :xs="24" :sm="24" :md="11" :lg="11" class="ContentPlaceHolder1_mainboxes">
             <div class="card-header">
               <h4>Latest Blocks</h4>
-              <el-button><el-icon>
-                  <Star />
-                </el-icon>Customize</el-button>
+              <el-button><el-icon><Grid /></el-icon>Customize</el-button>
             </div>
             <el-table :data="tableData" style="width: 100%" >
               <el-table-column prop="number">
@@ -171,9 +170,7 @@
           <el-col :span="11" :xs="24" :sm="24" :md="11" :lg="11" class="ContentPlaceHolder1_mainboxes">
             <div class="card-header">
               <h4>Latest Transactions</h4>
-              <el-button><el-icon>
-                  <Star />
-                </el-icon>Customize</el-button>
+              <el-button><el-icon><Grid /></el-icon>Customize</el-button>
             </div>
             <el-table :data="tableDatas" style="width: 100%" >
               <el-table-column prop="number">
@@ -194,19 +191,23 @@
                  </div>
                 </template>
               </el-table-column>
-              <el-table-column prop="number" width="300">
+              <el-table-column prop="number" >
                 <template v-slot="scope">
-                  <div class="skyblue-text" style="width:11.25rem">
+                  <div class="skyblue-text" style="width:10.25rem">
                     <span style="color:black">From </span>
-                    <router-link class="skyblue-text" :to="{ name: 'address', params: { address: scope.row.from } }">
+                    <el-tooltip effect="dark" :content="scope.row.from" placement="top">
+                      <router-link class="skyblue-text" :to="{ name: 'address', params: { address: scope.row.from } }">
                       {{ scope.row.from }}
                     </router-link>
+                    </el-tooltip>
                   </div>
-                  <div class="skyblue-text" style="width:11.25rem">
+                  <div class="skyblue-text" style="width:10.25rem">
                     <span style="color:black">To </span>
-                    <router-link class="skyblue-text" :to="{ name: 'address', params: { address: scope.row.from} }">
+                   <el-tooltip effect="dark" :content="scope.row.to" placement="top">
+                    <router-link class="skyblue-text" :to="{ name: 'address', params: { address: scope.row.to} }">
                       {{ scope.row.to }}
                     </router-link>
+                   </el-tooltip>
                   </div>
                 </template>
               </el-table-column>
@@ -226,34 +227,6 @@
                 </template>
               </el-table-column>
             </el-table>
-            <!-- <ul class="card-ul">
-              <li class="card-li">
-                <div class="d-flex">
-                  <el-icon size="20px" style="margin-right: 10px">
-                    <Document />
-                  </el-icon>
-                  <div>
-                    <el-link>0xc793ba720b7fc6...</el-link>
-                    <p>6 secs ago</p>
-                  </div>
-                </div>
-                <div class="b-flex">
-                  <div class="flex_from">
-                    <h4>From</h4>
-                    <el-link>0x70F65716...334f28e18</el-link>
-                  </div>
-                  <div class="flex_to">
-                    <h4>to</h4>
-                    <el-link>0x00000000...000001000</el-link>
-                  </div>
-                </div>
-                <el-tooltip content="Copy Address" placement="top">
-                  <div class="c-flex">
-                    <p>0.04532 MNT</p>
-                  </div>
-                </el-tooltip>
-              </li>
-            </ul> -->
             <div class="card-footer">
               <router-link to="/txs">
                 View all transactions<el-icon>
@@ -264,6 +237,7 @@
           </el-col>
         </el-row>
       </el-main>
+    <el-aside class="responsive-aside"></el-aside>
     </el-container>
   </div>
 </template>
@@ -405,9 +379,16 @@ onMounted(() => {
 }
 
 .container-xxl {
+  position: relative;
   background-color: #f5f7f9;
 }
-
+.container_bgc{
+  position: absolute;
+  width: 100%;
+  height: 29vh;
+  /* background: linear-gradient(45deg,#fff, #000,#000, #fff ); */
+  background: linear-gradient(to right, #000, #fff);
+}
 .el-link {
   margin-right: 8px;
 }
@@ -443,13 +424,17 @@ onMounted(() => {
 /* .card-boxright{
   margin-left: 5.1875rem;
 } */
+.responsive-aside {
+  width: 0rem;
+  transition: width 0.5s ease; 
+}
 @media (min-width: 768px) {
-  .card-box {
-    /* flex-direction: row; */
+  .responsive-aside {
+    width: 10rem;
+    opacity: 0.5;
+    /* background-color: #fff;  */
   }
 }
-
-/* 在小屏幕下减小间距 */
 @media (max-width: 767px) {
 
   .card-ul,
@@ -458,7 +443,6 @@ onMounted(() => {
     /* flex-wrap: wrap; */
   }
 
-  /* 减小字体大小 */
   /* .card_p,
   .c-flex p,
   .b-flex h4 {
@@ -582,7 +566,7 @@ onMounted(() => {
 }
 
 .container {
-  background-image: linear-gradient(to right, white, black, black, white);
+  /* background-image: linear-gradient(to right, white, black, black, white); */
   display: flex;
   height: 20vh;
   color: #fff;
