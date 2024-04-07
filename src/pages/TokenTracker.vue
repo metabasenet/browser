@@ -58,22 +58,22 @@
           prop="decimals"
           label="decimals" >
         </el-table-column>
-        <el-table-column prop="price" sortable label="Price" width="180">
+        <el-table-column prop="price" sortable label="Price" >
           <template #header>
             <el-tooltip content="Click for descending sort" placement="top">
               <span>Price</span>
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column prop="change" sortable label="Change (%)">
+        <el-table-column prop="change" sortable label="Change (%)" width="180">
           <template #header>
             <el-tooltip content="Click for descending sort" placement="top">
               <span>Change (%)</span>
             </el-tooltip>
           </template>
-          <template #default="{ row }">
+          <!-- <template #default="{ row }">
             <span v-html="formatChangeColor(row.change)" />
-          </template>
+          </template> -->
         </el-table-column>
         <el-table-column prop="volume" sortable label="Volume (24H)">
           <template #header>

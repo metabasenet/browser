@@ -395,7 +395,7 @@
                   </el-col>
                 </el-row>
               </el-tab-pane>
-              <el-tab-pane v-else>
+              <el-tab-pane v-else name="tab5">
                 <template #label>
                   <el-badge value="√" class="item" type="success">
                     comments
@@ -1036,6 +1036,7 @@ const handleClick = (tab, event) => {
   } else if (tab.props.name === "tab3") {
     // getContractList()
   } else if (tab.props.name === "tab4") {
+
   } else if (tab.props.name === "tab5") {
     getFileInfos();
   }
