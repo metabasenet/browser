@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 
 const routes =  [
 
@@ -79,6 +79,24 @@ const routes =  [
       component: () => import('../pages/TokenTransfers.vue')
     },
     {
+      path: '/verifyContract/:address',
+      name: 'verifyContract',
+      component: () => import('../views/verifyContract/index.vue'),
+      props:true
+    },
+    {
+      path: '/verifyContractSolc/:address',
+      name: 'verifyContractSolc',
+      component: () => import('../views/verifyContractSolc/index.vue'),
+      props:true
+    },
+    {
+      path: '/bytecode/:address',
+      name: 'bytecode',
+      component: () => import('../views/bytecode/index.vue'),
+      props:true
+    },
+    {
       path: '/:pathMatch(.*)*',
       redirect: '/404',
       name: 'notFound',
@@ -86,7 +104,7 @@ const routes =  [
   ];
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.VITE_BASE_URL),
+  history: createWebHashHistory(import.meta.env.VITE_BASE_URL),
   routes,
   scrollBehavior () {
     return {

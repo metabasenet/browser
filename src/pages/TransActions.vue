@@ -66,7 +66,7 @@
         </el-table-column>
         <el-table-column prop="formattedTime" label="Age">
         </el-table-column>
-        <el-table-column prop="from" label="From" width="250">
+        <el-table-column prop="from" label="From" width="250" align="center">
           <template v-slot="scope">
             <el-tooltip :content="scope.row.from" placement="top">
               <router-link class="skyblue-text" :to="{ name: 'address', params: { address: scope.row.from } }">{{ scope.row.from }}</router-link>
@@ -78,14 +78,14 @@
             <el-button style="margin-left:2.5rem" type="success" icon="right" circle plain />
           </template>
         </el-table-column>
-        <el-table-column prop="to" label="To" width="250">
+        <el-table-column prop="to" label="To" width="250" align="center">
           <template v-slot="scope">
             <el-tooltip v-if="scope.row.to" content="Contract" placement="top">
               <el-button style="margin-right:5px" icon="Document">
               </el-button>
             </el-tooltip>
             <el-tooltip :content="scope.row.to" placement="top">
-              <router-link class="skyblue-text" :to="{ name: 'address', params: { address: scope.row.from } }">{{ scope.row.to }}</router-link>
+              <router-link class="skyblue-text" :to="{ name: 'address', params: { address: scope.row.to } }">{{ scope.row.to }}</router-link>
             </el-tooltip>
             <el-tooltip v-if="scope.row.to" content="Copy Address" placement="top">
               <el-button icon="CopyDocument" @click="copyToClipboard(scope.row.to)">

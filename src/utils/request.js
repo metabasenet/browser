@@ -18,7 +18,7 @@ request.interceptors.response.use(function (response) {
     return response.data;
 }, function (error) {
     let message = '';
-    let status = error.response.status;
+    let status = error.response?.status;
     switch (status) {
         case 401:
             message = 'Login failed, please login again';
@@ -33,7 +33,7 @@ request.interceptors.response.use(function (response) {
             message = 'Server internal error';
             break;
         default:
-            message = error.response.data.msg || 'Unknown error';
+            message = error.response?.data.msg || 'Unknown error';
     }
     ElMessage({
         message: message,

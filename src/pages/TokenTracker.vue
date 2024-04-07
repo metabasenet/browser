@@ -21,15 +21,17 @@
         :default-sort="{ prop: ['price', 'chage', 'volume', 'virculating'], order: 'descending' }" style="width: 100%">
         <el-table-column prop="contractaddress" label="Token" width="200" >
           <template v-slot="scope">
+           <div class="token_div">
             <el-icon>
               <Position />
             </el-icon>
-            <router-link :to="{ name:'token',params:{address:scope.row.contractaddress} }">{{ scope.row.contractaddress }}</router-link>
+            <router-link class="skyblue-text" :to="{ name:'token',params:{address:scope.row.contractaddress} }">{{ scope.row.contractaddress }}</router-link>
             <el-tooltip content="Cross-Chain" placement="top">
               <el-icon>
                 <InfoFilled />
               </el-icon>
             </el-tooltip>
+           </div>
           </template>
         </el-table-column>
         <el-table-column
@@ -232,4 +234,16 @@ onMounted(() => {
     flex-wrap: wrap;
   }
 }
-</style>@/api/toTokens
+.skyblue-text {
+  width: 7.5rem;
+  color: #0693cc;
+  margin-right: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.token_div{
+display: flex;
+align-items: center;
+}
+</style>

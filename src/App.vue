@@ -17,10 +17,10 @@ export default {
   },
   computed: {
     shouldHideHeader() {
-      return this.$route.meta.hideHeader || this.$route.path === '/404';
+      return this.$route.meta.hideHeader || this.$route.path === '/404'|| this.$route.name === 'bytecode';
     },
     shouldHideFooter() {
-      return this.$route.meta.hideFooter || this.$route.path === '/404';
+      return this.$route.meta.hideFooter || this.$route.path === '/404'|| this.$route.name === 'bytecode';
     },
   },
 
