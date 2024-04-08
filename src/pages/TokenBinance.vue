@@ -8,7 +8,7 @@
             <div class="grid-content darkb_button grid-content_h3">
               <h3>
                 Token {{ individualQueryDetails.ercname }} ({{
-                individualQueryDetails.ercsymbol
+                  individualQueryDetails.ercsymbol
                 }}) <el-button type="success" icon="Check" circle />
               </h3>
               <div>
@@ -85,11 +85,10 @@
                 </li>
                 <li class="over_li">
                   <p>MAX TOTAL SUPPLY</p>
-                  <el-tooltip class="box-item" effect="dark" :content="
-                      individualQueryDetails &&
-                      individualQueryDetails.totalsupply
-                        ? individualQueryDetails.totalsupply.toString()
-                        : ''
+                  <el-tooltip class="box-item" effect="dark" :content="individualQueryDetails &&
+                    individualQueryDetails.totalsupply
+                    ? individualQueryDetails.totalsupply.toString()
+                    : ''
                     " placement="top-start">
                     <span>{{ individualQueryDetails.totalsupply }}</span>
                   </el-tooltip>
@@ -221,9 +220,9 @@
                     <el-table-column prop="transactionHash" label="Txn Hash" width="120">
                       <template v-slot="scope">
                         <router-link class="skyblue-text ellipsis-text" :to="{
-                            name: 'tx',
-                            params: { hash: scope.row.transactionHash },
-                          }">{{ scope.row.transactionHash }}</router-link>
+                          name: 'tx',
+                          params: { hash: scope.row.transactionHash },
+                        }">{{ scope.row.transactionHash }}</router-link>
                       </template>
                     </el-table-column>
                     <el-table-column prop="method" label="Method " width="120">
@@ -236,9 +235,9 @@
                     <el-table-column prop="blockNumber" label="Block" width="100">
                       <template v-slot="scope">
                         <router-link class="skyblue-text" :to="{
-                            name: 'block',
-                            params: { blockNumber: scope.row.blockNumber },
-                          }">{{ scope.row.blockNumber }}</router-link>
+                          name: 'block',
+                          params: { blockNumber: scope.row.blockNumber },
+                        }">{{ scope.row.blockNumber }}</router-link>
                       </template>
                     </el-table-column>
                     <el-table-column prop="formattedTime" label="Age">
@@ -248,9 +247,9 @@
                         <div class="router_box">
                           <el-tooltip :content="scope.row.from" placement="top">
                             <router-link class="skyblue-text ellipsis-text" :to="{
-                                name: 'address',
-                                params: { address: scope.row.from },
-                              }">{{ scope.row.from }}</router-link>
+                              name: 'address',
+                              params: { address: scope.row.from },
+                            }">{{ scope.row.from }}</router-link>
                           </el-tooltip>
                           <el-tooltip content="Copy Address" placement="top">
                             <el-button icon="CopyDocument" @click="copyToClipboard(scope.row.from)">
@@ -269,9 +268,9 @@
                           </el-tooltip>
                           <el-tooltip :content="scope.row.to" placement="top">
                             <router-link class="skyblue-text ellipsis-text" :to="{
-                                name: 'address',
-                                params: { address: scope.row.to },
-                              }">{{ scope.row.to }}</router-link>
+                              name: 'address',
+                              params: { address: scope.row.to },
+                            }">{{ scope.row.to }}</router-link>
                           </el-tooltip>
                           <el-tooltip content="Copy Address" placement="top">
                             <el-button icon="CopyDocument" @click="copyToClipboard(scope.row.to)">
@@ -364,7 +363,7 @@
               </div>
             </el-row></el-tab-pane> -->
               <el-tab-pane label="DEX Trades" name="tab4">DEX Trades</el-tab-pane>
-              <el-tab-pane v-if="verifystatused === 0 || !verifystatused" label="comments" name="tab5">
+              <el-tab-pane v-if="verifystatused === 0 || !verifystatused" label="Contract" name="tab5">
                 <el-row :gutter="10">
                   <el-col :span="24">
                     <div class="grid-content_h2 grid-contents">
@@ -375,11 +374,11 @@
                           </el-icon>
                           Are you the contract creator?
                           <router-link class="skyblue-text" :to="{
-                              name: 'verifyContract',
-                              params: {
-                                address: individualQueryDetails.contractaddress,
-                              },
-                            }">Verify and Publish </router-link>your contract source code today!
+                            name: 'verifyContract',
+                            params: {
+                              address: individualQueryDetails.contractaddress,
+                            },
+                          }">Verify and Publish </router-link>your contract source code today!
                         </p>
                         <el-button type="info">Decompile Bytecode
                           <el-icon>
@@ -398,7 +397,7 @@
               <el-tab-pane v-else name="tab5">
                 <template #label>
                   <el-badge value="√" class="item" type="success">
-                    comments
+                    Contract
                   </el-badge>
                 </template>
                 <el-tabs style="margin: 10px" type="card" v-model="activeNames" class="demo-tabs"
@@ -638,15 +637,16 @@
                                   <el-form-item v-for="(
                                       input, inputIndex
                                     ) in functionItem.inputs" :key="inputIndex" :prop="input.name" :label="input.name">
-                                    <el-input size="large" v-model="formModel[input.name]" placeholder="Enter value"></el-input>
+                                    <el-input size="large" v-model="formModel[input.name]"
+                                      placeholder="Enter value"></el-input>
                                   </el-form-item>
                                   <el-form-item>
-                                    <el-button type="info" plain @click="queryAllowance(functionItem)">Query</el-button>
+                                    <el-button type="info" plain @click="handleQuery(functionItem)">Query</el-button>
                                   </el-form-item>
                                   <el-form-item>
-                                    <span class="uints">{{functionItem.outputs[0].internalType}}</span>
+                                    <span class="uints">{{ functionItem.outputs[0].internalType }}</span>
                                   </el-form-item>
-                                  <el-form-item v-if="response">
+                                  <el-form-item v-if="responsed">
                                     <div style="
                                       display: flex;
                                       flex-direction: column;
@@ -662,7 +662,7 @@
                                         margin: 10px;
                                       ">
                                         <svg-icon name="right"></svg-icon>uint256:
-                                        0
+                                        {{ queryResult }}
                                       </p>
                                     </div>
                                   </el-form-item>
@@ -670,8 +670,8 @@
                               </div>
                               <div v-else>
                                 <!-- 对于非函数类型的项,可以显示其他信息 -->
-                                <div>{{functionItem.outputs[0].name}} <span
-                                    class="uints">{{functionItem.outputs[0].internalType}}</span></div>
+                                <div>{{ functionItem.name }} <span class="uints">{{
+                                  queryError }}</span></div>
                               </div>
                             </el-collapse-item>
                           </el-collapse>
@@ -767,11 +767,11 @@
 
                                   </el-form-item>
                                   <el-form-item>
-                                    <el-button type="primary">Write</el-button>
+                                    <el-button type="primary" @click="submitWrite(item)">Write</el-button>
                                   </el-form-item>
                                   <el-form-item>
                                   </el-form-item>
-                                  <el-form-item v-if="response">
+                                  <el-form-item v-if="responsed">
                                     <div style="
                                       display: flex;
                                       flex-direction: column;
@@ -787,7 +787,7 @@
                                         margin: 10px;
                                       ">
                                         <svg-icon name="right"></svg-icon>uint256:
-                                        0
+                                        {{ queryResult }}
                                       </p>
                                     </div>
                                   </el-form-item>
@@ -795,8 +795,9 @@
                               </div>
                               <div v-else>
                                 <!-- 对于非函数类型的项,可以显示其他信息 -->
-                                <div>{{item.outputs[0].name}} <span
-                                    class="uints">{{item.outputs[0].internalType}}</span></div>
+                                <div>{{ item.outputs[0].name }} <span class="uints">{{ queryError
+                                    }}</span>
+                                </div>
                               </div>
                             </el-collapse-item>
                           </el-collapse>
@@ -807,17 +808,16 @@
                       <el-form :model="form">
                         <el-form-item>
                           <el-select size="large" v-model="form.region" placeholder="Select">
-                            <el-option label="10" value="shanghai" />
-                            <el-option label="100" value="beijing" />
-                            <el-option label="10000" value="beijing" />
-                            <el-option label="100000" value="beijing" />
+                            <el-option label="10⁶" value="1000000" />
+                            <el-option label="10⁸" value="100000000" />
+                            <el-option label="10¹⁸" value="1000000000000000000" />
                           </el-select>
                         </el-form-item>
                       </el-form>
                       <template #footer>
                         <div class="dialog-footer">
                           <el-button @click="dialogFormVisibles = false">Cancel</el-button>
-                          <el-button type="primary" @click="dialogFormVisibles = false">
+                          <el-button type="primary" @click="addSelect(form.region)">
                             Add
                           </el-button>
                         </div>
@@ -870,14 +870,13 @@ import { ElMessage } from "element-plus";
 import { getContactPage, getTokenInquire } from "@/api/toTokens";
 import { getFileInfo } from "@/api/upload";
 import { getContractDetail } from "@/api/verifyContract";
-// import Web3 from "web3";
 import { ethers } from "ethers";
 const sizeForm = ref({
   address: "",
   spender: "",
 });
 let results = ref("");
-let response = false;
+let responsed = ref(false);;
 const tableData = ref([]);
 const individualQueryDetails = ref({});
 const currentPage4 = ref(1);
@@ -888,6 +887,8 @@ const activeName = ref("tab1");
 const activeNames = ref("first");
 const verifystatused = ref(0);
 const contractSource = ref({});
+const queryResult = ref(null);
+const queryError = ref(null);
 let dialogFormVisible = ref(false);
 let dialogFormVisibles = ref(false);
 const activeNamese = ref(["1"]);
@@ -900,10 +901,10 @@ const { address } = defineProps({
   },
 });
 const formModels = ref({});
-const formModel =ref({});
+const formModel = ref({});
 const form = ref({
   name: "",
-  region: "",
+  region: [],
   date1: "",
   date2: "",
   delivery: false,
@@ -923,22 +924,49 @@ const handleChange = (val) => {
 const openWeb = () => {
   dialogFormVisible.value = true;
 };
-const queryAllowance = async (functionItem) => {
-  // 根据 functionItem.inputs 构建查询参数
-  // const params = functionItem.inputs.reduce((acc, input) => {
-  //       acc[input.name] = formModel[input.name];
-  //       return acc;
-  //     }, {});
-  //       // 发送查询到后端，这里只是模拟
-  //       const response = await getFileInfo(address);
-  //       response[functionItem.name] = 'Your query response here';
-}
+
 const connectWallet = async () => {
-  // 检查是否安装了MetaMask
+  // const chainId = '0x2267';
+  // const rpcUrl = 'https://test2.metabasenet.site/rpc';
+  // if (window.ethereum) {
+  //   try {
+  //     await ethereum.request({
+  //       method: 'wallet_switchEthereumChain',
+  //       params: [{
+  //         chainId: chainId 
+  //       }]
+  //     })
+  //     console.log('wallet_switchEthereumChain');
+  //   } catch (e) {
+  //     console.log('(e as any).code', e.code);
+  //     if (e.code == 4902) {
+  //       try {
+  //         console.log('wallet_addEthereumChain');
+  //         await ethereum.request({
+  //           method: 'wallet_addEthereumChain',
+  //           params: [
+  //             {
+  //               chainId: chainId, // 目标链ID
+  //               chainName: 'MNT Testnet',
+  //               nativeCurrency: {
+  //                 name: 'MNT',
+  //                 symbol: 'MNT',
+  //                 decimals: 18
+  //               },
+  //               rpcUrls: [rpcUrl], 
+  //             }
+  //           ]
+  //         })
+  //       } catch (ee) {
+  //         //
+  //       }
+  //     } else if (e.code == 4001) return
+  //   }
+  // }
+
   if (typeof window.ethereum !== "undefined") {
     try {
       dialogFormVisible.value = false;
-      // 从MetaMask请求账户访问权限
       const accounts = await ethereum.request({
         method: "eth_requestAccounts",
       });
@@ -955,11 +983,17 @@ const connectWallet = async () => {
       console.log("Connected", account);
       // 创建Web3提供者
       // const provider = new ethers.providers.Web3Provider(window.ethereum);
+      // const provider = new ethers.BrowserProvider(window.ethereum,"https://test.metabasenet.site/rpc");
+      // // const provider = new ethers.JsonRpcProvider("https://test.metabasenet.site/rpc");
+      // let byteCode = await provider.getCode(contractAddress);
+      // return byteCode;
+      // }
       const provider = new ethers.BrowserProvider(window.ethereum);
+      // const provider = new ethers.BrowserProvider(window.ethereum, "https://test2.metabasenet.site/rpc");
       console.log(provider);
 
       // 获取签名器
-      const signer = provider.getSigner();
+      const signer = await provider.getSigner();
 
       // 使用ABI和合约地址初始化合约
       const contract = new ethers.Contract(
@@ -967,7 +1001,8 @@ const connectWallet = async () => {
         contractSource.value.abi,
         signer
       );
-       // 假设amountInEther和address已被正确赋值
+      console.log(contract);
+      // 假设amountInEther和address已被正确赋值
       //  const amountInWei = ethers.utils.parseEther(amountInEther);
       // 获取账户余额
       // const balance = await contract.provider.getBalance(account);
@@ -975,10 +1010,11 @@ const connectWallet = async () => {
       // const balance = await contract.balanceOf(account);
       console.log(balance);
       // 将余额从wei转换为ether并输出
-      console.log("Balance:", ethers.utils.formatEther(balance));
+      // console.log("Balance:", ethers.utils.formatEther(balance));
 
       // 查询代币总供应量
       const totalSupply = await contract.totalSupply();
+
       // 将总供应量从wei转换为ether并输出
       console.log("Total Token Supply:", ethers.utils.formatEther(totalSupply));
 
@@ -1009,6 +1045,8 @@ const connectWallet = async () => {
       const transferFromReceipt = await transferFromTxn.wait();
       // 输出代理转账交易回执
       console.log("Transfer From Transaction:", transferFromReceipt);
+      let byteCode = await provider.getCode(contractAddress);
+      return byteCode;
     } catch (error) {
       // 如果连接MetaMask失败，输出错误信息
       console.error("Failed to connect to MetaMask", error);
@@ -1018,6 +1056,95 @@ const connectWallet = async () => {
     console.error("MetaMask is not installed!");
   }
 };
+const addSelect = (value)=>{
+  dialogFormVisibles.value = false;
+}
+const submitWrite = async (item) => {
+  responsed.value = true;
+  try {
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    // const provider = new ethers.BrowserProvider(window.ethereum, "https://test2.metabasenet.site/rpc");
+    // 获取签名器
+    const signer = await provider.getSigner();
+
+    // 使用ABI和合约地址初始化合约
+    const contract = new ethers.Contract(contractSource.value.contractaddress, contractSource.value.abi, signer);
+    console.log(contract);
+    const params = item.inputs.reduce((acc, input) => {
+      acc[input.name] = formModels.value[input.name];
+      return acc;
+    }, {});
+    console.log(params);
+
+
+    console.log(item);
+    // let res = await contract[functionItem.name](params.account);
+    const valuesArray = Object.values(params);
+    // let res = await contract["symbol"]();
+    let res = await contract[item.name](...valuesArray);
+//  let res = await contract["transfer"]("0xe6897baC8439E77Cb662b18CF68a897c13aCacb5",0);
+    console.log('1111111', res);
+
+    console.log("-----------------------------------------------------------------")
+    queryResult.value = res;
+    console.log(queryResult.value);
+  } catch (error) {
+    queryError.value = error.message;
+  }
+}
+const handleQuery = async (functionItem) => {
+  responsed.value = true;
+  try {
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    // const provider = new ethers.BrowserProvider(window.ethereum, "https://test2.metabasenet.site/rpc");
+    // 获取签名器
+    const signer = await provider.getSigner();
+
+    // 使用ABI和合约地址初始化合约
+    // const contract = new ethers.Contract(contractSource.value.contractaddress, contractSource.value.abi, provider);
+    // console.log(contract);
+    const contract = new ethers.Contract(contractSource.value.contractaddress, contractSource.value.abi, signer);
+    console.log(contract);
+    // 转账
+    // let res11 = await contract["transfer"]("0xe6897baC8439E77Cb662b18CF68a897c13aCacb5","5");
+    // console.log(res11);
+     const params = functionItem.inputs.reduce ((acc, input) => {
+      acc[input.name] = formModel.value[input.name];
+      return acc;
+    }, {});
+    // let res = await contract[functionItem.name](params.account);
+    const valuesArray = Object.values(params);
+    // let res = await contract["symbol"]();
+    let res = await contract[functionItem.name](...valuesArray);
+    // const res = await contract[functionItem.functionName](...Object.values(params));
+    console.log('1111111', res);
+    queryResult.value = res;
+    console.log(queryResult.value);
+  } catch (error) {
+    queryError.value = error.message;
+  }
+}
+const getItemName = async () => {
+  try {
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    // const signer =await provider.getSigner();
+    const contract = new ethers.Contract(contractSource.value.contractaddress, contractSource.value.abi, provider);
+    const details = [];
+    const promises = viewFunctions.value.map(async (item,index) => {
+      if (item.inputs && item.inputs.length === 0) {
+        try {
+          item.detail = await contract[item.name]();
+          details[index] = item.detail;
+        } catch (error) {
+          item.detail = '';
+        }
+      }
+    });
+    await Promise.all(promises);
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+}
 const handleClicks = (tab, event) => {
   if (tab.props.name === "first") {
     // getContactList();
@@ -1039,6 +1166,7 @@ const handleClick = (tab, event) => {
 
   } else if (tab.props.name === "tab5") {
     getFileInfos();
+    getItemName();
   }
 };
 const getFileInfos = async () => {
@@ -1046,7 +1174,6 @@ const getFileInfos = async () => {
     if (address !== null) {
       const response = await getFileInfo(address);
       contractSource.value.sourceCode = response[0].sourceCode;
-      console.log(response);
     }
   } catch (error) {
     console.error("Error fetching block details:", error);
@@ -1060,10 +1187,10 @@ const getContactDetail = async () => {
       contractSource.value = response.data;
       let abi = JSON.parse(response.data.abi);
       viewFunctions.value = abi.filter(
-        (item) => item.type === "function" && item.stateMutability === "view"
+        (item) => item.type === "function" && item.stateMutability === "view" || item.stateMutability == 'prue'
       );
       writeContract.value = abi.filter(
-        (item) => item.type === "function" && item.stateMutability === "nonpayable"
+        (item) => item.type === "function" && item.stateMutability === "nonpayable" || item.stateMutability == 'payable'
       );
       console.log(writeContract.value);
       console.log(viewFunctions.value);
@@ -1158,12 +1285,14 @@ onMounted(() => {
 .fox_box {
   display: flex;
 }
+
 .wrap-text {
   white-space: normal;
   word-break: break-all;
   background-color: #e9ecef;
   border-radius: 9px;
 }
+
 .responsive-aside {
   width: 0rem;
   transition: width 0.5s ease;
@@ -1186,15 +1315,18 @@ onMounted(() => {
   padding: 19px 0;
   border-bottom: 1px solid #dcdfe6;
 }
+
 .grid-content_h2 {
   margin: 0 2rem;
   padding: 10px 0;
 }
+
 .grid-contents {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
+
 .blocks_heade {
   margin-top: 1.25rem;
   margin-left: 2rem;
@@ -1255,6 +1387,7 @@ onMounted(() => {
 }
 
 @media (max-width: 767px) {
+
   .card-ul,
   .card-li {
     padding: 5px;
@@ -1348,12 +1481,16 @@ onMounted(() => {
   flex-wrap: wrap;
   align-items: center;
 }
+
 .demo-tabs {
   background-color: #fff;
+  border-radius: 15px;
 }
+
 :deep(.el-badge__content.is-fixed) {
   right: 0;
 }
+
 :deep(.my-label) {
   width: 200px;
   display: inline-block;
@@ -1363,17 +1500,20 @@ onMounted(() => {
   display: inline-block;
   margin-left: 5rem;
 }
+
 @media (max-width: 768px) {
   .block_height {
     display: block;
     margin-left: 0;
   }
 }
+
 .contracts_info {
   margin: 10px 0;
   display: flex;
   justify-content: space-between;
 }
+
 .collapsed {
   width: 100%;
   display: flex;
@@ -1382,6 +1522,7 @@ onMounted(() => {
   /* background-color: #f8f9fa; */
   /* border-radius: 10px; */
 }
+
 .uints {
   font-size: 10px;
   font-style: italic;

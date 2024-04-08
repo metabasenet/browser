@@ -7,7 +7,6 @@ const API = {
   }
 export const getVertityUpload = (contractName,address,files) => {
   const formData = new FormData();
-  console.log(files.raw);
   formData.append('files', files.raw);
   const url = `${API.VERTITY_UPLOAD_URL}?contractName=${contractName}&contractAddress=${address}`;
   return request.post(url,formData);

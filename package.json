@@ -17,6 +17,7 @@
     "element-plus": "^2.6.1",
     "ethers": "^6.11.1",
     "express": "^4.19.2",
+    "mitt": "^3.0.1",
     "nprogress": "^0.2.0",
     "pinia": "^2.1.7",
     "progress": "^2.0.3",

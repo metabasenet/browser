@@ -149,7 +149,7 @@
                                 <el-checkbox v-model="rememberMe">I agree to the terms of service</el-checkbox>
                             </el-form-item>
                             <el-form-item>
-                                <el-button type="primary" @click="onSubmit(form)">Continue</el-button>
+                                <el-button type="primary" @click="onSubmit(sizeForm)">Continue</el-button>
                                 <el-button>Reset</el-button>
                             </el-form-item>
                         </el-form>
@@ -160,18 +160,21 @@
             <el-aside class="responsive-aside"></el-aside>
         </el-container>
     </div>
+
 </template>
     
 <script setup>
 import { reactive,ref,onMounted } from 'vue'
 import { useRouter } from 'vue-router';
 import { getContractDetail } from "@/api/verifyContract";
+import eventBus from "@/utils/eventBus";
 const { address } = defineProps({
   address: {
     type: [String],
     required: true,
   },
 });
+
 const form = ref()
 const router = useRouter();
 const rememberMe = ref(true)
@@ -197,14 +200,15 @@ const rules =ref({
     ],
 })
 const onSubmit = async (formEl) => {
-  if (!formEl) return
-  await formEl.validate((valid, fields) => {
-    if (valid) {
-      router.push({ name: 'verifyContractSolc',params:{address:sizeForm.value.contractaddress} })
-    } else {
-      console.log('error submit!', fields)
-    }
-  })
+    console.log(formEl);
+    console.log(formEl.compilerversion);
+    eventBus.emit('compilerversion', { compilerversion: "66666666666666" })
+    if (!formEl) return
+    if (formEl && formEl.contractaddress) {
+        router.push({ name: 'verifyContractSolc', params: { address: formEl.contractaddress } });
+        // compilerversion.value =formEl.compilerversion
+        
+    } 
 }
 const getContactDetail = async () => {
     try {
@@ -212,8 +216,12 @@ const getContactDetail = async () => {
             const response = await getContractDetail(
                 address
             );
-            sizeForm.value.contractaddress = response.data.contractaddress;
-            // sizeForm.value =response.data
+            if (response.data && response.data.contractaddress) {
+                sizeForm.value.contractaddress = response.data.contractaddress;
+            } else {
+                // sizeForm.value.contractaddress =address
+            }
+        
         }
     } catch (error) {
         console.error("Error fetching block details:", error);
