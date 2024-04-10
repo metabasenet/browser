@@ -1,11 +1,11 @@
 <template>
   <div>
     <el-container class="container-xxl">
-      <el-aside class="responsive-aside" ></el-aside>
-      <el-main>
+      <el-aside class="responsive-aside"></el-aside>
+      <el-main style="padding-bottom: 0;">
         <div class="fixed-header">
           <el-row :gutter="10" class="header_row">
-            <el-col :span="3" :xs="0" :sm="11" :md="11" :lg="3" ></el-col>
+            <el-col :span="3" :xs="0" :sm="11" :md="11" :lg="3"></el-col>
             <el-col :span="10" :xs="0" :sm="0" :md="11" :lg="8" class="header_search">
               <div class="header_price">
                 <div class="header_price" style="margin-right:10px">
@@ -23,46 +23,51 @@
                 <el-input v-model="homeSearch" style="height: 40px;"
                   placeholder="Search by Address / Txn Hash / Block / Token / Domain Name" class="input-with-select">
                   <template #append>
-                    <el-button @click="getSearch" type="primary" icon="Search" />
+                    <el-button @click="getSearch" icon="Search" />
                   </template>
                 </el-input>
                 <el-button icon="Sunny" class="header_button" size="large" style="margin-left:10px"></el-button>
                 <el-button icon="ChromeFilled" class="header_button" size="large" style="margin-left:10px"></el-button>
               </div>
             </el-col>
-            <el-col :span="3" :xs="0" :sm="0" :md="3" :lg="3" ></el-col>
+            <el-col :span="3" :xs="0" :sm="0" :md="3" :lg="3"></el-col>
           </el-row>
         </div>
         <div class="header-menu"><el-row :gutter="10">
             <el-col :span="24">
-              <el-menu :default-active="$route.path" router class="el-menu-demo" mode="horizontal">
-                <div class="el-img">
-                  <img width="40" height="37" src="/header_img.png" alt="" />
-                </div>
+              <el-menu ellipsis class="el-menu-popper-demo" collapse-transition :default-active="$route.path" router mode="horizontal"
+                :popper-offset="16">
+                <el-menu-item index="1">
+                  <div class="el-img">
+                    <img width="40" height="37" src="/header_img.png" alt="" />
+                    <span style="font-size:1.5rem;color:#00a186">MNT</span>
+                  </div>
+                </el-menu-item>
                 <div class="el_menu">
                   <el-menu-item index="/home">Home</el-menu-item>
-                  <el-sub-menu index="2">
-                    <template #title>Blockchain</template>
-                    <el-menu-item index="/blocks">View Blocks</el-menu-item>
-                    <el-menu-item index="/txs">Transactions</el-menu-item>
-                    <el-menu-item index="/accounts">Top Accounts</el-menu-item>
-                  </el-sub-menu>
-                  <el-sub-menu index="3">
-                    <template #title>Tokens</template>
+                <el-sub-menu index="2">
+                  <template #title>Blockchain</template>
+                  <el-menu-item index="/blocks">View Blocks</el-menu-item>
+                  <el-menu-item index="/txs">Transactions</el-menu-item>
+                  <el-menu-item index="/accounts">Top Accounts</el-menu-item>
+                </el-sub-menu>
+                <el-sub-menu index="3" :popper-offset="8">
+                  <template #title>Tokens</template>
                     <el-menu-item index="/tokens">Top Tokens<span>(ERC-20)</span></el-menu-item>
                     <el-menu-item index="/tokentxns">Token Transfers <span>(ERC-20)</span></el-menu-item>
                     <el-menu-item index="3-3">item three</el-menu-item>
-                  </el-sub-menu>
-                  <el-sub-menu index="4">
+                </el-sub-menu>
+                <el-sub-menu index="4">
                     <template #title>Blockchain</template>
                     <el-menu-item index="4-1">View Blocks</el-menu-item>
                     <el-menu-item index="4-2">item two</el-menu-item>
                     <el-menu-item index="4-3">item three</el-menu-item>
                   </el-sub-menu>
-                  <el-menu-item index="/login"><el-icon>
+                  <el-menu-item  index="/login"><el-icon>
                       <User />
                     </el-icon>Sign In</el-menu-item>
                 </div>
+                
               </el-menu>
             </el-col>
           </el-row></div>
@@ -113,11 +118,18 @@ const getSearch = async () => {
 </script>
 
 <style scoped>
+:deep(.el-menu--horizontal){
+  justify-content: space-between;
+}
+.container-xxl {
+  border-bottom: 1px solid #e8e8e8;
+}
+
 .mt-4 {
   height: 50px;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #e8e8e8;
+
 }
 
 .header_search {
@@ -126,11 +138,14 @@ const getSearch = async () => {
   align-content: center;
   justify-content: space-between;
   align-items: center;
+
+}
+
+.header_row {
+  display: flex;
   border-bottom: 1px solid #e8e8e8;
 }
-.header_row{
-  display: flex;
-}
+
 .header_price {
   display: flex;
   color: #6c757d;
@@ -140,7 +155,7 @@ const getSearch = async () => {
 .el-menu-demo {
   display: flex;
   justify-content: space-between;
-  margin: 0 2.25rem;
+  margin: 0 1.4rem;
 }
 
 .el_menu {
@@ -187,10 +202,12 @@ const getSearch = async () => {
   background-color: #fff;
   /* Set a background color if needed */
 }
+
 .responsive-aside {
   width: 0rem;
-  transition: width 0.5s ease; 
+  transition: width 0.5s ease;
 }
+
 @media (min-width: 768px) {
   .responsive-aside {
     width: 10rem;
@@ -198,7 +215,12 @@ const getSearch = async () => {
     /* background-color: #fff;  */
   }
 }
+
 .header-menu {
   margin-top: 50px;
+}
+
+:deep(.el-input-group--append>.el-input__wrapper) {
+  background-color: #f8f9fa;
 }
 </style>

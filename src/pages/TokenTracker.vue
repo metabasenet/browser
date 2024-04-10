@@ -233,6 +233,9 @@ onMounted(() => {
   .box-table_header {
     flex-wrap: wrap;
   }
+  .box-table,.grid-content_h3{
+        margin: 0px;
+    }
 }
 .skyblue-text {
   width: 7.5rem;

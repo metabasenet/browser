@@ -33,7 +33,7 @@
   </el-row>
   <el-row class="box-table">
     <div class="demo-pagination-block box-table_header">
-    <div class="demonstration"><p>Total of 36,899,505 blocks</p><span>(Showing blocks between #36949710 to #36949734)</span></div>
+    <div class="demonstration"><p>Total of {{ total }} blocks</p><span>(Showing blocks between #36949710 to #36949734)</span></div>
     <el-pagination
       v-model:current-page="currentPage4"
       v-model:page-size="pageSize4"
@@ -48,14 +48,14 @@
     />
   </div>
     <el-table :data="tableData" style="width: 100%" >
-    <el-table-column prop="number" label="Block" width="120">
+    <el-table-column prop="number" label="Block" width="100">
       <template v-slot="scope">
             <router-link class="skyblue-text" 
             :to="{ name:'block',params:{blockNumber:scope.row.number} }">
             {{ scope.row.number }}</router-link>
         </template>
     </el-table-column>
-    <el-table-column prop="formattedTime" label="Age" width="100" ></el-table-column>
+    <el-table-column prop="formattedTime" label="Age" width="120" align="center" ></el-table-column>
     <el-table-column prop="transactioncount" label="Txn" width="60">
       <template v-slot="scope">
             <router-link class="skyblue-text" :to="{ path: '/txs' }">{{ scope.row.transactioncount }}</router-link>
@@ -65,7 +65,7 @@
       <template v-slot="{ row }">
       <router-link class="skyblue-text" to="/address" >{{ row.validator }}</router-link>
       <el-tooltip  content="Copy Address" placement="top">
-        <el-button style="margin-left:5px" icon="CopyDocument" @click="copyToClipboard(row.validator)">
+        <el-button text style="margin-left:5px" icon="CopyDocument" @click="copyToClipboard(row.validator)">
         </el-button>
       </el-tooltip>
       
@@ -74,7 +74,7 @@
     <el-table-column prop="gasused" label="Gas used" >
       <template v-slot="{ row }">
       {{ row.gasused }}
-      <el-progress :percentage="row.percentage" /> 
+      <el-progress :percentage="Math.round(row.percentage)" /> 
     </template>
     </el-table-column>
     <el-table-column prop="gaslimit" label="Gas Limit" />
@@ -223,6 +223,12 @@ function copyToClipboard(text) {
 @media (max-width: 768px) {
   .box-table_header{
     flex-wrap: wrap;
+  }
+  .box-table{
+    margin: 0;
+  }
+  .blocks_heade,.grid-content_h3{
+    margin: 0;
   }
 }
 .demonstration span{

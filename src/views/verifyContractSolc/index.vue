@@ -193,11 +193,10 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router';
+import { useRouter,useRoute } from 'vue-router';
 import { getContractDetail } from "@/api/verifyContract";
 import { getVertityUpload, getFileInfo,deleteFile,submissionContract } from "@/api/upload";
 import { ElUpload, ElButton, ElMessage } from 'element-plus';
-import eventBus from '@/utils/eventBus';
 const { address} = defineProps({
     address: {
         type: [String],
@@ -205,10 +204,12 @@ const { address} = defineProps({
     }
 });
 const router = useRouter();
+const route = useRoute();
+ const compilerversion = route.query.compilerversion;
 const formInline = ref({
     contractaddress: address,
     contractname: '',
-    compilerversion: '',
+    compilerversion: compilerversion,
     optimization: '1',
     desc: '',
     files: {},
@@ -227,6 +228,7 @@ const resetForm = (formEl) => {
     formInline.value.resetFields()
 }
 const getContactDetail = async () => {
+    console.log(route);
     try {
         if (address !== null) {
             const response = await getContractDetail(
@@ -236,11 +238,11 @@ const getContactDetail = async () => {
                 formInline.value = response.data;
             } else {
                 
-                // 例如，设置一个默认值
+
                 formInline.value = {
                     contractaddress: address, 
-                    // compilerversion:compilerversion// 或者其他默认值
-                    // 其他属性可以根据需要设置默认值
+                    compilerversion:compilerversion
+
                 };
             }
         
@@ -290,10 +292,9 @@ const beforeUpload = (files) => {
     }
     return true;
 };
-const handleFileChange = (file, fileList) => {
+const handleFileChange = async(file, fileList) => {
     fileList= fileList;
     formInline.value.files = fileList[0];
-
 };
 const handleUploadSuccess = (response, file, fileList) => {
     ElMessage.success('Upload successfully');
@@ -330,12 +331,6 @@ const deleteUploaded = async()=>{
     }
 }
 onMounted(() => {
-    console.log("11111111111111111111111111111111");
-    // console.log(compilerversion);
-    eventBus.on('compilerversion', (compilerversion) => {
-    console.log(compilerversion)
-  })
-  console.log("11111111111111111111111111111111");
     getContactDetail();
 });
 </script>

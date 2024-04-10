@@ -1,13 +1,13 @@
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
-// 引入用户相关的仓库
+
 import { useUserStore } from '@/store/modules/user';
 let request = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL,
     timeout: 5000,
 });
 request.interceptors.request.use((config) => {
-    // 获取用户相关的小仓库:获取仓库内部token,登录成功后携带给服务器
+
     // let userStore = useUserStore();
     // config.headers['token'] = userStore.token;
     // config.headers.token = localStorage.getItem('token');

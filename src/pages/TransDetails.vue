@@ -68,7 +68,7 @@
         transDetails.hash.slice(0, 20) +
         '...' }}</span>
               <span v-else>N/A</span>
-              <el-tooltip content="Copy TxHash to clipboard" placement="top"><el-button icon="CopyDocument"
+              <el-tooltip content="Copy TxHash to clipboard" placement="top"><el-button text icon="CopyDocument"
                   @click="copyToClipboard(transDetails.hash)">
                 </el-button>
               </el-tooltip>
@@ -142,9 +142,12 @@
           <el-descriptions-item label="From:" label-align="center" align="left" label-class-name="my-label">
             <div class="block_height">
               <div class="TransactionAction">
-                <router-link class="skyblue-text ellipsis-text" to="/address">{{ transDetails.from }}
+                <router-link class="skyblue-text ellipsis-text" :to="{
+                          name: 'address',
+                          params: { address: transDetails.from },
+                        }">{{ transDetails.from }}
                 </router-link><span class="text-muted">(Validator: Certik)</span><el-tooltip content="Copy Address"
-                  placement="top"><el-button style="margin-left:5px" icon="CopyDocument"
+                  placement="top"><el-button style="margin-left:5px" text icon="CopyDocument"
                     @click="copyToClipboard(transDetails.from)">
                   </el-button>
                 </el-tooltip>
@@ -159,12 +162,15 @@
                     <Document />
                   </el-icon>
                 </el-tooltip>
-                <router-link class="skyblue-text ellipsis-text" to="/address">
+                <router-link class="skyblue-text ellipsis-text" :to="{
+                          name: 'address',
+                          params: { address: transDetails.to },
+                        }">
                   <div class=" mb-2 truncate">{{ transDetails.to }}</div>
                 </router-link>
                 <span>(BSC: Validator Set)</span>
                 <el-tooltip content="Copy Address" placement="top">
-                  <el-button style="margin-left:5px" icon="CopyDocument" @click="copyToClipboard(transDetails.to)">
+                  <el-button style="margin-left:5px" text icon="CopyDocument" @click="copyToClipboard(transDetails.to)">
                   </el-button>
                 </el-tooltip>
                 <el-tooltip content="Contract Execution Completed" placement="top">
@@ -249,7 +255,7 @@
               <el-descriptions-item label-class-name="my-label" label="Input Data:" label-align="center" align="left">
                 <div class="block_height"><el-input style="width: 100%" :rows="2" type="textarea" disabled
                     :placeholder="transDetails.data" />
-                  <el-select v-model="value" placeholder="View Input As" style="width: 150px">
+                  <el-select v-model="value" placeholder="View Input As" style="width: 150px;margin-right:10px">
                     <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
                   </el-select>
                   <el-button icon="Menu">Decode Input Data</el-button>
@@ -402,12 +408,12 @@ body {
 }
 
 .grid-content_h1 {
-  margin: 0 2rem;
-  padding: 19px 0;
+  padding: 19px 10px;
+  margin-left: 10px;
 }
 
 .grid-content_h1 span {
-  font-size: 12px;
+  font-size: 13px;
   color: #6c757d;
 }
 

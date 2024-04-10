@@ -170,7 +170,7 @@
                       <router-link class="ellipsis-text" :to="{ name: 'address' }">{{ address }}</router-link>
                     </el-tooltip>
                     <el-tooltip content="Copy Address" placement="top">
-                      <el-button icon="CopyDocument" @click="copyToClipboard(address)">
+                      <el-button text icon="CopyDocument" @click="copyToClipboard(address)">
                       </el-button>
                     </el-tooltip>
                   </div>
@@ -211,7 +211,7 @@
               <el-tab-pane label="Transfers" name="tab1">
                 <el-row class="box-table">
                   <div class="demo-pagination-block box-table_header">
-                    <div class="demonstration">Total of 36,899,505 blocks</div>
+                    <div class="demonstration">More than {{total}} transactions found</div>
                     <el-pagination v-model:current-page="currentPage4" v-model:page-size="pageSize4"
                       :page-sizes="[10, 20, 30, 40]" layout=" sizes, prev, pager, next, " :total="10" small
                       @size-change="handleSizeChange" @current-change="handleCurrentChange" />
@@ -252,7 +252,7 @@
                             }">{{ scope.row.from }}</router-link>
                           </el-tooltip>
                           <el-tooltip content="Copy Address" placement="top">
-                            <el-button icon="CopyDocument" @click="copyToClipboard(scope.row.from)">
+                            <el-button text icon="CopyDocument" @click="copyToClipboard(scope.row.from)">
                             </el-button>
                           </el-tooltip>
                           <el-button style="margin-left: 2.5rem" type="success" icon="right" circle plain />
@@ -273,7 +273,7 @@
                             }">{{ scope.row.to }}</router-link>
                           </el-tooltip>
                           <el-tooltip content="Copy Address" placement="top">
-                            <el-button icon="CopyDocument" @click="copyToClipboard(scope.row.to)">
+                            <el-button text icon="CopyDocument" @click="copyToClipboard(scope.row.to)">
                             </el-button>
                           </el-tooltip>
                         </div>
@@ -328,7 +328,7 @@
                           }}</router-link>
                       </el-tooltip>
                       <el-tooltip content="Copy Address" placement="top">
-                        <el-button icon="CopyDocument" @click="copyToClipboard(scope.row.from)">
+                        <el-button text icon="CopyDocument" @click="copyToClipboard(scope.row.from)">
                         </el-button>
                       </el-tooltip>
                       <el-button style="margin-left:2.5rem" type="success" icon="right" circle plain />
@@ -623,7 +623,7 @@
                                   <div>{{ index + 1 }}_{{ functionItem.name }}</div>
                                   <div>
                                     <el-tooltip effect="dark" content="Copy Method Name" placement="top">
-                                      <el-button icon="CopyDocument"></el-button>
+                                      <el-button text icon="CopyDocument"></el-button>
                                     </el-tooltip>
                                     <el-tooltip effect="dark" content="Copy Permalink" placement="top">
                                       <el-button icon="Link"></el-button>
@@ -637,7 +637,7 @@
                                   <el-form-item v-for="(
                                       input, inputIndex
                                     ) in functionItem.inputs" :key="inputIndex" :prop="input.name" :label="input.name">
-                                    <el-input size="large" v-model="formModel[input.name]"
+                                    <el-input size="large" v-model="input.value"
                                       placeholder="Enter value"></el-input>
                                   </el-form-item>
                                   <el-form-item>
@@ -652,10 +652,10 @@
                                       flex-direction: column;
                                       flex-wrap: wrap;
                                     ">
-                                      <p>
+                                      <!-- <p>
                                         [ allowance(address,address) method
                                         Response ]
-                                      </p>
+                                      </p> -->
                                       <p class="uints" style="
                                         display: flex;
                                         align-items: center;
@@ -741,7 +741,7 @@
                                   <div>{{ index + 1 }}_{{ item.name }}</div>
                                   <div>
                                     <el-tooltip effect="dark" content="Copy Method Name" placement="top">
-                                      <el-button icon="CopyDocument"></el-button>
+                                      <el-button text icon="CopyDocument"></el-button>
                                     </el-tooltip>
                                     <el-tooltip effect="dark" content="Copy Permalink" placement="top">
                                       <el-button icon="Link"></el-button>
@@ -750,7 +750,6 @@
                                 </div>
                               </template>
                               <div v-if="item.inputs.length !== 0">
-                                <!-- 根据inputs 显示表单 -->
                                 <el-form :model="formModels" label-position="top">
                                   <el-form-item v-for="(
                                       input, inputIndex
@@ -758,13 +757,11 @@
                                     <template #label>
                                       <span>{{ input.name }}</span>
                                       <el-button style="margin-left: 5px;" v-if="input.type === 'uint256'" type="info"
-                                        plain @click="dialogFormVisibles = true"><el-icon>
+                                        plain @click="openDialog(index, inputIndex)"><el-icon>
                                           <Plus />
                                         </el-icon></el-button>
                                     </template>
-                                    <el-input size="large" v-model="formModels[input.name]"
-                                      :placeholder="input.name"></el-input>
-
+                                    <el-input size="large" v-model="input.value" :placeholder="input.name"></el-input>
                                   </el-form-item>
                                   <el-form-item>
                                     <el-button type="primary" @click="submitWrite(item)">Write</el-button>
@@ -777,10 +774,10 @@
                                       flex-direction: column;
                                       flex-wrap: wrap;
                                     ">
-                                      <p>
+                                      <!-- <p>
                                         [ allowance(address,address) method
                                         Response ]
-                                      </p>
+                                      </p> -->
                                       <p class="uints" style="
                                         display: flex;
                                         align-items: center;
@@ -794,7 +791,7 @@
                                 </el-form>
                               </div>
                               <div v-else>
-                                <!-- 对于非函数类型的项,可以显示其他信息 -->
+
                                 <div>{{ item.outputs[0].name }} <span class="uints">{{ queryError
                                     }}</span>
                                 </div>
@@ -878,6 +875,7 @@ const sizeForm = ref({
 let results = ref("");
 let responsed = ref(false);;
 const tableData = ref([]);
+const total = ref(null)
 const individualQueryDetails = ref({});
 const currentPage4 = ref(1);
 const textarea2 = ref("");
@@ -900,6 +898,9 @@ const { address } = defineProps({
     required: true,
   },
 });
+
+const FunctionIndex = ref('');
+const InputIndex = ref('');
 const formModels = ref({});
 const formModel = ref({});
 const form = ref({
@@ -946,7 +947,7 @@ const connectWallet = async () => {
   //           method: 'wallet_addEthereumChain',
   //           params: [
   //             {
-  //               chainId: chainId, // 目标链ID
+  //               chainId: chainId, 
   //               chainName: 'MNT Testnet',
   //               nativeCurrency: {
   //                 name: 'MNT',
@@ -971,7 +972,7 @@ const connectWallet = async () => {
         method: "eth_requestAccounts",
       });
       const account = accounts[0];
-      // 如果账户地址长度足够，只显示前6位和后4位，中间用...代替
+
       if (account.length >= 10) {
         const firstPart = account.substring(0, 6);
         const lastPart = account.substring(account.length - 4);
@@ -979,9 +980,7 @@ const connectWallet = async () => {
         results.value = result;
         console.log(result);
       }
-      // 输出已连接的账户地址
       console.log("Connected", account);
-      // 创建Web3提供者
       // const provider = new ethers.providers.Web3Provider(window.ethereum);
       // const provider = new ethers.BrowserProvider(window.ethereum,"https://test.metabasenet.site/rpc");
       // // const provider = new ethers.JsonRpcProvider("https://test.metabasenet.site/rpc");
@@ -991,125 +990,99 @@ const connectWallet = async () => {
       const provider = new ethers.BrowserProvider(window.ethereum);
       // const provider = new ethers.BrowserProvider(window.ethereum, "https://test2.metabasenet.site/rpc");
       console.log(provider);
-
-      // 获取签名器
       const signer = await provider.getSigner();
-
-      // 使用ABI和合约地址初始化合约
       const contract = new ethers.Contract(
         contractSource.value.contractaddress,
         contractSource.value.abi,
         signer
       );
       console.log(contract);
-      // 假设amountInEther和address已被正确赋值
       //  const amountInWei = ethers.utils.parseEther(amountInEther);
-      // 获取账户余额
       // const balance = await contract.provider.getBalance(account);
       const balance = await provider.getBalance(account);
       // const balance = await contract.balanceOf(account);
       console.log(balance);
-      // 将余额从wei转换为ether并输出
       // console.log("Balance:", ethers.utils.formatEther(balance));
-
-      // 查询代币总供应量
       const totalSupply = await contract.totalSupply();
+      // console.log("Total Token Supply:", ethers.utils.formatEther(totalSupply));
 
-      // 将总供应量从wei转换为ether并输出
-      console.log("Total Token Supply:", ethers.utils.formatEther(totalSupply));
 
-      // 查询另一个账户的批准代币数量
       const allowance = await contract.allowance(account, anotherAccount);
-      // 将批准数量从wei转换为ether并输出
+
       console.log(
         "Allowance for anotherAccount:",
         ethers.utils.formatEther(allowance)
       );
-
-      // 批准另一个账户花费代币
       const approveTxn = await contract.approve(anotherAccount, amountInEther);
       const receipt = await approveTxn.wait();
-      // 输出批准交易回执
       console.log("Approval Transaction:", receipt);
-
-      // 转账代币
       const transferTxn = await contract.transfer(address, amountInEther);
       const transferReceipt = await transferTxn.wait();
-      // 输出转账交易回执
       console.log("Transfer Transaction:", transferReceipt);
-
-      // 代理转账代币
       const transferFromTxn = await contract
         .connect(signer)
         .transferFrom(fromAccount, address, amountInEther);
       const transferFromReceipt = await transferFromTxn.wait();
-      // 输出代理转账交易回执
       console.log("Transfer From Transaction:", transferFromReceipt);
       let byteCode = await provider.getCode(contractAddress);
       return byteCode;
     } catch (error) {
-      // 如果连接MetaMask失败，输出错误信息
+
       console.error("Failed to connect to MetaMask", error);
     }
   } else {
-    // 如果未安装MetaMask，输出错误信息
     console.error("MetaMask is not installed!");
   }
 };
-const addSelect = (value)=>{
+const openDialog = (functionIndex, inputIndex) => {
+  dialogFormVisibles.value = true;
+  InputIndex.value = inputIndex;
+  FunctionIndex.value = functionIndex;
+}
+const addSelect = (value) => {
   dialogFormVisibles.value = false;
+  console.log(writeContract.value[FunctionIndex.value].inputs[InputIndex.value]);
+  let itemInput = writeContract.value[FunctionIndex.value].inputs[InputIndex.value];
+  itemInput.value ||= 1;
+  itemInput.value *= value;
 }
 const submitWrite = async (item) => {
-  responsed.value = true;
+  // v-if="!results".value
+  console.log(results.value);
+  if (typeof window.ethereum !== "undefined" && results.value) {
+    responsed.value = true;
   try {
     const provider = new ethers.BrowserProvider(window.ethereum);
     // const provider = new ethers.BrowserProvider(window.ethereum, "https://test2.metabasenet.site/rpc");
-    // 获取签名器
     const signer = await provider.getSigner();
-
-    // 使用ABI和合约地址初始化合约
     const contract = new ethers.Contract(contractSource.value.contractaddress, contractSource.value.abi, signer);
-    console.log(contract);
     const params = item.inputs.reduce((acc, input) => {
-      acc[input.name] = formModels.value[input.name];
+      acc[input.name] = input.value;
       return acc;
     }, {});
-    console.log(params);
-
-
-    console.log(item);
-    // let res = await contract[functionItem.name](params.account);
     const valuesArray = Object.values(params);
-    // let res = await contract["symbol"]();
     let res = await contract[item.name](...valuesArray);
-//  let res = await contract["transfer"]("0xe6897baC8439E77Cb662b18CF68a897c13aCacb5",0);
-    console.log('1111111', res);
-
-    console.log("-----------------------------------------------------------------")
+    //  let res = await contract["transfer"]("0xe6897baC8439E77Cb662b18CF68a897c13aCacb5",0);
     queryResult.value = res;
-    console.log(queryResult.value);
   } catch (error) {
     queryError.value = error.message;
   }
+  } else {
+    ElMessage.error("Please install or connect MetaMask!");
+  }
+  
 }
 const handleQuery = async (functionItem) => {
   responsed.value = true;
   try {
     const provider = new ethers.BrowserProvider(window.ethereum);
     // const provider = new ethers.BrowserProvider(window.ethereum, "https://test2.metabasenet.site/rpc");
-    // 获取签名器
     const signer = await provider.getSigner();
-
-    // 使用ABI和合约地址初始化合约
     // const contract = new ethers.Contract(contractSource.value.contractaddress, contractSource.value.abi, provider);
-    // console.log(contract);
     const contract = new ethers.Contract(contractSource.value.contractaddress, contractSource.value.abi, signer);
-    console.log(contract);
-    // 转账
     // let res11 = await contract["transfer"]("0xe6897baC8439E77Cb662b18CF68a897c13aCacb5","5");
-    // console.log(res11);
-     const params = functionItem.inputs.reduce ((acc, input) => {
-      acc[input.name] = formModel.value[input.name];
+    const params = functionItem.inputs.reduce((acc, input) => {
+      acc[input.name] = input.value;
       return acc;
     }, {});
     // let res = await contract[functionItem.name](params.account);
@@ -1117,9 +1090,7 @@ const handleQuery = async (functionItem) => {
     // let res = await contract["symbol"]();
     let res = await contract[functionItem.name](...valuesArray);
     // const res = await contract[functionItem.functionName](...Object.values(params));
-    console.log('1111111', res);
     queryResult.value = res;
-    console.log(queryResult.value);
   } catch (error) {
     queryError.value = error.message;
   }
@@ -1127,24 +1098,36 @@ const handleQuery = async (functionItem) => {
 const getItemName = async () => {
   try {
     const provider = new ethers.BrowserProvider(window.ethereum);
-    // const signer =await provider.getSigner();
-    const contract = new ethers.Contract(contractSource.value.contractaddress, contractSource.value.abi, provider);
+    if (!contractSource.value || !contractSource.value.contractaddress) {
+      throw new Error('Contract address is not initialized or invalid.');
+    }
+
+    const contract = new ethers.Contract(
+      contractSource.value.contractaddress,
+      contractSource.value.abi,
+      provider
+    );
+
     const details = [];
-    const promises = viewFunctions.value.map(async (item,index) => {
-      if (item.inputs && item.inputs.length === 0) {
-        try {
+    const promises = viewFunctions.value.map(async (item, index) => {
+      try {
+        if (item.inputs && item.inputs.length === 0) {
           item.detail = await contract[item.name]();
           details[index] = item.detail;
-        } catch (error) {
+        } else {
           item.detail = '';
         }
+      } catch (error) {
+        console.error(`An error occurred while calling ${item.name}:`, error);
+        item.detail = '';
       }
     });
+
     await Promise.all(promises);
   } catch (error) {
     console.error("An error occurred:", error);
   }
-}
+};
 const handleClicks = (tab, event) => {
   if (tab.props.name === "first") {
     // getContactList();
@@ -1165,15 +1148,24 @@ const handleClick = (tab, event) => {
   } else if (tab.props.name === "tab4") {
 
   } else if (tab.props.name === "tab5") {
+  if(verifystatused.value == "1"){
     getFileInfos();
     getItemName();
+  }else{
+   
+  }
   }
 };
 const getFileInfos = async () => {
   try {
     if (address !== null) {
       const response = await getFileInfo(address);
-      contractSource.value.sourceCode = response[0].sourceCode;
+      if (response && response.length > 0) {
+        contractSource.value = contractSource.value || {};
+        contractSource.value.sourceCode = response[0]?.sourceCode;
+      } else {
+        console.warn('getFileInfo did not return any data or was invalid.');
+      }
     }
   } catch (error) {
     console.error("Error fetching block details:", error);
@@ -1183,17 +1175,26 @@ const getContactDetail = async () => {
   try {
     if (address !== null) {
       const response = await getContractDetail(address);
-      verifystatused.value = response.data.verifystatus;
+      verifystatused.value = response.data?.verifystatus;
       contractSource.value = response.data;
-      let abi = JSON.parse(response.data.abi);
-      viewFunctions.value = abi.filter(
-        (item) => item.type === "function" && item.stateMutability === "view" || item.stateMutability == 'prue'
-      );
-      writeContract.value = abi.filter(
-        (item) => item.type === "function" && item.stateMutability === "nonpayable" || item.stateMutability == 'payable'
-      );
-      console.log(writeContract.value);
-      console.log(viewFunctions.value);
+      // contractSource.value.abi = JSON.parse(response.data?.abi);
+      let abi;
+      if (response.data && typeof response.data.abi === 'string') {
+        try {
+          abi = JSON.parse(response.data.abi);
+          viewFunctions.value = abi.filter(
+            (item) => item.type === "function" && item.stateMutability === "view" || item.stateMutability == 'prue'
+          );
+          writeContract.value = abi.filter(
+            (item) => item.type === "function" && item.stateMutability === "nonpayable" || item.stateMutability == 'payable'
+          );
+        } catch (error) {
+          abi = null;
+        }
+      } else {
+        // console.warn('ABI is undefined or not a string.');
+        abi = null;
+      }
     }
   } catch (error) {
     console.error("Error fetching block details:", error);
@@ -1219,6 +1220,8 @@ const getContactList = async () => {
         pageSize4.value
       );
       tableData.value = response.data.list;
+      total.value = response.data.total;
+      console.log('--------------------------------------------------',tableData.value);
       timestamps();
       tableData.value.forEach((item) => {
         item.TransactionFee = item.cumulativeGasUsed * item.effectiveGasPrice;

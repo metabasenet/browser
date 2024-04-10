@@ -7,24 +7,24 @@
         <el-row>
       <el-col :span="24">
         <div class="grid-content ep-bg-purple-dark grid-content_h3">
-          <h3>Block<span class="header_span">#36901236</span></h3>
+          <h3>Block<span class="header_span">#{{ blockNumber }}</span></h3>
         </div>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="24">
-        <div class="grid-content ep-bg-purple-dark grid-content_h1">
+        <div class="grid-content ep-bg-purple-dark grid-content_h0">
           <el-button type="primary">OverView</el-button>
         </div>
       </el-col>
     </el-row>
     <el-row class="grid-content_row">
       <el-col :span="24">
-        <el-descriptions v-model="blockDetails" class="grid-content_h2 grid-content_h1" :column="1" align="left"
+        <el-descriptions v-model="blockDetails" class="grid-content_h2 " :column="1" align="left"
           >
           <el-descriptions-item label="Block Height:"  label-align="left" label-class-name="my-label"
             class-name="my-content" label-width="30%">
-            <div class="block_height"> <span>{{ blockDetails.number }}</span>
+            <div class="block_height"> <span style="margin-right:5px">{{ blockDetails.number }}</span>
             <el-tooltip content="View previous block" placement="top">
               <el-button icon="ArrowLeft" @click="ArrowLeft" />
             </el-tooltip><el-tooltip content="View next block" placement="top">
@@ -53,7 +53,7 @@
               <el-tooltip content="Copy Address" placement="top"><router-link class="skyblue-text"
                 to="/address">Validator: Legend II</router-link></el-tooltip>
             <el-tooltip content="Copy Address" placement="top">
-              <el-button icon="CopyDocument" @click="copyToClipboard(Validator)">
+              <el-button text icon="CopyDocument" @click="copyToClipboard(Validator)">
               </el-button>
             </el-tooltip>
             <span> in 3 secs</span>
@@ -86,7 +86,7 @@
             
           </el-descriptions-item>
           <el-descriptions-item label="Burnt Fees:" label-align="center" align="left" label-class-name="my-label">
-            <div class="block_height"><span>0.004062755588941122 MNT</span>
+            <div class="block_height"><span style="margin-right:5px">0.004062755588941122 MNT</span>
             <el-tooltip content="open fee burn transaction" placement="top"><el-button
                 icon="Share"></el-button></el-tooltip></div>
             
@@ -256,10 +256,13 @@ onMounted(() => {
 }
 
 .grid-content_h1 {
+  /* margin: 0 2rem; */
+  padding: 19px 20px;
+}
+.grid-content_h0 {
   margin: 0 2rem;
   padding: 19px 0;
 }
-
 .grid-content_h1 span {
   font-size: 12px;
   color: #6c757d;
@@ -322,6 +325,15 @@ onMounted(() => {
   .block_height{
   display: block;
   margin-left: 0;
+}
+.el-main{
+  --el-main-padding: 0px
+}
+.grid-content_h1{
+  margin: 0px;
+}
+.grid-content_h3,.grid-content_h0{
+  margin: 5px 1rem;
 }
 }
 </style>

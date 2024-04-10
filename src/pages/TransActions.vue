@@ -39,9 +39,9 @@
     </el-row>
     <el-row class="box-table">
       <div class="demo-pagination-block box-table_header">
-        <div class="demonstration">Total of 36,899,505 blocks</div>
+        <div class="demonstration">More than {{total}} transactions found</div>
         <el-pagination background v-model:current-page="currentPage4" v-model:page-size="pageSize4"
-          :page-sizes="[10, 25, 50, 100]" layout="sizes,prev, pager, next" :total="total" small
+          :page-sizes="[10, 25, 50, 100]" layout="sizes,prev, pager, next" :pager-count="5" :total="total" small
           @size-change="handleSizeChange" @current-change="getTransAction" />
       </div>
       <el-table :data="tableData" style="width: 100%"> 
@@ -61,7 +61,7 @@
         </el-table-column>
         <el-table-column prop="blockNumber" label="Block" width="100">
           <template v-slot="scope">
-            <router-link class="skyblue-text" :to="{ path: '/block' }">{{ scope.row.blockNumber }}</router-link>
+            <router-link class="skyblue-text" :to="{ name: 'block', params: { blockNumber: scope.row.blockNumber } }">{{ scope.row.blockNumber }}</router-link>
           </template>
         </el-table-column>
         <el-table-column prop="formattedTime" label="Age">
@@ -72,7 +72,7 @@
               <router-link class="skyblue-text" :to="{ name: 'address', params: { address: scope.row.from } }">{{ scope.row.from }}</router-link>
             </el-tooltip>
             <el-tooltip content="Copy Address" placement="top">
-              <el-button icon="CopyDocument" @click="copyToClipboard(scope.row.from)">
+              <el-button text icon="CopyDocument" @click="copyToClipboard(scope.row.from)">
               </el-button>
             </el-tooltip>
             <el-button style="margin-left:2.5rem" type="success" icon="right" circle plain />
@@ -80,15 +80,15 @@
         </el-table-column>
         <el-table-column prop="to" label="To" width="250" align="center">
           <template v-slot="scope">
-            <el-tooltip v-if="scope.row.to" content="Contract" placement="top">
-              <el-button style="margin-right:5px" icon="Document">
+            <el-tooltip v-if ="scope.row.to" content="Contract" placement="top">
+              <el-button text style="margin-right:5px" icon="Document" >
               </el-button>
             </el-tooltip>
             <el-tooltip :content="scope.row.to" placement="top">
               <router-link class="skyblue-text" :to="{ name: 'address', params: { address: scope.row.to } }">{{ scope.row.to }}</router-link>
             </el-tooltip>
             <el-tooltip v-if="scope.row.to" content="Copy Address" placement="top">
-              <el-button icon="CopyDocument" @click="copyToClipboard(scope.row.to)">
+              <el-button text icon="CopyDocument" @click="copyToClipboard(scope.row.to)">
               </el-button>
             </el-tooltip>
           </template>
@@ -99,7 +99,7 @@
       <div class="demo-pagination-block table_header">
         <span>Show rows:</span>
         <el-pagination background v-model:current-page="currentPage4" v-model:page-size="pageSize4"
-          :page-sizes="[10, 25, 50, 100]" small layout="sizes,prev, pager, next" :total="total"
+          :page-sizes="[10, 25, 50, 100]" :pager-count="5" small layout="sizes,prev, pager, next" :total="total"
           @size-change="handleSizeChange" @current-change="getTransAction"/>
       </div>
     </el-row>
@@ -261,7 +261,7 @@ onMounted(() => {
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
 
   .card-ul,
   .card-li {
@@ -270,6 +270,9 @@ onMounted(() => {
 
   .card_p {
     font-size: 8px;
+  }
+  .blocks_heade,.box-table,.grid-content_h3{
+    margin:0px
   }
 }
 

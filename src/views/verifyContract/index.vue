@@ -167,7 +167,6 @@
 import { reactive,ref,onMounted } from 'vue'
 import { useRouter } from 'vue-router';
 import { getContractDetail } from "@/api/verifyContract";
-import eventBus from "@/utils/eventBus";
 const { address } = defineProps({
   address: {
     type: [String],
@@ -202,11 +201,11 @@ const rules =ref({
 const onSubmit = async (formEl) => {
     console.log(formEl);
     console.log(formEl.compilerversion);
-    eventBus.emit('compilerversion', { compilerversion: "66666666666666" })
+    const compilerversion = formEl.compilerversion;
+    console.log(compilerversion);
     if (!formEl) return
     if (formEl && formEl.contractaddress) {
-        router.push({ name: 'verifyContractSolc', params: { address: formEl.contractaddress } });
-        // compilerversion.value =formEl.compilerversion
+        router.push({ name: 'verifyContractSolc', params: { address: formEl.contractaddress },query:{compilerversion} });
         
     } 
 }

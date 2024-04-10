@@ -35,7 +35,7 @@
                 </el-table-column>
                 <el-table-column prop="blockNumber" label="Block" width="100">
                     <template v-slot="scope">
-                        <router-link class="skyblue-text" :to="{ path: '/block' }">{{ scope.row.blockNumber
+                        <router-link class="skyblue-text" :to="{ name: 'block', params: { blockNumber: scope.row.blockNumber } }">{{ scope.row.blockNumber
                             }}</router-link>
                     </template>
                 </el-table-column>
@@ -44,11 +44,11 @@
                 <el-table-column prop="from" label="From" width="250">
                     <template v-slot="scope">
                         <el-tooltip :content="scope.row.from" placement="top">
-                            <router-link class="skyblue-text" :to="{ path: '/address' }">{{ scope.row.from
+                            <router-link class="skyblue-text" :to="{ name: 'address', params: { address: scope.row.from } }">{{ scope.row.from
                                 }}</router-link>
                         </el-tooltip>
                         <el-tooltip content="Copy Address" placement="top">
-                            <el-button icon="CopyDocument" @click="copyToClipboard(scope.row.from)">
+                            <el-button text icon="CopyDocument" @click="copyToClipboard(scope.row.from)">
                             </el-button>
                         </el-tooltip>
                         <el-button style="margin-left:2.5rem" type="success" icon="right" circle plain />
@@ -61,11 +61,11 @@
                             </el-button>
                         </el-tooltip> -->
                         <el-tooltip :content="scope.row.to" placement="top">
-                            <router-link class="skyblue-text" :to="{ path: '/address' }">{{ scope.row.to
+                            <router-link class="skyblue-text" :to="{ name: 'address', params: { address: scope.row.to } }">{{ scope.row.to
                                 }}</router-link>
                         </el-tooltip>
                         <el-tooltip v-if="scope.row.to" content="Copy Address" placement="top">
-                            <el-button icon="CopyDocument" @click="copyToClipboard(scope.row.to)">
+                            <el-button text icon="CopyDocument" @click="copyToClipboard(scope.row.to)">
                             </el-button>
                         </el-tooltip>
                     </template>
@@ -159,6 +159,7 @@ onMounted(() => {
     opacity: 0.5;
     /* background-color: #fff;  */
   }
+  
 }
 
 .box {
@@ -221,6 +222,9 @@ onMounted(() => {
 @media (max-width: 768px) {
     .box-table_header {
         flex-wrap: wrap;
+    }
+    .box-table,.grid-content_h3{
+        margin: 0px;
     }
 }
 

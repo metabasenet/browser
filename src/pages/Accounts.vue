@@ -1,48 +1,51 @@
 <template>
     <div class="box">
         <el-container class="container-xxl">
-      <el-aside class="responsive-aside" ></el-aside>
-      <el-main>
-        <el-row>
-            <el-col :span="24">
-                <div class="grid-content ep-bg-purple-dark grid-content_h3">
-                    <h3>Top Accounts by MNT Balance</h3>
-                </div>
-            </el-col>
-        </el-row>
-        <el-row class="box-table">
-            <div class="demo-pagination-block box-table_header">
-                <div class="demonstration">
-                    <p>More than 1,999,999 accounts found (24,058,964.14 MNT)</p><span>(Showing the last 10,000 top accounts only)</span>
-                </div>
-            </div>
-            <el-table :data="tableData" style="width: 100%">
-                <el-table-column type="index" width="50" />
-                <el-table-column prop="address" label="Address" show-overflow-tooltip width="200">
-                    <template v-slot="scope">
-                        <router-link class="skyblue-text" to="/home" >
-                            {{ scope.row.address }}</router-link>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="percentage" label="Name Tag" align="center" ></el-table-column>
-                <el-table-column prop="balance" label="Balance" align="center">
-                </el-table-column>
-                <el-table-column prop="percentage" label="Percentage" align="center">
-                </el-table-column>
-                <el-table-column prop="txnCount" label="Txn Count" align="center">
-                </el-table-column>
-            </el-table>
-            <div class="demo-pagination-block table_header">
-                <span>Show rows:</span>
-                <el-pagination v-model:current-page="currentPage4" v-model:page-size="pageSize4"
-                    :page-sizes="[10, 25, 50, 100]" background small layout=" sizes,prev, pager, next" :total="total"
-                    @size-change="handleSizeChange"  @current-change="getBalancePageData" />
-            </div>
-        </el-row>
-      </el-main>
-      <el-aside class="responsive-aside" ></el-aside>
-    </el-container>
-       
+            <el-aside class="responsive-aside"></el-aside>
+            <el-main>
+                <el-row>
+                    <el-col :span="24">
+                        <div class="grid-content ep-bg-purple-dark grid-content_h3">
+                            <h3>Top Accounts by MNT Balance</h3>
+                        </div>
+                    </el-col>
+                </el-row>
+                <el-row class="box-table">
+                    <div class="demo-pagination-block box-table_header">
+                        <div class="demonstration">
+                            <p>More than {{total}} accounts found (24,058,964.14 MNT)</p><span>(Showing the last 10,000
+                                top accounts only)</span>
+                        </div>
+                    </div>
+                    <el-table :data="tableData" style="width: 100%">
+                        <el-table-column type="index" width="50" />
+                        <el-table-column prop="address" label="Address0.0" show-overflow-tooltip width="200">
+                            <template v-slot="scope">
+                                <router-link class="skyblue-text"
+                                    :to="{ name: 'address', params: { address: scope.row.address } }">
+                                    {{ scope.row.address }}</router-link>
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="percentage" label="Name Tag" align="center"></el-table-column>
+                        <el-table-column prop="balance" label="Balance" align="center">
+                        </el-table-column>
+                        <el-table-column prop="percentage" label="Percentage" align="center">
+                        </el-table-column>
+                        <el-table-column prop="txnCount" label="Txn Count" align="center">
+                        </el-table-column>
+                    </el-table>
+                    <div class="demo-pagination-block table_header">
+                        <span>Show rows:</span>
+                        <el-pagination v-model:current-page="currentPage4" v-model:page-size="pageSize4"
+                            :page-sizes="[10, 25, 50, 100]" background small :pager-count="5"
+                            layout=" sizes,prev, pager, next" :total="total" @size-change="handleSizeChange"
+                            @current-change="getBalancePageData" />
+                    </div>
+                </el-row>
+            </el-main>
+            <el-aside class="responsive-aside"></el-aside>
+        </el-container>
+
     </div>
 </template>
 
@@ -117,16 +120,18 @@ onMounted(() => {
 
 <style scoped>
 .responsive-aside {
-  width: 0rem;
-  transition: width 0.5s ease; 
+    width: 0rem;
+    transition: width 0.5s ease;
 }
+
 @media (min-width: 768px) {
-  .responsive-aside {
-    width: 10rem;
-    opacity: 0.5;
-    /* background-color: #fff;  */
-  }
+    .responsive-aside {
+        width: 10rem;
+        opacity: 0.5;
+        /* background-color: #fff;  */
+    }
 }
+
 .box {
     background-color: #f9fafc;
 }
@@ -190,10 +195,15 @@ onMounted(() => {
     .box-table_header {
         flex-wrap: wrap;
     }
-}
-.demonstration {    
-    margin-left: 12px;
+    .box-table,.grid-content_h3{
+        margin: 0px;
     }
+}
+
+.demonstration {
+    margin-left: 12px;
+}
+
 .demonstration span {
     font-size: 10px;
     color: #6c757d;
