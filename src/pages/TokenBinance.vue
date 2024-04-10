@@ -38,7 +38,7 @@
                 <el-tag type="info"># Binance</el-tag>
                 <el-tag type="info"># Binance-Peg</el-tag>
               </div>
-              <div>
+              <div class="ethereum">
                 <el-dropdown style="margin-right: 5px">
                   <el-button type="primary">
                     <el-icon class="el-icon--left">
@@ -1369,6 +1369,12 @@ onMounted(() => {
   .box-table_header {
     flex-wrap: wrap;
   }
+  .grid-content_h3{
+    margin:0 0.5rem;
+  }
+  .blocks_heade{
+    margin: 0.7rem 0.5rem;
+  }
 }
 
 .ContentPlaceHolder1_mainboxes {
@@ -1509,6 +1515,10 @@ onMounted(() => {
     display: block;
     margin-left: 0;
   }
+  .ethereum{
+    margin: auto;
+  }
+  
 }
 
 .contracts_info {

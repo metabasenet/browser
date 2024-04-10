@@ -96,22 +96,23 @@ async function addWork() {
     try {
         if (typeof ethereum !== 'undefined') {
             const provider = ethereum;
-            const networkId = 56;
-            const chainId = '0x38';
-            const rpcUrl = 'https://bsc-dataseed1.binance.org/';
+            const networkId = 8807;
+            const chainId = "0x2267";
+            const rpcUrl = 'https://test.metabasenet.site/rpc';
             await provider.request({
                 method: 'wallet_addEthereumChain',
                 params: [
                     {
                         chainId: chainId,
                         rpcUrls: [rpcUrl],
-                        chainName: 'BSC Mainnet',
+                        chainName: 'MNT Mainnet',
                         nativeCurrency: {
-                            name: 'BSC',
-                            symbol: 'BNB',
+                            name: 'MNT',
+                            symbol: 'MNT',
                             decimals: 18,
                         },
-                        blockExplorerUrls: [`https://bscscan.com/token/${chainId}/`],
+                        // blockExplorerUrls: [`https://test.metabasenet.site/chain/${chainId}`],
+                        blockExplorerUrls: [`https://test.metabasenet.site/`],
                     },
                 ],
             });

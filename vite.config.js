@@ -5,8 +5,6 @@ import path from 'path';
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
 
 const env = loadEnv('', process.cwd());
-
-// https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   base: env.BASE_URL || '',
   plugins: [vue(),

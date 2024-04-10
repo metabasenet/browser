@@ -1,183 +1,185 @@
 <template>
   <div class="box">
     <el-container class="container-xxl">
-      <el-aside class="responsive-aside" ></el-aside>
+      <el-aside class="responsive-aside"></el-aside>
       <el-main>
         <el-row>
-      <el-col :span="24">
-        <div class="grid-content ep-bg-purple-dark grid-content_h3 darkb_button">
-          <h3>Transaction Details</h3>
-          <div>
-            <el-dropdown style="margin-right:5px">
-              <el-button type="primary">
-                <el-icon class="el-icon--left">
-                  <Basketball />
-                </el-icon>
-                Buy<el-icon class="el-icon--right"><arrow-down /></el-icon>
-              </el-button>
-              <template #dropdown>
-                <el-dropdown-menu>
-                  <el-dropdown-item>Action 1</el-dropdown-item>
-                  <el-dropdown-item>Action 2</el-dropdown-item>
-                  <el-dropdown-item>Action 3</el-dropdown-item>
-                  <el-dropdown-item>Action 4</el-dropdown-item>
-                  <el-dropdown-item>Action 5</el-dropdown-item>
-                </el-dropdown-menu>
-              </template>
-            </el-dropdown>
-            <el-dropdown style="margin-right:5px">
-              <el-button type="primary">
-                Play<el-icon class="el-icon--right"><arrow-down /></el-icon>
-              </el-button>
-              <template #dropdown>
-                <el-dropdown-menu>
-                  <el-dropdown-item>Action 1</el-dropdown-item>
-                  <el-dropdown-item>Action 2</el-dropdown-item>
-                </el-dropdown-menu>
-              </template>
-            </el-dropdown>
-            <el-dropdown>
-              <el-button type="primary">
-                Gaming<el-icon class="el-icon--right"><arrow-down /></el-icon>
-              </el-button>
-              <template #dropdown>
-                <el-dropdown-menu>
-                  <el-dropdown-item>Action 1</el-dropdown-item>
-                  <el-dropdown-item>Action 2</el-dropdown-item>
-                  <el-dropdown-item>Action 2</el-dropdown-item>
-                </el-dropdown-menu>
-              </template>
-            </el-dropdown>
-          </div>
-        </div>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="24">
-        <div class="grid-content ep-bg-purple-dark grid-content_h1">
-          <el-button type="primary" round>OverView</el-button>
-        </div>
-      </el-col>
-    </el-row>
-    <el-row class="grid-content_row">
-      <el-col :span="24" :xs="24">
-        <el-descriptions class="grid-content_h2 grid-content_h1" v-model="transDetails" :column="1" align="center">
-          <el-descriptions-item label="Transaction Hash:" label-align="center" align="left" label-class-name="my-label"
-            class-name="my-content ellipsis-text" label-width="30%">
-            <div class="block_height"> <span v-if="transDetails && typeof transDetails.hash === 'string'">{{
-        transDetails.hash.slice(0, 20) +
-        '...' }}</span>
-              <span v-else>N/A</span>
-              <el-tooltip content="Copy TxHash to clipboard" placement="top"><el-button text icon="CopyDocument"
-                  @click="copyToClipboard(transDetails.hash)">
-                </el-button>
-              </el-tooltip>
+          <el-col :span="24">
+            <div class="grid-content ep-bg-purple-dark grid-content_h3 darkb_button">
+              <h3>Transaction Details</h3>
+              <div>
+                <el-dropdown style="margin-right:5px">
+                  <el-button type="primary">
+                    <el-icon class="el-icon--left">
+                      <Basketball />
+                    </el-icon>
+                    Buy<el-icon class="el-icon--right"><arrow-down /></el-icon>
+                  </el-button>
+                  <template #dropdown>
+                    <el-dropdown-menu>
+                      <el-dropdown-item>Action 1</el-dropdown-item>
+                      <el-dropdown-item>Action 2</el-dropdown-item>
+                      <el-dropdown-item>Action 3</el-dropdown-item>
+                      <el-dropdown-item>Action 4</el-dropdown-item>
+                      <el-dropdown-item>Action 5</el-dropdown-item>
+                    </el-dropdown-menu>
+                  </template>
+                </el-dropdown>
+                <el-dropdown style="margin-right:5px">
+                  <el-button type="primary">
+                    Play<el-icon class="el-icon--right"><arrow-down /></el-icon>
+                  </el-button>
+                  <template #dropdown>
+                    <el-dropdown-menu>
+                      <el-dropdown-item>Action 1</el-dropdown-item>
+                      <el-dropdown-item>Action 2</el-dropdown-item>
+                    </el-dropdown-menu>
+                  </template>
+                </el-dropdown>
+                <el-dropdown>
+                  <el-button type="primary">
+                    Gaming<el-icon class="el-icon--right"><arrow-down /></el-icon>
+                  </el-button>
+                  <template #dropdown>
+                    <el-dropdown-menu>
+                      <el-dropdown-item>Action 1</el-dropdown-item>
+                      <el-dropdown-item>Action 2</el-dropdown-item>
+                      <el-dropdown-item>Action 2</el-dropdown-item>
+                    </el-dropdown-menu>
+                  </template>
+                </el-dropdown>
+              </div>
             </div>
-          </el-descriptions-item>
-          <el-descriptions-item label="Status:" label-align="center" align="left" label-class-name="my-label">
-            <div class="block_height"><el-button v-if="transDetails.status == 1" type="success" plain><el-icon>
-                  <CircleCheckFilled />
-                </el-icon>Success</el-button>
-              <el-button v-else type="danger" plain><el-icon>
-                  <CloseBold />
-                </el-icon>Lose</el-button>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <div class="grid-content ep-bg-purple-dark grid-content_h1">
+              <el-button type="primary" round>OverView</el-button>
             </div>
+          </el-col>
+        </el-row>
+        <el-row class="grid-content_row">
+          <el-col :span="24" :xs="24">
+            <el-descriptions class="grid-content_h2 grid-content_h1" v-model="transDetails" :column="1" align="center">
+              <el-descriptions-item label="Transaction Hash:" label-align="center" align="left"
+                label-class-name="my-label" class-name="my-content ellipsis-text" label-width="30%">
+                <div class="block_height"> <span v-if="transDetails && typeof transDetails.hash === 'string'">{{
+                  transDetails.hash.slice(0, 20) +
+                    '...' }}</span>
+                  <span v-else>N/A</span>
+                  <el-tooltip content="Copy TxHash to clipboard" placement="top"><el-button text icon="CopyDocument"
+                      @click="copyToClipboard(transDetails.hash)">
+                    </el-button>
+                  </el-tooltip>
+                </div>
+              </el-descriptions-item>
+              <el-descriptions-item label="Status:" label-align="center" align="left" label-class-name="my-label">
+                <div class="block_height"><el-button v-if="transDetails.status == 1" type="success" plain><el-icon>
+                      <CircleCheckFilled />
+                    </el-icon>Success</el-button>
+                  <el-button v-else type="danger" plain><el-icon>
+                      <CloseBold />
+                    </el-icon>Lose</el-button>
+                </div>
 
-          </el-descriptions-item>
-          <el-descriptions-item label="Block:" label-align="center" align="left" label-class-name="my-label">
-            <div class="block_height">
-              <div style="display: flex; justify-content: center; align-items: center;">
-                <router-link class="skyblue-text" to="/block">
-                  <div class=" mb-2 truncate">
-                    <span> {{ transDetails.blockNumber }}</span>
+              </el-descriptions-item>
+              <el-descriptions-item label="Block:" label-align="center" align="left" label-class-name="my-label">
+                <div class="block_height">
+                  <div style="display: flex;  align-items: center;">
+                    <router-link class="skyblue-text" to="/block">
+                      <div class=" mb-2 truncate">
+                        <span> {{ transDetails.blockNumber }}</span>
+                      </div>
+                    </router-link>
+                    <el-tooltip content="Number of blocks validated since" placement="top">
+                      <el-button size="small">10 Block Confirmations</el-button>
+                    </el-tooltip>
                   </div>
-                </router-link>
-                <el-tooltip content="Number of blocks validated since" placement="top">
-                  <el-button size="small">10 Block Confirmations</el-button>
-                </el-tooltip>
-              </div>
-            </div>
+                </div>
 
 
-          </el-descriptions-item>
-          <el-descriptions-item label="Timestamp:" label-align="center" align="left" label-class-name="my-label">
-            <div class="block_height"><el-icon>
-                <Timer />
-              </el-icon>
-              <span>{{ transDetails.formattedTime }}(Mar-14-2024 09:05:46 AM +UTC)</span>
-            </div>
-          </el-descriptions-item>
-          <el-descriptions-item label="Transaction Action:" label-align="center" align="left"
-            label-class-name="my-label">
-            <div class="block_height">
-              <div class="TransactionAction">
-                <el-icon>
-                  <CaretRight />
-                </el-icon>
-                <span>Call</span><el-tooltip content="0xf340fa01 l Deposit" placement="top">
-                  <el-button style="margin-left:5px;margin-right:5px">Deposit</el-button>
-                </el-tooltip><span>Function by</span><el-tooltip content="Validator: Certik" placement="top">
-                  <router-link class="skyblue-text" to="/address">
-                    <div class=" mb-2 truncate"><span> Validator: Certik</span></div>
-                  </router-link>
-                </el-tooltip>on<el-tooltip content="0xf340fa01 l Deposit" placement="top">
-                  <el-icon class="el-icon--right el-icon--left">
-                    <Document />
+              </el-descriptions-item>
+              <el-descriptions-item label="Timestamp:" label-align="center" align="left" label-class-name="my-label">
+                <div class="block_height"><el-icon>
+                    <Timer />
                   </el-icon>
-                </el-tooltip>
-                <el-tooltip content=" 0x0000000000000000000000000000000000001000" placement="top">
-                  <router-link class="skyblue-text" to="/address">
-                    <div class=" mb-2 truncate">BSC: Validator Set</div>
-                  </router-link>
-                </el-tooltip>
-                <el-tooltip content="Please login to your BscScan account to submit Transaction Action" placement="top">
-                  <el-icon>
-                    <Promotion />
-                  </el-icon>
-                </el-tooltip>
-              </div>
-            </div>
+                  <span>{{ transDetails.formattedTime }}(Mar-14-2024 09:05:46 AM +UTC)</span>
+                </div>
+              </el-descriptions-item>
+              <el-descriptions-item label="Transaction Action:" label-align="center" align="left"
+                label-class-name="my-label">
+                <div class="block_height">
+                  <div class="TransactionAction">
+                    <el-icon>
+                      <CaretRight />
+                    </el-icon>
+                    <span>Call</span><el-tooltip content="0xf340fa01 l Deposit" placement="top">
+                      <el-button style="margin-left:5px;margin-right:5px">Deposit</el-button>
+                    </el-tooltip><span>Function by</span><el-tooltip content="Validator: Certik" placement="top">
+                      <router-link class="skyblue-text" to="/address">
+                        <div class=" mb-2 truncate"><span> Validator: Certik</span></div>
+                      </router-link>
+                    </el-tooltip>on<el-tooltip content="0xf340fa01 l Deposit" placement="top">
+                      <el-icon class="el-icon--right el-icon--left">
+                        <Document />
+                      </el-icon>
+                    </el-tooltip>
+                    <el-tooltip content=" 0x0000000000000000000000000000000000001000" placement="top">
+                      <router-link class="skyblue-text" to="/address">
+                        <div class=" mb-2 truncate">BSC: Validator Set</div>
+                      </router-link>
+                    </el-tooltip>
+                    <el-tooltip content="Please login to your BscScan account to submit Transaction Action"
+                      placement="top">
+                      <el-icon>
+                        <Promotion />
+                      </el-icon>
+                    </el-tooltip>
+                  </div>
+                </div>
 
-          </el-descriptions-item>
-          <el-descriptions-item label="From:" label-align="center" align="left" label-class-name="my-label">
-            <div class="block_height">
-              <div class="TransactionAction">
-                <router-link class="skyblue-text ellipsis-text" :to="{
-                          name: 'address',
-                          params: { address: transDetails.from },
-                        }">{{ transDetails.from }}
-                </router-link><span class="text-muted">(Validator: Certik)</span><el-tooltip content="Copy Address"
-                  placement="top"><el-button style="margin-left:5px" text icon="CopyDocument"
-                    @click="copyToClipboard(transDetails.from)">
-                  </el-button>
-                </el-tooltip>
-              </div>
-            </div>
-          </el-descriptions-item>
-          <el-descriptions-item label="To:" label-align="center" align="left" label-class-name="my-label">
-            <div class="block_height">
-              <div class="TransactionAction">
-                <el-tooltip content="Contract" placement="top">
-                  <el-icon>
-                    <Document />
-                  </el-icon>
-                </el-tooltip>
-                <router-link class="skyblue-text ellipsis-text" :to="{
-                          name: 'address',
-                          params: { address: transDetails.to },
-                        }">
-                  <div class=" mb-2 truncate">{{ transDetails.to }}</div>
-                </router-link>
-                <span>(BSC: Validator Set)</span>
-                <el-tooltip content="Copy Address" placement="top">
-                  <el-button style="margin-left:5px" text icon="CopyDocument" @click="copyToClipboard(transDetails.to)">
-                  </el-button>
-                </el-tooltip>
-                <el-tooltip content="Contract Execution Completed" placement="top">
-                  <el-button type="success" icon="Check" circle />
-                </el-tooltip>
-              </div>
-              <!-- <div class="TransactionAction">
+              </el-descriptions-item>
+              <el-descriptions-item label="From:" label-align="center" align="left" label-class-name="my-label">
+                <div class="block_height">
+                  <div class="TransactionAction">
+                    <router-link class="skyblue-text ellipsis-text" :to="{
+                      name: 'address',
+                      params: { address: transDetails.from },
+                    }">{{ transDetails.from }}
+                    </router-link><span class="text-muted">(Validator: Certik)</span><el-tooltip content="Copy Address"
+                      placement="top"><el-button style="margin-left:5px" text icon="CopyDocument"
+                        @click="copyToClipboard(transDetails.from)">
+                      </el-button>
+                    </el-tooltip>
+                  </div>
+                </div>
+              </el-descriptions-item>
+              <el-descriptions-item label="To:" label-align="center" align="left" label-class-name="my-label">
+                <div class="block_height">
+                  <div class="TransactionAction">
+                    <el-tooltip content="Contract" placement="top">
+                      <el-icon>
+                        <Document />
+                      </el-icon>
+                    </el-tooltip>
+                    <router-link class="skyblue-text ellipsis-text" :to="{
+                      name: 'address',
+                      params: { address: transDetails.to },
+                    }">
+                      <div class=" mb-2 truncate">{{ transDetails.to }}</div>
+                    </router-link>
+                    <span>(BSC: Validator Set)</span>
+                    <el-tooltip content="Copy Address" placement="top">
+                      <el-button style="margin-left:5px" text icon="CopyDocument"
+                        @click="copyToClipboard(transDetails.to)">
+                      </el-button>
+                    </el-tooltip>
+                    <el-tooltip content="Contract Execution Completed" placement="top">
+                      <el-button type="success" icon="Check" circle />
+                    </el-tooltip>
+                  </div>
+                  <!-- <div class="TransactionAction">
                 <el-icon>
                   <Money />
                 </el-icon><span>Transfer 0.004435244050238826 MNT</span> <span>From</span>
@@ -207,94 +209,98 @@
                   </router-link>
                 </el-tooltip>
               </div> -->
-            </div>
-
-          </el-descriptions-item>
-          <el-descriptions-item label="Value:" label-align="center" align="left" label-class-name="my-label">
-            <div class="block_height"> <el-icon>
-                <Timer />
-              </el-icon>
-              <span> {{ transDetails.value }} ($43.24)</span>
-            </div>
-
-          </el-descriptions-item>
-          <el-descriptions-item label="Transaction Fee::" label-align="center" align="left" label-class-name="my-label">
-            <div class="block_height"> <span> {{ transDetails.TransactionFee }} MNT
-                (${{ transDetails.TransactionFee }})</span>
-            </div>
-
-          </el-descriptions-item>
-          <el-descriptions-item label="Gas Price:" label-align="center" align="left" label-class-name="my-label">
-            <div class="block_height"><span> {{ transDetails.gasPrice }} MNT ({{ transDetails.gasPrice }}) MNT</span>
-            </div>
-
-          </el-descriptions-item>
-        </el-descriptions>
-      </el-col>
-    </el-row>
-    <el-row class="grid-content_h2">
-      <el-col :span="24" :xs="24">
-        <el-collapse @change="handleChange">
-          <el-collapse-item title="More Details:" name="1">
-            <el-descriptions class="grid-content" :column="1" align="left" v-model="transDetails">
-              <el-descriptions-item label-class-name="my-label" label="Gas Limit & Usage by Txn:" label-align="center"
-                align="left" class-name="my-content">
-                <div class="block_height"><span>9,223,372,036,854,775,807 | 51,008
-                    (0%)</span></div>
-              </el-descriptions-item>
-              <el-descriptions-item label-class-name="my-label" label="Burnt Fees:" label-align="center" align="left">
-                <div class="block_height"><span>0.005224500901272524 MNT
-                    ($3.15)</span></div>
-              </el-descriptions-item>
-              <el-descriptions-item label-class-name="my-label" label="Other Attributes:" label-align="center"
-                align="left">
-                <div class="block_height"> <el-button>Nonce: 1607650</el-button><el-button>Position In Block:
-                    208</el-button></div>
+                </div>
 
               </el-descriptions-item>
-              <el-descriptions-item label-class-name="my-label" label="Input Data:" label-align="center" align="left">
-                <div class="block_height"><el-input style="width: 100%" :rows="2" type="textarea" disabled
-                    :placeholder="transDetails.data" />
-                  <el-select v-model="value" placeholder="View Input As" style="width: 150px;margin-right:10px">
-                    <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
-                  </el-select>
-                  <el-button icon="Menu">Decode Input Data</el-button>
-                  <el-button icon="Position">Advanced Filter</el-button>
+              <el-descriptions-item label="Value:" label-align="center" align="left" label-class-name="my-label">
+                <div class="block_height"> <el-icon>
+                    <Timer />
+                  </el-icon>
+                  <span> {{ transDetails.value }} ($43.24)</span>
+                </div>
+
+              </el-descriptions-item>
+              <el-descriptions-item label="Transaction Fee::" label-align="center" align="left"
+                label-class-name="my-label">
+                <div class="block_height"> <span> {{ transDetails.TransactionFee }} MNT
+                    (${{ transDetails.TransactionFee }})</span>
+                </div>
+
+              </el-descriptions-item>
+              <el-descriptions-item label="Gas Price:" label-align="center" align="left" label-class-name="my-label">
+                <div class="block_height"><span> {{ transDetails.gasPrice }} MNT ({{ transDetails.gasPrice }})
+                    MNT</span>
                 </div>
 
               </el-descriptions-item>
             </el-descriptions>
-          </el-collapse-item>
-        </el-collapse>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="24" :xs="24">
-        <el-descriptions class="grid-content_h2 grid-content" :column="1" align="center">
-          <el-descriptions-item label="Private Note:" label-align="center" align="left" label-class-name="my-label"
-            class-name="my-content" label-width="30%">
-            <div class="block_height"> <span>To access the Private Note feature, you must be Logged In</span></div>
+          </el-col>
+        </el-row>
+        <el-row class="grid-content_h2">
+          <el-col :span="24" :xs="24">
+            <el-collapse @change="handleChange">
+              <el-collapse-item title="More Details:" name="1">
+                <el-descriptions class="grid-content" :column="1" align="left" v-model="transDetails">
+                  <el-descriptions-item label-class-name="my-label" label="Gas Limit & Usage by Txn:"
+                    label-align="center" align="left" class-name="my-content">
+                    <div class="block_height"><span>9,223,372,036,854,775,807 | 51,008
+                        (0%)</span></div>
+                  </el-descriptions-item>
+                  <el-descriptions-item label-class-name="my-label" label="Burnt Fees:" label-align="center"
+                    align="left">
+                    <div class="block_height"><span>0.005224500901272524 MNT
+                        ($3.15)</span></div>
+                  </el-descriptions-item>
+                  <el-descriptions-item label-class-name="my-label" label="Other Attributes:" label-align="center"
+                    align="left">
+                    <div class="block_height"> <el-button>Nonce: 1607650</el-button><el-button>Position In Block:
+                        208</el-button></div>
 
-          </el-descriptions-item>
+                  </el-descriptions-item>
+                  <el-descriptions-item label-class-name="my-label" label="Input Data:" label-align="center"
+                    align="left">
+                    <div class="block_height"><el-input style="width: 100%" :rows="2" type="textarea" disabled
+                        :placeholder="transDetails.data" />
+                      <el-select v-model="value" placeholder="View Input As" style="width: 150px;margin-right:10px">
+                        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+                      </el-select>
+                      <el-button icon="Menu">Decode Input Data</el-button>
+                      <el-button icon="Position">Advanced Filter</el-button>
+                    </div>
 
-        </el-descriptions>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="24" :xs="24" class="grid-content_h1">
-        <span>
-          <el-icon>
-            <Loading />
-          </el-icon>
-          A transaction is a cryptographically signed instruction that changes the blockchain state. Block explorers
-          track the details of all transactions in the network. Learn more about transactions in our Knowledge
-          Base.</span>
-      </el-col>
-    </el-row>
+                  </el-descriptions-item>
+                </el-descriptions>
+              </el-collapse-item>
+            </el-collapse>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24" :xs="24">
+            <el-descriptions class="grid-content_h2 grid-content" :column="1" align="center">
+              <el-descriptions-item label="Private Note:" label-align="center" align="left" label-class-name="my-label"
+                class-name="my-content" label-width="30%">
+                <div class="block_height"> <span>To access the Private Note feature, you must be Logged In</span></div>
+
+              </el-descriptions-item>
+
+            </el-descriptions>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24" :xs="24" class="grid-content_h1">
+            <span>
+              <el-icon>
+                <Loading />
+              </el-icon>
+              A transaction is a cryptographically signed instruction that changes the blockchain state. Block explorers
+              track the details of all transactions in the network. Learn more about transactions in our Knowledge
+              Base.</span>
+          </el-col>
+        </el-row>
       </el-main>
-      <el-aside class="responsive-aside" ></el-aside>
+      <el-aside class="responsive-aside"></el-aside>
     </el-container>
-    
+
   </div>
 </template>
 
@@ -380,8 +386,9 @@ onMounted(() => {
 <style scoped>
 .responsive-aside {
   width: 0rem;
-  transition: width 0.5s ease; 
+  transition: width 0.5s ease;
 }
+
 @media (min-width: 768px) {
   .responsive-aside {
     width: 10rem;
@@ -389,6 +396,7 @@ onMounted(() => {
     /* background-color: #fff;  */
   }
 }
+
 body {
   font-size: 16px;
 }
@@ -460,7 +468,6 @@ body {
 
 .TransactionAction {
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   width: 100%;
@@ -494,6 +501,14 @@ body {
   .block_height {
     display: block;
     margin-left: 0;
+  }
+
+  .el-main {
+    --el-main-padding: 0px;
+  }
+
+  .grid-content_h3 {
+    margin: 0 1rem;
   }
 }
 </style>

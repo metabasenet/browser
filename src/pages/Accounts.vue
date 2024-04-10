@@ -198,6 +198,9 @@ onMounted(() => {
     .box-table,.grid-content_h3{
         margin: 0px;
     }
+    .el-main{
+           --el-main-padding: 0px; 
+    }
 }
 
 .demonstration {

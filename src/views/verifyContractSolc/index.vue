@@ -3,7 +3,7 @@
         <el-container class="container-xxl">
             <el-aside class="responsive-aside"></el-aside>
             <el-main class="verify_main">
-                <el-row :gutter="10" style="margin:0 2.25rem">
+                <el-row :gutter="10">
                     <el-col :xs="24" :sm="24" :md="24" :lg="24">
                         <div class="verify_header">
                             <h2>Verify & Publish Contract Source Code</h2>
@@ -336,6 +336,9 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.el-row{
+    /* margin: 0 0.75rem; */
+}
 .container-xxl {
     background-color: #fafbfc;
 }

@@ -29,7 +29,7 @@
                             </div>
                         </div>
                         <div class="verity-form">
-                            <el-form ref="form" :rules="rules" style="max-width: 600px" :model="sizeForm" label-width="auto"
+                            <el-form ref="form" :rules="rules" style="max-width: 600px;margin:auto;" :model="sizeForm" label-width="auto"
                             label-position="top">
                             <el-form-item prop="contractaddress" label="Please enter the Contract Address you would like to verify">
                                 <el-input v-model="sizeForm.contractaddress" maxlength="42" style="width: 28rem;height:2.6rem"/>
@@ -243,13 +243,15 @@ onMounted(() => {
     /* background-color: #fff;  */
   }
 }
+@media (max-width: 768px) {
+    
+}
 .verify_header{
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     text-align: center;
     padding: 10px 0;
-    margin: 0 2.25rem;
     border-bottom: 1px solid #ccc;
 }
 .verify_header p{
@@ -257,11 +259,10 @@ onMounted(() => {
     color: #6c757d;
 }
 .verity_img{
-    width: 14.1875rem;
-    height: 6rem;
+    width:3.875rem;
+    height: 3.875rem;
 }
 .verity_img img{
-    width: 100%;
     height: 100%;
 }
 .verity-box{
@@ -269,11 +270,11 @@ onMounted(() => {
     margin:2rem 0;
 }
 .verity-form{
-    display: flex;
+    /* display: flex; */
         flex-wrap: wrap;
-    align-content: center;
-    flex-direction: column;
-    margin: 0 2.25rem;
+    /* align-content: center; */
+    /* flex-direction: column; */
+    /* margin: 0 2.25rem; */
     margin-top: 20px;
 }
 :deep(.el-select--small .el-select__wrapper){
