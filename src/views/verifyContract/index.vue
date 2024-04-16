@@ -178,7 +178,7 @@ const form = ref()
 const router = useRouter();
 const rememberMe = ref(true)
 const sizeForm = ref({
-    contractaddress:'',
+    contractaddress:address,
     compiletype:'',
     compilerversion:'',
     licensetype:''
@@ -202,10 +202,11 @@ const onSubmit = async (formEl) => {
     console.log(formEl);
     console.log(formEl.compilerversion);
     const compilerversion = formEl.compilerversion;
-    console.log(compilerversion);
+    const compiletype = formEl.compiletype;
+    console.log(compiletype);
     if (!formEl) return
     if (formEl && formEl.contractaddress) {
-        router.push({ name: 'verifyContractSolc', params: { address: formEl.contractaddress },query:{compilerversion} });
+        router.push({ name: 'verifyContractSolc', params: { address: formEl.contractaddress },query:{compilerversion,compiletype} });
         
     } 
 }

@@ -47,7 +47,7 @@
       @current-change="getBlockPageData"
     />
   </div>
-    <el-table :data="tableData" style="width: 100%" >
+    <el-table :data="tableData" size="default" style="width: 100%" >
     <el-table-column prop="number" label="Block" width="100">
       <template v-slot="scope">
             <router-link class="skyblue-text" 
@@ -55,7 +55,7 @@
             {{ scope.row.number }}</router-link>
         </template>
     </el-table-column>
-    <el-table-column prop="formattedTime" label="Age" width="120" align="center" ></el-table-column>
+    <el-table-column prop="formattedTime" label="Age" width="140" align="center" ></el-table-column>
     <el-table-column prop="transactioncount" label="Txn" width="60">
       <template v-slot="scope">
             <router-link class="skyblue-text" :to="{ path: '/txs' }">{{ scope.row.transactioncount }}</router-link>
@@ -193,7 +193,7 @@ function copyToClipboard(text) {
   margin-top: 10px;
 }
 .blocks_header p{
- font-size: 10px;
+ font-size: 12px;
  color: #88877d;
 }
 .blocks_header .el-link{
@@ -215,7 +215,7 @@ function copyToClipboard(text) {
   flex-wrap: wrap;
   margin: 10px 0;
   color: #6c757d;
-  font-size: 12px;
+  font-size: 14px;
 }
 .table_header span{
   margin-right: 5px;
@@ -232,7 +232,7 @@ function copyToClipboard(text) {
   }
 }
 .demonstration span{
-  font-size: 10px;
+  font-size: 12px;
   color: #6c757d;
 }
 .skyblue-text{

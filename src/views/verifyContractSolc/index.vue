@@ -52,7 +52,7 @@
                                                 <el-form-item label="Compiler">
                                                     <el-select class="demo_select" v-model="formInline.compilerversion"
                                                         disabled>
-                                                        
+
                                                     </el-select>
                                                     <!-- <el-select v-model="formInline.compilerversion"
                                                         placeholder="[please select]" style="width: 28rem;">
@@ -153,29 +153,34 @@
                                             <el-col :span="24">
                                                 <el-form-item prop="files">
                                                     <template #label>
-                                                        <el-upload action="#" :before-upload="beforeUpload"
-                                                            :on-success="handleUploadSuccess"
-                                                            :on-error="handleUploadError" :file-list="fileList"
-                                                            :auto-upload="false" :limit="1"
-                                                            @change="handleFileChange"><el-button size="small"
-                                                                type="primary">Select file</el-button>
+                                                        <!-- :auto-upload="false" -->
+                                                        <el-upload action="#" :before-upload="beforeUpload" show-file-list :http-request="uploadFiles"
+                                                            :file-list="fileList" :before-remove="beforeRemove" :auto-upload="true"><el-button
+                                                                size="small" type="primary">Select file</el-button>
                                                             <div class="el-upload__tip">Only.sol files can be uploaded
                                                             </div>
                                                         </el-upload>
-                                                        <el-button type="primary" @click="submitForm">UPLOAD</el-button>
-                                                        <el-button type="primary" @click="deleteUploaded">Delete server
-                                                            files</el-button>
+                                                        <!-- <el-button type="primary" @click="submitForm">UPLOAD</el-button> -->
+                                                        <!-- <el-button type="primary" @click="deleteUploaded">Delete server
+                                                            files</el-button> -->
                                                     </template>
-                                                    <el-input v-model="formInline.testfile" type="textarea" :rows="8" />
+                                                    <div v-for="(item, index) in formInline.testfile" :key="index"
+                                                        class="verify_file">
+                                                        <span>File {{ index + 1 }} of {{
+                                                            formInline.testfile.length }}:</span> <span>{{ item.fileName
+                                                                ||
+                                                                item.name }}</span>
+                                                        <el-input v-model="item.sourceCode" type="textarea" disabled :rows="8" />
+                                                    </div>
                                                 </el-form-item>
                                             </el-col>
                                             <el-col :span="24" class="verify_button">
                                                 <el-form-item>
                                                     <el-button type="primary" size="large" @click="onSubmit">Verify and
                                                         Publish</el-button>
-                                                    <el-button type="info" size="large">Reset</el-button>
+                                                    <el-button type="info" size="large" @click="resetForm(formInline)">Reset</el-button>
                                                     <el-button type="info" size="large"
-                                                        @click="resetForm(formRef)">Return to main</el-button>
+                                                    @click="returnHome">Return to main</el-button>
                                                 </el-form-item>
                                             </el-col>
                                         </el-form>
@@ -193,11 +198,11 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRouter,useRoute } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { getContractDetail } from "@/api/verifyContract";
-import { getVertityUpload, getFileInfo,deleteFile,submissionContract } from "@/api/upload";
+import { getVertityUpload, getFileInfo, deleteFile, submissionContract } from "@/api/upload";
 import { ElUpload, ElButton, ElMessage } from 'element-plus';
-const { address} = defineProps({
+const { address } = defineProps({
     address: {
         type: [String],
         required: true,
@@ -205,27 +210,37 @@ const { address} = defineProps({
 });
 const router = useRouter();
 const route = useRoute();
- const compilerversion = route.query.compilerversion;
+const compilerversion = route.query.compilerversion;
+const compiletype = route.query.compiletype;
 const formInline = ref({
     contractaddress: address,
     contractname: '',
     compilerversion: compilerversion,
-    optimization: '1',
+    optimization: '',
     desc: '',
     files: {},
-    testfile:'',
-    fileName:'',
-    compiletype:'',
+    testfile: [],
+    fileName: '',
+    compiletype: compiletype,
 })
 const fileList = ref([])
-const rules =ref({
-    files:[
+const rules = ref({
+    files: [
         { required: true, message: 'Required', trigger: 'change' },
     ],
 })
 const resetForm = (formEl) => {
-    if (!formEl) return
-    formInline.value.resetFields()
+    formEl.contractname ='';
+    formEl.optimization ='';
+    ElMessage.success('Reset successfully')
+}
+const returnHome = ()=>{
+    router.push({ name: 'home' });
+}
+const uploadFiles=async(file)=>{
+    console.log(file)
+    submitForm(file, fileList);
+
 }
 const getContactDetail = async () => {
     console.log(route);
@@ -237,15 +252,15 @@ const getContactDetail = async () => {
             if (response.data && response.data.contractaddress) {
                 formInline.value = response.data;
             } else {
-                
+
 
                 formInline.value = {
-                    contractaddress: address, 
-                    compilerversion:compilerversion
+                    contractaddress: address,
+                    compilerversion: compilerversion
 
                 };
             }
-        
+
         }
     } catch (error) {
         console.error("Error fetching block details:", error);
@@ -257,88 +272,100 @@ const getFileInfos = async () => {
             const response = await getFileInfo(
                 address
             );
-            formInline.value.testfile = response[0].sourceCode
+            console.log(response);
+            formInline.value.testfile = response
+            fileList.value = response.map((item) => {
+                return {
+                    name: item.fileName,
+                    sourceCode: item.sourceCode
+                }
+            })
+            console.log(formInline.value);
             formInline.value.fileName = response[0].fileName
         }
     } catch (error) {
         console.error("Error fetching block details:", error);
     }
 };
-const onSubmit =  async()=> {
+const onSubmit = async () => {
     if (formInline.value.contractname && formInline.value.contractaddress && formInline.value.compilerversion && formInline.value.optimization) {
         try {
             let data = {
-                contractaddress:formInline.value.contractaddress,
-                contractname:formInline.value.contractname,
-                compilerversion:formInline.value.compilerversion,
-                optimization:formInline.value.optimization,
-                compiletype:formInline.value.compiletype,
+                contractaddress: formInline.value.contractaddress,
+                contractname: formInline.value.contractname,
+                compilerversion: formInline.value.compilerversion,
+                optimization: formInline.value.optimization,
+                compiletype: formInline.value.compiletype,
             }
             const submitSponse = await submissionContract(data);
+            console.log(submitSponse);
             ElMessage.success('Submit successfully');
             router.push({ name: 'home' })
         } catch (error) {
         }
     } else {
-        ElMessage.warning('Please fill in the contract name, contract address, and select File!');
+        ElMessage.warning('Please fill in the contract name, contract address, and choose whether to file!');
     }
 }
-const beforeUpload = (files) => {
-    console.log(files);
-    const isSol = files.name.endsWith('.sol');
+const beforeUpload = (file) => {
+    const isSol = file.name.endsWith('.sol');
     if (!isSol) {
         ElMessage.error('You can only upload.sol files!');
         return false;
+    } else if (formInline.value.contractname && formInline.value.contractaddress && formInline.value.compilerversion && formInline.value.optimization) {
+        formInline.value.files = file;
+        return true;
+
+    } else {
+        ElMessage.warning('Please fill in the contract name, contract address, and choose whether to file!');
+        return false
     }
-    return true;
-};
-const handleFileChange = async(file, fileList) => {
-    fileList= fileList;
-    formInline.value.files = fileList[0];
-};
-const handleUploadSuccess = (response, file, fileList) => {
-    ElMessage.success('Upload successfully');
-    getFileInfos();
+
 };
 
 const handleUploadError = (err, file, fileList) => {
     ElMessage.error('Upload failure');
 };
-const submitForm = async () => {
-    if (formInline.value.contractname && formInline.value.contractaddress) {
+const submitForm = async (file, fileList) => {
         try {
-            const uploadResponse = await getVertityUpload(formInline.value.contractname, formInline.value.contractaddress, formInline.value.files);
+            const uploadResponse = await getVertityUpload(formInline.value.contractname, formInline.value.contractaddress, file);
             if (uploadResponse.data === 'upload success') {
                 getFileInfos();
+                ElMessage.success('Upload successfully');
             } else {
                 handleUploadError(uploadResponse.error, file, fileList);
             }
         } catch (error) {
 
         }
-    } else {
-        ElMessage.warning('Please fill in the contract name, contract address, and select File!');
-    }
 };
-const deleteUploaded = async()=>{
+const beforeRemove = (file, fileList) => {
+    deleteUploaded(file.name, fileList)
+    // return ElMessage.success('Successfully deleted');
+};
+const deleteUploaded = async (fileName, fileList) => {
     try {
-        if (address !== null & formInline.value.fileName !== null) {
-            const response = await deleteFile(address,formInline.value.fileName);
-            ElMessage.error('Successfully deleted');
+        if (address !== null & fileName !== null) {
+            const response = await deleteFile(address, fileName);
+            ElMessage.success('Successfully deleted');
+            formInline.value.testfile = fileList
+            // formInline.value.testfile = '';
+            // formInline.value.fileName = '';
         }
     } catch (error) {
         console.error("Error fetching block details:", error);
     }
 }
 onMounted(() => {
-    getContactDetail();
+    // getContactDetail();
 });
 </script>
 
 <style scoped>
-.el-row{
+.el-row {
     /* margin: 0 0.75rem; */
 }
+
 .container-xxl {
     background-color: #fafbfc;
 }
@@ -397,5 +424,16 @@ onMounted(() => {
 
 .verity_formbox {
     margin: 10px;
+}
+
+.verify_file {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.verify_file p {
+    font-size: 14px;
+    color: #6c757d;
+
 }
 </style>

@@ -26,7 +26,7 @@
                     </el-col>
                 </el-row>
                 <el-row class="footerbox-center">
-                    <el-col :span="6">
+                    <el-col :span="6" :xs="24" :sm="12" :md="6" :lg="6">
                         <div class="grid-content ep-bg-purple footer-center">
                             <h2>Powered by BNB Beacon Chain</h2>
                             <el-button @click="addWork" style="width: 50%;" type="info" plain>
@@ -36,7 +36,7 @@
                             </el-button>
                         </div>
                     </el-col>
-                    <el-col :span="6">
+                    <el-col :span="6" :xs="12" :sm="12" :md="6" :lg="6">
                         <div class="grid-content ep-bg-purple footer-center">
                             <h4>Company</h4>
                             <el-link href="https://element-plus.org" :underline="false">Delegate to BscScan</el-link>
@@ -48,7 +48,7 @@
                                 </el-icon> </el-link>
                         </div>
                     </el-col>
-                    <el-col :span="6">
+                    <el-col :span="6" :xs="12" :sm="12" :md="6" :lg="6">
                         <div class="grid-content ep-bg-purple footer-center">
                             <h4>Community</h4>
                             <el-link href="https://element-plus.org" :underline="false">API Documentation</el-link>
@@ -59,8 +59,8 @@
                                 </el-icon> </el-link>
                         </div>
                     </el-col>
-                    <el-col :span="6">
-                        <div class="grid-content ep-bg-purple footer-center">
+                    <el-col :span="6" :xs="12" :sm="12" :md="6" :lg="6">
+                        <div class="grid-content ep-bg-purple footer-center footer-Products">
                             <h4>Products & Services</h4>
                             <el-link href="https://element-plus.org" :underline="false">Advertise<el-icon>
                                     <Position />
@@ -145,7 +145,11 @@ async function addWork() {
         /* background-color: #fff;  */
     }
 }
-
+@media (max-width: 768px) {
+    .footer-Products{
+        margin-top: 20px;
+    }
+}
 .footer {
     width: 100%;
     /* position: fixed;
@@ -155,7 +159,7 @@ async function addWork() {
 
 .footer-box {
     /* margin-top: 1.25rem; */
-    margin-left: 1.25rem;
+    /* margin-left: 1.25rem; */
     margin-right: 1.25rem;
     /* background-color: #f8f9fa; */
 }
@@ -169,11 +173,12 @@ async function addWork() {
     flex-direction: column;
     text-align: center;
     align-items: flex-start;
+    padding-top: 10px;
 }
 
 .footer-center .el-button {
     margin-top: 10px;
-    font-size: 11px;
+    font-size: 13px;
 }
 
 .footer-center .el-text {
@@ -184,19 +189,19 @@ async function addWork() {
 
 .footer-center .el-link {
     margin-top: 10px;
-    font-size: 11px;
+    font-size: 13px;
 }
 
 .footertop {
     display: flex;
     justify-content: space-between;
-    font-size: 1rem;
+    font-size: 1.1rem;
     padding: 1rem 0;
     border-bottom: 1px solid #e9ecef;
 }
 
 .footerbox-center {
-    padding: 3rem 0;
+    padding: 2rem 0;
     border-bottom: 1px solid #e9ecef;
 }
 

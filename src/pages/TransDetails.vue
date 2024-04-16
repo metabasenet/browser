@@ -61,7 +61,7 @@
         </el-row>
         <el-row class="grid-content_row">
           <el-col :span="24" :xs="24">
-            <el-descriptions class="grid-content_h2 grid-content_h1" v-model="transDetails" :column="1" align="center">
+            <el-descriptions class="grid-content_h2 grid-content_h1" size="default" v-model="transDetails" :column="1" align="center">
               <el-descriptions-item label="Transaction Hash:" label-align="center" align="left"
                 label-class-name="my-label" class-name="my-content ellipsis-text" label-width="30%">
                 <div class="block_height"> <span v-if="transDetails && typeof transDetails.hash === 'string'">{{
@@ -109,7 +109,7 @@
               </el-descriptions-item>
               <el-descriptions-item label="Transaction Action:" label-align="center" align="left"
                 label-class-name="my-label">
-                <div class="block_height">
+                <!-- <div class="block_height">
                   <div class="TransactionAction">
                     <el-icon>
                       <CaretRight />
@@ -137,7 +137,7 @@
                       </el-icon>
                     </el-tooltip>
                   </div>
-                </div>
+                </div> -->
 
               </el-descriptions-item>
               <el-descriptions-item label="From:" label-align="center" align="left" label-class-name="my-label">
@@ -216,20 +216,24 @@
                 <div class="block_height"> <el-icon>
                     <Timer />
                   </el-icon>
-                  <span> {{ transDetails.value }} ($43.24)</span>
+                  <span> {{ transDetails.value }} 
+                    <!-- ($43.24) -->
+                    </span>
                 </div>
 
               </el-descriptions-item>
               <el-descriptions-item label="Transaction Fee::" label-align="center" align="left"
                 label-class-name="my-label">
                 <div class="block_height"> <span> {{ transDetails.TransactionFee }} MNT
-                    (${{ transDetails.TransactionFee }})</span>
+                    <!-- (${{ transDetails.TransactionFee }}) -->
+                    </span>
                 </div>
 
               </el-descriptions-item>
               <el-descriptions-item label="Gas Price:" label-align="center" align="left" label-class-name="my-label">
-                <div class="block_height"><span> {{ transDetails.gasPrice }} MNT ({{ transDetails.gasPrice }})
-                    MNT</span>
+                <div class="block_height"><span> {{ transDetails.gasPrice }} MNT 
+                  <!-- ({{ transDetails.gasPrice }})MNT -->
+                  </span>
                 </div>
 
               </el-descriptions-item>
@@ -287,7 +291,7 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="24" :xs="24" class="grid-content_h1">
+          <el-col :span="24" :xs="24" class="grid-content_h1 grid_content">
             <span>
               <el-icon>
                 <Loading />
@@ -403,7 +407,7 @@ body {
 
 @media (max-width: 768px) {
   body {
-    font-size: 12px;
+    font-size: 14px;
   }
 
   .grid-content_row {
@@ -421,12 +425,12 @@ body {
 }
 
 .grid-content_h1 span {
-  font-size: 13px;
+  font-size: 14px;
   color: #6c757d;
 }
 
 .grid-content span {
-  font-size: 12px;
+  font-size: 14px;
   color: #6c757d;
 }
 
@@ -453,7 +457,7 @@ body {
 }
 
 :deep(.my-label) {
-  width: 120px;
+  width: 130px;
   display: inline-block;
 }
 
@@ -509,6 +513,9 @@ body {
 
   .grid-content_h3 {
     margin: 0 1rem;
+  }
+  .grid_content{
+    margin-left: 0;
   }
 }
 </style>

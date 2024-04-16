@@ -13,11 +13,11 @@
     </el-row>
     <el-row class="box-table">
       <div class="demo-pagination-block box-table_header">
-        <div class="demonstration">A total of 1,363 Token Contracts found</div>
+        <div class="demonstration">A total of {{total}} Token Contracts found</div>
         <el-input style="width: 15rem" placeholder="Please enter your search" v-model="searchText" prefix-icon="Search"
           @input="handleSearchInput" />
       </div>
-      <el-table :header-cell-style="{ color: '#0784c3' }" :data="filteredData"
+      <el-table size="default" :header-cell-style="{ color: '#0784c3' }" :data="filteredData"
         :default-sort="{ prop: ['price', 'chage', 'volume', 'virculating'], order: 'descending' }" style="width: 100%">
         <el-table-column prop="contractaddress" label="Token" width="200" >
           <template v-slot="scope">
@@ -210,7 +210,7 @@ onMounted(() => {
 }
 
 .blocks_header p {
-  font-size: 10px;
+  font-size: 12px;
   color: #88877d;
 }
 

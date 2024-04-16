@@ -15,7 +15,7 @@
               <el-input v-model="homeSearch" placeholder="Search by Address / Txn Hash / Block / Token / Domain Name"
                 style="max-width: 100%;height:100%;border:none" class="input-with-select">
                 <template #prepend>
-                  <el-select v-model="select" placeholder="All Filters" style="width: 115px;height:100%">
+                  <el-select v-model="select" placeholder="All Filters">
                     <el-option label="Block" value="1" />
                     <el-option label="Txn Hash" value="2" />
                     <el-option label="Address" value="3" />
@@ -147,7 +147,7 @@
                 header-align="center"
                 align="center"
                 prop="number"
-                width="150">
+                width="100">
                 <template v-slot="scope" >
                   <div>
                     <el-tooltip content="Copy Address" placement="top">
@@ -160,8 +160,9 @@
               </el-table-column>
             </el-table>
             <div class="card-footer">
-              <router-link to="/blocks">
-                VIEW ALL BLOCKS<el-icon>
+              <router-link to="/blocks" class="view-all">
+                <span>VIEW ALL BLOCKS</span>
+                <el-icon style="margin-left:3px">
                   <Right />
                 </el-icon>
               </router-link>
@@ -215,7 +216,7 @@
                 header-align="center"
                 align="center"
                 prop="number"
-                width="150">
+                width="100">
                 <template v-slot="scope" >
                   <div>
                     <el-tooltip content="Copy Address" placement="top">
@@ -228,8 +229,9 @@
               </el-table-column>
             </el-table>
             <div class="card-footer">
-              <router-link to="/txs">
-                View all transactions<el-icon>
+              <router-link to="/txs" class="view-all">
+                <span>VIEW ALL TRANSACTIONS</span>
+                <el-icon style="margin-left:3px">
                   <Right />
                 </el-icon>
               </router-link>
@@ -359,6 +361,15 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.view-all{
+  display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.el-select{
+  width: 7.1875rem;
+    height: 100%;
+}
 .el-table {
   width: 100%;
 }
@@ -386,8 +397,8 @@ onMounted(() => {
   position: absolute;
   width: 100%;
   height: 29vh;
-  /* background: linear-gradient(45deg,#fff, #000,#000, #fff ); */
-  background: linear-gradient(to right, #000, #fff);
+  background: linear-gradient(45deg,#fff, #000,#000, #fff );
+  /* background: linear-gradient(45deg,#fff,#0c9482, #0c9482, #fff); */
 }
 .el-link {
   margin-right: 8px;
@@ -442,7 +453,9 @@ onMounted(() => {
     padding: 5px;
     /* flex-wrap: wrap; */
   }
-
+  .el-select{
+    width: 5.6rem;
+  }
   /* .card_p,
   .c-flex p,
   .b-flex h4 {
@@ -484,7 +497,7 @@ onMounted(() => {
 }
 
 .card_p {
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .card-header {
@@ -522,7 +535,7 @@ onMounted(() => {
 
 .d-flex p {
   color: #6c757d;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .b-flex {
@@ -536,12 +549,12 @@ onMounted(() => {
 
 .b-flex_span {
   color: #6c757d;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .b-flex h4 {
   margin-right: 10px;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .c-flex {
@@ -561,7 +574,7 @@ onMounted(() => {
   text-align: center;
   padding: 15px 0;
   color: #6c757d;
-  font-size: 15px;
+  font-size: 16px;
   /* border: 1px solid #e6e6e6; */
   background-color: #f8f9fa;
 }

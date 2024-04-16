@@ -44,7 +44,7 @@
           :page-sizes="[10, 25, 50, 100]" layout="sizes,prev, pager, next" :pager-count="5" :total="total" small
           @size-change="handleSizeChange" @current-change="getTransAction" />
       </div>
-      <el-table :data="tableData" style="width: 100%"> 
+      <el-table :data="tableData" style="width: 100%" size="default" > 
         <el-table-column prop="hash" label="Txn Hash" width="120">
           <template v-slot="scope">
             <router-link class="skyblue-text ellipsis-text" :to="{ name: 'tx', params: { hash: scope.row.hash } }">
@@ -81,7 +81,7 @@
         <el-table-column prop="to" label="To" width="250" align="center">
           <template v-slot="scope">
             <el-tooltip v-if ="scope.row.to" content="Contract" placement="top">
-              <el-button text style="margin-right:5px" icon="Document" >
+              <el-button text  icon="Document" >
               </el-button>
             </el-tooltip>
             <el-tooltip :content="scope.row.to" placement="top">
@@ -93,7 +93,13 @@
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column prop="value" label="Value" />
+        <el-table-column prop="value" label="Value">
+          <template v-slot="scope">
+            <el-tooltip effect="dark" :content="`${scope.row.value}`" placement="top">
+              <span class="skyblue-text">{{ scope.row.value }}</span>
+            </el-tooltip>
+          </template>
+        </el-table-column>
         <el-table-column prop="gasPrice" label="Gas Price" />
       </el-table>
       <div class="demo-pagination-block table_header">
@@ -204,7 +210,7 @@ onMounted(() => {
 }
 
 .blocks_header p {
-  font-size: 10px;
+  font-size: 12px;
   color: #88877d;
 }
 
@@ -230,7 +236,7 @@ onMounted(() => {
   flex-wrap: wrap;
   margin: 10px 0;
   color: #6c757d;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .table_header span {
@@ -269,7 +275,7 @@ onMounted(() => {
   }
 
   .card_p {
-    font-size: 8px;
+    font-size: 10px;
   }
   .blocks_heade,.box-table,.grid-content_h3{
     margin:0px
@@ -281,7 +287,7 @@ onMounted(() => {
 }
 
 .card_p {
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .card {
@@ -305,7 +311,6 @@ onMounted(() => {
 
 .skyblue-text {
   color: #0693cc;
-  margin-right: 5px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -313,6 +318,8 @@ onMounted(() => {
 
 :deep(.cell) {
   display: flex;
+  justify-content: center;
+    align-items: center;
 }
 
 .ellipsis-text {

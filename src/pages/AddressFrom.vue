@@ -72,23 +72,23 @@
                   <h3>Overview</h3>
                 </li>
                 <li class="over_li">
-                  <p>MAX TOTAL SUPPLY</p>
+                  <p>MNT BALANCE</p>
                   <!-- <el-tooltip class="box-item" effect="dark"
                 :content="individualQueryDetails && individualQueryDetails.totalsupply ? individualQueryDetails.totalsupply.toString() : ''"
                 placement="top-start">
                 <span>{{ individualQueryDetails.totalsupply }}</span>
               </el-tooltip> -->
-                  <span style="font-weight: bold;"> ETH </span>
+                  <!-- <span style="font-weight: bold;"> ETH </span> -->
                   <el-tooltip class="box-item" effect="dark" content="CSupply: 551,557.859909" placement="top-start">
-                    <span style="color:#6c757d">(CSupply: 551,557.859909)</span>
+                    <span >9,637,261.643045837681412824 BNB</span>
                   </el-tooltip>
                 </li>
                 <li class="over_li">
-                  <p>HOLDERS</p>
-                  <span>1,886,491 (0.00%)</span>
+                  <p>MNT VALUE</p>
+                  <span>$5,250,039,228.27 (@ $544.76/BNB)</span>
                 </li>
                 <li class="over_li">
-                  <p>TOTAL TRANSFERS</p>
+                  <p>TOKEN HOLDINGS</p>
                   <div class="over_div">
                     <span>58,667,724</span>
                     <el-tooltip class="box-item" effect="dark"
@@ -107,21 +107,23 @@
             <div class="grid-content ep-bg-purple-dark blocks_header">
               <ul class="over_ul">
                 <li>
-                  <h3>Overview</h3>
+                  <h3>More Info</h3>
                 </li>
                 <li class="over_li">
-                  <p>MAX TOTAL SUPPLY</p>
-                  <el-tooltip class="box-item" effect="dark" content="Top Left prompts info" placement="top-start">
-                    <span>604,999.999959 </span>
+                  <p>PRIVATE NAME TAGS</p>
+                  <el-button icon="Plus" round>Add</el-button>
+                  <!-- <el-tooltip class="box-item" effect="dark" content="Top Left prompts info" placement="top-start">
+                    <span class="ellipsis-text">604,999.999959 </span>
                   </el-tooltip>
                   <span style="font-weight: bold;">ETH </span>
                   <el-tooltip class="box-item" effect="dark" content="Top Left prompts info" placement="top-start">
-                    <span style="color:#6c757d">(CSupply: 551,557.859909)</span>
-                  </el-tooltip>
+                    <span class="ellipsis-text" style="color:#6c757d">(CSupply: 551,557.859909)</span>
+                  </el-tooltip> -->
                 </li>
                 <li class="over_li">
-                  <p>HOLDERS</p>
-                  <span>1,886,491 (0.00%)</span>
+                  <p>LAST TXN SENT</p>
+                  <router-link class="ellipsis-text" :to="{ name: 'address',params:{address:address} }">{{ address }}</router-link>
+                  <span>from 12 hrs ago</span>
                 </li>
                 <li class="over_li">
                   <p>TOTAL TRANSFERS</p>
@@ -188,11 +190,11 @@
                 <el-row class="box-table">
                   <div class="demo-pagination-block box-table_header">
                     <div class="demonstration">More than {{total}} accounts found (24,120,943.46 MNT)</div>
-                    <el-pagination v-model:current-page="currentPage4" v-model:page-size="pageSize4"
-                      :page-sizes="[10, 20, 30, 40]" layout=" sizes, prev, pager, next, " :total="total" small
+                    <el-pagination :pager-count="5" v-model:current-page="currentPage4" v-model:page-size="pageSize4"
+                      :page-sizes="[10, 20, 30, 40]" background layout=" sizes, prev, pager, next, " :total="total" small
                       @size-change="handleSizeChange1" @current-change="getAddressList" />
                   </div>
-                  <el-table :data="tableData" style="width: 100%">
+                  <el-table :data="tableData" style="width: 100%" size="default">
                     <el-table-column prop="hash" label="Transaction Hash" align="center" width="120">
                       <template v-slot="scope">
                         <el-tooltip :content="scope.row.hash" placement="top">
@@ -220,7 +222,7 @@
                     </el-table-column>
                     <el-table-column prop="formattedTime" label="Age" align="center">
                     </el-table-column>
-                    <el-table-column prop="from" label="From" align="center" width="280">
+                    <el-table-column prop="from" label="From" align="center" width="250">
                       <template v-slot="scope">
                         <div class="router_box">
                           <el-tooltip :content="scope.row.from" placement="top">
@@ -236,7 +238,7 @@
                         </div>
                       </template>
                     </el-table-column>
-                    <el-table-column prop="to" label="To" align="center" width="280">
+                    <el-table-column prop="to" label="To" align="center" width="250">
                       <template v-slot="scope">
                         <div class="router_box">
                           <el-tooltip content="Contract" placement="top">
@@ -256,11 +258,18 @@
                       </template>
                     </el-table-column>
                     <el-table-column prop="value" label="Value" align="center" />
-                    <el-table-column prop="TransactionFee" label="Txn Fee" align="center" />
+                    <el-table-column prop="TransactionFee" label="Txn Fee" align="center" >
+                      <template v-slot="scope">
+                        <el-tooltip :content="`${scope.row.TransactionFee}`" placement="top">
+                          <span class="ellipsis-text">{{ scope.row.TransactionFee }}</span>
+                        </el-tooltip>
+                      </template>
+                    </el-table-column>
+                    
                   </el-table>
                   <div class="demo-pagination-block box-table_header">
-                    <el-pagination v-model:current-page="currentPage4" v-model:page-size="pageSize4"
-                      :page-sizes="[10, 20, 30, 40]" layout=" sizes, prev, pager, next, " :total="total" small
+                    <el-pagination :pager-count="5" v-model:current-page="currentPage4" v-model:page-size="pageSize4"
+                      :page-sizes="[10, 20, 30, 40]" background layout=" sizes, prev, pager, next, " :total="total" small
                       @size-change="handleSizeChange1" @current-change="getAddressList" />
                   </div>
                 </el-row>
@@ -269,11 +278,11 @@
               <el-tab-pane label="Token Transfers(ERC-20)" name="tab3"><el-row class="box-table">
                   <div class="demo-pagination-block box-table_header">
                     <div class="demonstration">More than {{totals}} accounts found (24,120,943.46 MNT)</div>
-                    <el-pagination v-model:current-page="currentPage4" v-model:page-size="pageSize4"
-                      :page-sizes="[10, 20, 30, 40]" layout=" sizes, prev, pager, next, " :total="totals" small
+                    <el-pagination :pager-count="5" v-model:current-page="currentPage4" v-model:page-size="pageSize4"
+                      :page-sizes="[10, 20, 30, 40]" background layout=" sizes, prev, pager, next, " :total="totals" small
                       @size-change="handleSizeChange" @current-change="getContractList" />
                   </div>
-                  <el-table :data="tableDatas" style="width: 100%">
+                  <el-table :data="tableDatas" style="width: 100%" size="default">
                     <el-table-column prop="transactionHash" label="Txn Hash">
                       <template v-slot="scope">
                         <el-tooltip :content="scope.row.to" placement="top">
@@ -298,7 +307,7 @@
                     </el-table-column>
                     <el-table-column prop="formattedTime" label="Age" align="center">
                     </el-table-column>
-                    <el-table-column prop="from" label="From" align="center" width="280">
+                    <el-table-column prop="from" label="From" align="center" width="250">
                       <template v-slot="scope">
                         <div class="router_box">
                           <el-tooltip :content="scope.row.from" placement="top">
@@ -314,7 +323,7 @@
                         </div>
                       </template>
                     </el-table-column>
-                    <el-table-column prop="to" align="center" label="To" width="280">
+                    <el-table-column prop="to" align="center" label="To" width="250">
                       <template v-slot="scope">
                         <div class="router_box">
                           <el-tooltip content="Contract" placement="top">
@@ -333,12 +342,18 @@
                         </div>
                       </template>
                     </el-table-column>
-                    <el-table-column prop="value" align="center" label="Value" />
+                    <el-table-column prop="value" align="center" label="Value" >
+                      <template v-slot="scope">
+                        <el-tooltip :content="`${scope.row.value}`" placement="top">
+                          <span class="ellipsis-text">{{ scope.row.value }}</span>
+                        </el-tooltip>
+                      </template>
+                    </el-table-column>
                     <el-table-column prop="ercName" align="center" label="Token" />
                   </el-table>
                   <div class="demo-pagination-block box-table_header">
-                    <el-pagination v-model:current-page="currentPage4" v-model:page-size="pageSize4"
-                      :page-sizes="[10, 20, 30, 40]" layout=" sizes, prev, pager, next, " :total="totals" small
+                    <el-pagination  :pager-count="5" v-model:current-page="currentPage4" v-model:page-size="pageSize4"
+                      :page-sizes="[10, 20, 30, 40]" background layout=" sizes, prev, pager, next, " :total="totals" small
                       @size-change="handleSizeChange" @current-change="getContractList" />
                   </div>
                 </el-row></el-tab-pane>
@@ -530,7 +545,7 @@ onMounted(() => {
 }
 
 .blocks_header p {
-  font-size: 10px;
+  font-size: 12px;
   color: #88877d;
 }
 
@@ -573,7 +588,7 @@ onMounted(() => {
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
 
   .card-ul,
   .card-li {
@@ -581,7 +596,11 @@ onMounted(() => {
   }
 
   .card_p {
-    font-size: 8px;
+    font-size: 10px;
+  }
+  .grid-content_h3,.blocks_heade{
+    margin-left: 0;
+    margin-right: 0;
   }
 }
 
@@ -590,7 +609,7 @@ onMounted(() => {
 }
 
 .card_p {
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .card {
@@ -632,7 +651,7 @@ onMounted(() => {
 
 .blocks_heade_p {
   color: #6c757d;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .el-tag {
@@ -649,10 +668,11 @@ onMounted(() => {
 .ContentPlaceHolder1_lblWarning {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .over_ul {
-  height: 10rem;
+  height: 12rem;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;

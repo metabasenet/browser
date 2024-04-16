@@ -17,9 +17,9 @@
                                 top accounts only)</span>
                         </div>
                     </div>
-                    <el-table :data="tableData" style="width: 100%">
+                    <el-table :data="tableData" style="width: 100%" size="default">
                         <el-table-column type="index" width="50" />
-                        <el-table-column prop="address" label="Address0.0" show-overflow-tooltip width="200">
+                        <el-table-column prop="address" label="Address" show-overflow-tooltip width="200">
                             <template v-slot="scope">
                                 <router-link class="skyblue-text"
                                     :to="{ name: 'address', params: { address: scope.row.address } }">
@@ -156,7 +156,7 @@ onMounted(() => {
 }
 
 .blocks_header p {
-    font-size: 10px;
+    font-size: 12px;
     color: #88877d;
 }
 
@@ -184,7 +184,7 @@ onMounted(() => {
     flex-wrap: wrap;
     margin: 10px 0;
     color: #6c757d;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .table_header span {
@@ -208,7 +208,7 @@ onMounted(() => {
 }
 
 .demonstration span {
-    font-size: 10px;
+    font-size: 12px;
     color: #6c757d;
 }
 

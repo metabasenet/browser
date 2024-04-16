@@ -35,9 +35,10 @@
         </div>
         <div class="header-menu"><el-row :gutter="10">
             <el-col :span="24">
-              <el-menu ellipsis class="el-menu-popper-demo" collapse-transition :default-active="$route.path" router mode="horizontal"
+              <!-- menu-trigger="click" -->
+              <el-menu ellipsis class="el-menu-popper-demo" :default-active="$route.path" router mode="horizontal"
                 :popper-offset="16">
-                <el-menu-item index="1">
+                <el-menu-item index="/home">
                   <div class="el-img">
                     <img width="40" height="37" src="/header_img.png" alt="" />
                     <span style="font-size:1.5rem;color:#00a186">MNT</span>
@@ -149,7 +150,7 @@ const getSearch = async () => {
 .header_price {
   display: flex;
   color: #6c757d;
-  font-size: .78515625rem;
+  font-size: 0.9rem;
 }
 
 .el-menu-demo {

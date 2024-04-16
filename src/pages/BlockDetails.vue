@@ -20,7 +20,7 @@
     </el-row>
     <el-row class="grid-content_row">
       <el-col :span="24">
-        <el-descriptions v-model="blockDetails" class="grid-content_h2 " :column="1" align="left"
+        <el-descriptions v-model="blockDetails" size="default" class="grid-content_h2 " :column="1" align="left"
           >
           <el-descriptions-item label="Block Height:"  label-align="left" label-class-name="my-label"
             class-name="my-content" label-width="30%">
@@ -40,7 +40,7 @@
           </el-descriptions-item>
           <el-descriptions-item label="Transactions:" label-align="center" align="left" label-class-name="my-label">
             <div class="block_height">
-              <el-tooltip content="Copy Address" placement="top"><router-link class="skyblue-text" to="/txs">
+              <el-tooltip :content="`${blockDetails.transactioncount}`" placement="top"><router-link class="skyblue-text" to="/txs">
                 <span>{{
         blockDetails.transactioncount }}</span></router-link></el-tooltip>
             </div>
@@ -49,7 +49,7 @@
                 contract internal transactions</router-link></el-tooltip> <span>in this block</span> -->
           </el-descriptions-item>
           <el-descriptions-item label="Validated By:" label-align="center" align="left" label-class-name="my-label">
-            <div class="block_height">
+            <!-- <div class="block_height">
               <el-tooltip content="Copy Address" placement="top"><router-link class="skyblue-text"
                 to="/address">Validator: Legend II</router-link></el-tooltip>
             <el-tooltip content="Copy Address" placement="top">
@@ -57,7 +57,7 @@
               </el-button>
             </el-tooltip>
             <span> in 3 secs</span>
-            </div>
+            </div> -->
           </el-descriptions-item>
           <el-descriptions-item label="Block Reward:" label-align="center" align="left" label-class-name="my-label">
             <div class="block_height">
@@ -86,9 +86,9 @@
             
           </el-descriptions-item>
           <el-descriptions-item label="Burnt Fees:" label-align="center" align="left" label-class-name="my-label">
-            <div class="block_height"><span style="margin-right:5px">0.004062755588941122 MNT</span>
+            <!-- <div class="block_height"><span style="margin-right:5px">0.004062755588941122 MNT</span>
             <el-tooltip content="open fee burn transaction" placement="top"><el-button
-                icon="Share"></el-button></el-tooltip></div>
+                icon="Share"></el-button></el-tooltip></div> -->
             
           </el-descriptions-item>
           <el-descriptions-item label="Extra Data:" label-align="center" align="left" label-class-name="my-label">
@@ -264,11 +264,11 @@ onMounted(() => {
   padding: 19px 0;
 }
 .grid-content_h1 span {
-  font-size: 12px;
+  font-size: 14px;
   color: #6c757d;
 }
 .grid-content span{
-  font-size: 12px;
+  font-size: 14px;
   color: #6c757d;
 }
 .grid-content_h3 {
@@ -308,7 +308,7 @@ onMounted(() => {
 
 .header_span {
   margin-left: 8px;
-  font-size: 11px;
+  font-size: 13px;
   color: #6c7589;
 }
 
