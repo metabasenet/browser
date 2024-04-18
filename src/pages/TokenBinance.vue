@@ -315,7 +315,7 @@
                       <template v-slot="scope">
                         <div class="router_box">
                           <el-tooltip content="Contract" placement="top">
-                            <el-button text icon="Document">
+                            <el-button  icon="Document">
                             </el-button>
                           </el-tooltip>
                           <el-tooltip :content="scope.row.address" placement="top">

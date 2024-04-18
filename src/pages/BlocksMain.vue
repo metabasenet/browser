@@ -33,7 +33,9 @@
   </el-row>
   <el-row class="box-table">
     <div class="demo-pagination-block box-table_header">
-    <div class="demonstration"><p>Total of {{ total }} blocks</p><span>(Showing blocks between #36949710 to #36949734)</span></div>
+    <div class="demonstration"><p>Total of {{ total }} blocks</p>
+    <!-- <span>(Showing blocks between #36949710 to #36949734)</span> -->
+    </div>
     <el-pagination
       v-model:current-page="currentPage4"
       v-model:page-size="pageSize4"

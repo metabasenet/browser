@@ -16,6 +16,7 @@
                 style="max-width: 100%;height:100%;border:none" class="input-with-select">
                 <template #prepend>
                   <el-select v-model="select" placeholder="All Filters">
+                    <el-option label="All Filters" value="" />
                     <el-option label="Block" value="1" />
                     <el-option label="Txn Hash" value="2" />
                     <el-option label="Address" value="3" />
@@ -272,16 +273,27 @@ const getSearch = async () => {
     } else if (select.value === '1' || response.data.block) {
       let number = response.data.block.number
       router.push({ name: 'block', params: { blockNumber: number } });
+      homeSearch.value = '';
     } else if (select.value === '2' || response.data.transaction) {
       let hash = response.data.transaction.hash
       router.push({ name: 'tx', params: { hash: hash } });
-    } else if (select.value === '3' || response.data.address) {
-      let address = response.data.address.address
-      // router.push({ name: 'address'});
-      router.push({ name: 'address', params: { address: address } });
-    } else if (select.value === '4' || response.data.contract) {
+      homeSearch.value = '';
+    } else if (select.value === '3' || response.data.address || response.data.contract) {
+      if(response.data.contract){
+        let contractaddress = response.data.contract.contractaddress
+        let contract = Object.keys(response.data)[0]
+        router.push({ name: 'address', params: { address: contractaddress },query:{contract} });
+        homeSearch.value = '';
+      }else{
+        let address = response.data.address.address
+        let contract = Object.keys(response.data)[0]
+        router.push({ name: 'address', params: { address: address },query:{contract} });
+        homeSearch.value = '';
+      }
+    } else if (select.value === '4' ) {
       let contractAddress = response.data.contract.contractaddress
       router.push({ name: 'token', params: { address: contractAddress } });
+      homeSearch.value = '';
     } else {
       ElMessage.warning('No data found')
     }
@@ -595,7 +607,7 @@ onMounted(() => {
 
 .drop_search {
   background-color: #fff;
-  height: 4vh;
+  height: 40px;
   border-radius: 15px;
 }
 

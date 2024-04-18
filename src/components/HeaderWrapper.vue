@@ -99,16 +99,28 @@ const getSearch = async () => {
     } else if (select.value === '1' || response.data.block) {
       let number = response.data.block.number
       router.push({ name: 'block', params: { blockNumber: number } });
+      homeSearch.value = '';
     } else if (select.value === '2' || response.data.transaction) {
       let hash = response.data.transaction.hash
       router.push({ name: 'tx', params: { hash: hash } });
-    } else if (select.value === '3' || response.data.address) {
-      let address = response.data.address.address
-      // router.push({ name: 'address'});
-      router.push({ name: 'address', params: { address: address } });
-    } else if (select.value === '4' || response.data.contract) {
+      homeSearch.value = '';
+    } else if (select.value === '3' || response.data.address || response.data.contract) {
+      if(response.data.contract){
+        let contractaddress = response.data.contract.contractaddress
+        let contract = Object.keys(response.data)[0]
+        console.log(contract);
+        router.push({ name: 'address', params: { address: contractaddress },query:{contract} });
+        homeSearch.value = '';
+      }else{
+        let address = response.data.address.address
+        let contract = Object.keys(response.data)[0]
+        router.push({ name: 'address', params: { address: address },query:{contract} });
+        homeSearch.value = '';
+      }
+    }else if (select.value === '4' || response.data.contract) {
       let contractAddress = response.data.contract.contractaddress
       router.push({ name: 'token', params: { address: contractAddress } });
+      homeSearch.value = '';
     } else {
       ElMessage.warning('No data found')
     }

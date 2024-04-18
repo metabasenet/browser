@@ -6,3 +6,4 @@ const MyGlobalComponentsPlugin = {
     }
   };
   export default MyGlobalComponentsPlugin;
+

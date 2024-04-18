@@ -1,6 +1,5 @@
 <template>
   <div class="box">
-
     <el-container class="container-xxl">
       <el-aside class="responsive-aside"></el-aside>
       <el-main>
@@ -8,7 +7,8 @@
           <el-col :span="24">
             <div class="grid-content darkb_button grid-content_h3">
               <div>
-                <h3>Address</h3> <span class="ellipsis-text">{{ address }}</span>
+                <h3>{{ contract }}</h3>
+                <span class="ellipsis-text">{{ address }}</span>
                 <el-tooltip content="Copy Address" placement="top">
                   <el-button text icon="CopyDocument" @click="copyToClipboard(address)">
                   </el-button>
@@ -30,7 +30,8 @@
         </el-row>
         <el-row class="blocks_heade">
           <el-col :span="24">
-            <p class="blocks_heade_p">Sponsored: METAWIN - Join Metawin Today Enter Now.
+            <p class="blocks_heade_p">
+              Sponsored: METAWIN - Join Metawin Today Enter Now.
             </p>
             <div class="ContentPlaceHolder1_lblWarning">
               <div>
@@ -40,9 +41,8 @@
                 <el-tag type="info"># Binance-Peg</el-tag>
               </div>
               <div>
-                <el-dropdown style="margin-right:5px">
-                  <el-button icon="Star">
-                  </el-button>
+                <el-dropdown style="margin-right: 5px">
+                  <el-button icon="Star"> </el-button>
                 </el-dropdown>
                 <el-dropdown>
                   <el-button>
@@ -80,7 +80,7 @@
               </el-tooltip> -->
                   <!-- <span style="font-weight: bold;"> ETH </span> -->
                   <el-tooltip class="box-item" effect="dark" content="CSupply: 551,557.859909" placement="top-start">
-                    <span >9,637,261.643045837681412824 BNB</span>
+                    <span>{{ getByBalance.balance }}</span>
                   </el-tooltip>
                 </li>
                 <li class="over_li">
@@ -90,14 +90,23 @@
                 <li class="over_li">
                   <p>TOKEN HOLDINGS</p>
                   <div class="over_div">
-                    <span>58,667,724</span>
-                    <el-tooltip class="box-item" effect="dark"
-                      content="This count of token transfers is updated every few hours instead of in real-time"
-                      placement="top-start">
-                      <el-icon>
-                        <Warning />
-                      </el-icon>
-                    </el-tooltip>
+                    <el-select v-model="values" placeholder=">$96,375" filterable style="width: 100%">
+                      <template #header>
+                        <p class="erc_p">ERC-20 Tokens</p>
+                      </template>
+                      <el-option v-for="item in cities" :key="item.decimals" :label="item.ercName"
+                        :value="item.decimals">
+                        <router-link :to="{ name: 'token', params: { address: item.address } }"
+                          style="display: flex; height:50px; flex-direction: column; line-height: 1.5; padding-top: 5px; padding-bottom: 5px;">
+                          <p style="margin: 0; color: black;
+                            font-weight:400;
+                            font-size: 12px; ">{{ item.ercName }} ({{ item.ercSymbol }})</p>
+                          <p style="margin: 0; color: #6c757d;
+                            font-weight:400;
+                            font-size: 13px; ">{{ item.balance }} {{ item.ercSymbol }}</p>
+                        </router-link>
+                      </el-option>
+                    </el-select>
                   </div>
                 </li>
               </ul>
@@ -122,8 +131,16 @@
                 </li>
                 <li class="over_li">
                   <p>LAST TXN SENT</p>
-                  <router-link class="ellipsis-text" :to="{ name: 'address',params:{address:address} }">{{ address }}</router-link>
-                  <span>from 12 hrs ago</span>
+                  <div class="over_div">
+                    <el-tooltip class="box-item" effect="dark" :content="address" placement="top-start">
+                      <router-link class="skyblue-text ellipsis-text"
+                        :to="{ name: 'address', params: { address: address } }">{{
+                          address
+                        }}</router-link>
+                    </el-tooltip>
+                    <span>from 12 hrs ago</span>
+                  </div>
+
                 </li>
                 <li class="over_li">
                   <p>TOTAL TRANSFERS</p>
@@ -147,7 +164,7 @@
                   <h3>Other Info</h3>
                 </li>
                 <li class="over_li">
-                  <p>TOKEN CONTRACT </p>
+                  <p>TOKEN CONTRACT</p>
                   <div class="over_div">
                     <el-tooltip class="box-item" effect="dark" content="Contract" placement="top-start">
                       <el-icon>
@@ -155,7 +172,9 @@
                       </el-icon>
                     </el-tooltip>
                     <el-tooltip class="box-item" effect="dark" :content="address" placement="top-start">
-                      <router-link class="ellipsis-text" :to="{ name: 'address',params:{address:address} }">{{ address }}</router-link>
+                      <router-link class="skyblue-text ellipsis-text"
+                        :to="{ name: 'address', params: { address: address } }">{{
+                          address }}</router-link>
                     </el-tooltip>
                     <el-tooltip content="Copy Address" placement="top">
                       <el-button text icon="CopyDocument" @click="copyToClipboard(address)">
@@ -189,21 +208,22 @@
               <el-tab-pane label="Transactions" name="tab1">
                 <el-row class="box-table">
                   <div class="demo-pagination-block box-table_header">
-                    <div class="demonstration">More than {{total}} accounts found (24,120,943.46 MNT)</div>
+                    <div class="demonstration">
+                      More than {{ total }} transactions found
+                    </div>
                     <el-pagination :pager-count="5" v-model:current-page="currentPage4" v-model:page-size="pageSize4"
-                      :page-sizes="[10, 20, 30, 40]" background layout=" sizes, prev, pager, next, " :total="total" small
-                      @size-change="handleSizeChange1" @current-change="getAddressList" />
+                      :page-sizes="[10, 20, 30, 40]" background layout=" sizes, prev, pager, next, " :total="total"
+                      small @size-change="handleSizeChange1" @current-change="getAddressList" />
                   </div>
                   <el-table :data="tableData" style="width: 100%" size="default">
                     <el-table-column prop="hash" label="Transaction Hash" align="center" width="120">
                       <template v-slot="scope">
                         <el-tooltip :content="scope.row.hash" placement="top">
-                          <router-link class="skyblue-text ellipsis-text"
-                          :to="{ name: 'tx', params: { hash: scope.row.hash } }">{{
-                            scope.row.hash
-                          }}</router-link>
+                          <router-link class="skyblue-text ellipsis-text" :to="{
+                            name: 'tx',
+                            params: { hash: scope.row.hash },
+                          }">{{ scope.row.hash }}</router-link>
                         </el-tooltip>
-                        
                       </template>
                     </el-table-column>
                     <el-table-column prop="method" label="Method" align="center" width="120">
@@ -215,9 +235,10 @@
                     </el-table-column>
                     <el-table-column prop="blockNumber" label="Block" align="center" width="100">
                       <template v-slot="scope">
-                        <router-link class="skyblue-text"
-                          :to="{ name: 'block', params: { blockNumber: scope.row.blockNumber } }">{{
-                          scope.row.blockNumber }}</router-link>
+                        <router-link class="skyblue-text" :to="{
+                          name: 'block',
+                          params: { blockNumber: scope.row.blockNumber },
+                        }">{{ scope.row.blockNumber }}</router-link>
                       </template>
                     </el-table-column>
                     <el-table-column prop="formattedTime" label="Age" align="center">
@@ -226,15 +247,16 @@
                       <template v-slot="scope">
                         <div class="router_box">
                           <el-tooltip :content="scope.row.from" placement="top">
-                            <router-link class="skyblue-text ellipsis-text"
-                              :to="{ name: 'address', params: { address: scope.row.from } }">{{ scope.row.from
-                              }}</router-link>
+                            <router-link class="skyblue-text ellipsis-text" :to="{
+                              name: 'address',
+                              params: { address: scope.row.from },
+                            }">{{ scope.row.from }}</router-link>
                           </el-tooltip>
                           <el-tooltip content="Copy Address" placement="top">
                             <el-button text icon="CopyDocument" @click="copyToClipboard(scope.row.from)">
                             </el-button>
                           </el-tooltip>
-                          <el-button style="margin-left:2.5rem" type="success" icon="right" circle plain />
+                          <el-button style="margin-left: 2.5rem" type="success" icon="right" circle plain />
                         </div>
                       </template>
                     </el-table-column>
@@ -242,13 +264,14 @@
                       <template v-slot="scope">
                         <div class="router_box">
                           <el-tooltip content="Contract" placement="top">
-                            <el-button style="margin-right:5px" icon="Document" @click="copyToClipboard(scope.row.to)">
+                            <el-button style="margin-right: 5px" icon="Document" @click="copyToClipboard(scope.row.to)">
                             </el-button>
                           </el-tooltip>
                           <el-tooltip :content="scope.row.to" placement="top">
-                            <router-link class="skyblue-text ellipsis-text"
-                              :to="{ name: 'address', params: { address: scope.row.to } }">{{ scope.row.to
-                              }}</router-link>
+                            <router-link class="skyblue-text ellipsis-text" :to="{
+                              name: 'address',
+                              params: { address: scope.row.to },
+                            }">{{ scope.row.to }}</router-link>
                           </el-tooltip>
                           <el-tooltip content="Copy Address" placement="top">
                             <el-button text icon="CopyDocument" @click="copyToClipboard(scope.row.to)">
@@ -257,38 +280,51 @@
                         </div>
                       </template>
                     </el-table-column>
-                    <el-table-column prop="value" label="Value" align="center" />
-                    <el-table-column prop="TransactionFee" label="Txn Fee" align="center" >
+                    <el-table-column prop="value" label="Value" align="center">
                       <template v-slot="scope">
-                        <el-tooltip :content="`${scope.row.TransactionFee}`" placement="top">
-                          <span class="ellipsis-text">{{ scope.row.TransactionFee }}</span>
+                        <el-tooltip :content="`${scope.row.value}`" placement="top">
+                          <span class="ellipsis-text">{{
+                            scope.row.value
+                          }}</span>
                         </el-tooltip>
                       </template>
                     </el-table-column>
-                    
+                    <el-table-column prop="TransactionFee" label="Txn Fee" align="center">
+                      <template v-slot="scope">
+                        <el-tooltip :content="`${scope.row.TransactionFee}`" placement="top">
+                          <span class="ellipsis-text">{{
+                            scope.row.TransactionFee
+                          }}</span>
+                        </el-tooltip>
+                      </template>
+                    </el-table-column>
                   </el-table>
                   <div class="demo-pagination-block box-table_header">
                     <el-pagination :pager-count="5" v-model:current-page="currentPage4" v-model:page-size="pageSize4"
-                      :page-sizes="[10, 20, 30, 40]" background layout=" sizes, prev, pager, next, " :total="total" small
-                      @size-change="handleSizeChange1" @current-change="getAddressList" />
+                      :page-sizes="[10, 20, 30, 40]" background layout=" sizes, prev, pager, next, " :total="total"
+                      small @size-change="handleSizeChange1" @current-change="getAddressList" />
                   </div>
                 </el-row>
               </el-tab-pane>
               <el-tab-pane label="Internal Transactions" name="tab2">Config</el-tab-pane>
               <el-tab-pane label="Token Transfers(ERC-20)" name="tab3"><el-row class="box-table">
                   <div class="demo-pagination-block box-table_header">
-                    <div class="demonstration">More than {{totals}} accounts found (24,120,943.46 MNT)</div>
+                    <div class="demonstration">
+                      Latest {{ totals }} ERC-20 Token Transfer Events (View All)
+                    </div>
                     <el-pagination :pager-count="5" v-model:current-page="currentPage4" v-model:page-size="pageSize4"
-                      :page-sizes="[10, 20, 30, 40]" background layout=" sizes, prev, pager, next, " :total="totals" small
-                      @size-change="handleSizeChange" @current-change="getContractList" />
+                      :page-sizes="[10, 20, 30, 40]" background layout=" sizes, prev, pager, next, " :total="totals"
+                      small @size-change="handleSizeChange" @current-change="getContractList" />
                   </div>
                   <el-table :data="tableDatas" style="width: 100%" size="default">
                     <el-table-column prop="transactionHash" label="Txn Hash">
                       <template v-slot="scope">
                         <el-tooltip :content="scope.row.to" placement="top">
-                          <router-link class="skyblue-text ellipsis-text" :to="{ path: '/address' }">{{
-                            scope.row.transactionHash
-                            }}</router-link>
+                          <router-link class="skyblue-text ellipsis-text" :to="{
+                            name: 'tx',
+                            params: { hash: scope.row.transactionHash },
+                          }">{{
+                                scope.row.transactionHash }}</router-link>
                         </el-tooltip>
                       </template>
                     </el-table-column>
@@ -301,7 +337,10 @@
                     </el-table-column>
                     <el-table-column prop="blockNumber" label="Block" align="center" width="100">
                       <template v-slot="scope">
-                        <router-link class="skyblue-text" :to="{ path: '/block' }">{{ scope.row.blockNumber
+                        <router-link class="skyblue-text" :to="{
+                          name: 'block',
+                          params: { blockNumber: scope.row.blockNumber },
+                        }">{{ scope.row.blockNumber
                           }}</router-link>
                       </template>
                     </el-table-column>
@@ -311,15 +350,16 @@
                       <template v-slot="scope">
                         <div class="router_box">
                           <el-tooltip :content="scope.row.from" placement="top">
-                            <router-link class="skyblue-text ellipsis-text"
-                              :to="{ name: 'address', params: { address: scope.row.from } }">{{ scope.row.from
-                              }}</router-link>
+                            <router-link class="skyblue-text ellipsis-text" :to="{
+                              name: 'address',
+                              params: { address: scope.row.from },
+                            }">{{ scope.row.from }}</router-link>
                           </el-tooltip>
                           <el-tooltip content="Copy Address" placement="top">
                             <el-button text icon="CopyDocument" @click="copyToClipboard(scope.row.from)">
                             </el-button>
                           </el-tooltip>
-                          <el-button style="margin-left:2.5rem" type="success" icon="right" circle plain />
+                          <el-button style="margin-left: 2.5rem" type="success" icon="right" circle plain />
                         </div>
                       </template>
                     </el-table-column>
@@ -327,13 +367,14 @@
                       <template v-slot="scope">
                         <div class="router_box">
                           <el-tooltip content="Contract" placement="top">
-                            <el-button style="margin-right:5px" icon="Document" @click="copyToClipboard(scope.row.to)">
+                            <el-button style="margin-right: 5px" icon="Document" @click="copyToClipboard(scope.row.to)">
                             </el-button>
                           </el-tooltip>
                           <el-tooltip :content="scope.row.to" placement="top">
-                            <router-link class="skyblue-text ellipsis-text"
-                              :to="{ name: 'address', params: { address: scope.row.to } }">{{ scope.row.to
-                              }}</router-link>
+                            <router-link class="skyblue-text ellipsis-text" :to="{
+                              name: 'address',
+                              params: { address: scope.row.to },
+                            }">{{ scope.row.to }}</router-link>
                           </el-tooltip>
                           <el-tooltip content="Copy Address" placement="top">
                             <el-button text icon="CopyDocument" @click="copyToClipboard(scope.row.to)">
@@ -342,23 +383,36 @@
                         </div>
                       </template>
                     </el-table-column>
-                    <el-table-column prop="value" align="center" label="Value" >
+                    <el-table-column prop="value" align="center" label="Value">
                       <template v-slot="scope">
                         <el-tooltip :content="`${scope.row.value}`" placement="top">
-                          <span class="ellipsis-text">{{ scope.row.value }}</span>
+                          <span class="ellipsis-text">{{
+                            scope.row.value
+                          }}</span>
                         </el-tooltip>
                       </template>
                     </el-table-column>
                     <el-table-column prop="ercName" align="center" label="Token" />
                   </el-table>
-                  <div class="demo-pagination-block box-table_header">
-                    <el-pagination  :pager-count="5" v-model:current-page="currentPage4" v-model:page-size="pageSize4"
-                      :page-sizes="[10, 20, 30, 40]" background layout=" sizes, prev, pager, next, " :total="totals" small
-                      @size-change="handleSizeChange" @current-change="getContractList" />
+                  <div class="card-footer">
+                    <router-link to="/tokentxns" class="view-all">
+                      <span>VIEW ALL ERC-20 TRANSACTIONS </span>
+                      <el-icon style="margin-left:3px">
+                        <Right />
+                      </el-icon>
+                    </router-link>
                   </div>
-                </el-row></el-tab-pane>
+
+                  <!-- <div class="demo-pagination-block box-table_header"></div> -->
+                  <!-- <el-pagination :pager-count="5" v-model:current-page="currentPage4" v-model:page-size="pageSize4"
+                      :page-sizes="[10, 20, 30, 40]" background layout=" sizes, prev, pager, next, " :total="totals"
+                      small @size-change="handleSizeChange" @current-change="getContractList" /> -->
+                </el-row>
+              </el-tab-pane>
               <el-tab-pane label="NFT Transfers" name="tab4">Task</el-tab-pane>
+
             </el-tabs>
+
           </el-col>
         </el-row>
       </el-main>
@@ -368,66 +422,89 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { ElMessage } from 'element-plus';
-import { getAddressPage, getContractAddress } from '@/api/address';
-const tableData = ref([]);
-const total = ref(0);
-const totals = ref(0);
-const tableDatas = ref([]);
-// const individualQueryDetails = ref({})
-const currentPage4 = ref(1)
-const pageSize4 = ref(10)
-const copiedText = ref('');
+import { ref, onMounted,defineProps} from "vue";
+import { useRoute } from "vue-router";
+import { ElMessage } from "element-plus";
+import { ethers } from "ethers";
+import HomeMain from "@/pages/HomeMain.vue";
+import {
+  getAddressPage,
+  getContractAddress,
+  getBalanceAddress,
+  getselectAddress
+} from "@/api/address";
 const { address } = defineProps({
   address: {
     type: [String],
     required: true,
-  }
+  },
 });
-const activeName = ref('tab1')
-
+const tableData = ref([]);
+const total = ref(0);
+const totals = ref(0);
+const tableDatas = ref([]);
+const cities = ref([])
+const values = ref('')
+// const individualQueryDetails = ref({})
+const route = useRoute();
+const contract = ref(route.query.contract);
+const currentPage4 = ref(1);
+const pageSize4 = ref(10);
+const copiedText = ref("");
+const getByBalance = ref({});
+const activeName = ref("tab1");
 const handleClick = (tab, event) => {
-  console.log(tab.props.name)
-  if (tab.props.name === 'tab1') {
-    getAddressList()
-  } else if (tab.props.name === 'tab2') {
+  console.log(tab.props.name);
+  if (tab.props.name === "tab1") {
+    getAddressList();
+  } else if (tab.props.name === "tab2") {
     console.log(tab.props.name);
-  } else if (tab.props.name === 'tab3') {
-    getContractList()
+  } else if (tab.props.name === "tab3") {
+    getContractList();
   }
-}
+};
 // const getIndividualQuery = async () => {
 //   try {
 //     if (address !== null) {
 //       const response = await getTokenInquire(address);
 //       individualQueryDetails.value = response.data;
-//       console.log(response.data);
+//       
 //     }
 //   } catch (error) {
-//     console.error('Error fetching block details:', error);
+//     console.error('Error fetching details:', error);
 //   }
 // }
 const getContractList = async (pager = 1) => {
   try {
     if (address !== null) {
       currentPage4.value = pager;
-      const response = await getContractAddress(address, currentPage4.value, pageSize4.value);
-      console.log(response.data);
+      const response = await getContractAddress(
+        address,
+        currentPage4.value,
+        pageSize4.value
+      );
+
       tableDatas.value = response.data.list;
+      
       totals.value = response.data.total;
       const currentTime = Math.floor(Date.now() / 1000);
-      tableDatas.value.forEach(item => {
+      tableDatas.value.forEach((item) => {
         const timestamp = item.timestamp;
         const timeDifferenceInSeconds = currentTime - timestamp;
         let formattedTime;
         if (timeDifferenceInSeconds < 60) {
           const absoluteTimeDifference = Math.abs(timeDifferenceInSeconds);
           formattedTime = `${absoluteTimeDifference} seconds ago`;
-        } else if (timeDifferenceInSeconds >= 60 && timeDifferenceInSeconds < 3600) {
+        } else if (
+          timeDifferenceInSeconds >= 60 &&
+          timeDifferenceInSeconds < 3600
+        ) {
           const minutes = Math.floor(timeDifferenceInSeconds / 60);
           formattedTime = `${minutes} minutes ago`;
-        } else if (timeDifferenceInSeconds >= 3600 && timeDifferenceInSeconds < 86400) {
+        } else if (
+          timeDifferenceInSeconds >= 3600 &&
+          timeDifferenceInSeconds < 86400
+        ) {
           const hours = Math.floor(timeDifferenceInSeconds / 3600);
           formattedTime = `${hours} hours ago`;
         } else {
@@ -435,41 +512,86 @@ const getContractList = async (pager = 1) => {
           formattedTime = `${days} days ago`;
         }
         item.formattedTime = formattedTime;
-      })
+      });
     }
   } catch (error) {
-    console.error('Error fetching block details:', error);
+    console.error("Error fetching details:", error);
   }
-}
+};
 const getAddressList = async (pager = 1) => {
   try {
     if (address !== null) {
       currentPage4.value = pager;
-      const response = await getAddressPage(address, currentPage4.value, pageSize4.value);
+      const response = await getAddressPage(
+        address,
+        currentPage4.value,
+        pageSize4.value
+      );
       tableData.value = response.data.list;
       total.value = response.data.total;
       timestamps();
-      tableData.value.forEach(item => {
-        item.TransactionFee = item.cumulativeGasUsed * item.effectiveGasPrice
-      })
+      tableData.value.forEach((item) => {
+        item.TransactionFee = item.cumulativeGasUsed * item.effectiveGasPrice;
+      });
     }
   } catch (error) {
-    console.error('Error fetching block details:', error);
+    console.error("Error fetching details:", error);
+  }
+};
+const getBalanceList = async () => {
+  try {
+    if (address !== null) {
+      const response = await getBalanceAddress(address);
+      getByBalance.value = response.data[0] || {};
+    }
+  } catch (error) {
+    console.error("Error fetching details:", error);
+  }
+};
+const getSelectList = async () => {
+  try {
+    if (address !== null) {
+      const response = await getselectAddress(address);
+
+      cities.value = response.data;
+    }
+  } catch (error) {
+    console.error("Error fetching details:", error);
+  }
+};
+const getContractOrAddress = async () => {
+  const provider = new ethers.BrowserProvider(window.ethereum);
+  try {
+    await provider.getCode(address).then(code => {
+      if (code.length > 4) {
+        contract.value = "contract"
+      } else {
+        contract.value = "address"
+      }
+    })
+  } catch (error) {
+    console.log(error);
   }
 }
 const timestamps = () => {
   const currentTime = Math.floor(Date.now() / 1000);
-  tableData.value.forEach(item => {
+  tableData.value.forEach((item) => {
     const timestamp = item.timestamp;
     const timeDifferenceInSeconds = currentTime - timestamp;
     let formattedTime;
     if (timeDifferenceInSeconds < 60) {
       const absoluteTimeDifference = Math.abs(timeDifferenceInSeconds);
       formattedTime = `${absoluteTimeDifference} seconds ago`;
-    } else if (timeDifferenceInSeconds >= 60 && timeDifferenceInSeconds < 3600) {
+    } else if (
+      timeDifferenceInSeconds >= 60 &&
+      timeDifferenceInSeconds < 3600
+    ) {
       const minutes = Math.floor(timeDifferenceInSeconds / 60);
       formattedTime = `${minutes} minutes ago`;
-    } else if (timeDifferenceInSeconds >= 3600 && timeDifferenceInSeconds < 86400) {
+    } else if (
+      timeDifferenceInSeconds >= 3600 &&
+      timeDifferenceInSeconds < 86400
+    ) {
       const hours = Math.floor(timeDifferenceInSeconds / 3600);
       formattedTime = `${hours} hours ago`;
     } else {
@@ -478,34 +600,53 @@ const timestamps = () => {
     }
     item.formattedTime = formattedTime;
   });
-}
-const handleSizeChange1= (val) => {
-  getAddressList()
-}
+};
+const handleSizeChange1 = (val) => {
+  getAddressList();
+};
 const handleSizeChange = (val) => {
-  getContractList()
-}
+  getContractList();
+};
 const handleCurrentChange = (val) => {
-  console.log(`current page: ${val}`)
-}
+  console.log(`current page: ${val}`);
+};
 function copyToClipboard(text) {
   copiedText.value = text;
-  navigator.clipboard.writeText(text)
+  navigator.clipboard
+    .writeText(text)
     .then(() => {
-      ElMessage.success('Copy successful!');
+      ElMessage.success("Copy successful!");
     })
-    .catch(err => {
-      console.error('Copy failed:', err);
-      ElMessage.error('Copy failed, please copy manually!');
+    .catch((err) => {
+      console.error("Copy failed:", err);
+      ElMessage.error("Copy failed, please copy manually!");
     });
 }
 onMounted(() => {
   getAddressList();
-  // getIndividualQuery();
-})
+  getBalanceList();
+  getSelectList();
+  getContractOrAddress();
+});
 </script>
 
 <style scoped>
+.el-select-dropdown__item {
+  height: auto;
+  line-height: normal;
+  overflow: visible;
+}
+
+:deep(.is-filterable) {
+  height: 40px;
+}
+
+.erc_p {
+  font-size: 13px;
+  color: black;
+  font-weight: 500;
+}
+
 .responsive-aside {
   width: 0rem;
   transition: width 0.5s ease;
@@ -562,6 +703,18 @@ onMounted(() => {
   display: flex;
   justify-content: space-between;
   margin: 10px 0;
+
+}
+
+.card-footer {
+  width: 100%;
+  text-align: center;
+  padding: 15px 0;
+  color: #6c757d;
+  font-size: 16px;
+  background-color: #f8f9fa;
+  /* border: 1px solid #e6e6e6; */
+
 }
 
 @media (max-width: 768px) {
@@ -598,7 +751,9 @@ onMounted(() => {
   .card_p {
     font-size: 10px;
   }
-  .grid-content_h3,.blocks_heade{
+
+  .grid-content_h3,
+  .blocks_heade {
     margin-left: 0;
     margin-right: 0;
   }
@@ -656,7 +811,7 @@ onMounted(() => {
 
 .el-tag {
   margin-top: 1.25rem;
-  margin-right: .625rem;
+  margin-right: 0.625rem;
 }
 
 .darkb_button {

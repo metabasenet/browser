@@ -81,7 +81,7 @@
         <el-table-column prop="to" label="To" width="250" align="center">
           <template v-slot="scope">
             <el-tooltip v-if ="scope.row.to" content="Contract" placement="top">
-              <el-button text  icon="Document" >
+              <el-button  icon="Document" >
               </el-button>
             </el-tooltip>
             <el-tooltip :content="scope.row.to" placement="top">
