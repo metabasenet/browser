@@ -104,7 +104,8 @@ const routes =  [
   ];
 
 const router = createRouter({
-  history: createWebHashHistory(import.meta.env.VITE_BASE_URL),
+  // history: createWebHashHistory(import.meta.env.VITE_BASE_URL),
+  history: createWebHashHistory(),
   routes,
   scrollBehavior () {
     return {
