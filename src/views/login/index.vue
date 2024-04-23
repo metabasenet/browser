@@ -65,7 +65,7 @@ const handleSubmit = async () => {
   loading.value = true;
   try {
     await useStore.userLogin(form)
-    $router.push('/home')
+    $router.push('/')
     ElNotification({
       title: 'Success',
       message: 'Login Successfully',

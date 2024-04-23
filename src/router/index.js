@@ -4,7 +4,7 @@ const routes =  [
 
     {
       path: '/',
-      redirect: '/home'
+      redirect: ''
     },
     {
       path: '/login',
@@ -26,7 +26,7 @@ const routes =  [
       },
     },
     {
-      path: '/home',
+      path: '',
       name: 'home',
       component: () => import('../pages/HomeMain.vue')
     },

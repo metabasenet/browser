@@ -104,7 +104,7 @@
                 <li class="over_li">
                   <p>TOTAL TRANSFERS</p>
                   <div class="over_div">
-                    <span>{{transfers}}</span>
+                    <span>{{ transfers }}</span>
                     <el-tooltip class="box-item" effect="dark"
                       content="This count of token transfers is updated every few hours instead of in real-time"
                       placement="top-start">
@@ -169,19 +169,24 @@
                     <el-tooltip class="box-item" effect="dark" :content="address" placement="top-start">
                       <router-link class="ellipsis-text" :to="{ name: 'address' }">{{ address }}</router-link>
                     </el-tooltip>
-                    <el-tooltip content="Copy Address" placement="top">
-                      <el-button text icon="CopyDocument" @click="copyToClipboard(address)">
+                    <el-tooltip v-if="!copyratius" content="Copy Address" placement="top">
+                      <el-button text icon="CopyDocument" @click="copyClipboard(address)">
                       </el-button>
                     </el-tooltip>
+                    
+            <el-tooltip v-else content="Copied!" placement="top">
+              <el-button text icon="Check" @click="copyClipboard(address)">
+              </el-button>
+            </el-tooltip>
                   </div>
                 </li>
                 <li class="over_li">
                   <p>HOLDERS</p>
-                  <span>{{holdTotal}}</span>
+                  <span>{{ holdTotal }}</span>
                 </li>
                 <li class="over_li">
                   <p>TOTAL TRANSFERS</p>
-                  <span>{{transfers}}</span>
+                  <span>{{ transfers }}</span>
                   <el-tooltip class="box-item" effect="dark"
                     content="This count of token transfers is updated every few hours instead of in real-time"
                     placement="top-start">
@@ -210,7 +215,7 @@
               <el-tab-pane label="Transfers" name="tab1">
                 <el-row class="box-table">
                   <div class="demo-pagination-block box-table_header">
-                    <div class="demonstration"> {{total}} transactions in total</div>
+                    <div class="demonstration"> {{ total }} transactions in total</div>
                     <el-pagination v-model:current-page="currentPage4" v-model:page-size="pageSize4"
                       :page-sizes="[10, 20, 30, 40]" small background layout="sizes,prev, pager, next" :total="total"
                       class="mt-4" @size-change="handleSizeChange" @current-change="getContactList" />
@@ -226,7 +231,7 @@
                     </el-table-column>
                     <el-table-column prop="method" label="Method " width="120">
                       <template v-slot="scope">
-                        <el-tooltip :content="scope.row.method" placement="top">
+                        <el-tooltip v-if="scope.row.method" :content="scope.row.method" placement="top">
                           <el-button>{{ scope.row.method }}</el-button>
                         </el-tooltip>
                       </template>
@@ -250,8 +255,12 @@
                               params: { address: scope.row.from },
                             }">{{ scope.row.from }}</router-link>
                           </el-tooltip>
-                          <el-tooltip content="Copy Address" placement="top">
-                            <el-button text icon="CopyDocument" @click="copyToClipboard(scope.row.from)">
+                          <el-tooltip v-if="!scope.row.isCopied" content="Copy Address" placement="top">
+                            <el-button text icon="CopyDocument" @click="copyFormClipboard(scope.row.from, scope.row)">
+                            </el-button>
+                          </el-tooltip>
+                          <el-tooltip v-else content="Copied!" placement="top">
+                            <el-button text icon="Check" @click="copyFormClipboard(scope.row.from, scope.row)">
                             </el-button>
                           </el-tooltip>
                           <el-button style="margin-left: 2.5rem" type="success" icon="right" circle plain />
@@ -262,7 +271,7 @@
                       <template v-slot="scope">
                         <div class="router_box">
                           <el-tooltip content="Contract" placement="top">
-                            <el-button style="margin-right: 5px" icon="Document" @click="copyToClipboard(scope.row.to)">
+                            <el-button style="margin-right: 5px" icon="Document">
                             </el-button>
                           </el-tooltip>
                           <el-tooltip :content="scope.row.to" placement="top">
@@ -271,21 +280,25 @@
                               params: { address: scope.row.to },
                             }">{{ scope.row.to }}</router-link>
                           </el-tooltip>
-                          <el-tooltip content="Copy Address" placement="top">
-                            <el-button text icon="CopyDocument" @click="copyToClipboard(scope.row.to)">
+                          <el-tooltip v-if="!scope.row.istoCopied" content="Copy Address" placement="top">
+                            <el-button text icon="CopyDocument" @click="copyToClipboard(scope.row.to, scope.row)">
+                            </el-button>
+                          </el-tooltip>
+                          <el-tooltip v-else content="Copied!" placement="top">
+                            <el-button text icon="Check" @click="copyToClipboard(scope.row.to, scope.row)">
                             </el-button>
                           </el-tooltip>
                         </div>
                       </template>
                     </el-table-column>
-                    <el-table-column prop="value" label="Value" >
+                    <el-table-column prop="value" label="Value">
                       <template v-slot="scope">
                         <el-tooltip :content="`${scope.row.value}`" placement="top">
                           <span class="ellipsis-text">{{ scope.row.value }}</span>
                         </el-tooltip>
                       </template>
                     </el-table-column>
-                    <el-table-column prop="TransactionFee" label="Gas Price" >
+                    <el-table-column prop="TransactionFee" label="Gas Price">
                       <template v-slot="scope">
                         <el-tooltip :content="`${scope.row.TransactionFee}`" placement="top">
                           <span class="ellipsis-text">{{ scope.row.TransactionFee }}</span>
@@ -304,7 +317,8 @@
                 <el-row class="box-table">
                   <el-button type="primary" icon="Histogram" class="holders_chart">Token Holders Chart</el-button>
                   <div class="demo-pagination-block box-table_header">
-                    <div class="demonstration">Top {{ holdTotal }} holders (From a total of {{holdTotal}} holders)</div>
+                    <div class="demonstration">Top {{ holdTotal }} holders (From a total of {{ holdTotal }} holders)
+                    </div>
                     <el-pagination v-model:current-page="currentPage4" v-model:page-size="pageSize4"
                       :page-sizes="[10, 20, 30, 40]" layout=" sizes, prev, pager, next," :pager-count="5" background
                       :total="holdTotal" small @size-change="handleSizeChange2" @current-change="getBalanceList" />
@@ -315,7 +329,7 @@
                       <template v-slot="scope">
                         <div class="router_box">
                           <el-tooltip content="Contract" placement="top">
-                            <el-button  icon="Document">
+                            <el-button icon="Document">
                             </el-button>
                           </el-tooltip>
                           <el-tooltip :content="scope.row.address" placement="top">
@@ -323,8 +337,12 @@
                               :to="{ name: 'address', params: { address: scope.row.address } }">{{ scope.row.address
                               }}</router-link>
                           </el-tooltip>
-                          <el-tooltip content="Copy Address" placement="top">
-                            <el-button text icon="CopyDocument" @click="copyToClipboard(scope.row.address)">
+                          <el-tooltip v-if="!scope.row.istoCopied" content="Copy Address" placement="top">
+                            <el-button text icon="CopyDocument" @click="copyToClipboard(scope.row.address, scope.row)">
+                            </el-button>
+                          </el-tooltip>
+                          <el-tooltip v-else content="Copied!" placement="top">
+                            <el-button text icon="Check" @click="copyToClipboard(scope.row.address, scope.row)">
                             </el-button>
                           </el-tooltip>
                         </div>
@@ -340,7 +358,7 @@
                     <el-table-column prop="balance" label="Value" align="center">
                     </el-table-column>
                     <el-table-column prop="Analytics" label="Analytics" align="center">
-                      <router-link to="/home">
+                      <router-link to="/">
                         <svg-icon name="broken" width="1rem" height="1rem">
                         </svg-icon>
                       </router-link>
@@ -469,8 +487,7 @@
                     Contract
                   </el-badge>
                 </template>
-                <el-tabs  type="card" v-model="activeNames" class="demo-tabs"
-                  @tab-click="handleClicks">
+                <el-tabs type="card" v-model="activeNames" class="demo-tabs" @tab-click="handleClicks">
                   <el-tab-pane label="Code" name="first">
                     <el-row :gutter="10">
                       <el-col :span="24">
@@ -785,12 +802,11 @@
                   </el-tab-pane>
                   <el-tab-pane label="Write Contract" name="third">
                     <el-row :gutter="10">
-                      <el-col v-if="!results" :xs="24" :sm="24" :md="24" :lg="24"><el-button  plain
-                          @click="openWeb">
+                      <el-col v-if="!results" :xs="24" :sm="24" :md="24" :lg="24"><el-button plain @click="openWeb">
                           <svg-icon name="reddot" width=".8rem" height=".8rem" style="margin-right: 5px"></svg-icon>
                           Connect to Web3
                         </el-button></el-col>
-                      <el-col v-else :xs="24" :sm="24" :md="24" :lg="24"><el-button  @click="openWeb">
+                      <el-col v-else :xs="24" :sm="24" :md="24" :lg="24"><el-button @click="openWeb">
                           <svg-icon name="greendot" width=".8rem" height=".8rem" style="margin-right: 5px"></svg-icon>
                           Connect to Web3 [{{ results }}]
                         </el-button></el-col>
@@ -882,17 +898,17 @@
                     <el-dialog v-model="dialogFormVisibles" title="Add Zeroes" width="500">
                       <el-form :model="form">
                         <el-form-item>
-                          <el-select size="large" v-model="form.region" @change="handleSelectChange" placeholder="Select">
+                          <el-select size="large" v-model="form.region" @change="handleSelectChange"
+                            placeholder="Select">
                             <el-option label="10⁶" value="1000000" />
                             <el-option label="10⁸" value="100000000" />
                             <el-option label="10¹⁸" value="1000000000000000000" />
-                            <el-option label="Custom" value="Custom"/>
+                            <el-option label="Custom" value="Custom" />
                           </el-select>
                           <div v-if="showCustomInput" style="width:100%">
-                            <el-input style="margin-top: 10px" v-model="form.customValue" size="large"  type="number" :min="1" :max="18"
-                          @blur="handleInputBlur" @input="handleInput"
-                          ></el-input>
-                          <p>Enter the number of zeroes to add. Example: 3 to add three (000) zeroes.</p>
+                            <el-input style="margin-top: 10px" v-model="form.customValue" size="large" type="number"
+                              :min="1" :max="18" @blur="handleInputBlur" @input="handleInput"></el-input>
+                            <p>Enter the number of zeroes to add. Example: 3 to add three (000) zeroes.</p>
                           </div>
                         </el-form-item>
                       </el-form>
@@ -949,7 +965,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { ElMessage } from "element-plus";
-import { getContactPage, getTokenInquire, getContactBalance,getContractTransationCount } from "@/api/toTokens";
+import { getContactPage, getTokenInquire, getContactBalance, getContractTransationCount } from "@/api/toTokens";
 import { getFileInfo } from "@/api/upload";
 import { getContractDetail } from "@/api/verifyContract";
 import { ethers } from "ethers";
@@ -958,7 +974,8 @@ const sizeForm = ref({
   spender: "",
 });
 let results = ref("");
-let responsed = ref(false);;
+const copyratius = ref(false);
+let responsed = ref(false);
 const tableData = ref([]);
 const actives = ref([])
 const total = ref(0)
@@ -1015,7 +1032,7 @@ const rules = ref({
 const handleChange = (val) => {
   console.log(val);
 };
-const getTransationCount = async()=>{
+const getTransationCount = async () => {
   try {
     if (address !== null) {
       const response = await getContractTransationCount(address);
@@ -1025,14 +1042,14 @@ const getTransationCount = async()=>{
     console.error("Error fetching getContractTransationCount details:", error);
   }
 }
-const toggleAll=()=>{
+const toggleAll = () => {
   if (actives.value.length === viewFunctions.value.length) {
-        actives.value = [];
-      } else {
-        actives.value = viewFunctions.value.map((_, index) => index.toString());
-      }
+    actives.value = [];
+  } else {
+    actives.value = viewFunctions.value.map((_, index) => index.toString());
+  }
 }
-const resetAll =()=>{
+const resetAll = () => {
   actives.value = [];
   viewFunctions.value.forEach((item) => {
     item.inputs.forEach((input) => {
@@ -1040,14 +1057,14 @@ const resetAll =()=>{
     })
   })
 }
-const toggleAll2=()=>{
+const toggleAll2 = () => {
   if (actives.value.length === writeContract.value.length) {
-        actives.value = [];
-      } else {
-        actives.value = writeContract.value.map((_, index) => index.toString());
-      }
+    actives.value = [];
+  } else {
+    actives.value = writeContract.value.map((_, index) => index.toString());
+  }
 }
-const resetAll2 =()=>{
+const resetAll2 = () => {
   actives.value = [];
   writeContract.value.forEach((item) => {
     item.inputs.forEach((input) => {
@@ -1058,30 +1075,30 @@ const resetAll2 =()=>{
 const openWeb = () => {
   dialogFormVisible.value = true;
 };
-const handleSelectChange =(value)=>{
+const handleSelectChange = (value) => {
   console.log(value);
-  if(value === 'Custom'){
+  if (value === 'Custom') {
     showCustomInput.value = true;
     form.value.customValue = '';
-  }else{
+  } else {
     showCustomInput.value = false;
     form.value.customValue = '';
   }
 }
-const handleInput = (value)=>{
+const handleInput = (value) => {
   form.value.customValue = value.replace(/[^\d]/g, '')
   const intValue = parseInt(value, 10);
-  if(isNaN(intValue) || intValue < 1 || intValue > 18){
+  if (isNaN(intValue) || intValue < 1 || intValue > 18) {
     form.value.customValue = form.value.customValue.slice(0, -1);
     ElMessage.error('Please enter a number between 1 and 18');
   }
 }
-const handleInputBlur =()=>{
+const handleInputBlur = () => {
   console.log(form.value.customValue);
   const customValue = parseInt(form.value.customValue, 10);
-  if(!isNaN(customValue) && customValue >= 1 && customValue <= 18){
+  if (!isNaN(customValue) && customValue >= 1 && customValue <= 18) {
     form.value.region = Math.pow(10, customValue);
-  }else{
+  } else {
     form.value.region = ''
     ElMessage.error('Please enter a number between 1 and 18');
     return
@@ -1313,10 +1330,10 @@ const handleClick = (tab, event) => {
   } else if (tab.props.name === "tab2") {
     if (address !== null) {
       getBalanceList();
-} else {
-  console.error('Cannot fetch balance list because the address is null');
-}
-    
+    } else {
+      console.error('Cannot fetch balance list because the address is null');
+    }
+
   } else if (tab.props.name === "tab3") {
     // getContractList()
   } else if (tab.props.name === "tab4") {
@@ -1457,16 +1474,43 @@ const handleSizeChange2 = (val) => {
 };
 const handleCurrentChange = (val) => {
 };
-function copyToClipboard(text) {
+function copyFormClipboard(text, row) {
+  row.isCopied = true;
+  setTimeout(() => { row.isCopied = false; }, 2000);
   copiedText.value = text;
-  navigator.clipboard
-    .writeText(text)
+  navigator.clipboard.writeText(text)
     .then(() => {
-      ElMessage.success("Copy successful!");
+      ElMessage.success('Copy successful!');
     })
-    .catch((err) => {
-      console.error("Copy failed:", err);
-      ElMessage.error("Copy failed, please copy manually!");
+    .catch(err => {
+      console.error('Copy failed:', err);
+      ElMessage.error('Copy failed, please copy manually!');
+    });
+}
+function copyClipboard(text) {
+  copyratius.value = true;
+  setTimeout(() => { copyratius.value = false; }, 2000);
+  copiedText.value = text;
+  navigator.clipboard.writeText(text)
+    .then(() => {
+      ElMessage.success('Copy successful!');
+    })
+    .catch(err => {
+      console.error('Copy failed:', err);
+      ElMessage.error('Copy failed, please copy manually!');
+    });
+}
+function copyToClipboard(text, row) {
+  row.istoCopied = true;
+  setTimeout(() => { row.istoCopied = false; }, 2000);
+  copiedText.value = text;
+  navigator.clipboard.writeText(text)
+    .then(() => {
+      ElMessage.success('Copy successful!');
+    })
+    .catch(err => {
+      console.error('Copy failed:', err);
+      ElMessage.error('Copy failed, please copy manually!');
     });
 }
 onMounted(() => {
@@ -1479,9 +1523,10 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.holders_chart{
+.holders_chart {
   font-weight: 500;
 }
+
 .successDetail {
   color: green;
 
@@ -1584,10 +1629,12 @@ onMounted(() => {
   .blocks_heade {
     margin: 0.7rem 0rem;
   }
-  .decompile{
+
+  .decompile {
     margin-left: 12px;
     margin-bottom: 10px;
   }
+
   .card-ul,
   .card-li {
     padding: 5px;
@@ -1596,13 +1643,17 @@ onMounted(() => {
   .card_p {
     font-size: 10px;
   }
-  .icon_menu,.darkb_button_div{
+
+  .icon_menu,
+  .darkb_button_div {
     margin-top: 10px;
   }
+
   .ethereum {
     margin: auto;
   }
-  .grid-content_h2{
+
+  .grid-content_h2 {
     margin: 0;
   }
 }

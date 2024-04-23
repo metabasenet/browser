@@ -64,10 +64,14 @@
               <template v-slot="{ row }">
                 <div v-if="row.validator">
                   <router-link class="skyblue-text" to="/address">{{ row.validator }}</router-link>
-                  <el-tooltip content="Copy Address" placement="top">
-                    <el-button text style="margin-left:5px" icon="CopyDocument" @click="copyToClipboard(row.validator)">
+                  <el-tooltip v-if="!row.istoCopied" content="Copy Address" placement="top">
+                    <el-button text style="margin-left:5px" icon="CopyDocument" @click="copyToClipboard(row.validator,row)">
                     </el-button>
                   </el-tooltip>
+                  <el-tooltip v-else content="Copied!" placement="top">
+              <el-button text icon="Check" @click="copyToClipboard(row.validator,row)">
+              </el-button>
+            </el-tooltip>
                 </div>
 
               </template>
@@ -148,7 +152,9 @@ const handleSizeChange = (val) => {
 // const handleCurrentChange = (val) => {
 //   getBlockPageData()
 // }
-function copyToClipboard(text) {
+function copyToClipboard(text,row) {
+  row.istoCopied = true;
+  setTimeout(() => { row.istoCopied = false; }, 2000);
       copiedText.value = text;
       navigator.clipboard.writeText(text)
         .then(() => {

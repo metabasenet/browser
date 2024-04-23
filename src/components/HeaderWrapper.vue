@@ -38,14 +38,14 @@
               <!-- menu-trigger="click" -->
               <el-menu ellipsis class="el-menu-popper-demo" :default-active="$route.path" router mode="horizontal"
                 :popper-offset="16">
-                <el-menu-item index="/home">
+                <el-menu-item index="/">
                   <div class="el-img">
                     <img width="40" height="37" src="/header_img.png" alt="" />
                     <span style="font-size:1.5rem;color:#00a186">MNT</span>
                   </div>
                 </el-menu-item>
                 <div class="el_menu">
-                  <el-menu-item index="/home">Home</el-menu-item>
+                  <el-menu-item index="/">Home</el-menu-item>
                 <el-sub-menu index="2">
                   <template #title>Blockchain</template>
                   <el-menu-item index="/blocks">View Blocks</el-menu-item>

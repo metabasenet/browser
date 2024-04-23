@@ -61,15 +61,20 @@
         </el-row>
         <el-row class="grid-content_row">
           <el-col :span="24" :xs="24">
-            <el-descriptions class="grid-content_h2 grid-content_h1" size="default" v-model="transDetails" :column="1" align="center">
+            <el-descriptions class="grid-content_h2 grid-content_h1" size="default" v-model="transDetails" :column="1"
+              align="center">
               <el-descriptions-item label="Transaction Hash:" label-align="center" align="left"
                 label-class-name="my-label" class-name="my-content ellipsis-text" label-width="30%">
                 <div class="block_height"> <span v-if="transDetails && typeof transDetails.hash === 'string'">{{
-                  transDetails.hash.slice(0, 20) +
+                    transDetails.hash.slice(0, 20) +
                     '...' }}</span>
                   <span v-else>N/A</span>
-                  <el-tooltip content="Copy TxHash to clipboard" placement="top"><el-button text icon="CopyDocument"
-                      @click="copyToClipboard(transDetails.hash)">
+                  <el-tooltip v-if="!transDetails.istoCopied" content="Copy TxHash to clipboard"
+                    placement="top"><el-button text icon="CopyDocument" @click="copyToClipboard(transDetails.hash)">
+                    </el-button>
+                  </el-tooltip>
+                  <el-tooltip v-else content="Copied!" placement="top">
+                    <el-button text icon="Check" @click="copyToClipboard(transDetails.hash)">
                     </el-button>
                   </el-tooltip>
                 </div>
@@ -147,11 +152,16 @@
                       name: 'address',
                       params: { address: transDetails.from },
                     }">{{ transDetails.from }}
-                    </router-link><span class="text-muted">(Validator: Certik)</span><el-tooltip content="Copy Address"
+                    </router-link><span class="text-muted">(Validator: Certik)</span>
+                    <el-tooltip v-if="!transDetails.istoCopieds" content="Copy Address"
                       placement="top"><el-button style="margin-left:5px" text icon="CopyDocument"
-                        @click="copyToClipboard(transDetails.from)">
+                        @click="copyToClipboards(transDetails.from)">
                       </el-button>
                     </el-tooltip>
+                    <el-tooltip v-else content="Copied!" placement="top">
+                    <el-button text icon="Check" @click="copyToClipboards(transDetails.hash)">
+                    </el-button>
+                  </el-tooltip>
                   </div>
                 </div>
               </el-descriptions-item>
@@ -170,11 +180,15 @@
                       <div class=" mb-2 truncate">{{ transDetails.to }}</div>
                     </router-link>
                     <span>(BSC: Validator Set)</span>
-                    <el-tooltip content="Copy Address" placement="top">
+                    <el-tooltip v-if="!transDetails.istoCopiedd" content="Copy Address" placement="top">
                       <el-button style="margin-left:5px" text icon="CopyDocument"
-                        @click="copyToClipboard(transDetails.to)">
+                        @click="copyToClipboardd(transDetails.to)">
                       </el-button>
                     </el-tooltip>
+                    <el-tooltip v-else content="Copied!" placement="top">
+                    <el-button text icon="Check" @click="copyToClipboardd(transDetails.hash)">
+                    </el-button>
+                  </el-tooltip>
                     <el-tooltip content="Contract Execution Completed" placement="top">
                       <el-button type="success" icon="Check" circle />
                     </el-tooltip>
@@ -216,9 +230,9 @@
                 <div class="block_height"> <el-icon>
                     <Timer />
                   </el-icon>
-                  <span> {{ transDetails.value }} 
+                  <span> {{ transDetails.value }}
                     <!-- ($43.24) -->
-                    </span>
+                  </span>
                 </div>
 
               </el-descriptions-item>
@@ -226,13 +240,13 @@
                 label-class-name="my-label">
                 <div class="block_height"> <span> {{ transDetails.TransactionFee }} MNT
                     <!-- (${{ transDetails.TransactionFee }}) -->
-                    </span>
+                  </span>
                 </div>
 
               </el-descriptions-item>
               <el-descriptions-item label="Gas Price:" label-align="center" align="left" label-class-name="my-label">
-                <div class="block_height"><span> {{ transDetails.gasPrice }} MNT 
-                  <!-- ({{ transDetails.gasPrice }})MNT -->
+                <div class="block_height"><span> {{ transDetails.gasPrice }} MNT
+                    <!-- ({{ transDetails.gasPrice }})MNT -->
                   </span>
                 </div>
 
@@ -372,6 +386,34 @@ const handleChange = (val) => {
   console.log(val)
 }
 function copyToClipboard(text) {
+  transDetails.value.istoCopied = true;
+  setTimeout(() => { transDetails.value.istoCopied = false; }, 2000);
+  copiedText.value = text;
+  navigator.clipboard.writeText(text)
+    .then(() => {
+      ElMessage.success('Copy successful!');
+    })
+    .catch(err => {
+      console.error('Copy failed:', err);
+      ElMessage.error('Copy failed, please copy manually!');
+    });
+}
+function copyToClipboards(text) {
+  transDetails.value.istoCopieds = true;
+  setTimeout(() => { transDetails.value.istoCopieds = false; }, 2000);
+  copiedText.value = text;
+  navigator.clipboard.writeText(text)
+    .then(() => {
+      ElMessage.success('Copy successful!');
+    })
+    .catch(err => {
+      console.error('Copy failed:', err);
+      ElMessage.error('Copy failed, please copy manually!');
+    });
+}
+function copyToClipboardd(text) {
+  transDetails.value.istoCopiedd = true;
+  setTimeout(() => { transDetails.value.istoCopiedd = false; }, 2000);
   copiedText.value = text;
   navigator.clipboard.writeText(text)
     .then(() => {
