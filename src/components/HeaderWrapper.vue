@@ -5,11 +5,11 @@
       <el-main style="padding-bottom: 0;">
         <div class="fixed-header">
           <el-row :gutter="10" class="header_row">
-            <el-col :span="3" :xs="0" :sm="11" :md="11" :lg="3"></el-col>
-            <el-col :span="10" :xs="0" :sm="0" :md="11" :lg="8" class="header_search">
+            <el-col :span="3" :xs="0" :sm="11" :md="11" :lg="1"></el-col>
+            <el-col :span="10" :xs="0" :sm="0" :md="11" :lg="11" class="header_search">
               <div class="header_price">
                 <div class="header_price" style="margin-right:10px">
-                  <span>MNT Price:</span><span style="color: #0784c3;">$586.58 <span
+                  <span>MNT Price:</span><span style="color: #0784c3;">${{headerPrice}} <span
                       style="color:#00a186">(+0.49%)</span></span>
                 </div>
                 <div class="header_price">
@@ -18,7 +18,7 @@
                 </div>
               </div>
             </el-col>
-            <el-col :span="10" :xs="23" :sm="24" :md="11" :lg="10">
+            <el-col :span="10" :xs="23" :sm="24" :md="11" :lg="11">
               <div class="mt-4">
                 <el-input v-model="homeSearch" style="height: 40px;"
                   placeholder="Search by Address / Txn Hash / Block / Token / Domain Name" class="input-with-select">
@@ -30,7 +30,7 @@
                 <el-button icon="ChromeFilled" class="header_button" size="large" style="margin-left:10px"></el-button>
               </div>
             </el-col>
-            <el-col :span="3" :xs="0" :sm="0" :md="3" :lg="3"></el-col>
+            <el-col :span="3" :xs="0" :sm="0" :md="1" :lg="1"></el-col>
           </el-row>
         </div>
         <div class="header-menu"><el-row :gutter="10">
@@ -80,12 +80,14 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import router from '@/router'
 import { getSearchInfo } from '@/api/home';
+import { getPriceInfo } from '@/api/headerprice';
 import { ElMessage } from 'element-plus'
 const homeSearch = ref('')
 const select = ref('');
+const headerPrice = ref('')
 const getSearch = async () => {
   if (!homeSearch.value) {
     ElMessage.warning('Please enter your search')
@@ -128,6 +130,17 @@ const getSearch = async () => {
 
   }
 }
+const getHeaderPrice = async () => {
+  try {
+    const response = await getPriceInfo()
+    headerPrice.value = response.price;
+  } catch (error) {
+    console.error('Error fetching data:', error)
+  }
+}
+onMounted(()=>{
+  getHeaderPrice()
+})
 </script>
 
 <style scoped>
@@ -223,7 +236,7 @@ const getSearch = async () => {
 
 @media (min-width: 768px) {
   .responsive-aside {
-    width: 10rem;
+    width: 3vw;
     opacity: 0.5;
     /* background-color: #fff;  */
   }

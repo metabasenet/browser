@@ -936,7 +936,7 @@
                   </el-tab-pane>
                 </el-tabs>
               </el-tab-pane>
-              <el-tab-pane label="NFT Transfers" name="tab6">Task</el-tab-pane>
+              <!-- <el-tab-pane label="NFT Transfers" name="tab6">Task</el-tab-pane> -->
             </el-tabs>
           </el-col>
         </el-row>
@@ -1509,7 +1509,8 @@ onMounted(() => {
 
 @media (min-width: 768px) {
   .responsive-aside {
-    width: 10rem;
+    /* width: 10rem; */
+    width: 3vw;
     opacity: 0.5;
     /* background-color: #fff;  */
   }

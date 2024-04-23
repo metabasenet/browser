@@ -409,7 +409,7 @@
                       small @size-change="handleSizeChange" @current-change="getContractList" /> -->
                 </el-row>
               </el-tab-pane>
-              <el-tab-pane label="NFT Transfers" name="tab4">Task</el-tab-pane>
+              <!-- <el-tab-pane label="NFT Transfers" name="tab4">Task</el-tab-pane> -->
 
             </el-tabs>
 
@@ -553,7 +553,7 @@ const getSelectList = async () => {
     if (address !== null) {
       const response = await getselectAddress(address);
 
-      cities.value = response.data;
+      cities.value = response.data || [];
     }
   } catch (error) {
     console.error("Error fetching details:", error);
@@ -654,7 +654,8 @@ onMounted(() => {
 
 @media (min-width: 768px) {
   .responsive-aside {
-    width: 10rem;
+    /* width: 10rem; */
+    width: 3vw;
     opacity: 0.5;
     /* background-color: #fff;  */
   }

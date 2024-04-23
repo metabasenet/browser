@@ -140,7 +140,8 @@ async function addWork() {
 
 @media (min-width: 768px) {
     .responsive-aside {
-        width: 10rem;
+        /* width: 10rem; */
+        width: 3vw;
         opacity: 0.5;
         /* background-color: #fff;  */
     }
