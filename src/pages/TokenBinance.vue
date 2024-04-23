@@ -239,7 +239,7 @@
                         }">{{ scope.row.blockNumber }}</router-link>
                       </template>
                     </el-table-column>
-                    <el-table-column prop="formattedTime" label="Age">
+                    <el-table-column prop="formattedTime" label="Age" width="150">
                     </el-table-column>
                     <el-table-column prop="from" label="From" width="250" align="center">
                       <template v-slot="scope">

@@ -9,10 +9,14 @@
               <div>
                 <h3>{{ contract }}</h3>
                 <span class="ellipsis-text">{{ address }}</span>
-                <el-tooltip content="Copy Address" placement="top">
+                <el-tooltip v-if="!istoCopied" content="Copy Address" placement="top">
                   <el-button text icon="CopyDocument" @click="copyToClipboard(address)">
                   </el-button>
                 </el-tooltip>
+                <el-tooltip v-else content="Copied!" placement="top">
+              <el-button text icon="Check" @click="copyToClipboard(address)">
+              </el-button>
+            </el-tooltip>
               </div>
               <div>
                 <el-button type="primary">
@@ -241,7 +245,7 @@
                         }">{{ scope.row.blockNumber }}</router-link>
                       </template>
                     </el-table-column>
-                    <el-table-column prop="formattedTime" label="Age" align="center">
+                    <el-table-column prop="formattedTime" label="Age" align="center" width="150">
                     </el-table-column>
                     <el-table-column prop="from" label="From" align="center" width="250">
                       <template v-slot="scope">
@@ -439,6 +443,7 @@ const { address } = defineProps({
     required: true,
   },
 });
+const istoCopied = ref(false);
 const tableData = ref([]);
 const total = ref(0);
 const totals = ref(0);

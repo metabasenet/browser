@@ -53,26 +53,30 @@
           </template>
         </el-table-column>
         <el-table-column prop="method" label="Method " width="120">
-          <template v-slot="scope">
+         <!--  <template v-slot="scope">
             <el-tooltip :content="scope.row.method" placement="top">
               <el-button>{{ scope.row.method }}</el-button>
             </el-tooltip>
-          </template>
+          </template> -->
         </el-table-column>
         <el-table-column prop="blockNumber" label="Block" width="100">
           <template v-slot="scope">
             <router-link class="skyblue-text" :to="{ name: 'block', params: { blockNumber: scope.row.blockNumber } }">{{ scope.row.blockNumber }}</router-link>
           </template>
         </el-table-column>
-        <el-table-column prop="formattedTime" label="Age">
+        <el-table-column prop="formattedTime" label="Age" width="150">
         </el-table-column>
         <el-table-column prop="from" label="From" width="250" align="center">
           <template v-slot="scope">
             <el-tooltip :content="scope.row.from" placement="top">
               <router-link class="skyblue-text" :to="{ name: 'address', params: { address: scope.row.from } }">{{ scope.row.from }}</router-link>
             </el-tooltip>
-            <el-tooltip content="Copy Address" placement="top">
-              <el-button text icon="CopyDocument" @click="copyToClipboard(scope.row.from)">
+            <el-tooltip v-if="!scope.row.isCopied" content="Copy Address" placement="top">
+              <el-button text icon="CopyDocument" @click="copyFormClipboard(scope.row.from,scope.row)">
+              </el-button>
+            </el-tooltip>
+            <el-tooltip v-else content="Copied!" placement="top">
+              <el-button text icon="Check" @click="copyFormClipboard(scope.row.from,scope.row)">
               </el-button>
             </el-tooltip>
             <el-button style="margin-left:2.5rem" type="success" icon="right" circle plain />
@@ -87,8 +91,13 @@
             <el-tooltip :content="scope.row.to" placement="top">
               <router-link class="skyblue-text" :to="{ name: 'address', params: { address: scope.row.to } }">{{ scope.row.to }}</router-link>
             </el-tooltip>
-            <el-tooltip v-if="scope.row.to" content="Copy Address" placement="top">
-              <el-button text icon="CopyDocument" @click="copyToClipboard(scope.row.to)">
+            <!-- <el-tooltip v-if="scope.row.to" content="Copy Address" placement="top"> -->
+            <el-tooltip v-if="!scope.row.istoCopied" content="Copy Address" placement="top">
+              <el-button text icon="CopyDocument" @click="copyToClipboard(scope.row.to,scope.row)">
+              </el-button>
+            </el-tooltip>
+            <el-tooltip v-else content="Copied!" placement="top">
+              <el-button text icon="Check" @click="copyToClipboard(scope.row.to,scope.row)">
               </el-button>
             </el-tooltip>
           </template>
@@ -157,7 +166,22 @@ const getTransAction = async (pager = 1) => {
     console.error('Error fetching data:', error)
   }
 }
-function copyToClipboard(text) {
+function copyFormClipboard(text,row) {
+  row.isCopied = true;
+  setTimeout(() => { row.isCopied = false; }, 2000);
+  copiedText.value = text;
+  navigator.clipboard.writeText(text)
+    .then(() => {
+      ElMessage.success('Copy successful!');
+    })
+    .catch(err => {
+      console.error('Copy failed:', err);
+      ElMessage.error('Copy failed, please copy manually!');
+    });
+}
+function copyToClipboard(text,row) {
+  row.istoCopied = true;
+  setTimeout(() => { row.istoCopied = false; }, 2000);
   copiedText.value = text;
   navigator.clipboard.writeText(text)
     .then(() => {
