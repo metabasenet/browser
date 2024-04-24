@@ -1189,7 +1189,7 @@ const connectWallet = async () => {
 
       console.log(
         "Allowance for anotherAccount:",
-        ethers.utils.formatEther(allowance)
+        ethers.formatEther(allowance)
       );
       const approveTxn = await contract.approve(anotherAccount, amountInEther);
       const receipt = await approveTxn.wait();
