@@ -1,12 +1,11 @@
 {
-  "name": "my-new-project",
+  "name": "mntcans-vue3",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite --open --host",
     "build": "vite build",
-    "build:prod": "vite build --mode production",
     "preview": "vite preview"
   },
   "dependencies": {
