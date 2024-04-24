@@ -3,11 +3,10 @@ import { loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import path from 'path';
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
-
-const env = loadEnv('', process.cwd());
-// const env = loadEnv(process.env.NODE_ENV, process.cwd());
+const mode = process.env.NODE_ENV;
+const env = loadEnv(mode, process.cwd());
 export default defineConfig(({ mode }) => ({
-  base: env.BASE_URL || '',
+  base: env.VITE_BASE_URL || '/',
   plugins: [vue(),
   createSvgIconsPlugin({
     iconDirs: [path.resolve(process.cwd(), 'src/assets/icons')],
@@ -21,7 +20,7 @@ export default defineConfig(({ mode }) => ({
   },
   server: {
     proxy: {
-      [env.BASE_URL]: {
+      '/api': {
         target: env.VITE_APP_API_URL,
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')

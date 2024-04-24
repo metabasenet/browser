@@ -180,10 +180,14 @@
                         :to="{ name: 'address', params: { address: address } }">{{
                         address }}</router-link>
                     </el-tooltip>
-                    <el-tooltip content="Copy Address" placement="top">
-                      <el-button text icon="CopyDocument" @click="copyToClipboard(address)">
-                      </el-button>
-                    </el-tooltip>
+                    <el-tooltip v-if="!istoCopied" content="Copy Address" placement="top">
+                  <el-button text icon="CopyDocument" @click="copyToClipboards(address)">
+                  </el-button>
+                </el-tooltip>
+                <el-tooltip v-else content="Copied!" placement="top">
+                  <el-button text icon="Check" @click="copyToClipboards(address)">
+                  </el-button> 
+                </el-tooltip>
                   </div>
                 </li>
                 <li class="over_li">
