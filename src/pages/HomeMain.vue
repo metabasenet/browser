@@ -1,8 +1,8 @@
 <template>
   <div class="common-layout">
-      <el-container class="container-xxl">
-        <div class="container_bgc"></div>
-        <el-aside class="responsive-aside"></el-aside>
+    <el-container class="container-xxl">
+      <div class="container_bgc"></div>
+      <el-aside class="responsive-aside"></el-aside>
       <el-main>
         <div class="container">
           <el-row justify="center" align="middle">
@@ -107,55 +107,56 @@
           <el-col :span="11" :xs="24" :sm="24" :md="11" :lg="11" class="ContentPlaceHolder1_mainboxes">
             <div class="card-header">
               <h4>Latest Blocks</h4>
-              <el-button><el-icon><Grid /></el-icon>Customize</el-button>
+              <el-button><el-icon>
+                  <Grid />
+                </el-icon>Customize</el-button>
             </div>
-            <el-table :data="tableData" style="width: 100%" >
+            <el-table :data="tableData" style="width: 100%">
               <el-table-column prop="number">
                 <template v-slot="scope">
-                 <div style="display:flex;align-items: center;" >
-                  <svg-icon name="box" width="1.8rem" height="1.8rem" >
-                  </svg-icon>
-                  <div style="margin-left:8px">
-                    <div>
-                    <router-link class="skyblue-text" :to="{ name: 'block', params: { blockNumber: scope.row.number } }">
-                      {{ scope.row.number }}
-                    </router-link>
+                  <div style="display:flex;align-items: center;">
+                    <svg-icon name="box" width="1.8rem" height="1.8rem">
+                    </svg-icon>
+                    <div style="margin-left:8px">
+                      <div>
+                        <router-link class="skyblue-text"
+                          :to="{ name: 'block', params: { blockNumber: scope.row.number } }">
+                          {{ scope.row.number }}
+                        </router-link>
+                      </div>
+                      <div>
+                        <span class="b-flex_span">{{ scope.row.formattedTime }}</span>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <span class="b-flex_span">{{scope.row.formattedTime}}</span>
-                  </div>
-                  </div>
-                 </div>
                 </template>
               </el-table-column>
-              <el-table-column prop="number" >
+              <el-table-column prop="number">
                 <template v-slot="scope">
                   <div>
                     <span>Validated By</span>
-                    <router-link class="skyblue-text" :to="{ name: 'block', params: { blockNumber: scope.row.number } }">
+                    <router-link class="skyblue-text"
+                      :to="{ name: 'block', params: { blockNumber: scope.row.number } }">
                       {{ scope.row.number }}
                     </router-link>
                   </div>
                   <div>
-                    <router-link class="skyblue-text" :to="{ name: 'block', params: { blockNumber: scope.row.number } }">
+                    <router-link class="skyblue-text"
+                      :to="{ name: 'block', params: { blockNumber: scope.row.number } }">
                       {{ scope.row.number }}
                     </router-link>
                     <span class="b-flex_span">in 3 secs</span>
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column
-                header-align="center"
-                align="center"
-                prop="number"
-                width="100">
-                <template v-slot="scope" >
+              <el-table-column header-align="center" align="center" prop="number" width="130">
+                <template v-slot="scope">
                   <div>
-                    <el-tooltip content="Copy Address" placement="top">
-                  <div class="c-flex">
-                    <p>{{ scope.row.number }}MNT</p>
-                  </div>
-                </el-tooltip>
+                    <el-tooltip :content="scope.row.gaspriceTotal.toString()" placement="top">
+                      <div class="c-flex">
+                        <p>{{ scope.row.gaspriceTotal }}MNT</p>
+                      </div>
+                    </el-tooltip>
                   </div>
                 </template>
               </el-table-column>
@@ -172,59 +173,57 @@
           <el-col :span="11" :xs="24" :sm="24" :md="11" :lg="11" class="ContentPlaceHolder1_mainboxes">
             <div class="card-header">
               <h4>Latest Transactions</h4>
-              <el-button><el-icon><Grid /></el-icon>Customize</el-button>
+              <el-button><el-icon>
+                  <Grid />
+                </el-icon>Customize</el-button>
             </div>
-            <el-table :data="tableDatas" style="width: 100%" >
+            <el-table :data="tableDatas" style="width: 100%">
               <el-table-column prop="number">
                 <template v-slot="scope">
-                 <div style="display:flex;align-items: center;" >
-                  <svg-icon name="document" width="1.8rem" height="1.8rem" >
-                  </svg-icon>
-                  <div style="margin-left:8px;">
-                    <div class="skyblue-text">
-                    <router-link class="skyblue-text" :to="{ name: 'tx', params: { hash: scope.row.hash } }">
-                      {{ scope.row.hash }}
-                    </router-link>
+                  <div style="display:flex;align-items: center;">
+                    <svg-icon name="document" width="1.8rem" height="1.8rem">
+                    </svg-icon>
+                    <div style="margin-left:8px;">
+                      <div class="skyblue-text">
+                        <router-link class="skyblue-text" :to="{ name: 'tx', params: { hash: scope.row.hash } }">
+                          {{ scope.row.hash }}
+                        </router-link>
+                      </div>
+                      <div>
+                        <span class="b-flex_span">{{ scope.row.formattedTime }}</span>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <span class="b-flex_span">{{scope.row.formattedTime}}</span>
-                  </div>
-                  </div>
-                 </div>
                 </template>
               </el-table-column>
-              <el-table-column prop="number" >
+              <el-table-column prop="number">
                 <template v-slot="scope">
                   <div class="skyblue-text" style="width:10.25rem">
                     <span style="color:black">From </span>
                     <el-tooltip effect="dark" :content="scope.row.from" placement="top">
                       <router-link class="skyblue-text" :to="{ name: 'address', params: { address: scope.row.from } }">
-                      {{ scope.row.from }}
-                    </router-link>
+                        {{ scope.row.from }}
+                      </router-link>
                     </el-tooltip>
                   </div>
                   <div class="skyblue-text" style="width:10.25rem">
                     <span style="color:black">To </span>
-                   <el-tooltip effect="dark" :content="scope.row.to" placement="top">
-                    <router-link class="skyblue-text" :to="{ name: 'address', params: { address: scope.row.to} }">
-                      {{ scope.row.to }}
-                    </router-link>
-                   </el-tooltip>
+                    <el-tooltip effect="dark" :content="scope.row.to" placement="top">
+                      <router-link class="skyblue-text" :to="{ name: 'address', params: { address: scope.row.to } }">
+                        {{ scope.row.to }}
+                      </router-link>
+                    </el-tooltip>
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column
-                header-align="center"
-                align="center"
-                prop="number"
-                width="100">
-                <template v-slot="scope" >
+              <el-table-column header-align="center" align="center" prop="number" width="130">
+                <template v-slot="scope">
                   <div>
                     <el-tooltip content="Copy Address" placement="top">
-                  <div class="c-flex">
-                    <p>{{ scope.row.number }}MNT</p>
-                  </div>
-                </el-tooltip>
+                      <div class="c-flex">
+                        <p>{{ scope.row.gaspriceTotal }}MNT</p>
+                      </div>
+                    </el-tooltip>
                   </div>
                 </template>
               </el-table-column>
@@ -240,18 +239,19 @@
           </el-col>
         </el-row>
       </el-main>
-    <el-aside class="responsive-aside"></el-aside>
+      <el-aside class="responsive-aside"></el-aside>
     </el-container>
   </div>
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref} from 'vue'
 import router from '@/router'
 import { getSearchInfo } from '@/api/home';
 import { getBlockPage } from '@/api/block';
 import { getTransactionPage } from '@/api/transaction';
 import { ElMessage } from 'element-plus'
+import { ethers } from 'ethers';
 // import useUserStore from '@/store/modules/user'
 // let userStore = useUserStore()
 const tableData = ref([])
@@ -279,18 +279,18 @@ const getSearch = async () => {
       router.push({ name: 'tx', params: { hash: hash } });
       homeSearch.value = '';
     } else if (select.value === '3' || response.data.address || response.data.contract) {
-      if(response.data.contract){
+      if (response.data.contract) {
         let contractaddress = response.data.contract.contractaddress
         let contract = Object.keys(response.data)[0]
-        router.push({ name: 'address', params: { address: contractaddress },query:{contract} });
+        router.push({ name: 'address', params: { address: contractaddress }, query: { contract } });
         homeSearch.value = '';
-      }else{
+      } else {
         let address = response.data.address.address
         let contract = Object.keys(response.data)[0]
-        router.push({ name: 'address', params: { address: address },query:{contract} });
+        router.push({ name: 'address', params: { address: address }, query: { contract } });
         homeSearch.value = '';
       }
-    } else if (select.value === '4' ) {
+    } else if (select.value === '4') {
       let contractAddress = response.data.contract.contractaddress
       router.push({ name: 'token', params: { address: contractAddress } });
       homeSearch.value = '';
@@ -311,7 +311,12 @@ const getBlockPageData = async (pager = 1) => {
       const percentage = (item.gasused / item.gaslimit) * 100;
       item.percentage = percentage;
     })
-
+    tableData.value.forEach(item => {
+      const gasused = parseFloat(item.gasUsed) || 0;
+      const gasprice = item.gasprice || 0;
+      const result = ethers.formatEther(gasused * parseFloat(gasprice))
+      item.gaspriceTotal = 0 ? '0' : result;
+    })
     const currentTime = Math.floor(Date.now() / 1000);
     tableData.value.forEach(item => {
       const timestamp = item.timestamp;
@@ -341,6 +346,12 @@ const getTransAction = async (pager = 1) => {
     currentPage4.value = pager;
     const response = await getTransactionPage(currentPage4.value, pageSize4.value)
     tableDatas.value = response.data.list;
+    tableDatas.value.forEach(item => {
+      const gasused = parseFloat(item.gasUsed);
+      const gasprice = item.gasprice || 0;
+      const result = ethers.formatEther(gasused * parseFloat(gasprice))
+      item.gaspriceTotal = 0 ? '0' : result;
+    })
     const currentTime = Math.floor(Date.now() / 1000);
     tableDatas.value.forEach(item => {
       const timestamp = item.timestamp;
@@ -361,6 +372,7 @@ const getTransAction = async (pager = 1) => {
       }
       item.formattedTime = formattedTime;
     });
+    // addGaspriceTotalToTableDatas();
   } catch (error) {
     console.error('Error fetching data:', error)
   }
@@ -373,15 +385,17 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.view-all{
+.view-all {
   display: flex;
-    justify-content: center;
-    align-items: center;
+  justify-content: center;
+  align-items: center;
 }
-.el-select{
+
+.el-select {
   width: 7.1875rem;
-    height: 100%;
+  height: 100%;
 }
+
 .el-table {
   width: 100%;
 }
@@ -405,13 +419,15 @@ onMounted(() => {
   position: relative;
   background-color: #f5f7f9;
 }
-.container_bgc{
+
+.container_bgc {
   position: absolute;
   width: 100%;
   height: 29vh;
-  background: linear-gradient(45deg,#fff, #000,#000, #fff );
+  background: linear-gradient(45deg, #fff, #000, #000, #fff);
   /* background: linear-gradient(45deg,#fff,#0c9482, #0c9482, #fff); */
 }
+
 .el-link {
   margin-right: 8px;
 }
@@ -449,8 +465,9 @@ onMounted(() => {
 } */
 .responsive-aside {
   width: 0rem;
-  transition: width 0.5s ease; 
+  transition: width 0.5s ease;
 }
+
 @media (min-width: 768px) {
   .responsive-aside {
     /* width: 10rem; */
@@ -459,6 +476,7 @@ onMounted(() => {
     /* background-color: #fff;  */
   }
 }
+
 @media (max-width: 767px) {
 
   .card-ul,
@@ -466,9 +484,11 @@ onMounted(() => {
     padding: 5px;
     /* flex-wrap: wrap; */
   }
-  .el-select{
+
+  .el-select {
     width: 5.6rem;
   }
+
   /* .card_p,
   .c-flex p,
   .b-flex h4 {

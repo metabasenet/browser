@@ -15,7 +15,7 @@
                 </el-tooltip>
                 <el-tooltip v-else content="Copied!" placement="top">
                   <el-button text icon="Check" @click="copyToClipboards(address)">
-                  </el-button> 
+                  </el-button>
                 </el-tooltip>
               </div>
               <div>
@@ -98,9 +98,9 @@
                       <template #header>
                         <p class="erc_p">ERC-20 Tokens</p>
                       </template>
-                      <el-option v-for="item in cities" :key="item.decimals" :label="item.ercName"
-                        :value="item.decimals">
-                        <router-link :to="{ name: 'token', params: { address: item.address } }"
+                      <el-option v-for="(item, index) in cities" :key="index" :label="item.ercName"
+                         :value="item.decimals || ''">
+                        <router-link v-if="item.decimals !== null" :to="{ name: 'token', params: { address: item.address } }"
                           style="display: flex; height:50px; flex-direction: column; line-height: 1.5; padding-top: 5px; padding-bottom: 5px;">
                           <p style="margin: 0; color: black;
                             font-weight:400;
@@ -139,7 +139,7 @@
                     <el-tooltip class="box-item" effect="dark" :content="address" placement="top-start">
                       <router-link class="skyblue-text ellipsis-text"
                         :to="{ name: 'address', params: { address: address } }">{{
-                        address
+                          address
                         }}</router-link>
                     </el-tooltip>
                     <span>from 12 hrs ago</span>
@@ -178,16 +178,16 @@
                     <el-tooltip class="box-item" effect="dark" :content="address" placement="top-start">
                       <router-link class="skyblue-text ellipsis-text"
                         :to="{ name: 'address', params: { address: address } }">{{
-                        address }}</router-link>
+                          address }}</router-link>
                     </el-tooltip>
                     <el-tooltip v-if="!istoCopied" content="Copy Address" placement="top">
-                  <el-button text icon="CopyDocument" @click="copyToClipboards(address)">
-                  </el-button>
-                </el-tooltip>
-                <el-tooltip v-else content="Copied!" placement="top">
-                  <el-button text icon="Check" @click="copyToClipboards(address)">
-                  </el-button> 
-                </el-tooltip>
+                      <el-button text icon="CopyDocument" @click="copyToClipboards(address)">
+                      </el-button>
+                    </el-tooltip>
+                    <el-tooltip v-else content="Copied!" placement="top">
+                      <el-button text icon="Check" @click="copyToClipboards(address)">
+                      </el-button>
+                    </el-tooltip>
                   </div>
                 </li>
                 <li class="over_li">
@@ -301,7 +301,7 @@
                         <el-tooltip :content="`${scope.row.value}`" placement="top">
                           <span class="ellipsis-text">{{
                             scope.row.value
-                            }}</span>
+                          }}</span>
                         </el-tooltip>
                       </template>
                     </el-table-column>
@@ -310,7 +310,7 @@
                         <el-tooltip :content="`${scope.row.TransactionFee}`" placement="top">
                           <span class="ellipsis-text">{{
                             scope.row.TransactionFee
-                            }}</span>
+                          }}</span>
                         </el-tooltip>
                       </template>
                     </el-table-column>
@@ -412,7 +412,7 @@
                         <el-tooltip :content="`${scope.row.value}`" placement="top">
                           <span class="ellipsis-text">{{
                             scope.row.value
-                            }}</span>
+                          }}</span>
                         </el-tooltip>
                       </template>
                     </el-table-column>
@@ -446,7 +446,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted,defineProps} from "vue";
+import { ref, onMounted, defineProps } from "vue";
 import { useRoute } from "vue-router";
 import { ElMessage } from "element-plus";
 import { ethers } from "ethers";
@@ -510,7 +510,7 @@ const getContractList = async (pager = 1) => {
       );
 
       tableDatas.value = response.data.list;
-      
+
       totals.value = response.data.total;
       const currentTime = Math.floor(Date.now() / 1000);
       tableDatas.value.forEach((item) => {
@@ -636,7 +636,7 @@ const handleSizeChange = (val) => {
 const handleCurrentChange = (val) => {
   console.log(`current page: ${val}`);
 };
-function copyFormClipboard(text,row) {
+function copyFormClipboard(text, row) {
   row.isCopied = true;
   setTimeout(() => { row.isCopied = false; }, 2000);
   copiedText.value = text;
@@ -649,7 +649,7 @@ function copyFormClipboard(text,row) {
       ElMessage.error('Copy failed, please copy manually!');
     });
 }
-function copyToClipboard(text,row) {
+function copyToClipboard(text, row) {
   row.istoCopied = true;
   setTimeout(() => {
     row.istoCopied = false;

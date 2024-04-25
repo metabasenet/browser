@@ -291,7 +291,7 @@
                         </div>
                       </template>
                     </el-table-column>
-                    <el-table-column prop="value" label="Value">
+                    <el-table-column prop="value" label="Value" align="center">
                       <template v-slot="scope">
                         <el-tooltip :content="`${scope.row.value}`" placement="top">
                           <span class="ellipsis-text">{{ scope.row.value }}</span>
@@ -300,8 +300,8 @@
                     </el-table-column>
                     <el-table-column prop="TransactionFee" label="Gas Price">
                       <template v-slot="scope">
-                        <el-tooltip :content="`${scope.row.TransactionFee}`" placement="top">
-                          <span class="ellipsis-text">{{ scope.row.TransactionFee }}</span>
+                        <el-tooltip :content="`${scope.row.effectiveGasPrice}`" placement="top">
+                          <span class="ellipsis-text">{{ scope.row.effectiveGasPrice }}</span>
                         </el-tooltip>
                       </template>
                     </el-table-column>
@@ -1431,8 +1431,12 @@ const getContactList = async (pager = 1) => {
       total.value = response.data.total;
       timestamps();
       tableData.value.forEach((item) => {
-        item.TransactionFee = item.cumulativeGasUsed * item.effectiveGasPrice;
+        // item.TransactionFee = item.cumulativeGasUsed * item.effectiveGasPrice;
+        const decimals = individualQueryDetails.value.decimals || 0;
+            const values = item.value || 0;
+            item.value = ethers.formatUnits(parseInt(values, 16).toString(), decimals);
       });
+      console.log(tableData.value);
     }
   } catch (error) {
     console.error("Error fetching block details:", error);
@@ -1518,7 +1522,7 @@ onMounted(() => {
   getContactDetail();
   getIndividualQuery();
   getTransationCount();
-  getBalanceList();
+  // getBalanceList();
 });
 </script>
 

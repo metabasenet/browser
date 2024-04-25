@@ -23,9 +23,12 @@ export const getTokenInquire = (address) => {
   const url = `${API.TOKEN_INQUIRE_URL}?address=${address}`;
   return request.get(url);
 };
-export const getAllContact = (page, pageSize) => {
+export const getAllContact = (page, pageSize,timeout = 10000) => {
   const url = `${API.TOKEN_ALLCONTACT_URL}?page=${page}&pageSize=${pageSize}`;
-  return request.get(url);
+  const config = {
+    timeout: timeout 
+  };
+  return request.get(url,config);
 };
 export const getContractTransationCount = (address) => {
   const url = `${API.TOKEN_TRANSATION_URL}?contractAddress=${address}`;

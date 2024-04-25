@@ -114,6 +114,7 @@
 import { ref, onMounted } from 'vue'
 import { ElMessage } from 'element-plus';
 import { getAllContact } from '@/api/toTokens';
+import { ethers } from "ethers";
 const tableData = ref([])
 const currentPage4 = ref(1)
 const pageSize4 = ref(10)
@@ -127,6 +128,11 @@ const getTransAction = async (pager = 1) => {
         currentPage4.value = pager;
         const response = await getAllContact(currentPage4.value, pageSize4.value)
         tableData.value = response.data.list;
+        tableData.value.forEach(item => {
+            const decimals = item.decimals || 0;
+            const values = item.value || 0;
+            item.value = ethers.formatUnits(parseInt(values, 16).toString(), decimals);
+        })
         total.value = response.data.total;
         timestamps();
     } catch (error) {

@@ -47,9 +47,11 @@
       <el-table :data="tableData" style="width: 100%" size="default" > 
         <el-table-column prop="hash" label="Txn Hash" width="120">
           <template v-slot="scope">
-            <router-link class="skyblue-text ellipsis-text" :to="{ name: 'tx', params: { hash: scope.row.hash } }">
+            <el-tooltip effect="dark" :content="scope.row.hash" placement="top">
+              <router-link class="skyblue-text ellipsis-text" :to="{ name: 'tx', params: { hash: scope.row.hash } }">
               {{ scope.row.hash }}
             </router-link>
+            </el-tooltip>
           </template>
         </el-table-column>
         <el-table-column prop="method" label="Method " width="120">
@@ -128,19 +130,31 @@
 import { ref, onMounted } from 'vue'
 import { ElMessage } from 'element-plus';
 import { getTransactionPage } from '@/api/transaction';
+import { ethers } from 'ethers';
 const tableData = ref([])
 const currentPage4 = ref(1)
 const pageSize4 = ref(10)
 const total = ref(0)
 const copiedText = ref('');
-const handleSizeChange = (val) => {
-  getTransAction()
-}
 const getTransAction = async (pager = 1) => {
   try {
     currentPage4.value = pager;
     const response = await getTransactionPage(currentPage4.value, pageSize4.value)
     tableData.value = response.data.list;
+    tableData.value.forEach(item => {
+      // const values = parseFloat(item.value) || 0;
+  //     if (values > Number.MAX_SAFE_INTEGER) {
+  //   console.error(`Invalid value detected: ${values}. Skipping formatting.`);
+  //   return;
+  // }
+  
+  
+  console.log(typeof(item.value))
+
+  
+      const result = ethers.formatEther(BigNumber.from(item.value))
+      item.value = result;
+    })
     total.value = response.data.total;
     const currentTime = Math.floor(Date.now() / 1000);
     tableData.value.forEach(item => {

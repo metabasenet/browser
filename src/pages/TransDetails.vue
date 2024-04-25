@@ -114,36 +114,7 @@
               </el-descriptions-item>
               <el-descriptions-item label="Transaction Action:" label-align="center" align="left"
                 label-class-name="my-label">
-                <!-- <div class="block_height">
-                  <div class="TransactionAction">
-                    <el-icon>
-                      <CaretRight />
-                    </el-icon>
-                    <span>Call</span><el-tooltip content="0xf340fa01 l Deposit" placement="top">
-                      <el-button style="margin-left:5px;margin-right:5px">Deposit</el-button>
-                    </el-tooltip><span>Function by</span><el-tooltip content="Validator: Certik" placement="top">
-                      <router-link class="skyblue-text" to="/address">
-                        <div class=" mb-2 truncate"><span> Validator: Certik</span></div>
-                      </router-link>
-                    </el-tooltip>on<el-tooltip content="0xf340fa01 l Deposit" placement="top">
-                      <el-icon class="el-icon--right el-icon--left">
-                        <Document />
-                      </el-icon>
-                    </el-tooltip>
-                    <el-tooltip content=" 0x0000000000000000000000000000000000001000" placement="top">
-                      <router-link class="skyblue-text" to="/address">
-                        <div class=" mb-2 truncate">BSC: Validator Set</div>
-                      </router-link>
-                    </el-tooltip>
-                    <el-tooltip content="Please login to your BscScan account to submit Transaction Action"
-                      placement="top">
-                      <el-icon>
-                        <Promotion />
-                      </el-icon>
-                    </el-tooltip>
-                  </div>
-                </div> -->
-
+                <div class="block_height">{{ transDetails.transactionActions }}</div>
               </el-descriptions-item>
               <el-descriptions-item label="From:" label-align="center" align="left" label-class-name="my-label">
                 <div class="block_height">
@@ -236,7 +207,7 @@
                 </div>
 
               </el-descriptions-item>
-              <el-descriptions-item label="Transaction Fee::" label-align="center" align="left"
+              <el-descriptions-item label="Transaction Fee:" label-align="center" align="left"
                 label-class-name="my-label">
                 <div class="block_height"> <span> {{ transDetails.TransactionFee }} MNT
                     <!-- (${{ transDetails.TransactionFee }}) -->
@@ -323,9 +294,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted,computed } from 'vue'
 import { ElMessage } from 'element-plus';
 import { getTransactionDetail } from '@/api/transaction';
+import { ethers } from "ethers";
 const activeNames = ref([])
 const transDetails = ref({})
 const value = ref('')
@@ -375,8 +347,19 @@ const fetchTransactionDetails = async () => {
     if (hash !== null) {
       const response = await getTransactionDetail(hash);
       transDetails.value = response.data;
-      transDetails.value.TransactionFee = transDetails.value.cumulativeGasUsed * transDetails.value.effectiveGasPrice
+      const gaspricetotal = computed(() => {
+        const gasused = parseFloat(transDetails.value.gasUsed);
+          const gasprice = transDetails.value.effectiveGasPrice || 0;
+          const result = gasused * parseFloat(gasprice) 
+        return ethers.formatEther(result);
+      })
+      transDetails.value.TransactionFee = gaspricetotal.value;
       timestamps()
+      if(transDetails.value.method == null){
+        transDetails.value.transactionActions = transDetails.value.methodHash
+      }else{
+        transDetails.value.transactionActions = transDetails.value.method
+      }
     }
   } catch (error) {
     console.error('Error fetching block details:', error);

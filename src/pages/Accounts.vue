@@ -13,25 +13,28 @@
                 <el-row class="box-table">
                     <div class="demo-pagination-block box-table_header">
                         <div class="demonstration">
-                            <p>More than {{total}} accounts found (24,058,964.14 MNT)</p><span>(Showing the last 10,000
+                            <p>More than {{ total }} accounts found (24,058,964.14 MNT)</p><span>(Showing the last 10,000
                                 top accounts only)</span>
                         </div>
                     </div>
-                    <el-table :data="tableData" style="width: 100%" size="default">
-                        <el-table-column type="index" width="50" />
-                        <el-table-column prop="address" label="Address" show-overflow-tooltip width="200">
+                    <el-table :data="tableData" style="width: 100%" size="default" >
+                        <el-table-column type="index" width="100" label="Number" align="center"/>
+                        <el-table-column prop="address" label="Address" show-overflow-tooltip width="450" align="center">
                             <template v-slot="scope">
                                 <router-link class="skyblue-text"
                                     :to="{ name: 'address', params: { address: scope.row.address } }">
                                     {{ scope.row.address }}</router-link>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="percentage" label="Name Tag" align="center"></el-table-column>
+                        <!-- <el-table-column prop="percentage" label="Name Tag" align="center"></el-table-column> -->
                         <el-table-column prop="balance" label="Balance" align="center">
                         </el-table-column>
-                        <el-table-column prop="percentage" label="Percentage" align="center">
+                        <el-table-column prop="percentage" label="Percentage" align="center" width="300">
+                            <template v-slot="scope">
+                                {{ scope.row.percentage }}%
+                            </template>
                         </el-table-column>
-                        <el-table-column prop="txnCount" label="Txn Count" align="center">
+                        <el-table-column prop="txnCount" label="Txn Count" align="center" width="200">
                         </el-table-column>
                     </el-table>
                     <div class="demo-pagination-block table_header">
@@ -50,9 +53,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted,computed } from 'vue'
 import { ElMessage } from 'element-plus';
 import { getBalancePage } from '@/api/accounts';
+
 const tableData = ref([])
 const currentPage4 = ref(1)
 const total = ref(0)
@@ -64,12 +68,15 @@ const getBalancePageData = async (pager = 1) => {
         currentPage4.value = pager;
         const response = await getBalancePage(currentPage4.value, pageSize4.value)
         tableData.value = response.data.list;
-        total.value = response.data.total;
         tableData.value.forEach(item => {
-            const percentage = (item.gasused / item.gaslimit) * 100;
-            item.percentage = percentage;
-        })
-
+        const balance = item.balance || 0;
+        if(!isNaN(balance)){
+            const result = parseFloat(balance) / 10 ** 18;
+           item.balance =  0 ? '0' : result.toFixed(6);
+        }
+    })
+        total.value = response.data.total;
+        console.log(tableData.value);
         const currentTime = Math.floor(Date.now() / 1000);
         tableData.value.forEach(item => {
             const timestamp = item.timestamp;
@@ -88,14 +95,13 @@ const getBalancePageData = async (pager = 1) => {
                 const days = Math.floor(timeDifferenceInSeconds / 86400);
                 formattedTime = `${days} days ago`;
             }
+          
             item.formattedTime = formattedTime;
         });
     } catch (error) {
         console.error('Error fetching data:', error)
     }
 }
-
-
 const handleSizeChange = (val) => {
     getBalancePageData()
 }
@@ -196,11 +202,14 @@ onMounted(() => {
     .box-table_header {
         flex-wrap: wrap;
     }
-    .box-table,.grid-content_h3{
+
+    .box-table,
+    .grid-content_h3 {
         margin: 0px;
     }
-    .el-main{
-           --el-main-padding: 0px; 
+
+    .el-main {
+        --el-main-padding: 0px;
     }
 }
 
