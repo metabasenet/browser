@@ -45,7 +45,7 @@
           @size-change="handleSizeChange" @current-change="getTransAction" />
       </div>
       <el-table :data="tableData" style="width: 100%" size="default" > 
-        <el-table-column prop="hash" label="Txn Hash" width="120">
+        <el-table-column prop="hash" label="Txn Hash" width="200">
           <template v-slot="scope">
             <el-tooltip effect="dark" :content="scope.row.hash" placement="top">
               <router-link class="skyblue-text ellipsis-text" :to="{ name: 'tx', params: { hash: scope.row.hash } }">
@@ -104,7 +104,7 @@
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column prop="value" label="Value">
+        <el-table-column prop="value" label="Value" width="200">
           <template v-slot="scope">
             <el-tooltip effect="dark" :content="`${scope.row.value}`" placement="top">
               <span class="skyblue-text">{{ scope.row.value }}</span>
@@ -130,12 +130,15 @@
 import { ref, onMounted } from 'vue'
 import { ElMessage } from 'element-plus';
 import { getTransactionPage } from '@/api/transaction';
-import { ethers } from 'ethers';
+import { formatUnits} from 'ethers';
 const tableData = ref([])
 const currentPage4 = ref(1)
 const pageSize4 = ref(10)
 const total = ref(0)
 const copiedText = ref('');
+const handleSizeChange =()=>{
+  getTransAction()
+}
 const getTransAction = async (pager = 1) => {
   try {
     currentPage4.value = pager;
@@ -147,12 +150,7 @@ const getTransAction = async (pager = 1) => {
   //   console.error(`Invalid value detected: ${values}. Skipping formatting.`);
   //   return;
   // }
-  
-  
-  console.log(typeof(item.value))
-
-  
-      const result = ethers.formatEther(BigNumber.from(item.value))
+      const result = formatUnits(item.value.toString(),18)
       item.value = result;
     })
     total.value = response.data.total;
