@@ -216,7 +216,7 @@
 
               </el-descriptions-item>
               <el-descriptions-item label="Gas Price:" label-align="center" align="left" label-class-name="my-label">
-                <div class="block_height"><span> {{ transDetails.gasPrice }} MNT
+                <div class="block_height"><span> {{ transDetails.gasPrice }}
                     <!-- ({{ transDetails.gasPrice }})MNT -->
                   </span>
                 </div>
@@ -297,7 +297,7 @@
 import { ref, onMounted,computed } from 'vue'
 import { ElMessage } from 'element-plus';
 import { getTransactionDetail } from '@/api/transaction';
-import { ethers } from "ethers";
+import { ethers,formatUnits } from "ethers";
 const activeNames = ref([])
 const transDetails = ref({})
 const value = ref('')
@@ -347,6 +347,8 @@ const fetchTransactionDetails = async () => {
     if (hash !== null) {
       const response = await getTransactionDetail(hash);
       transDetails.value = response.data;
+      const results = formatUnits(transDetails.value.value.toString(),18)
+      transDetails.value.value = results;
       const gaspricetotal = computed(() => {
         const gasused = parseFloat(transDetails.value.gasUsed);
           const gasprice = transDetails.value.effectiveGasPrice || 0;
