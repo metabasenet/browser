@@ -55,11 +55,11 @@
           </template>
         </el-table-column>
         <el-table-column prop="method" label="Method " width="120">
-         <!--  <template v-slot="scope">
-            <el-tooltip :content="scope.row.method" placement="top">
-              <el-button>{{ scope.row.method }}</el-button>
-            </el-tooltip>
-          </template> -->
+            <template v-slot="scope">
+              <el-tooltip :content="scope.row.method" placement="top">
+                <el-button>{{ scope.row.method }}</el-button>
+              </el-tooltip>
+            </template>
         </el-table-column>
         <el-table-column prop="blockNumber" label="Block" width="100">
           <template v-slot="scope">
@@ -145,6 +145,7 @@ const getTransAction = async (pager = 1) => {
     const response = await getTransactionPage(currentPage4.value, pageSize4.value)
     tableData.value = response.data.list;
     tableData.value.forEach(item => {
+      item.method = item.method ||item.methodHash;
       // const values = parseFloat(item.value) || 0;
   //     if (values > Number.MAX_SAFE_INTEGER) {
   //   console.error(`Invalid value detected: ${values}. Skipping formatting.`);

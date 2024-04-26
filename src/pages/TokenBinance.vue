@@ -86,20 +86,17 @@
                 <li class="over_li">
                   <p>MAX TOTAL SUPPLY</p>
                   <el-tooltip class="box-item" effect="dark" :content="individualQueryDetails &&
-                    individualQueryDetails.totalsupply
-                    ? individualQueryDetails.totalsupply.toString()
+                    individualQueryDetails.totalSupply
+                    ? individualQueryDetails.totalSupply.toString()
                     : ''
                     " placement="top-start">
-                    <span>{{ individualQueryDetails.totalsupply }}</span>
+                    <span>{{ individualQueryDetails.totalSupply }}</span>
                   </el-tooltip>
-                  <span style="font-weight: bold"> {{ individualQueryDetails.ercsymbol }} </span>
-                  <el-tooltip class="box-item" effect="dark" content="CSupply: 551,557.859909" placement="top-start">
-                    <span style="color: #6c757d">(CSupply: 551,557.859909)</span>
-                  </el-tooltip>
+                  <span style="font-weight: bold"> {{ individualQueryDetails.ercSymbol }} </span>
                 </li>
                 <li class="over_li">
                   <p>HOLDERS</p>
-                  <span>{{ holdTotal }}</span>
+                  <span>{{ individualQueryDetails.holders }}</span>
                 </li>
                 <li class="over_li">
                   <p>TOTAL TRANSFERS</p>
@@ -167,7 +164,11 @@
                       </el-icon>
                     </el-tooltip>
                     <el-tooltip class="box-item" effect="dark" :content="address" placement="top-start">
-                      <router-link class="ellipsis-text" :to="{ name: 'address' }">{{ address }}</router-link>
+                      <router-link class="ellipsis-texts" :to="{
+                              name: 'address',
+                              params: { address: address },
+                            }"
+                      >{{ address }}</router-link>
                     </el-tooltip>
                     <el-tooltip v-if="!copyratius" content="Copy Address" placement="top">
                       <el-button text icon="CopyDocument" @click="copyClipboard(address)">
@@ -182,7 +183,7 @@
                 </li>
                 <li class="over_li">
                   <p>HOLDERS</p>
-                  <span>{{ holdTotal }}</span>
+                  <span>{{ individualQueryDetails.holders }}</span>
                 </li>
                 <li class="over_li">
                   <p>TOTAL TRANSFERS</p>
@@ -371,8 +372,8 @@
                   </div>
                 </el-row>
               </el-tab-pane>
-              <el-tab-pane label="info" name="tab3">
-                <!-- <el-row class="box-table">
+              <!-- <el-tab-pane label="info" name="tab3">
+                <el-row class="box-table">
                   <div class="demo-pagination-block box-table_header">
                     <div class="demonstration">Total of 36,899,505 blocks</div>
                     <el-pagination v-model:current-page="currentPage4" v-model:page-size="pageSize4"
@@ -447,9 +448,9 @@
                       :page-sizes="[10, 20, 30, 40]" small layout=" sizes, prev, pager, next" :total="20"
                       @size-change="handleSizeChange" @current-change="handleCurrentChange" />
                   </div>
-                </el-row> -->
-              </el-tab-pane>
-              <el-tab-pane label="DEX Trades" name="tab4">DEX Trades</el-tab-pane>
+                </el-row>
+              </el-tab-pane> -->
+              <!-- <el-tab-pane label="DEX Trades" name="tab4">DEX Trades</el-tab-pane> -->
               <el-tab-pane v-if="verifystatused === 0 || !verifystatused" label="Contract" name="tab5">
                 <el-row :gutter="10">
                   <el-col :span="24">
@@ -1431,6 +1432,7 @@ const getContactList = async (pager = 1) => {
       total.value = response.data.total;
       timestamps();
       tableData.value.forEach((item) => {
+        item.method = item.method ||item.methodHash;
         // item.TransactionFee = item.cumulativeGasUsed * item.effectiveGasPrice;
         const decimals = individualQueryDetails.value.decimals || 0;
             const values = item.value || 0;
@@ -1715,6 +1717,11 @@ onMounted(() => {
 
 .ellipsis-text {
   width: 7.125rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ellipsis-texts {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

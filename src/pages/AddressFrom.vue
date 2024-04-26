@@ -235,11 +235,11 @@
                       </template>
                     </el-table-column>
                     <el-table-column prop="method" label="Method" align="center" width="120">
-                      <!-- <template v-slot="scope">
+                      <template v-slot="scope">
                         <el-tooltip :content="scope.row.method" placement="top">
                           <el-button>{{ scope.row.method }}</el-button>
                         </el-tooltip>
-                      </template> -->
+                      </template>
                     </el-table-column>
                     <el-table-column prop="blockNumber" label="Block" align="center" width="100">
                       <template v-slot="scope">
@@ -345,11 +345,11 @@
                       </template>
                     </el-table-column>
                     <el-table-column prop="method" label="Method" align="center" width="120">
-                      <!-- <template v-slot="scope">
+                      <template v-slot="scope">
                         <el-tooltip :content="scope.row.method" placement="top">
                           <el-button>{{ scope.row.method }}</el-button>
                         </el-tooltip>
-                      </template> -->
+                      </template>
                     </el-table-column>
                     <el-table-column prop="blockNumber" label="Block" align="center" width="100">
                       <template v-slot="scope">
@@ -450,7 +450,6 @@ import { ref, onMounted, defineProps } from "vue";
 import { useRoute } from "vue-router";
 import { ElMessage } from "element-plus";
 import { ethers } from "ethers";
-import HomeMain from "@/pages/HomeMain.vue";
 import {
   getAddressPage,
   getContractAddress,
@@ -510,7 +509,12 @@ const getContractList = async (pager = 1) => {
       );
 
       tableDatas.value = response.data.list;
-
+      tableDatas.value.forEach((item) => {
+          item.method = item.method ||item.methodHash;
+        const decimals = item.decimals || 0;
+            const values = item.value || 0;
+            item.value = ethers.formatUnits(parseInt(values, 16).toString(), decimals);
+      });
       totals.value = response.data.total;
       const currentTime = Math.floor(Date.now() / 1000);
       tableDatas.value.forEach((item) => {
@@ -557,6 +561,10 @@ const getAddressList = async (pager = 1) => {
       timestamps();
       tableData.value.forEach((item) => {
         item.TransactionFee = item.cumulativeGasUsed * item.effectiveGasPrice;
+        item.method = item.method ||item.methodHash;
+        const decimals = item.decimals || 0;
+            const values = item.value || 0;
+            item.value = ethers.formatUnits(parseInt(values, 16).toString(), decimals);
       });
     }
   } catch (error) {
