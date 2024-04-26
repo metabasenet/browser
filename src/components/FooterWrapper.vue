@@ -92,13 +92,14 @@
 </template>
 
 <script setup>
+import {config} from '@/config/config'
 async function addWork() {
     try {
         if (typeof ethereum !== 'undefined') {
             const provider = ethereum;
             const networkId = 8807;
             const chainId = "0x2267";
-            const rpcUrl = 'https://test.metabasenet.site/rpc';
+            const rpcUrl = config.rpc_testAdress;
             await provider.request({
                 method: 'wallet_addEthereumChain',
                 params: [

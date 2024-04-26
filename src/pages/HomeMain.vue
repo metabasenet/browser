@@ -51,7 +51,7 @@
                 </el-icon> -->
                 <div class="card">
                   <p class="card_p">MNT PRICE</p>
-                  <el-link> $524.59 @ 0.007508 BTC (+4.02%)</el-link>
+                  <el-link> ${{ headerPrice }} @ 0.007508 BTC (+4.02%)</el-link>
                 </div>
               </div>
             </div>
@@ -93,7 +93,7 @@
                 </el-icon>
                 <div class="card">
                   <p class="card_p">LATEST BLOCK</p>
-                  <el-link> 36871960 (3.0s)</el-link>
+                  <el-link> {{ lastestBlock }} (3.0s)</el-link>
                 </div>
               </div>
               <div class="card-right">
@@ -252,6 +252,8 @@ import { getBlockPage } from '@/api/block';
 import { getTransactionPage } from '@/api/transaction';
 import { ElMessage } from 'element-plus'
 import { ethers } from 'ethers';
+import { config } from '@/config/config';
+import { getPriceInfo } from '@/api/headerprice';
 // import useUserStore from '@/store/modules/user'
 // let userStore = useUserStore()
 const tableData = ref([])
@@ -260,6 +262,8 @@ const homeSearch = ref('')
 const select = ref('');
 const currentPage4 = ref(1)
 const pageSize4 = ref(6)
+const lastestBlock = ref()
+const headerPrice = ref()
 const getSearch = async () => {
   if (!homeSearch.value) {
     ElMessage.warning('Please enter your search')
@@ -306,6 +310,7 @@ const getBlockPageData = async (pager = 1) => {
   try {
     currentPage4.value = pager;
     const response = await getBlockPage(currentPage4.value, pageSize4.value)
+    console.log(response);
     tableData.value = response.data.list;
     tableData.value.forEach(item => {
       const percentage = (item.gasused / item.gaslimit) * 100;
@@ -380,8 +385,23 @@ const getTransAction = async (pager = 1) => {
 onMounted(() => {
   getBlockPageData()
   getTransAction()
+  getLastestHeight()
+  getMNtPrice()
   // userStore.userInfo()
 })
+async function getLastestHeight() {
+  const provider = new ethers.JsonRpcProvider(config.rpc_adress);
+  const blockNumber = await provider.getBlockNumber()
+  lastestBlock.value = blockNumber
+}
+async function getMNtPrice () {
+  try {
+    const response = await getPriceInfo()
+    headerPrice.value = response.price;
+  } catch (error) {
+    console.error('Error fetching data:', error)
+  }
+}
 </script>
 
 <style scoped>

@@ -35,7 +35,7 @@
                 <div class="block_height">
                   <el-icon>
                     <Timer />
-                  </el-icon> <span>{{ blockDetails.formattedTime }}</span>
+                  </el-icon> <span>{{ blockDetails.formattedTime }} ({{ greenwichTime }})</span>
                 </div>
               </el-descriptions-item>
               <el-descriptions-item label="Transactions:" label-align="center" align="left" label-class-name="my-label">
@@ -117,11 +117,6 @@
                       <router-link class="skyblue-text" to="/address">{{ blockDetails.parenthash }}</router-link>
                     </div>
                   </el-descriptions-item>
-                  <el-descriptions-item label="Sha3Uncles:" label-align="left" label-class-name="my-label" align="left">
-                    <div class="block_height">
-                      <span>0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347</span>
-                    </div>
-                  </el-descriptions-item>
                   <el-descriptions-item label="Nonce:" label-align="left" align="left" label-class-name="my-label">
                     <div class="block_height">
                       <span>0x0000000000000000</span>
@@ -157,10 +152,12 @@ import { useRouter } from "vue-router";
 import { ElMessage } from 'element-plus';
 import { getBlockDetail } from '@/api/block';
 import { ethers } from "ethers";
+import moment from 'moment'
 const blockDetails = ref({});
 const copiedText = ref('');
 const router = useRouter();
 const route = useRouter();
+const greenwichTime = ref('')
 const { blockNumber } = defineProps({
   blockNumber: {
     type: [Number, String],
@@ -175,6 +172,7 @@ const fetchBlockDetails = async () => {
   try {
     if (blockNumberAsNumber.value !== null) {
       const response = await getBlockDetail(blockNumberAsNumber.value);
+      console.log(response);
       blockDetails.value = response.data;
       const gaspricetotal = computed(() => {
         const gasused = parseFloat(blockDetails.value.gasused);
@@ -194,6 +192,7 @@ const fetchBlockDetails = async () => {
 const timestamps = () => {
   const currentTime = Math.floor(Date.now() / 1000);
   const timestamp = blockDetails.value.timestamp;
+  greenwichTime.value = moment.utc(timestamp * 1000).format('MMM-DD-YYYY HH:mm:ss A') + ' ' + '+UTC'
   const timeDifferenceInSeconds = currentTime - timestamp;
   let formattedTime;
   if (timeDifferenceInSeconds < 60) {

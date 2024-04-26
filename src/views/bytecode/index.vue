@@ -5,6 +5,7 @@
 <script setup>
 import { onMounted,ref } from "vue";
 import { ethers } from "ethers";
+import {config} from '@/config/config'
 const byteCodes =ref(null);
 const { address } = defineProps({
   address: {
@@ -13,7 +14,7 @@ const { address } = defineProps({
   },
 });
 onMounted(async() => {
-  const provider = new ethers.JsonRpcProvider("https://test.metabasenet.site/rpc");
+  const provider = new ethers.JsonRpcProvider(config.rpc_testAdress);
     try {
         let byteCode = await provider.getCode(address);
         byteCodes.value = byteCode;

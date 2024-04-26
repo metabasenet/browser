@@ -66,8 +66,7 @@
               <el-descriptions-item label="Transaction Hash:" label-align="center" align="left"
                 label-class-name="my-label" class-name="my-content ellipsis-text" label-width="30%">
                 <div class="block_height"> <span v-if="transDetails && typeof transDetails.hash === 'string'">{{
-                    transDetails.hash.slice(0, 20) +
-                    '...' }}</span>
+                    transDetails.hash }}</span>
                   <span v-else>N/A</span>
                   <el-tooltip v-if="!transDetails.istoCopied" content="Copy TxHash to clipboard"
                     placement="top"><el-button text icon="CopyDocument" @click="copyToClipboard(transDetails.hash)">
@@ -98,18 +97,16 @@
                       </div>
                     </router-link>
                     <el-tooltip content="Number of blocks validated since" placement="top">
-                      <el-button size="small">10 Block Confirmations</el-button>
+                      <el-button size="small">{{ blockHeightDiff }} Block Confirmations</el-button>
                     </el-tooltip>
                   </div>
                 </div>
-
-
               </el-descriptions-item>
               <el-descriptions-item label="Timestamp:" label-align="center" align="left" label-class-name="my-label">
                 <div class="block_height"><el-icon>
                     <Timer />
                   </el-icon>
-                  <span>{{ transDetails.formattedTime }}(Mar-14-2024 09:05:46 AM +UTC)</span>
+                  <span>{{ transDetails.formattedTime }} ({{ greenwichTime }})</span>
                 </div>
               </el-descriptions-item>
               <el-descriptions-item label="Transaction Action:" label-align="center" align="left"
@@ -123,16 +120,15 @@
                       name: 'address',
                       params: { address: transDetails.from },
                     }">{{ transDetails.from }}
-                    </router-link><span class="text-muted">(Validator: Certik)</span>
-                    <el-tooltip v-if="!transDetails.istoCopieds" content="Copy Address"
-                      placement="top"><el-button style="margin-left:5px" text icon="CopyDocument"
-                        @click="copyToClipboards(transDetails.from)">
+                    </router-link>
+                    <el-tooltip v-if="!transDetails.istoCopieds" content="Copy Address" placement="top"><el-button
+                        style="margin-left:5px" text icon="CopyDocument" @click="copyToClipboards(transDetails.from)">
                       </el-button>
                     </el-tooltip>
                     <el-tooltip v-else content="Copied!" placement="top">
-                    <el-button text icon="Check" @click="copyToClipboards(transDetails.hash)">
-                    </el-button>
-                  </el-tooltip>
+                      <el-button text icon="Check" @click="copyToClipboards(transDetails.hash)">
+                      </el-button>
+                    </el-tooltip>
                   </div>
                 </div>
               </el-descriptions-item>
@@ -150,16 +146,15 @@
                     }">
                       <div class=" mb-2 truncate">{{ transDetails.to }}</div>
                     </router-link>
-                    <span>(BSC: Validator Set)</span>
                     <el-tooltip v-if="!transDetails.istoCopiedd" content="Copy Address" placement="top">
                       <el-button style="margin-left:5px" text icon="CopyDocument"
                         @click="copyToClipboardd(transDetails.to)">
                       </el-button>
                     </el-tooltip>
                     <el-tooltip v-else content="Copied!" placement="top">
-                    <el-button text icon="Check" @click="copyToClipboardd(transDetails.hash)">
-                    </el-button>
-                  </el-tooltip>
+                      <el-button text icon="Check" @click="copyToClipboardd(transDetails.hash)">
+                      </el-button>
+                    </el-tooltip>
                     <el-tooltip content="Contract Execution Completed" placement="top">
                       <el-button type="success" icon="Check" circle />
                     </el-tooltip>
@@ -232,8 +227,8 @@
                 <el-descriptions class="grid-content" :column="1" align="left" v-model="transDetails">
                   <el-descriptions-item label-class-name="my-label" label="Gas Limit & Usage by Txn:"
                     label-align="center" align="left" class-name="my-content">
-                    <div class="block_height"><span>9,223,372,036,854,775,807 | 51,008
-                        (0%)</span></div>
+                    <div class="block_height"><span> {{ transDetails.gasUsed }} | {{ transDetails.gasLimit }}
+                        ({{ ratioValue }}%)</span></div>
                   </el-descriptions-item>
                   <el-descriptions-item label-class-name="my-label" label="Burnt Fees:" label-align="center"
                     align="left">
@@ -298,10 +293,15 @@ import { ref, onMounted,computed } from 'vue'
 import { ElMessage } from 'element-plus';
 import { getTransactionDetail } from '@/api/transaction';
 import { ethers,formatUnits } from "ethers";
+import {config} from '@/config/config'
+import moment from 'moment'
+import { getBlockPage } from '@/api/block';
 const activeNames = ref([])
 const transDetails = ref({})
 const value = ref('')
 const copiedText = ref('');
+const greenwichTime = ref('')
+const lastestBlock = ref();
 const options = [
   {
     value: 'Default View',
@@ -325,6 +325,7 @@ const { hash } = defineProps({
 const timestamps = () => {
   const currentTime = Math.floor(Date.now() / 1000);
   const timestamp = transDetails.value.timestamp;
+  greenwichTime.value = moment.utc(timestamp * 1000).format('MMM-DD-YYYY HH:mm:ss A') + ' ' + '+UTC'
   const timeDifferenceInSeconds = currentTime - timestamp;
   let formattedTime;
   if (timeDifferenceInSeconds < 60) {
@@ -346,6 +347,7 @@ const fetchTransactionDetails = async () => {
   try {
     if (hash !== null) {
       const response = await getTransactionDetail(hash);
+      console.log(response);
       transDetails.value = response.data;
       const results = formatUnits(transDetails.value.value.toString(),18)
       transDetails.value.value = results;
@@ -411,6 +413,20 @@ function copyToClipboardd(text) {
 }
 onMounted(() => {
   fetchTransactionDetails();
+  getLastestHeight();
+})
+let ratioValue = computed(()=>{
+  let res = (transDetails.value.gasUsed / transDetails.value.gasLimit) * 100
+  return res.toFixed(2)
+})
+
+async function getLastestHeight () {
+  const provider = new ethers.JsonRpcProvider(config.rpc_adress);
+  const blockNumber =  await provider.getBlockNumber()
+  lastestBlock.value = blockNumber
+}
+let blockHeightDiff = computed(()=>{
+  return lastestBlock.value - transDetails.value.blockNumber
 })
 </script>
 

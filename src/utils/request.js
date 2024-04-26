@@ -4,7 +4,7 @@ import { ElMessage } from 'element-plus'
 import { useUserStore } from '@/store/modules/user';
 let request = axios.create({
     baseURL: import.meta.env.VITE_APP_API_URL,
-    timeout: 5000,
+    timeout: 15000,
 });
 request.interceptors.request.use((config) => {
 

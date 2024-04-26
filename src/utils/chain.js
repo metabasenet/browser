@@ -7,11 +7,12 @@
 
 import express from 'express';
 import { ethers } from 'ethers';
+import {config} from '@/config/config'
 const app = express();
 const PORT = 8081;
 
 export  async function getBytecode(address) {
-    const provider = new ethers.JsonRpcProvider("https://test.metabasenet.site/rpc");
+    const provider = new ethers.JsonRpcProvider(config.rpc_testAdress);
     try {
         let byteCode = await provider.getCode(address);
         console.log(byteCode);
