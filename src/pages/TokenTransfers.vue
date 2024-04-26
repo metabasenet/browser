@@ -30,11 +30,11 @@
                             </template>
                         </el-table-column>
                         <el-table-column prop="method" label="Method " width="120">
-                            <!-- <template v-slot="scope">
+                            <template v-slot="scope">
                                 <el-tooltip :content="scope.row.method" placement="top">
                                     <el-button>{{ scope.row.method }}</el-button>
                                 </el-tooltip>
-                            </template> -->
+                            </template>
                         </el-table-column>
                         <el-table-column prop="blockNumber" label="Block" width="100">
                             <template v-slot="scope">
@@ -129,6 +129,7 @@ const getTransAction = async (pager = 1) => {
         const response = await getAllContact(currentPage4.value, pageSize4.value)
         tableData.value = response.data.list;
         tableData.value.forEach(item => {
+            item.method = item.method ||item.methodHash;
             const decimals = item.decimals || 0;
             const values = item.value || 0;
             item.value = ethers.formatUnits(parseInt(values, 16).toString(), decimals);

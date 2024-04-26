@@ -19,13 +19,13 @@
       </div>
       <el-table size="default" :header-cell-style="{ color: '#0784c3' }" :data="filteredData"
         :default-sort="{ prop: ['price', 'chage', 'volume', 'virculating'], order: 'descending' }" style="width: 100%">
-        <el-table-column prop="contractaddress" label="Token" width="200" >
+        <el-table-column prop="contractaddress" label="Token" width="200" align="center">
           <template v-slot="scope">
            <div class="token_div">
             <el-icon>
               <Position />
             </el-icon>
-            <router-link class="skyblue-text" :to="{ name:'token',params:{address:scope.row.contractaddress} }">{{ scope.row.contractaddress }}</router-link>
+            <router-link class="skyblue-text" :to="{ name:'token',params:{address:scope.row.contractAddress} }">{{ scope.row.contractAddress }}</router-link>
             <el-tooltip content="Cross-Chain" placement="top">
               <el-icon>
                 <InfoFilled />
@@ -37,19 +37,19 @@
         <el-table-column
           header-align="center"
           align="center"
-          prop="ercname"
+          prop="ercName"
           label="Token name" >
         </el-table-column>
         <el-table-column
           header-align="center"
           align="center"
-          prop="ercsymbol"
+          prop="ercSymbol"
           label="Token symbol" >
         </el-table-column>
         <el-table-column
           header-align="center"
           align="center"
-          prop="totalsupply"
+          prop="totalSupply"
           label="totalsupply" >
         </el-table-column>
         <el-table-column
@@ -58,7 +58,7 @@
           prop="decimals"
           label="decimals" >
         </el-table-column>
-        <el-table-column prop="price" sortable label="Price" >
+        <!-- <el-table-column prop="price" sortable label="Price" >
           <template #header>
             <el-tooltip content="Click for descending sort" placement="top">
               <span>Price</span>
@@ -71,9 +71,6 @@
               <span>Change (%)</span>
             </el-tooltip>
           </template>
-          <!-- <template #default="{ row }">
-            <span v-html="formatChangeColor(row.change)" />
-          </template> -->
         </el-table-column>
         <el-table-column prop="volume" sortable label="Volume (24H)">
           <template #header>
@@ -81,8 +78,8 @@
               <span>Volume (24H)</span>
             </el-tooltip>
           </template>
-        </el-table-column>
-        <el-table-column prop="virculating" sortable label="Circulating Market Cap ">
+        </el-table-column> -->
+        <!-- <el-table-column prop="virculating" sortable label="Circulating Market Cap ">
           <template #header>
             <el-tooltip content="Click for descending sort" placement="top">
               <span>Circulating Market Cap</span>
@@ -108,13 +105,8 @@ larger than the reported circulating supply." placement="top">
               </el-icon>
             </el-tooltip>
           </template>
-        </el-table-column>
-        <el-table-column prop="holders" label="Holders">
-          <template #header>
-            <el-tooltip content="Click for descending sort" placement="top">
-              <span>Holders</span>
-            </el-tooltip>
-          </template>
+        </el-table-column> -->
+        <el-table-column prop="holders" label="Holders" align="center">
         </el-table-column>
       </el-table>
       <div class="demo-pagination-block box-table_header">
@@ -138,28 +130,29 @@ const total = ref(0)
 const searchText = ref('');
 const pageSize4 = ref(10)
 const handleSizeChange = (val) => {
-  getTokenList()
+  // getTokenList()
 }
 const getTokenList = async (pager = 1) => {
   try {
     currentPage4.value = pager;
     const response = await getTokenPage(currentPage4.value, pageSize4.value)
     tableData.value = response.data.list;
-    total.value = response.data.total;
     console.log(tableData.value);
+    total.value = response.data.total;
   } catch (error) {
     console.error('Error fetching data:', error)
   }
 }
 const filteredData = computed(() => {
   return tableData.value.filter(item => {
-    if (item.name && searchText.value) {
+    if (item.ercName && searchText.value) {
       return item.name.toLowerCase().includes(searchText.value.toLowerCase());
     }
     return !searchText.value;
   });
 });
 const handleSearchInput = (value) => {
+  console.log(value);
   searchText.value = value;
 };
 const formatChangeColor = (value) => {
