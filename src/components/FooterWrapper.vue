@@ -32,7 +32,7 @@
                             <el-button @click="addWork" style="width: 50%;" type="info" plain>
                                 <svg-icon name="fox" width="0.8rem" height="0.8rem"
                                     style="margin-right: 10px"></svg-icon>
-                                Add BSC Network
+                                <span style="font-size: 12.5625px; color: #081D35;">Add BSC Network</span>
                             </el-button>
                         </div>
                     </el-col>

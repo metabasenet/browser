@@ -1,17 +1,16 @@
 <template>
   <div class="box">
-
     <el-container class="container-xxl">
       <el-aside class="responsive-aside"></el-aside>
       <el-main>
         <el-row>
           <el-col :span="24">
             <div class="grid-content ep-bg-purple-dark grid-content_h3">
-              <h3>Blocks</h3>
+              <h3 style="font-size: 18.75px; color: #212529; font-weight: 500;">Blocks</h3>
             </div>
           </el-col>
         </el-row>
-        <el-row class="blocks_heade">
+        <!-- <el-row class="blocks_heade">
           <el-col :span="5" :xs="24" :sm="12" :md="12" :lg="6">
             <div class="grid-content ep-bg-purple-dark blocks_header">
               <p>NETWORK UTILIZATION(24H)</p>
@@ -36,7 +35,7 @@
               <el-link>12.7%</el-link>
             </div>
           </el-col>
-        </el-row>
+        </el-row> -->
         <el-row class="box-table">
           <div class="demo-pagination-block box-table_header">
             <div class="demonstration">
@@ -47,44 +46,63 @@
               :page-sizes="[10, 25, 50, 100]" layout=" sizes, prev, pager, next, " :total="total" :pager-count="5"
               background small @size-change="handleSizeChange" @current-change="getBlockPageData" />
           </div>
-          <el-table :data="tableData" size="default" style="width: 100%" align="center">
-            <el-table-column prop="number" label="Block" width="100">
+          <el-table :data="tableData" size="default" style="width: 100%" :row-style="{ height: '70px' }">
+            <el-table-column prop="number" label="Block" width="100" style="font-size: 12px;">
               <template v-slot="scope">
                 <router-link class="skyblue-text" :to="{ name:'block',params:{blockNumber:scope.row.number} }">
                   {{ scope.row.number }}</router-link>
               </template>
             </el-table-column>
-            <el-table-column prop="formattedTime" label="Age" width="150" align="center"></el-table-column>
-            <el-table-column prop="transactioncount" label="Txn" width="60">
+            <el-table-column prop="hash" label="Hash" width="250">
               <template v-slot="scope">
-                <router-link class="skyblue-text" :to="{ path: '/txs' }">{{ scope.row.transactioncount }}</router-link>
+                <el-tooltip :content="scope.row.hash">
+                  <span style="font-size: 14.4992px; color: #0784C3;">{{ scope.row.hash.substring(0, 25) + '...'
+                    }}</span>
+                </el-tooltip>
               </template>
             </el-table-column>
-            <el-table-column prop="validator" label="Validator" align="center">
+            <el-table-column prop="formattedTime" label="Age" width="150" class="age-table">
+              <template v-slot="scope">
+                <span style="font-size: 14.4992px; color: #212529">{{ scope.row.formattedTime }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="transactioncount" label="Txn" width="60">
+              <template v-slot="scope">
+                <div class="skyblue-text" style="cursor: pointer;"
+                  @click="goTransactionPage(scope.row.transactioncount, scope.row.hash)">{{
+                  scope.row.transactioncount }}</div>
+              </template>
+            </el-table-column>
+            <el-table-column prop="gasused" label="Gas used" align="center">
+              <template v-slot="scope">
+                <span style="font-size: 14.4992px; color: #212529;">{{ scope.row.gasused }}</span>
+                <!-- &nbsp;({{ scope.row.ratio}}%) -->
+                <!-- <el-progress :percentage="Math.round(row.percentage)" /> -->
+              </template>
+            </el-table-column>
+            <el-table-column prop="gaslimit" label="Gas Limit">
+              <template v-slot="scope">
+                <span style="font-size: 14.4992px; color: #212529;">{{ scope.row.gaslimit }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="validator" label="Validator" width="80">
               <template v-slot="{ row }">
                 <div v-if="row.validator">
                   <router-link class="skyblue-text" to="/address">{{ row.validator }}</router-link>
                   <el-tooltip v-if="!row.istoCopied" content="Copy Address" placement="top">
-                    <el-button text style="margin-left:5px" icon="CopyDocument" @click="copyToClipboard(row.validator,row)">
+                    <el-button text style="margin-left:5px" icon="CopyDocument"
+                      @click="copyToClipboard(row.validator,row)">
                     </el-button>
                   </el-tooltip>
                   <el-tooltip v-else content="Copied!" placement="top">
-              <el-button text icon="Check" @click="copyToClipboard(row.validator,row)">
-              </el-button>
-            </el-tooltip>
+                    <el-button text icon="Check" @click="copyToClipboard(row.validator,row)">
+                    </el-button>
+                  </el-tooltip>
                 </div>
 
               </template>
             </el-table-column>
-            <el-table-column prop="gasused" label="Gas used" align="center">
-              <template v-slot="{ row }">
-                {{ row.gasused }}
-                <el-progress :percentage="Math.round(row.percentage)" />
-              </template>
-            </el-table-column>
-            <el-table-column prop="gaslimit" label="Gas Limit" align="center" />
-            <el-table-column prop="reward" label="Reward" align="center" />
-            <el-table-column prop="gaspriceTotal" label="Fees (MNT)" align="center" />
+            <el-table-column prop="reward" label="Reward" width="80" />
           </el-table>
           <div class="demo-pagination-block table_header">
             <span>Show rows:</span>
@@ -100,10 +118,11 @@
 </template>
 
 <script setup>
-import { ref,onMounted,computed} from 'vue'
+import { ref,onMounted,computed, reactive} from 'vue'
 import { ElMessage } from 'element-plus';
 import {getBlockPage} from '@/api/block';
-const tableData = ref([])
+import router from '@/router';
+let tableData = reactive([])
 const currentPage4 = ref(1)
 const total = ref(0)
 const pageSize4 = ref(10)
@@ -113,15 +132,17 @@ const getBlockPageData = async (pager = 1) => {
   try {
     currentPage4.value = pager;
     const response = await getBlockPage(currentPage4.value, pageSize4.value)
-    tableData.value = response.data.list;
+    tableData = response.data.list;
+    console.log(tableData);
     total.value = response.data.total;
-    tableData.value.forEach(item => {
+    tableData.forEach(item => {
       const percentage = (item.gasused / item.gaslimit) * 100;
       item.percentage = percentage;
+      item.ratio = (item.gasused / item.gaslimit * 100).toFixed(0)
     })
 
     const currentTime = Math.floor(Date.now() / 1000);
-    tableData.value.forEach(item => {
+    tableData.forEach(item => {
       const timestamp = item.timestamp;
       const timeDifferenceInSeconds  = currentTime - timestamp;
       let formattedTime;
@@ -147,7 +168,7 @@ const getBlockPageData = async (pager = 1) => {
 }
 const gaspricetotal = computed(()=>{
   let total = 0;
-  tableData.value.forEach(item => {
+  tableData.forEach(item => {
     const gasused = parseFloat(item.gasused);
     const gasprice = item.gasprice || 0;
     const result = gasused * parseFloat(gasprice) / 10**18;
@@ -156,11 +177,10 @@ const gaspricetotal = computed(()=>{
     return total === 0 ? '0' : total.toFixed(7);
 })
 const addGaspriceTotalToTableData = () => {
-      tableData.value.forEach(item => {
+      tableData.forEach(item => {
         item.gaspriceTotal = gaspricetotal.value;
       });
-      console.log(tableData.value);
-    };
+};
 
 const handleSizeChange = (val) => {
   getBlockPageData()
@@ -181,9 +201,16 @@ function copyToClipboard(text,row) {
           ElMessage.error('Copy failed, please copy manually!');
         });
     }
-    onMounted( () => {
+onMounted(() => {
   getBlockPageData()
 })
+function goTransactionPage(count, hash) {
+  if (count == 0) {
+    return
+  } else {
+    router.push({ name: 'txs', params: { block: hash } })
+  }
+}
 </script>
 
 <style scoped>
@@ -215,19 +242,21 @@ function copyToClipboard(text,row) {
 }
 .box-table{
   margin: 10px 2rem;
+  background-color: #fff;
+  border-radius: 15px;
 }
 .box-table_header{
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin: 10px 0;
+  padding:  12px;
 }
 .table_header{
   width: 100%;
+  padding: 30px 12px 30px;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  margin: 10px 0;
   color: #6c757d;
   font-size: 14px;
 }
@@ -245,12 +274,13 @@ function copyToClipboard(text,row) {
     margin: 0;
   }
 }
-.demonstration span{
-  font-size: 12px;
-  color: #6c757d;
+.demonstration p{
+  font-size: 14.4992px;
+  color: #000;
 }
 .skyblue-text{
-  color: #0693cc;
+  color: #0784C3;
+  font-size: 14.4992px;
 }
 .responsive-aside {
   width: 0rem;
@@ -263,5 +293,10 @@ function copyToClipboard(text,row) {
     opacity: 0.5;
     /* background-color: #fff;  */
   }
+}
+:deep(.el-table--default .cell) {
+  font-size: 12.5625px;
+  color: #212529;
+  font-weight: 500;
 }
 </style>

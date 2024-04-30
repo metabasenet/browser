@@ -1,20 +1,19 @@
 <template>
   <div class="box">
-
     <el-container class="container-xxl">
       <el-aside class="responsive-aside"></el-aside>
       <el-main>
         <el-row>
           <el-col :span="24">
             <div class="grid-content ep-bg-purple-dark grid-content_h3">
-              <h3>Block<span class="header_span">#{{ blockNumber }}</span></h3>
+              <h3 style="font-size: 18.75px; color: #212529; font-weight: 500;">Block<span class="header_span">#{{ blockNumber }}</span></h3>
             </div>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
             <div class="grid-content ep-bg-purple-dark grid-content_h0">
-              <el-button type="primary">OverView</el-button>
+              <el-button style="width: 70.73px; height:  28.44px; background-color: #0784C3; font-size: 12.5625px; color: #fff; border-radius: 8px" >OverView</el-button>
             </div>
           </el-col>
         </el-row>
@@ -23,27 +22,29 @@
             <el-descriptions v-model="blockDetails" size="default" class="grid-content_h2 " :column="1" align="left">
               <el-descriptions-item label="Block Height:" label-align="left" label-class-name="my-label"
                 class-name="my-content" label-width="30%">
-                <div class="block_height"> <span style="margin-right:5px">{{ blockDetails.number }}</span>
+                <div class="block_height"> 
+                  <span style="margin-right:5px; font-size: 14.4992px; color: #212529;" >{{ blockDetails.number }}</span>
                   <el-tooltip content="View previous block" placement="top">
                     <el-button icon="ArrowLeft" @click="ArrowLeft" />
-                  </el-tooltip><el-tooltip content="View next block" placement="top">
+                  </el-tooltip>
+                  <el-tooltip content="View next block" placement="top">
                     <el-button icon="ArrowRight" @click="ArrowRight" />
                   </el-tooltip>
                 </div>
               </el-descriptions-item>
               <el-descriptions-item label=" Timestamp:" label-align="center" align="left" label-class-name="my-label">
-                <div class="block_height">
-                  <el-icon>
+                <div class="block_height" >
+                  <el-icon style="vertical-align: middle;">
                     <Timer />
-                  </el-icon> <span>{{ blockDetails.formattedTime }} ({{ greenwichTime }})</span>
+                  </el-icon> 
+                  <span style="vertical-align: middle; font-size: 14.4992px; color: #212529;">{{ blockDetails.formattedTime }} ({{ greenwichTime }})</span>
                 </div>
               </el-descriptions-item>
               <el-descriptions-item label="Transactions:" label-align="center" align="left" label-class-name="my-label">
                 <div class="block_height">
-                  <el-tooltip :content="`${blockDetails.transactioncount}`" placement="top"><router-link
-                      class="skyblue-text" to="/txs">
-                      <span>{{
-                        blockDetails.transactioncount }}</span></router-link></el-tooltip>
+                  <el-tooltip :content="`${blockDetails.transactioncount}`" placement="top"><div
+                      class="skyblue-text" style="cursor: pointer;" @click="goTransactionPage">
+                      <span>{{ blockDetails.transactioncount }}</span></div></el-tooltip>
                 </div>
                 <!-- <span>and </span>
             <el-tooltip content="Copy Address" placement="top"><router-link class="skyblue-text" to="/address">29
@@ -66,7 +67,7 @@
                 </div>
               </el-descriptions-item>
               <el-descriptions-item label="Difficulty:" label-align="center" align="left" label-class-name="my-label">
-                <div class="block_height"> <span>{{ blockDetails.difficulty }}</span></div>
+                <div class="block_height"> <span style="font-size: 14.4992px; color: #212529;">{{ blockDetails.difficulty }}</span></div>
 
               </el-descriptions-item>
               <el-descriptions-item label="Total Difficulty:" label-align="center" align="left"
@@ -82,18 +83,17 @@
 
               </el-descriptions-item>
               <el-descriptions-item label="Gas Used:" label-align="center" align="left" label-class-name="my-label">
-                <div class="block_height"><span>{{ blockDetails.gasused }}</span></div>
-
+                <div class="block_height"><span  style="font-size: 14.4992px; color: #212529;">{{ blockDetails.gasused }}</span></div>
               </el-descriptions-item>
               <el-descriptions-item label="Gas Limit:" label-align="center" align="left" label-class-name="my-label">
-                <div class="block_height"><span>{{ blockDetails.gaslimit }}</span></div>
+                <div class="block_height"><span  style="font-size: 14.4992px; color: #212529;">{{ blockDetails.gaslimit }}</span></div>
 
               </el-descriptions-item>
               <el-descriptions-item label="Fees:" label-align="center" align="left" label-class-name="my-label">
                 <!-- <div class="block_height"><span style="margin-right:5px">0.004062755588941122 MNT</span>
             <el-tooltip content="open fee burn transaction" placement="top"><el-button
                 icon="Share"></el-button></el-tooltip></div> -->
-                <div class="block_height"><span>{{ blockDetails.gaspriceTotal }}MNT</span></div>
+                <div class="block_height"><span  style="font-size: 14.4992px; color: #212529;">{{ blockDetails.gaspriceTotal }}MNT</span></div>
               </el-descriptions-item>
               <el-descriptions-item label="Extra Data:" label-align="center" align="left" label-class-name="my-label">
                 <el-input style="height:auto" type="textarea" :disabled="true" :placeholder="blockDetails.extradata">
@@ -109,7 +109,7 @@
                 <el-descriptions class="grid-content" :column="1" align="left" v-model="blockDetails">
                   <el-descriptions-item label="Hash:" label-align="left" align="left" label-class-name="my-label"
                     class-name="my-content">
-                    <div class="block_height"><span>{{ blockDetails.hash }}</span></div>
+                    <div class="block_height"><span style="font-size: 14.4992px; color: #212529">{{ blockDetails.hash }}</span></div>
                   </el-descriptions-item>
                   <el-descriptions-item label="Parent Hash:" label-align="center" align="left"
                     label-class-name="my-label">
@@ -119,7 +119,7 @@
                   </el-descriptions-item>
                   <el-descriptions-item label="Nonce:" label-align="left" align="left" label-class-name="my-label">
                     <div class="block_height">
-                      <span>0x0000000000000000</span>
+                      <span style="font-size: 14.4992px; color: #212529">0x0000000000000000</span>
                     </div>
 
                   </el-descriptions-item>
@@ -130,10 +130,10 @@
         </el-row>
         <el-row>
           <el-col :span="24" class="grid-content_h1">
-            <el-icon>
+            <el-icon style="vertical-align: middle;">
               <Loading />
             </el-icon>
-            <span>
+            <span style="font-size: 12.5625px; color: #6C757D">
               Blocks are batches of transactions linked via cryptographic hashes. Any tampering of a block would
               invalidate
               all following blocks as all subsequent hashes would change. Learn more about this page in our Knowledge
@@ -147,7 +147,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, onMounted, computed, reactive } from "vue";
 import { useRouter } from "vue-router";
 import { ElMessage } from 'element-plus';
 import { getBlockDetail } from '@/api/block';
@@ -158,6 +158,7 @@ const copiedText = ref('');
 const router = useRouter();
 const route = useRouter();
 const greenwichTime = ref('')
+
 const { blockNumber } = defineProps({
   blockNumber: {
     type: [Number, String],
@@ -172,17 +173,14 @@ const fetchBlockDetails = async () => {
   try {
     if (blockNumberAsNumber.value !== null) {
       const response = await getBlockDetail(blockNumberAsNumber.value);
-      console.log(response);
       blockDetails.value = response.data;
       const gaspricetotal = computed(() => {
         const gasused = parseFloat(blockDetails.value.gasused);
           const gasprice = blockDetails.value.gasprice || 0;
-          console.log(gasprice)
           const result = gasused * parseFloat(gasprice) 
         return ethers.formatEther(result);
       })
       blockDetails.value.gaspriceTotal = gaspricetotal.value;
-      console.log(blockDetails.value);
     }
     timestamps()
   } catch (error) {
@@ -248,9 +246,16 @@ function copyToClipboard(text) {
       ElMessage.error('Copy failed, please copy manually!');
     });
 }
-onMounted(() => {
-  fetchBlockDetails();
+onMounted(async () => {
+  await fetchBlockDetails();
 })
+function goTransactionPage () {
+  if (blockDetails.value.transactioncount == 0) {
+    return
+  } else {
+    router.push({ name: 'txs', params: { block: blockDetails.value.hash}})
+  }
+}
 </script>
 
 <style scoped>
@@ -274,7 +279,7 @@ onMounted(() => {
 
 .grid-content_h1 {
   /* margin: 0 2rem; */
-  padding: 19px 20px;
+  padding: 19px 35px;
 }
 
 .grid-content_h0 {
@@ -299,7 +304,7 @@ onMounted(() => {
 }
 
 .grid-content_h2 {
-  margin: 5px 1rem;
+  margin: 5px 2rem;
   padding: 19px 20px;
   background-color: #fff;
   border: 1px solid #dcdfe6;
@@ -330,12 +335,13 @@ onMounted(() => {
 
 .header_span {
   margin-left: 8px;
-  font-size: 13px;
-  color: #6c7589;
+  font-size: 14.4992px;
+  color: #6C757D;
 }
 
 .skyblue-text {
-  color: #0693cc;
+  color: #0784C3;
+  font-size: 14.4992px;
   margin-right: 5px;
 }
 
@@ -362,5 +368,18 @@ onMounted(() => {
   .grid-content_h0 {
     margin: 5px 1rem;
   }
+}
+:deep(.el-descriptions__label:not(.is-bordered-label)) {
+    font-size: 14.4992px;
+    color: #6C757D;
+}
+:deep(.el-textarea__inner) {
+  font-size: 14.4992px;
+  color: #6C757D;
+  background-color: #F8F9FA;
+}
+:deep(.el-collapse-item__header) {
+  font-size: 14.4992px;
+  color: #6C757D;
 }
 </style>

@@ -104,6 +104,7 @@ function handlePasswordView() {
   align-items: center;
   justify-content: center;
   height: 70vh;
+  margin-top: 1%;
 }
 
 .login-form {

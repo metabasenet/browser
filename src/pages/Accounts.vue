@@ -6,20 +6,20 @@
                 <el-row>
                     <el-col :span="24">
                         <div class="grid-content ep-bg-purple-dark grid-content_h3">
-                            <h3>Top Accounts by MNT Balance</h3>
+                            <h3 style="font-size: 18.75px; color: #212529; font-weight: 500;">Top Accounts by MNT Balance</h3>
                         </div>
                     </el-col>
                 </el-row>
                 <el-row class="box-table">
                     <div class="demo-pagination-block box-table_header">
                         <div class="demonstration">
-                            <p>More than {{ total }} accounts found (24,058,964.14 MNT)</p><span>(Showing the last 10,000
-                                top accounts only)</span>
+                            <p style="font-size: 14.4992px; color: #212529;">More than <span style="font-size: 14.4992px; color: #0784C3;">{{ total }} accounts found</span> (24,058,964.14 MNT)</p>
+                            <span style="font-size: 12.6868px; color: 6C757D">(Showing the last 10,000 top accounts only)</span>
                         </div>
                     </div>
-                    <el-table :data="tableData" style="width: 100%" size="default" >
-                        <el-table-column type="index" width="100" label="Number" align="center"/>
-                        <el-table-column prop="address" label="Address" show-overflow-tooltip width="450" align="center">
+                    <el-table :data="tableData" style="width: 100%" size="default" :row-style="{ height: '70px' }">
+                        <el-table-column type="index" label="#" />
+                        <el-table-column prop="address" label="Address" show-overflow-tooltip width="450">
                             <template v-slot="scope">
                                 <router-link class="skyblue-text"
                                     :to="{ name: 'address', params: { address: scope.row.address } }">
@@ -27,14 +27,20 @@
                             </template>
                         </el-table-column>
                         <!-- <el-table-column prop="percentage" label="Name Tag" align="center"></el-table-column> -->
-                        <el-table-column prop="balance" label="Balance" align="center">
-                        </el-table-column>
-                        <el-table-column prop="percentage" label="Percentage" align="center" width="300">
+                        <el-table-column style="font-size: 100px;" prop="balance" label="Balance" >
                             <template v-slot="scope">
-                                {{ scope.row.percentage }}%
+                                <span style="font-size: 14.4992px; color: #212529;">{{ scope.row.balance }}</span>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="txnCount" label="Txn Count" align="center" width="200">
+                        <el-table-column prop="percentage" label="Percentage">
+                            <template v-slot="scope">
+                                <span style="font-size: 14.4992px; color: #212529;">{{ scope.row.percentage }}%</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="txnCount" label="Txn Count" >
+                            <template v-slot="scope">
+                                <span style="font-size: 14.4992px; color: #212529;">{{ scope.row.txnCount }}</span>
+                            </template>
                         </el-table-column>
                     </el-table>
                     <div class="demo-pagination-block table_header">
@@ -48,7 +54,6 @@
             </el-main>
             <el-aside class="responsive-aside"></el-aside>
         </el-container>
-
     </div>
 </template>
 
@@ -174,14 +179,14 @@ onMounted(() => {
 .box-table {
     margin: 10px 2rem;
     background-color: #fff;
-    border-radius: 10px;
+    border-radius: 15px;
 }
 
 .box-table_header {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    margin: 10px 0;
+    padding: 20px 3px 10px;
 }
 
 .table_header {
@@ -189,7 +194,7 @@ onMounted(() => {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    margin: 10px 0;
+    padding: 20px 12px 20px;
     color: #6c757d;
     font-size: 14px;
 }
@@ -223,6 +228,12 @@ onMounted(() => {
 }
 
 .skyblue-text {
-    color: #0693cc;
+    color: #0784C3;
+    font-size: 14.4992px;
+}
+:deep(.el-table--default .cell) {
+  font-size: 12.5625px;
+  color: #212529;
+  font-weight: 500;
 }
 </style>

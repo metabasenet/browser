@@ -8,6 +8,7 @@ import 'virtual:svg-icons-register'
 import MyGlobalComponentsPlugin from './components/index.js';
 import pinia from './store';
 import './permisstion';
+import '@/common/common.css'
 const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)

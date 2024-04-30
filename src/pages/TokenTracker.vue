@@ -1,120 +1,68 @@
 <template>
   <div class="box">
-    
     <el-container class="container-xxl">
       <el-aside class="responsive-aside" ></el-aside>
       <el-main>
         <el-row>
-      <el-col :span="24">
-        <div class="grid-content ep-bg-purple-dark grid-content_h3">
-          <h3>Token Tracker(ERC-20)</h3>
-        </div>
-      </el-col>
-    </el-row>
-    <el-row class="box-table">
-      <div class="demo-pagination-block box-table_header">
-        <div class="demonstration">A total of {{total}} Token Contracts found</div>
-        <el-input style="width: 15rem" placeholder="Please enter your search" v-model="searchText" prefix-icon="Search"
-          @input="handleSearchInput" />
-      </div>
-      <el-table size="default" :header-cell-style="{ color: '#0784c3' }" :data="filteredData"
-        :default-sort="{ prop: ['price', 'chage', 'volume', 'virculating'], order: 'descending' }" style="width: 100%">
-        <el-table-column prop="contractaddress" label="Token" width="200" align="center">
-          <template v-slot="scope">
-           <div class="token_div">
-            <el-icon>
-              <Position />
-            </el-icon>
-            <router-link class="skyblue-text" :to="{ name:'token',params:{address:scope.row.contractAddress} }">{{ scope.row.contractAddress }}</router-link>
-            <el-tooltip content="Cross-Chain" placement="top">
-              <el-icon>
-                <InfoFilled />
-              </el-icon>
-            </el-tooltip>
-           </div>
-          </template>
-        </el-table-column>
-        <el-table-column
-          header-align="center"
-          align="center"
-          prop="ercName"
-          label="Token name" >
-        </el-table-column>
-        <el-table-column
-          header-align="center"
-          align="center"
-          prop="ercSymbol"
-          label="Token symbol" >
-        </el-table-column>
-        <el-table-column
-          header-align="center"
-          align="center"
-          prop="totalSupply"
-          label="totalsupply" >
-        </el-table-column>
-        <el-table-column
-          header-align="center"
-          align="center"
-          prop="decimals"
-          label="decimals" >
-        </el-table-column>
-        <!-- <el-table-column prop="price" sortable label="Price" >
-          <template #header>
-            <el-tooltip content="Click for descending sort" placement="top">
-              <span>Price</span>
-            </el-tooltip>
-          </template>
-        </el-table-column>
-        <el-table-column prop="change" sortable label="Change (%)" width="180">
-          <template #header>
-            <el-tooltip content="Click for descending sort" placement="top">
-              <span>Change (%)</span>
-            </el-tooltip>
-          </template>
-        </el-table-column>
-        <el-table-column prop="volume" sortable label="Volume (24H)">
-          <template #header>
-            <el-tooltip content="Click for descending sort" placement="top">
-              <span>Volume (24H)</span>
-            </el-tooltip>
-          </template>
-        </el-table-column> -->
-        <!-- <el-table-column prop="virculating" sortable label="Circulating Market Cap ">
-          <template #header>
-            <el-tooltip content="Click for descending sort" placement="top">
-              <span>Circulating Market Cap</span>
-            </el-tooltip>
-            <el-tooltip content="Calculated by multiplying the number of tokens in
-circulating supply across all chains with the current market
-price per token." placement="top">
-              <el-icon class="el-icon--right">
-                <QuestionFilled />
-              </el-icon>
-            </el-tooltip>
-          </template>
-        </el-table-column>
-        <el-table-column prop="onchain" label="Onchain Market Cap">
-          <template #header>
-            <span>Onchain Market Cap</span>
-            <el-tooltip content="Calculated by multiplying the token's Total Supply on MNT
-Smart Chain with the current market price per token.
-Numbers may be unrealistic if the onchain supply is much
-larger than the reported circulating supply." placement="top">
-              <el-icon class="el-icon--right">
-                <QuestionFilled />
-              </el-icon>
-            </el-tooltip>
-          </template>
-        </el-table-column> -->
-        <el-table-column prop="holders" label="Holders" align="center">
-        </el-table-column>
-      </el-table>
-      <div class="demo-pagination-block box-table_header">
-        <el-pagination background v-model:current-page="currentPage4" v-model:page-size="pageSize4" :page-sizes="[10, 25, 50, 100]"
-          small layout=" sizes, prev, pager, next" :total="total" @size-change="handleSizeChange"
-          @current-change="getTokenList" />
-      </div>
-    </el-row>
+          <el-col :span="24">
+            <div class="grid-content ep-bg-purple-dark grid-content_h3">
+              <h3 style="font-size: 18.75px; color: #212529; font-weight: 500;">Token Tracker(ERC-20)</h3>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row class="box-table">
+          <div class="demo-pagination-block box-table_header">
+            <div class="demonstration" style="font-size: 14.4992px; color: #000;">A total of <span style="font-weight: 700">{{total}}</span> Token Contracts found</div>
+            <el-input style="width: 15rem" placeholder="Please enter your search" v-model="searchText" prefix-icon="Search"
+              @input="handleSearchInput" />
+          </div>
+          <el-table size="default" :header-cell-style="{ color: '#0784c3', fontSize: '12.5625px' }" :data="filteredData"
+            :default-sort="{ prop: ['price', 'chage', 'volume', 'virculating'], order: 'descending' }" style="width: 100%" :row-style="{ height: '70px' }">
+            <el-table-column prop="contractaddress" label="Token" width="470">
+              <template v-slot="scope">
+              <div class="token_div">
+                <el-icon>
+                  <Position />
+                </el-icon>
+                <router-link class="skyblue-text" :to="{ name:'token',params:{address:scope.row.contractAddress} }">{{ scope.row.contractAddress }}</router-link>
+                <el-tooltip content="Cross-Chain" placement="top">
+                  <el-icon>
+                    <InfoFilled />
+                  </el-icon>
+                </el-tooltip>
+              </div>
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="ercName"
+              label="Token name" >
+              <template v-slot="scope"><span style="font-size: 14.4992px; color: #212529;">{{ scope.row.ercName }}</span></template>
+            </el-table-column>
+            <el-table-column
+              prop="ercSymbol"
+              label="Token symbol" >
+              <template v-slot="scope"><span style="font-size: 14.4992px; color: #212529;">{{ scope.row.ercSymbol }}</span></template>
+            </el-table-column>
+            <el-table-column
+              prop="totalSupply"
+              label="totalsupply" >
+              <template v-slot="scope"><span style="font-size: 14.4992px; color: #212529;">{{ scope.row.totalSupply }}</span></template>
+            </el-table-column>
+            <el-table-column
+              prop="decimals"
+              label="decimals" >
+              <template v-slot="scope"><span style="font-size: 14.4992px; color: #212529;">{{ scope.row.decimals }}</span></template>
+            </el-table-column>
+            <el-table-column prop="holders" label="Holders">
+              <template v-slot="scope"><span style="font-size: 14.4992px; color: #212529;">{{ scope.row.holders }}</span></template>
+            </el-table-column>
+          </el-table>
+          <div class="demo-pagination-block box-table_header">
+            <el-pagination background v-model:current-page="currentPage4" v-model:page-size="pageSize4" :page-sizes="[10, 25, 50, 100]"
+              small layout=" sizes, prev, pager, next" :total="total" @size-change="handleSizeChange"
+              @current-change="getTokenList" />
+          </div>
+        </el-row>
       </el-main>
       <el-aside class="responsive-aside" ></el-aside>
     </el-container>
@@ -214,13 +162,15 @@ onMounted(() => {
 
 .box-table {
   margin: 10px 2rem;
+  background-color: #fff;
+  border-radius: 15px;
 }
 
 .box-table_header {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin: 10px 0;
+  padding: 30px 15px 30px;
 }
 
 @media (max-width: 768px) {
@@ -232,7 +182,7 @@ onMounted(() => {
     }
 }
 .skyblue-text {
-  width: 7.5rem;
+  /* width: 7.5rem; */
   color: #0693cc;
   margin-right: 5px;
   white-space: nowrap;

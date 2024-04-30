@@ -14,7 +14,7 @@
                 </div>
                 <div class="header_price">
                   <svg-icon name="refuel" width=".85rem" height=".85rem" />
-                  <span>Gas:</span><span style="color: #0784c3;">1 GWei</span>
+                  <span>Gas:</span><span style="color: #0784c3;">{{ gasPrice }} GWei</span>
                 </div>
               </div>
             </el-col>
@@ -36,7 +36,7 @@
         <div class="header-menu"><el-row :gutter="10">
             <el-col :span="24">
               <!-- menu-trigger="click" -->
-              <el-menu ellipsis class="el-menu-popper-demo" :default-active="$route.path" router mode="horizontal"
+              <el-menu ellipsis class="el-menu-popper-demo"  router mode="horizontal"
                 :popper-offset="16">
                 <el-menu-item index="/">
                   <div class="el-img">
@@ -49,29 +49,24 @@
                 <el-sub-menu index="2">
                   <template #title>Blockchain</template>
                   <el-menu-item index="/blocks">View Blocks</el-menu-item>
-                  <el-menu-item index="/txs">Transactions</el-menu-item>
+                  <el-menu-item index="/txs/home">Transactions</el-menu-item>
                   <el-menu-item index="/accounts">Top Accounts</el-menu-item>
                 </el-sub-menu>
                 <el-sub-menu index="3" :popper-offset="8">
                   <template #title>Tokens</template>
                     <el-menu-item index="/tokens">Top Tokens<span>(ERC-20)</span></el-menu-item>
                     <el-menu-item index="/tokentxns">Token Transfers <span>(ERC-20)</span></el-menu-item>
-                    <el-menu-item index="3-3">item three</el-menu-item>
                 </el-sub-menu>
-                <el-sub-menu index="4">
-                    <template #title>Blockchain</template>
-                    <el-menu-item index="4-1">View Blocks</el-menu-item>
-                    <el-menu-item index="4-2">item two</el-menu-item>
-                    <el-menu-item index="4-3">item three</el-menu-item>
-                  </el-sub-menu>
-                  <el-menu-item  index="/login"><el-icon>
+                <el-menu-item  index="/login"><el-icon>
                       <User />
-                    </el-icon>Sign In</el-menu-item>
+                    </el-icon>Sign In
+                </el-menu-item>
                 </div>
                 
               </el-menu>
             </el-col>
-          </el-row></div>
+          </el-row>
+        </div>
       </el-main>
       <el-aside class="responsive-aside"></el-aside>
     </el-container>
@@ -85,9 +80,12 @@ import router from '@/router'
 import { getSearchInfo } from '@/api/home';
 import { getPriceInfo } from '@/api/headerprice';
 import { ElMessage } from 'element-plus'
+import { ethers, formatUnits } from "ethers";
+import { config } from '@/config/config';
 const homeSearch = ref('')
 const select = ref('');
 const headerPrice = ref('')
+const gasPrice = ref()
 const getSearch = async () => {
   if (!homeSearch.value) {
     ElMessage.warning('Please enter your search')
@@ -138,8 +136,14 @@ const getHeaderPrice = async () => {
     console.error('Error fetching data:', error)
   }
 }
+let getGasPrice = async ()=>{
+  const provider = new ethers.JsonRpcProvider(config.rpc_adress);
+  const res = await provider.send("eth_gasPrice");
+  gasPrice.value = formatUnits(parseInt(res, 16), 9)
+}
 onMounted(()=>{
   getHeaderPrice()
+  getGasPrice()
 })
 </script>
 
@@ -174,6 +178,7 @@ onMounted(()=>{
 
 .header_price {
   display: flex;
+  align-items: center;
   color: #6c757d;
   font-size: 0.9rem;
 }

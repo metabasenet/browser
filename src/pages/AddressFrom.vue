@@ -6,9 +6,13 @@
         <el-row>
           <el-col :span="24">
             <div class="grid-content darkb_button grid-content_h3">
-              <div>
-                <h3>{{ contract }}</h3>
-                <span class="ellipsis-text">{{ address }}</span>
+              <div style="display: flex; justify-content: flex-start; align-items: center">
+                <img src="@/images/Avatar.png"
+                  style="width: 24px; height: 24px; border-radius: 100px; vertical-align: middle; margin-right: 5px;"
+                  alt="">
+                <span style="font-size: 18.75px; color: #212529; margin-right: 6px; ">Address</span>
+                <!-- <h3>{{ contract }}</h3> -->
+                <span class="ellipsis-text" style="font-size: 15px; color: #212529">{{ address }}</span>
                 <el-tooltip v-if="!istoCopied" content="Copy Address" placement="top">
                   <el-button text icon="CopyDocument" @click="copyToClipboards(address)">
                   </el-button>
@@ -18,7 +22,7 @@
                   </el-button>
                 </el-tooltip>
               </div>
-              <div>
+              <!-- <div>
                 <el-button type="primary">
                   Buy<el-icon class="el-icon--right"><arrow-down /></el-icon>
                 </el-button>
@@ -28,7 +32,7 @@
                 <el-button type="primary">
                   Gaming<el-icon class="el-icon--right"><arrow-down /></el-icon>
                 </el-button>
-              </div>
+              </div> -->
             </div>
           </el-col>
         </el-row>
@@ -39,10 +43,12 @@
             </p>
             <div class="ContentPlaceHolder1_lblWarning">
               <div>
-                <el-tag type="info">ERC-20</el-tag>
-                <el-tag type="info">Cross-Chain</el-tag>
-                <el-tag type="info"># Binance</el-tag>
-                <el-tag type="info"># Binance-Peg</el-tag>
+                <el-tag type="info" style="color: #000; background-color: #fff; border-radius: 10px;">ERC-20</el-tag>
+                <el-tag type="info"
+                  style="color: #000; background-color: #fff; border-radius: 10px;">Cross-Chain</el-tag>
+                <el-tag type="info" style="color: #000; background-color: #fff; border-radius: 10px;"># Binance</el-tag>
+                <el-tag type="info" style="color: #000; background-color: #fff; border-radius: 10px;">#
+                  Binance-Peg</el-tag>
               </div>
               <div>
                 <el-dropdown style="margin-right: 5px">
@@ -56,11 +62,11 @@
                   </el-button>
                   <template #dropdown>
                     <el-dropdown-menu>
-                      <el-dropdown-item>Action 1</el-dropdown-item>
+                      <!-- <el-dropdown-item>Action 1</el-dropdown-item>
                       <el-dropdown-item>Action 2</el-dropdown-item>
                       <el-dropdown-item>Action 3</el-dropdown-item>
                       <el-dropdown-item>Action 4</el-dropdown-item>
-                      <el-dropdown-item>Action 5</el-dropdown-item>
+                      <el-dropdown-item>Action 5</el-dropdown-item> -->
                     </el-dropdown-menu>
                   </template>
                 </el-dropdown>
@@ -73,10 +79,10 @@
             <div class="grid-content ep-bg-purple-dark blocks_header">
               <ul class="over_ul">
                 <li>
-                  <h3>Overview</h3>
+                  <h3 style="font-size: 14.4992px; color: #212529; font-weight: 500">Overview</h3>
                 </li>
                 <li class="over_li">
-                  <p>MNT BALANCE</p>
+                  <p class="title-item">MNT BALANCE</p>
                   <!-- <el-tooltip class="box-item" effect="dark"
                 :content="individualQueryDetails && individualQueryDetails.totalsupply ? individualQueryDetails.totalsupply.toString() : ''"
                 placement="top-start">
@@ -84,23 +90,24 @@
               </el-tooltip> -->
                   <!-- <span style="font-weight: bold;"> ETH </span> -->
                   <el-tooltip class="box-item" effect="dark" content="CSupply: 551,557.859909" placement="top-start">
-                    <span>{{ getByBalance.balance }}</span>
+                    <span class="content-item">{{ getByBalance.balance }}</span>
                   </el-tooltip>
                 </li>
                 <li class="over_li">
-                  <p>MNT VALUE</p>
-                  <span>$5,250,039,228.27 (@ $544.76/BNB)</span>
+                  <p class="title-item">MNT VALUE</p>
+                  <span class="content-item">$5,250,039,228.27 (@ $544.76/BNB)</span>
                 </li>
                 <li class="over_li">
-                  <p>TOKEN HOLDINGS</p>
+                  <p class="title-item">TOKEN HOLDINGS</p>
                   <div class="over_div">
                     <el-select v-model="values" placeholder=">$96,375" filterable style="width: 100%">
                       <template #header>
                         <p class="erc_p">ERC-20 Tokens</p>
                       </template>
                       <el-option v-for="(item, index) in cities" :key="index" :label="item.ercName"
-                         :value="item.decimals || ''">
-                        <router-link v-if="item.decimals !== null" :to="{ name: 'token', params: { address: item.address } }"
+                        :value="item.decimals || ''">
+                        <router-link v-if="item.decimals !== null"
+                          :to="{ name: 'token', params: { address: item.address } }"
                           style="display: flex; height:50px; flex-direction: column; line-height: 1.5; padding-top: 5px; padding-bottom: 5px;">
                           <p style="margin: 0; color: black;
                             font-weight:400;
@@ -120,10 +127,10 @@
             <div class="grid-content ep-bg-purple-dark blocks_header">
               <ul class="over_ul">
                 <li>
-                  <h3>More Info</h3>
+                  <h3 style="font-size: 14.4992px; color: #212529; font-weight: 500">More Info</h3>
                 </li>
                 <li class="over_li">
-                  <p>PRIVATE NAME TAGS</p>
+                  <p class="title-item">PRIVATE NAME TAGS</p>
                   <el-button icon="Plus" round>Add</el-button>
                   <!-- <el-tooltip class="box-item" effect="dark" content="Top Left prompts info" placement="top-start">
                     <span class="ellipsis-text">604,999.999959 </span>
@@ -134,29 +141,28 @@
                   </el-tooltip> -->
                 </li>
                 <li class="over_li">
-                  <p>LAST TXN SENT</p>
+                  <p class="title-item">LAST TXN SENT</p>
                   <div class="over_div">
                     <el-tooltip class="box-item" effect="dark" :content="address" placement="top-start">
-                      <router-link class="skyblue-text ellipsis-text"
+                      <router-link style="font-size: 14.4992px; color: #0784C3;" class="skyblue-text ellipsis-text"
                         :to="{ name: 'address', params: { address: address } }">{{
-                          address
+                        address.substring(0,30) + '...'
                         }}</router-link>
                     </el-tooltip>
-                    <span>from 12 hrs ago</span>
+                    <!-- <span class="content-item">from 12 hrs ago</span> -->
                   </div>
 
                 </li>
                 <li class="over_li">
-                  <p>TOTAL TRANSFERS</p>
-                  <span>58,667,724</span>
-                  <span>ETH</span>
-                  <el-tooltip class="box-item" effect="dark"
+                  <p class="title-item">TOTAL TRANSFERS</p>
+                  <span class="content-item">{{ total }}</span>
+                  <!-- <el-tooltip class="box-item" effect="dark"
                     content="This count of token transfers is updated every few hours instead of in real-time"
                     placement="top-start">
-                    <el-icon>
+                    <el-icon style="vertical-align: middle; margin-bottom: 4px;">
                       <Warning />
                     </el-icon>
-                  </el-tooltip>
+                  </el-tooltip> -->
                 </li>
               </ul>
             </div>
@@ -165,10 +171,10 @@
             <div class="grid-content ep-bg-purple-dark blocks_header">
               <ul class="over_ul">
                 <li>
-                  <h3>Other Info</h3>
+                  <h3 style="font-size: 14.4992px; color: #212529; font-weight: 500">Other Info</h3>
                 </li>
                 <li class="over_li">
-                  <p>TOKEN CONTRACT</p>
+                  <p class="title-item">TOKEN CONTRACT</p>
                   <div class="over_div">
                     <el-tooltip class="box-item" effect="dark" content="Contract" placement="top-start">
                       <el-icon>
@@ -176,9 +182,9 @@
                       </el-icon>
                     </el-tooltip>
                     <el-tooltip class="box-item" effect="dark" :content="address" placement="top-start">
-                      <router-link class="skyblue-text ellipsis-text"
+                      <router-link class="skyblue-text ellipsis-text" style="font-size: 14.4992px; color: #0784C3"
                         :to="{ name: 'address', params: { address: address } }">{{
-                          address }}</router-link>
+                        address.substring(0,25) + '...' }}</router-link>
                     </el-tooltip>
                     <el-tooltip v-if="!istoCopied" content="Copy Address" placement="top">
                       <el-button text icon="CopyDocument" @click="copyToClipboards(address)">
@@ -191,20 +197,20 @@
                   </div>
                 </li>
                 <li class="over_li">
-                  <p>HOLDERS</p>
-                  <span>1,886,491 (0.00%)</span>
+                  <p class="title-item">HOLDERS</p>
+                  <span class="content-item">1,886,491 (0.00%)</span>
                 </li>
                 <li class="over_li">
-                  <p>TOTAL TRANSFERS</p>
-                  <span>58,667,724</span>
-                  <span>ETH</span>
-                  <el-tooltip class="box-item" effect="dark"
+                  <p class="title-item">TOTAL TRANSFERS</p>
+                  <span class="content-item">{{ total }}</span>
+
+                  <!-- <el-tooltip class="box-item" effect="dark"
                     content="This count of token transfers is updated every few hours instead of in real-time"
                     placement="top-start">
-                    <el-icon>
+                    <el-icon style="vertical-align: middle; margin-bottom: 4px;">
                       <Warning />
                     </el-icon>
-                  </el-tooltip>
+                  </el-tooltip> -->
                 </li>
               </ul>
             </div>
@@ -216,49 +222,55 @@
               <el-tab-pane label="Transactions" name="tab1">
                 <el-row class="box-table">
                   <div class="demo-pagination-block box-table_header">
-                    <div class="demonstration">
-                      More than {{ total }} transactions found
+                    <div class="demonstration" style="font-size: 14.4992px; color: #212529">
+                      More than <span style="font-size: 14.4992px; color: #0784C3">{{ total }}</span> transactions found
                     </div>
                     <el-pagination :pager-count="5" v-model:current-page="currentPage4" v-model:page-size="pageSize4"
                       :page-sizes="[10, 20, 30, 40]" background layout=" sizes, prev, pager, next, " :total="total"
                       small @size-change="handleSizeChange1" @current-change="getAddressList" />
                   </div>
-                  <el-table :data="tableData" style="width: 100%" size="default">
-                    <el-table-column prop="hash" label="Transaction Hash" align="center" width="120">
+                  <el-table :data="tableData" style="width: 100%" size="default" :row-style="{ height: '70px' }">
+                    <el-table-column prop="hash" label="Transaction Hash" width="125">
                       <template v-slot="scope">
                         <el-tooltip :content="scope.row.hash" placement="top">
                           <router-link class="skyblue-text ellipsis-text" :to="{
                             name: 'tx',
                             params: { hash: scope.row.hash },
-                          }">{{ scope.row.hash }}</router-link>
+                          }" style="font-size: 14.4992px; color: #0784C3">{{ scope.row.hash }}</router-link>
                         </el-tooltip>
                       </template>
                     </el-table-column>
-                    <el-table-column prop="method" label="Method" align="center" width="120">
+                    <el-table-column prop="method" label="Method" width="90">
                       <template v-slot="scope">
                         <el-tooltip :content="scope.row.method" placement="top">
-                          <el-button>{{ scope.row.method }}</el-button>
+                          <el-button v-if="scope.row.method"
+                            style="font-size: 10.8744px; color: #000; width: 4rem; height:24.88px; border-radius: 6px;">{{
+                            scope.row.method }}</el-button>
                         </el-tooltip>
                       </template>
                     </el-table-column>
-                    <el-table-column prop="blockNumber" label="Block" align="center" width="100">
+                    <el-table-column prop="blockNumber" label="Block" width="88">
                       <template v-slot="scope">
                         <router-link class="skyblue-text" :to="{
                           name: 'block',
                           params: { blockNumber: scope.row.blockNumber },
-                        }">{{ scope.row.blockNumber }}</router-link>
+                        }" style="font-size: 14.4992px; color: #0784C3">{{ scope.row.blockNumber }}</router-link>
                       </template>
                     </el-table-column>
-                    <el-table-column prop="formattedTime" label="Age" align="center" width="150">
+                    <el-table-column prop="formattedTime" label="Age" width="112">
+                      <template v-slot="scope">
+                        <span style="font-size: 14.4992px; color: #212529">{{ scope.row.formattedTime }}</span>
+                      </template>
                     </el-table-column>
-                    <el-table-column prop="from" label="From" align="center" width="250">
+                    <el-table-column prop="from" label="From" width="200" align="center">
                       <template v-slot="scope">
                         <div class="router_box">
                           <el-tooltip :content="scope.row.from" placement="top">
                             <router-link class="skyblue-text ellipsis-text" :to="{
                               name: 'address',
                               params: { address: scope.row.from },
-                            }">{{ scope.row.from }}</router-link>
+                            }" style="font-size: 14.4992px; color: #0784C3;">{{ scope.row.from.substring(0,10) + '...'
+                              }}</router-link>
                           </el-tooltip>
                           <el-tooltip v-if="!scope.row.isCopied" content="Copy Address" placement="top">
                             <el-button text icon="CopyDocument" @click="copyFormClipboard(scope.row.from, scope.row)">
@@ -268,22 +280,25 @@
                             <el-button text icon="Check" @click="copyFormClipboard(scope.row.from, scope.row)">
                             </el-button>
                           </el-tooltip>
-                          <el-button style="margin-left: 2.5rem" type="success" icon="right" circle plain />
+                          <el-button style="margin-left: 0.5rem" type="success" icon="right" circle plain />
                         </div>
                       </template>
                     </el-table-column>
-                    <el-table-column prop="to" label="To" align="center" width="250">
+                    <el-table-column prop="to" label="To" align="center" width="200">
                       <template v-slot="scope">
                         <div class="router_box">
                           <el-tooltip content="Contract" placement="top">
-                            <el-button style="margin-right: 5px" icon="Document">
+                            <el-button
+                              style="margin-right: 5px; margin-top: 5px; width: 12.69px; height: 15px; border-radius: 5px;"
+                              icon="Document">
                             </el-button>
                           </el-tooltip>
                           <el-tooltip :content="scope.row.to" placement="top">
                             <router-link class="skyblue-text ellipsis-text" :to="{
                               name: 'address',
                               params: { address: scope.row.to },
-                            }">{{ scope.row.to }}</router-link>
+                            }" style="font-size: 14.4992px; color: #0784C3">{{ scope.row.to.substring(0,10) + '...'
+                              }}</router-link>
                           </el-tooltip>
                           <el-tooltip v-if="!scope.row.istoCopied" content="Copy Address" placement="top">
                             <el-button text icon="CopyDocument" @click="copyToClipboard(scope.row.to, scope.row)">
@@ -296,21 +311,20 @@
                         </div>
                       </template>
                     </el-table-column>
-                    <el-table-column prop="value" label="Value" align="center">
+                    <el-table-column prop="TransactionFee" label="Txn Fee">
+                      <template v-slot="scope">
+                        <el-tooltip :content="`${scope.row.TransactionFee}`" placement="top">
+                          <span class="ellipsis-text" v-if="scope.row.TransactionFee"> {{ scope.row.TransactionFee
+                            }}<span style="font-size: 12px; color: #212529">(GWei)</span></span>
+                        </el-tooltip>
+                      </template>
+                    </el-table-column>
+                    <el-table-column prop="value" label="Value">
                       <template v-slot="scope">
                         <el-tooltip :content="`${scope.row.value}`" placement="top">
                           <span class="ellipsis-text">{{
                             scope.row.value
-                          }}</span>
-                        </el-tooltip>
-                      </template>
-                    </el-table-column>
-                    <el-table-column prop="TransactionFee" label="Txn Fee" align="center">
-                      <template v-slot="scope">
-                        <el-tooltip :content="`${scope.row.TransactionFee}`" placement="top">
-                          <span class="ellipsis-text">{{
-                            scope.row.TransactionFee
-                          }}</span>
+                            }}</span>
                         </el-tooltip>
                       </template>
                     </el-table-column>
@@ -322,54 +336,61 @@
                   </div>
                 </el-row>
               </el-tab-pane>
-              <el-tab-pane label="Internal Transactions" name="tab2">Config</el-tab-pane>
+              <!-- <el-tab-pane label="Internal Transactions" name="tab2">Config</el-tab-pane> -->
               <el-tab-pane label="Token Transfers(ERC-20)" name="tab3"><el-row class="box-table">
                   <div class="demo-pagination-block box-table_header">
-                    <div class="demonstration">
-                      Latest {{ totals }} ERC-20 Token Transfer Events (View All)
+                    <div class="demonstration" style="font-size: 14.4992px; color: #212529;">
+                      Latest {{ totals }} ERC-20 Token Transfer Events (<span
+                        style="font-size: 14.4992px; color: #0784C3;">View All</span>)
                     </div>
                     <el-pagination :pager-count="5" v-model:current-page="currentPage4" v-model:page-size="pageSize4"
                       :page-sizes="[10, 20, 30, 40]" background layout=" sizes, prev, pager, next, " :total="totals"
                       small @size-change="handleSizeChange" @current-change="getContractList" />
                   </div>
-                  <el-table :data="tableDatas" style="width: 100%" size="default">
-                    <el-table-column prop="transactionHash" label="Txn Hash">
+                  <el-table :data="tableDatas" style="width: 100%" size="default" :row-style="{ height: '70px' }">
+                    <el-table-column prop="transactionHash" label="Txn Hash" width="200">
                       <template v-slot="scope">
                         <el-tooltip :content="scope.row.to" placement="top">
                           <router-link class="skyblue-text ellipsis-text" :to="{
                             name: 'tx',
                             params: { hash: scope.row.transactionHash },
-                          }">{{
+                          }" style="font-size: 14.4992px; color: #0784C3;">{{
                             scope.row.transactionHash }}</router-link>
                         </el-tooltip>
                       </template>
                     </el-table-column>
-                    <el-table-column prop="method" label="Method" align="center" width="120">
+                    <el-table-column prop="method" label="Method" width="100">
                       <template v-slot="scope">
                         <el-tooltip :content="scope.row.method" placement="top">
-                          <el-button>{{ scope.row.method }}</el-button>
+                          <el-button
+                            style="font-size: 10.8744px; color: #000; width: 4rem; height:24.88px; border-radius: 6px;">{{
+                            scope.row.method }}</el-button>
                         </el-tooltip>
                       </template>
                     </el-table-column>
-                    <el-table-column prop="blockNumber" label="Block" align="center" width="100">
+                    <el-table-column prop="blockNumber" label="Block" width="88">
                       <template v-slot="scope">
                         <router-link class="skyblue-text" :to="{
                           name: 'block',
                           params: { blockNumber: scope.row.blockNumber },
-                        }">{{ scope.row.blockNumber
+                        }" style="font-size: 14.4992px; color: #0784C3">{{ scope.row.blockNumber
                           }}</router-link>
                       </template>
                     </el-table-column>
-                    <el-table-column prop="formattedTime" label="Age" align="center">
+                    <el-table-column prop="formattedTime" label="Age" width="128">
+                      <template v-slot="scope">
+                        <span style="font-size: 14.4992px; color: #0784C3">{{ scope.row.formattedTime }}</span>
+                      </template>
                     </el-table-column>
-                    <el-table-column prop="from" label="From" align="center" width="250">
+                    <el-table-column prop="from" label="From" align="center" width="200">
                       <template v-slot="scope">
                         <div class="router_box">
                           <el-tooltip :content="scope.row.from" placement="top">
                             <router-link class="skyblue-text ellipsis-text" :to="{
                               name: 'address',
                               params: { address: scope.row.from },
-                            }">{{ scope.row.from }}</router-link>
+                            }" style="font-size: 14.4992px; color: #0784C3;">{{ scope.row.from.substring(0,10) + '...'
+                              }}</router-link>
                           </el-tooltip>
                           <el-tooltip v-if="!scope.row.isCopied" content="Copy Address" placement="top">
                             <el-button text icon="CopyDocument" @click="copyFormClipboard(scope.row.from, scope.row)">
@@ -379,22 +400,25 @@
                             <el-button text icon="Check" @click="copyFormClipboard(scope.row.from, scope.row)">
                             </el-button>
                           </el-tooltip>
-                          <el-button style="margin-left: 2.5rem" type="success" icon="right" circle plain />
+                          <el-button style="margin-left: 1rem" type="success" icon="right" circle plain />
                         </div>
                       </template>
                     </el-table-column>
-                    <el-table-column prop="to" align="center" label="To" width="250">
+                    <el-table-column prop="to" align="center" label="To" width="200">
                       <template v-slot="scope">
                         <div class="router_box">
                           <el-tooltip content="Contract" placement="top">
-                            <el-button style="margin-right: 5px" icon="Document" @click="copyToClipboard(scope.row.to)">
+                            <el-button
+                              style="margin-right: 5px; margin-top: 4px; width: 12.69px; height: 15px; border-radius: 5px;"
+                              icon="Document" @click="copyToClipboard(scope.row.to)">
                             </el-button>
                           </el-tooltip>
                           <el-tooltip :content="scope.row.to" placement="top">
                             <router-link class="skyblue-text ellipsis-text" :to="{
                               name: 'address',
                               params: { address: scope.row.to },
-                            }">{{ scope.row.to }}</router-link>
+                            }" style="font-size: 14.4992px; color: #0784C3">{{ scope.row.to.substring(0,10) + '...'
+                              }}</router-link>
                           </el-tooltip>
                           <el-tooltip v-if="!scope.row.istoCopied" content="Copy Address" placement="top">
                             <el-button text icon="CopyDocument" @click="copyToClipboard(scope.row.to, scope.row)">
@@ -410,9 +434,9 @@
                     <el-table-column prop="value" align="center" label="Value">
                       <template v-slot="scope">
                         <el-tooltip :content="`${scope.row.value}`" placement="top">
-                          <span class="ellipsis-text">{{
+                          <span class="ellipsis-text" style="font-size: 14.4992px; color: #212529">{{
                             scope.row.value
-                          }}</span>
+                            }}</span>
                         </el-tooltip>
                       </template>
                     </el-table-column>
@@ -420,8 +444,8 @@
                   </el-table>
                   <div class="card-footer">
                     <router-link to="/tokentxns" class="view-all">
-                      <span>VIEW ALL ERC-20 TRANSACTIONS </span>
-                      <el-icon style="margin-left:3px">
+                      <span style="font-size: 12px; color: #6C757D">VIEW ALL ERC-20 TRANSACTIONS </span>
+                      <el-icon style="margin-left:3px; vertical-align: middle">
                         <Right />
                       </el-icon>
                     </router-link>
@@ -434,9 +458,7 @@
                 </el-row>
               </el-tab-pane>
               <!-- <el-tab-pane label="NFT Transfers" name="tab4">Task</el-tab-pane> -->
-
             </el-tabs>
-
           </el-col>
         </el-row>
       </el-main>
@@ -446,10 +468,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted, defineProps } from "vue";
+import { ref, onMounted, defineProps, reactive } from "vue";
 import { useRoute } from "vue-router";
 import { ElMessage } from "element-plus";
-import { ethers } from "ethers";
+import { ethers, formatUnits } from "ethers";
+import {config} from '@/config/config'
 import {
   getAddressPage,
   getContractAddress,
@@ -463,10 +486,10 @@ const { address } = defineProps({
   },
 });
 const istoCopied = ref(false);
-const tableData = ref([]);
+let tableData = reactive([]);
 const total = ref(0);
 const totals = ref(0);
-const tableDatas = ref([]);
+let tableDatas = reactive([]);
 const cities = ref([])
 const values = ref('')
 // const individualQueryDetails = ref({})
@@ -508,16 +531,16 @@ const getContractList = async (pager = 1) => {
         pageSize4.value
       );
 
-      tableDatas.value = response.data.list;
-      tableDatas.value.forEach((item) => {
+      tableDatas = response.data.list;
+      tableDatas.forEach((item) => {
           item.method = item.method ||item.methodHash;
         const decimals = item.decimals || 0;
             const values = item.value || 0;
-            item.value = ethers.formatUnits(parseInt(values, 16).toString(), decimals);
+            item.value = formatUnits(parseInt(values, 16).toString(), decimals);
       });
       totals.value = response.data.total;
       const currentTime = Math.floor(Date.now() / 1000);
-      tableDatas.value.forEach((item) => {
+      tableDatas.forEach((item) => {
         const timestamp = item.timestamp;
         const timeDifferenceInSeconds = currentTime - timestamp;
         let formattedTime;
@@ -556,15 +579,15 @@ const getAddressList = async (pager = 1) => {
         currentPage4.value,
         pageSize4.value
       );
-      tableData.value = response.data.list;
+      tableData = response.data.list;
       total.value = response.data.total;
       timestamps();
-      tableData.value.forEach((item) => {
-        item.TransactionFee = item.cumulativeGasUsed * item.effectiveGasPrice;
+      tableData.forEach((item) => {
+        item.TransactionFee = formatUnits(Math.floor((item.cumulativeGasUsed * item.effectiveGasPrice)).toString(), 9);
         item.method = item.method ||item.methodHash;
         const decimals = item.decimals || 0;
             const values = item.value || 0;
-            item.value = ethers.formatUnits(parseInt(values, 16).toString(), decimals);
+            item.value = formatUnits(parseInt(values, 16).toString(), decimals);
       });
     }
   } catch (error) {
@@ -585,16 +608,14 @@ const getSelectList = async () => {
   try {
     if (address !== null) {
       const response = await getselectAddress(address);
-      console.log(response.data);
       cities.value = response.data || [];
-      console.log(cities.value);
     }
   } catch (error) {
     console.error("Error fetching details:", error);
   }
 };
 const getContractOrAddress = async () => {
-  const provider = new ethers.BrowserProvider(window.ethereum);
+  const provider = new ethers.JsonRpcProvider(config.rpc_adress);
   try {
     await provider.getCode(address).then(code => {
       if (code.length > 4) {
@@ -609,7 +630,7 @@ const getContractOrAddress = async () => {
 }
 const timestamps = () => {
   const currentTime = Math.floor(Date.now() / 1000);
-  tableData.value.forEach((item) => {
+  tableData.forEach((item) => {
     const timestamp = item.timestamp;
     const timeDifferenceInSeconds = currentTime - timestamp;
     let formattedTime;
@@ -777,8 +798,7 @@ onMounted(() => {
   width: 100%;
   text-align: center;
   padding: 15px 0;
-  color: #6c757d;
-  font-size: 16px;
+  border-radius: 0 0 12px 12px;
   background-color: #f8f9fa;
   /* border: 1px solid #e6e6e6; */
 
@@ -859,7 +879,7 @@ onMounted(() => {
 }
 
 .ellipsis-text {
-  width: 7.125rem;
+  /* width: 7.125rem; */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -872,8 +892,8 @@ onMounted(() => {
 }
 
 .blocks_heade_p {
-  color: #6c757d;
-  font-size: 14px;
+  color: #6C757D;
+  font-size: 14.4992px;
 }
 
 .el-tag {
@@ -881,11 +901,12 @@ onMounted(() => {
   margin-right: 0.625rem;
 }
 
-.darkb_button {
+/* .darkb_button {
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
+  justify-content: flex-start;
+  align-items: center; 
+  flex-wrap: wrap; 
+} */
 
 .ContentPlaceHolder1_lblWarning {
   display: flex;
@@ -914,5 +935,18 @@ onMounted(() => {
 .demo-tabs {
   background-color: #fff;
   border-radius: 15px;
+}
+.title-item {
+  font-size:  12px;
+  color:  #6C757D;
+}
+.content-item {
+  font-size: 14.4992px;
+  color: #212529;
+}
+:deep(.el-table--default .cell) {
+  font-size: 12.5625px;
+  color: #212529;
+  font-weight: 500;
 }
 </style>

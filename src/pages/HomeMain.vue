@@ -5,118 +5,129 @@
       <el-aside class="responsive-aside"></el-aside>
       <el-main>
         <div class="container">
-          <el-row justify="center" align="middle">
+          <el-row justify="center" class="homeOne-itemone">
             <el-col :span="12" :xs="24">
-              <h2>MNT Smart Chain Explorer</h2>
+              <h2 class="home-title">MNT Smart Chain Explorer</h2>
             </el-col>
           </el-row>
-          <el-row justify="center" align="middle">
-            <el-col :span="12" class="drop_search" :xs="22" :sm="22" :md="20" :lg="12">
-              <el-input v-model="homeSearch" placeholder="Search by Address / Txn Hash / Block / Token / Domain Name"
-                style="max-width: 100%;height:100%;border:none" class="input-with-select">
-                <template #prepend>
-                  <el-select v-model="select" placeholder="All Filters">
-                    <el-option label="All Filters" value="" />
-                    <el-option label="Block" value="1" />
-                    <el-option label="Txn Hash" value="2" />
-                    <el-option label="Address" value="3" />
-                    <el-option label="Contract" value="4" />
+          <el-row justify="center" class="homeOne-itemtwo">
+            <el-col :span="24" :xs="22" :sm="22" :md="20" :lg="12">
+              <div class="input">
+                <div class="select">
+                  <el-select v-model="select" placeholder="All Filters" style="width: 100px; margin-right: 3px;">
+                    <el-option label="All Filters" value="1" />
+                    <el-option label="Block" value="2" />
+                    <el-option label="Txn Hash" value="3" />
+                    <el-option label="Address" value="4" />
+                    <el-option label="Contract" value="5" />
                   </el-select>
-                </template>
-                <template #append>
-                  <el-button @click="getSearch" type="primary" icon="Search" />
-                </template>
-              </el-input>
+                </div>
+                <input v-model="homeSearch" :class="input_item"
+                  placeholder="Search by Address / Txn Hash / Block / Token / Domain Name"
+                  @focus="input_item = 'input_item_selected'" @blur="input_item = 'input_item'" />
+                <el-button style="width: 35px; height: 35px; border-radius: 11px; margin-left: 6px" type="primary"
+                  :icon="Search" @click="getSearch" />
+              </div>
             </el-col>
           </el-row>
-          <el-row justify="center" align="middle">
-            <el-col :span="12">
-              <span>Featured: Bscscan API - Need higher call rates ? <el-link style="color:aqua" href="#"
-                  target="_blank">Sign-up
-                  for a
-                  dedicated plan
-                  today!</el-link></span>
-
+          <el-row justify="center">
+            <el-col :span="24" style="text-align: center">
+              <span class="input-bottom" style="font-size: 14.4992px; color: #fff;">Featured: Bscscan API - Need higher
+                call rates ?
+                <el-link style="color:#0784c3" href="#" target="_blank">Sign-up for a dedicated plan today!</el-link>
+              </span>
             </el-col>
           </el-row>
         </div>
-        <el-row :gutter="20" class="ContentPlaceHolder1">
-          <el-col :span="11" :xs="24" :sm="24" :md="11" :lg="11" class="ContentPlaceHolder1_mainboxes">
-            <div class="card-box">
-              <div class="card-left">
-                <svg-icon name="phone" width="2rem" height="2rem" style="margin-right: 10px; margin-top: 10px">
+        <el-row class="homeTwo" style="margin-bottom: 1.5rem;">
+          <el-col :span="7" class="homeTwo-one" :xs="24">
+            <div class="cardOne-top">
+              <div class="cardOne-top-img">
+                <svg-icon name="phone" width="2rem" height="2rem">
                 </svg-icon>
-                <!-- <el-icon :size="30" style="margin-right: 10px; margin-top: 10px">
-                  <Compass />
-                </el-icon> -->
-                <div class="card">
-                  <p class="card_p">MNT PRICE</p>
-                  <el-link> ${{ headerPrice }} @ 0.007508 BTC (+4.02%)</el-link>
-                </div>
+              </div>
+              <div class="cardOne-top-font">
+                <p class="card_p" style="font-size: 12px; color:#6C757D">MNT PRICE</p>
+                <el-link> <span style="font-size: 15px; color: #081D35">${{ headerPrice }}</span>&nbsp;<span
+                    style="font-size: 15px; color: #6C757D">@ 0.007508 MNT</span>&nbsp;<span
+                    style="font-size: 13.125px; color: #00A186;">(+4.02%)</span></el-link>
+              </div>
+            </div>
+            <div class="line"></div>
+            <div class="cardOne-bottom">
+              <div class="cardOne-top-img">
+                <svg-icon name="globe" width="2rem" height="2rem">
+                </svg-icon>
+              </div>
+              <div class="cardOne-top-font">
+                <p class="card_p">MNT MARKET CAP ON BSC</p>
+                <el-link></el-link>
               </div>
             </div>
           </el-col>
-          <el-col class="ContentPlaceHolder1_mainboxes card-boxright" :span="11" :xs="24" :sm="24" :md="11" :lg="11">
-            <div class="card-box">
-              <div class="card-left">
-                <el-icon :size="30" style="margin-right: 10px; margin-top: 10px">
-                  <View />
-                </el-icon>
-                <div class="card">
+          <el-col :span="1"><el-divider direction="vertical" style="height: 100%;" class="divder" /></el-col>
+          <el-col :span="7" class="homeTwo-two" :xs="24">
+            <div class="cardTwo-top">
+              <div class="cardTwo-topLeft">
+                <div class="cardTwo-topLeft-img">
+                  <el-icon :size="30">
+                    <View />
+                  </el-icon>
+                </div>
+                <div>
                   <p class="card_p">TTRANSACTIONS</p>
-                  <el-link> 5,469.16 M (65.2 TPS)</el-link>
+                  <el-link style="font-size: 15px; color: #081D35"><span>{{ transactionCount }}</span></el-link>
                 </div>
               </div>
-              <div class="card-right">
+              <div class="cardTwo-topRight">
                 <p class="card_p">MED GAS PRICE</p>
-                <el-link> 3 Gwei ($0.03)</el-link>
+                <el-link> <span style="font-size: 15px; color: #081D35">{{ gasPrice }}</span> <span
+                    style="font-size: 12px; color: #6C757D">Gwei ($0.01)</span></el-link>
               </div>
             </div>
-          </el-col>
-          <el-col class="ContentPlaceHolder1_mainboxes" :span="11" :xs="24" :sm="24" :md="11" :lg="11">
-            <div class="card-box">
-              <div class="card-left">
-                <svg-icon name="globe" width="2rem" height="2rem" style="margin-right: 10px; margin-top: 10px">
-                </svg-icon>
-                <div class="card">
-                  <p class="card_p">MNT MARKET CAP ON BSC</p>
-                  <el-link> $12,653,201,507.00 (23,985,641 MNT)</el-link>
+            <div class="line"></div>
+            <div class="cardTwo-bottom">
+              <div class="cardTwo-topLeft">
+                <div class="cardTwo-topLeft-img">
+                  <el-icon :size="30">
+                    <Odometer />
+                  </el-icon>
                 </div>
-              </div>
-            </div>
-          </el-col>
-          <el-col class="card-boxright ContentPlaceHolder1_mainboxes" :span="11" :xs="24" :sm="24" :md="11" :lg="11">
-            <div class="card-box">
-              <div class="card-left">
-                <el-icon :size="30" style="margin-right: 10px; margin-top: 10px">
-                  <Odometer />
-                </el-icon>
-                <div class="card">
+                <div>
                   <p class="card_p">LATEST BLOCK</p>
-                  <el-link> {{ lastestBlock }} (3.0s)</el-link>
+                  <el-link> <span style="font-size: 15px; color: #081D35">{{ lastestBlock }}</span>&nbsp;<span
+                      style="font-size: 12.6868px; color: #6C757D">(3.0s)</span></el-link>
                 </div>
               </div>
-              <div class="card-right">
-                <p class="card_p">MED GAS PRICE</p>
-                <el-link> 3 Gwei ($0.03)</el-link>
+              <div class="cardTwo-topRight">
+                <p class="card_p">VOTING POWER</p>
+                <el-link style="font-size: 15px; color: #081D35"> 26,321,900.53 BNB</el-link>
               </div>
+            </div>
+          </el-col>
+          <el-col :span="1"><el-divider direction="vertical" style="height: 100%;" class="divder" /></el-col>
+          <el-col :span="8" :xs="24">
+            <div ref="chart" style="height: 150px;">
             </div>
           </el-col>
         </el-row>
-        <el-row :gutter="20" class="ContentPlaceHolder1">
-          <el-col :span="11" :xs="24" :sm="24" :md="11" :lg="11" class="ContentPlaceHolder1_mainboxes">
+        <div class="homeThree">
+          <div class="homeThree-one">
             <div class="card-header">
-              <h4>Latest Blocks</h4>
-              <el-button><el-icon>
+              <h4 style="font-size: 15px; color: #212529; font-weight: 500;">Latest Blocks</h4>
+              <!-- <el-button><el-icon>
                   <Grid />
-                </el-icon>Customize</el-button>
+                </el-icon>Customize</el-button> -->
             </div>
-            <el-table :data="tableData" style="width: 100%">
+            <el-table :data="tableData" style="width: 100%" :row-style="{ height: '70px' }">
               <el-table-column prop="number">
                 <template v-slot="scope">
                   <div style="display:flex;align-items: center;">
-                    <svg-icon name="box" width="1.8rem" height="1.8rem">
-                    </svg-icon>
+                    <div
+                      style="width: 3rem; height: 3rem; background-color: #f8f9fa; display: flex; justify-content: center; align-items: center; border-radius: 12px;">
+                      <svg-icon name="box" width="1rem" height="1rem">
+                      </svg-icon>
+                    </div>
                     <div style="margin-left:8px">
                       <div>
                         <router-link class="skyblue-text"
@@ -133,26 +144,32 @@
               </el-table-column>
               <el-table-column prop="number">
                 <template v-slot="scope">
-                  <div>
+                  <!-- <div>
                     <span>Validated By</span>
                     <router-link class="skyblue-text"
                       :to="{ name: 'block', params: { blockNumber: scope.row.number } }">
                       {{ scope.row.number }}
                     </router-link>
-                  </div>
+                  </div> -->
+                  <el-tooltip :content="scope.row.hash">
+                    <span style="font-size: 14.4992px; color:#0784c3; cursor: pointer;">
+                      {{ scope.row.hash.substring(0, 20) + '...' }}
+                    </span>
+                  </el-tooltip>
                   <div>
-                    <router-link class="skyblue-text"
-                      :to="{ name: 'block', params: { blockNumber: scope.row.number } }">
-                      {{ scope.row.number }}
-                    </router-link>
-                    <span class="b-flex_span">in 3 secs</span>
+                    <!-- :to="{ name: 'txs', params: { block: scope.row.hash }}" -->
+                    <span style="font-size: 14.4992px; color: #0784C3; cursor: pointer;"
+                      @click="goTransactionPage(scope.row.transactioncount, scope.row.hash)">{{
+                      scope.row.transactioncount}}
+                      txns</span>&nbsp;
+                    <span style="font-size: 12.6868px; color: #6C757D;">in 3 secs</span>
                   </div>
                 </template>
               </el-table-column>
               <el-table-column header-align="center" align="center" prop="number" width="130">
                 <template v-slot="scope">
                   <div>
-                    <el-tooltip :content="scope.row.gaspriceTotal.toString()" placement="top">
+                    <el-tooltip :content="scope.row.gaspriceTotal.toString()">
                       <div class="c-flex">
                         <p>{{ scope.row.gaspriceTotal }}MNT</p>
                       </div>
@@ -163,26 +180,29 @@
             </el-table>
             <div class="card-footer">
               <router-link to="/blocks" class="view-all">
-                <span>VIEW ALL BLOCKS</span>
+                <span style="font-size: 12px; color: #6C757D;">VIEW ALL BLOCKS</span>
                 <el-icon style="margin-left:3px">
                   <Right />
                 </el-icon>
               </router-link>
             </div>
-          </el-col>
-          <el-col :span="11" :xs="24" :sm="24" :md="11" :lg="11" class="ContentPlaceHolder1_mainboxes">
+          </div>
+          <div class="homeThree-two">
             <div class="card-header">
-              <h4>Latest Transactions</h4>
-              <el-button><el-icon>
+              <h4 style="font-size: 15px; color: #212529; font-weight: 500;">Latest Transactions</h4>
+              <!-- <el-button><el-icon>
                   <Grid />
-                </el-icon>Customize</el-button>
+                </el-icon>Customize</el-button> -->
             </div>
-            <el-table :data="tableDatas" style="width: 100%">
+            <el-table :data="tableDatas" style="width: 100%" :row-style="{ height: '70px' }">
               <el-table-column prop="number">
                 <template v-slot="scope">
                   <div style="display:flex;align-items: center;">
-                    <svg-icon name="document" width="1.8rem" height="1.8rem">
-                    </svg-icon>
+                    <div
+                      style="width: 3rem; height: 3rem; background-color: #f8f9fa; display: flex; justify-content: center; align-items: center; border-radius: 12px;">
+                      <svg-icon name="document" width="1rem" height="1rem">
+                      </svg-icon>
+                    </div>
                     <div style="margin-left:8px;">
                       <div class="skyblue-text">
                         <router-link class="skyblue-text" :to="{ name: 'tx', params: { hash: scope.row.hash } }">
@@ -200,7 +220,7 @@
                 <template v-slot="scope">
                   <div class="skyblue-text" style="width:10.25rem">
                     <span style="color:black">From </span>
-                    <el-tooltip effect="dark" :content="scope.row.from" placement="top">
+                    <el-tooltip effect="dark" :content="scope.row.from">
                       <router-link class="skyblue-text" :to="{ name: 'address', params: { address: scope.row.from } }">
                         {{ scope.row.from }}
                       </router-link>
@@ -208,7 +228,7 @@
                   </div>
                   <div class="skyblue-text" style="width:10.25rem">
                     <span style="color:black">To </span>
-                    <el-tooltip effect="dark" :content="scope.row.to" placement="top">
+                    <el-tooltip effect="dark" :content="scope.row.to">
                       <router-link class="skyblue-text" :to="{ name: 'address', params: { address: scope.row.to } }">
                         {{ scope.row.to }}
                       </router-link>
@@ -219,7 +239,7 @@
               <el-table-column header-align="center" align="center" prop="number" width="130">
                 <template v-slot="scope">
                   <div>
-                    <el-tooltip content="Copy Address" placement="top">
+                    <el-tooltip content="Copy Address">
                       <div class="c-flex">
                         <p>{{ scope.row.gaspriceTotal }}MNT</p>
                       </div>
@@ -230,14 +250,14 @@
             </el-table>
             <div class="card-footer">
               <router-link to="/txs" class="view-all">
-                <span>VIEW ALL TRANSACTIONS</span>
+                <span style="font-size: 12px; color: #6C757D;">VIEW ALL TRANSACTIONS</span>
                 <el-icon style="margin-left:3px">
                   <Right />
                 </el-icon>
               </router-link>
             </div>
-          </el-col>
-        </el-row>
+          </div>
+        </div>
       </el-main>
       <el-aside class="responsive-aside"></el-aside>
     </el-container>
@@ -245,18 +265,20 @@
 </template>
 
 <script setup>
-import { onMounted, ref} from 'vue'
+import { onMounted, ref, reactive} from 'vue'
 import router from '@/router'
 import { getSearchInfo } from '@/api/home';
 import { getBlockPage } from '@/api/block';
-import { getTransactionPage } from '@/api/transaction';
+import { getTransactionPage, getTransactionRecords, getTransactionCount } from '@/api/transaction';
 import { ElMessage } from 'element-plus'
-import { ethers } from 'ethers';
 import { config } from '@/config/config';
 import { getPriceInfo } from '@/api/headerprice';
+import * as echarts from 'echarts';
+import { Search } from '@element-plus/icons-vue';
+import { ethers, formatUnits } from "ethers";
 // import useUserStore from '@/store/modules/user'
 // let userStore = useUserStore()
-const tableData = ref([])
+let tableData = reactive([])
 const tableDatas = ref([])
 const homeSearch = ref('')
 const select = ref('');
@@ -264,6 +286,12 @@ const currentPage4 = ref(1)
 const pageSize4 = ref(6)
 const lastestBlock = ref()
 const headerPrice = ref()
+const chart = ref();
+let transactionCount = ref()
+let transationHistory = reactive([])
+const input_item = ref('input_item')
+const gasPrice = ref()
+
 const getSearch = async () => {
   if (!homeSearch.value) {
     ElMessage.warning('Please enter your search')
@@ -310,20 +338,20 @@ const getBlockPageData = async (pager = 1) => {
   try {
     currentPage4.value = pager;
     const response = await getBlockPage(currentPage4.value, pageSize4.value)
-    console.log(response);
-    tableData.value = response.data.list;
-    tableData.value.forEach(item => {
+    tableData = response.data.list;
+    console.log(tableData);
+    tableData.forEach(item => {
       const percentage = (item.gasused / item.gaslimit) * 100;
       item.percentage = percentage;
     })
-    tableData.value.forEach(item => {
+    tableData.forEach(item => {
       const gasused = parseFloat(item.gasUsed) || 0;
       const gasprice = item.gasprice || 0;
       const result = ethers.formatEther(gasused * parseFloat(gasprice))
       item.gaspriceTotal = 0 ? '0' : result;
     })
     const currentTime = Math.floor(Date.now() / 1000);
-    tableData.value.forEach(item => {
+    tableData.forEach(item => {
       const timestamp = item.timestamp;
       const timeDifferenceInSeconds = currentTime - timestamp;
       let formattedTime;
@@ -382,11 +410,73 @@ const getTransAction = async (pager = 1) => {
     console.error('Error fetching data:', error)
   }
 }
+let getGasPrice = async ()=>{
+  const provider = new ethers.JsonRpcProvider(config.rpc_adress);
+  const res = await provider.send("eth_gasPrice");
+  gasPrice.value = formatUnits(parseInt(res, 16), 9)
+}
+let getTransationCords = async () => {
+  transationHistory = await getTransactionRecords();
+  let xdata = []
+  let ydata = []
+  for (let i=0;i<transationHistory.length;i++) {
+    ydata.push(transationHistory[i].count)
+    xdata.push(transationHistory[i].date)
+  }
+  let myChart = echarts.init(chart.value);
+  let option = {
+    title: {
+      text: 'MNT SMART CHAIN TRANSACTION HISTORY IN 14 DAYS',
+      textStyle: {
+        fontSize: 12
+      },
+    },
+    grid: {
+      top: '20%',    // 设置 Y 轴顶部留白的高度，可以是像素值，也可以是百分比
+      bottom: '20%',  // 设置 Y 轴底部留白的高度，同样可以是像素值或百分比
+      left: '10%',    // 设置 X 轴左侧留白的宽度，可以是像素值，也可以是百分比
+      right: '10%' 
+    },
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'cross',
+        label: {
+          backgroundColor: '#6a7985'
+        }
+      }
+    },
+    xAxis: {
+      type: 'category',
+      data: xdata,
+      boundaryGap: false,
+    },
+    yAxis: {
+      type: 'value'
+    },
+    series: [
+      {
+        data: ydata,
+        type: 'line',
+        smooth: true
+      }
+    ]
+  };
+  myChart.setOption(option)
+  
+}
+let getTransactionCounts = async () => {
+  let {data} = await getTransactionCount()
+  transactionCount.value = data[2].count
+}
 onMounted(() => {
   getBlockPageData()
   getTransAction()
   getLastestHeight()
   getMNtPrice()
+  getGasPrice()
+  getTransationCords()
+  getTransactionCounts()
   // userStore.userInfo()
 })
 async function getLastestHeight() {
@@ -400,6 +490,13 @@ async function getMNtPrice () {
     headerPrice.value = response.price;
   } catch (error) {
     console.error('Error fetching data:', error)
+  }
+}
+function goTransactionPage (count, hash) {
+  if (count == 0) {
+    return
+  } else {
+    router.push({ name: 'txs', params: { block: hash}})
   }
 }
 </script>
@@ -443,8 +540,9 @@ async function getMNtPrice () {
 .container_bgc {
   position: absolute;
   width: 100%;
-  height: 29vh;
-  background: linear-gradient(45deg, #fff, #000, #000, #fff);
+  height: 45vh;
+  /* background: linear-gradient(45deg, #fff, #000, #000, #fff); */
+  background-color: #131313
   /* background: linear-gradient(45deg,#fff,#0c9482, #0c9482, #fff); */
 }
 
@@ -550,7 +648,8 @@ async function getMNtPrice () {
 }
 
 .card_p {
-  font-size: 12px;
+  font-size: 12px; 
+  color:#6C757D;
 }
 
 .card-header {
@@ -601,8 +700,8 @@ async function getMNtPrice () {
 }
 
 .b-flex_span {
-  color: #6c757d;
-  font-size: 13px;
+  color: #6C757D;
+  font-size: 12.6868px;
 }
 
 .b-flex h4 {
@@ -611,12 +710,16 @@ async function getMNtPrice () {
 }
 
 .c-flex {
-  font-weight: bold;
+  width: 82px;
+  font-weight: 500;
   background-color: #fff;
-  height: 30px;
-  line-height: 30px;
+  height: 25px;
+  line-height: 25px;
+  text-align: center;
   border: 1px solid #e6e6e6;
-  border-radius: 10%;
+  border-radius: 8px;
+  font-size:  10.8744px;
+  color: #000;
 }
 
 .c-flex p {
@@ -628,8 +731,8 @@ async function getMNtPrice () {
   padding: 15px 0;
   color: #6c757d;
   font-size: 16px;
-  /* border: 1px solid #e6e6e6; */
   background-color: #f8f9fa;
+  border-radius:  0 0 15px 15px;
 }
 
 .container {
@@ -639,29 +742,155 @@ async function getMNtPrice () {
   color: #fff;
   flex-direction: column;
   justify-content: space-evenly;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
+
 }
 
 .container h2 {
   text-align: center;
 }
 
-.drop_search {
-  background-color: #fff;
-  height: 40px;
-  border-radius: 15px;
-}
-
-:deep(.el-select__wrapper) {
-  height: 100%;
-}
 
 .skyblue-text {
   width: 7.5rem;
-  color: #0693cc;
+  color: #0784C3;
   margin-right: 5px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 14.4992px;
+  
+}
+
+
+/* //修改样式 */
+.homeOne-itemone {
+  margin-bottom: 12px;
+}
+.home-title {
+  font-size: 19.6875px;
+  color: #fff;
+}
+.homeOne-itemtwo {
+  margin-bottom: 5px;
+}
+.cardOne-top {
+  display: flex;
+}
+.homeTwo {
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 15px;
+  border: 1px solid #dee2e6;
+}
+.cardOne-top-img {
+  margin-right: 12px;
+} 
+.cardOne-bottom {
+  display: flex;
+}
+.cardTwo-top {
+  display: flex;
+  justify-content: space-between;
+}
+.cardTwo-topLeft {
+  display: flex;
+}
+.cardTwo-topLeft-img {
+  margin-right: 12px;
+}
+.cardTwo-bottom {
+  display: flex;
+  justify-content: space-between;
+}
+.cardTwo-topRight {
+  text-align: center;
+}
+.line {
+  width: 95%;
+  height: 1px;
+  background-color: #ccc;
+  margin: 24px 0;
+}
+@media (max-width: 768px) {
+  .divder {
+    display: none;
+  }
+  .homeTwo-one {
+    margin-bottom: 60px;
+  }
+  .homeTwo-two {
+    margin-bottom: 60px;
+  }
+}
+.homeThree {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.homeThree-one {
+  width: 49%;
+  border-radius: 15px;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+}
+.homeThree-two {
+  width: 49%;
+  border-radius: 15px;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+}
+@media (max-width: 768px) {
+ .homeThree-one {
+  width: 100%;
+  margin-bottom: 1.25rem;
+}
+.homeThree-two {
+  width: 100%;
+}
+.input-bottom {
+  display: none;
+}
+}
+
+.input {
+  width: 100%;
+  background-color: #fff;
+  height: 35px;
+  border-radius: 10px;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+:deep(.el-select__wrapper) {
+  height: 35px;
+  border-radius: 10px;
+  border: 1px solid #fff;
+  box-shadow: none;
+}
+.input_item {
+  width: 100%;
+  height: 32px;
+  border-radius: 10px;
+  border: 1px solid #fff;
+  box-shadow: none;
+  padding-left: 10px;
+}
+.input_item_selected {
+  width: 100%;
+  height: 32px;
+  border-radius: 10px;
+  border: 1px solid #fff;
+  box-shadow: 10px 5px 25px 0 #adb5bd;
+  padding-left: 10px;
+  transition: 0.6s;
+}
+input:focus {
+  outline-color: #fff;
+}
+.select {
+  width: 100px;
+  margin-right: 4px;
 }
 </style>

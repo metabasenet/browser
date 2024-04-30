@@ -6,8 +6,8 @@
         <el-row>
           <el-col :span="24">
             <div class="grid-content ep-bg-purple-dark grid-content_h3 darkb_button">
-              <h3>Transaction Details</h3>
-              <div>
+              <h3 style="font-size: 18.75px; color: #212529; font-weight: 500;">Transaction Details</h3>
+              <!-- <div>
                 <el-dropdown style="margin-right:5px">
                   <el-button type="primary">
                     <el-icon class="el-icon--left">
@@ -48,7 +48,7 @@
                     </el-dropdown-menu>
                   </template>
                 </el-dropdown>
-              </div>
+              </div> -->
             </div>
           </el-col>
         </el-row>
@@ -64,8 +64,8 @@
                         :column="1" align="center">
                         <el-descriptions-item label="Transaction Hash:" label-align="center" align="left"
                           label-class-name="my-label" class-name="my-content ellipsis-text" label-width="30%">
-                          <div class="block_height"> <span
-                              v-if="transDetails && typeof transDetails.hash === 'string'">{{
+                          <div class="block_height" > <span
+                              v-if="transDetails && typeof transDetails.hash === 'string'" style="font-size: 14.4992px; color: #212529;">{{
                               transDetails.hash }}</span>
                             <span v-else>N/A</span>
                             <el-tooltip v-if="!transDetails.istoCopied" content="Copy TxHash to clipboard"
@@ -81,7 +81,7 @@
                         </el-descriptions-item>
                         <el-descriptions-item label="Status:" label-align="center" align="left"
                           label-class-name="my-label">
-                          <div class="block_height"><el-button v-if="transDetails.status == 1" type="success"
+                          <div class="block_height"><el-button v-if="transDetails.status == 1" type="success" style="border-radius: 6px;"
                               plain><el-icon>
                                 <CircleCheckFilled />
                               </el-icon>Success</el-button>
@@ -97,11 +97,11 @@
                             <div style="display: flex;  align-items: center;">
                               <router-link class="skyblue-text" to="/block">
                                 <div class=" mb-2 truncate">
-                                  <span> {{ transDetails.blockNumber }}</span>
+                                  <span style="font-size: 14.4992px; color: #0784C3;"> {{ transDetails.blockNumber }}</span>
                                 </div>
                               </router-link>
                               <el-tooltip content="Number of blocks validated since" placement="top">
-                                <el-button size="small">{{ blockHeightDiff }} Block Confirmations</el-button>
+                                <el-button style="width: 10rem; height: 24.88px; border-radius: 6px; font-size: 10.8744px; color: #000;">{{ blockHeightDiff }} Block Confirmations</el-button>
                               </el-tooltip>
                             </div>
                           </div>
@@ -110,15 +110,16 @@
                         </el-descriptions-item>
                         <el-descriptions-item label="Timestamp:" label-align="center" align="left"
                           label-class-name="my-label">
-                          <div class="block_height"><el-icon>
+                          <div class="block_height" style="font-size: 14.4992px; color: #212529;">
+                            <el-icon style="vertical-align: middle; margin-bottom: 2px;">
                               <Timer />
                             </el-icon>
-                            <span>{{ transDetails.formattedTime }} ({{ greenwichTime }})</span>
+                            {{ transDetails.formattedTime }} ({{ greenwichTime }})
                           </div>
                         </el-descriptions-item>
                         <el-descriptions-item label="Transaction Action:" label-align="center" align="left"
                           label-class-name="my-label">
-                          <div class="block_height">{{ transDetails.transactionActions }}</div>
+                          <div class="block_height" style="font-size: 14.4992px; color: #212529;" >{{ transDetails.transactionActions }}</div>
                         </el-descriptions-item>
                         <el-descriptions-item label="From:" label-align="center" align="left"
                           label-class-name="my-label">
@@ -127,7 +128,7 @@
                               <router-link class="skyblue-text ellipsis-text" :to="{
                                 name: 'address',
                                 params: { address: transDetails.from },
-                              }">{{ transDetails.from }}
+                              }" style="font-size: 14.4992px; color: #0784C3;" >{{ transDetails.from }}
                               </router-link>
                               <el-tooltip v-if="!transDetails.istoCopieds" content="Copy Address"
                                 placement="top"><el-button style="margin-left:5px" text icon="CopyDocument"
@@ -153,7 +154,7 @@
                                 name: 'address',
                                 params: { address: transDetails.to },
                               }">
-                                <div class=" mb-2 truncate">{{ transDetails.to }}</div>
+                                <div class=" mb-2 truncate" style="font-size: 14.4992px; color: #0784C3;">{{ transDetails.to }}</div>
                               </router-link>
 
                               <el-tooltip v-if="!transDetails.istoCopiedd" content="Copy Address" placement="top">
@@ -204,10 +205,11 @@
                         </el-descriptions-item>
                         <el-descriptions-item label="Value:" label-align="center" align="left"
                           label-class-name="my-label">
-                          <div class="block_height"> <el-icon>
+                          <div class="block_height" > 
+                            <el-icon style="font-size: 14.4992px; color: #212529; vertical-align: middle; margin-bottom: 3px">
                               <Timer />
                             </el-icon>
-                            <span> {{ transDetails.value }}
+                            <span style="font-size: 14.4992px; color: #212529;"> {{ transDetails.value }}
                               <!-- ($43.24) -->
                             </span>
                           </div>
@@ -215,7 +217,7 @@
                         </el-descriptions-item>
                         <el-descriptions-item label="Transaction Fee:" label-align="center" align="left"
                           label-class-name="my-label">
-                          <div class="block_height"> <span> {{ transDetails.TransactionFee }} MNT
+                          <div class="block_height"> <span style="font-size: 14.4992px; color:#212529;">{{ transDetails.TransactionFee }} MNT
                               <!-- (${{ transDetails.TransactionFee }}) -->
                             </span>
                           </div>
@@ -223,7 +225,7 @@
                         </el-descriptions-item>
                         <el-descriptions-item label="Gas Price:" label-align="center" align="left"
                           label-class-name="my-label">
-                          <div class="block_height"><span> {{ transDetails.gasPrice }}
+                          <div class="block_height"><span style="font-size: 14.4992px; color:#212529;"> {{ transDetails.gasPrice }}
                               <!-- ({{ transDetails.gasPrice }})MNT -->
                             </span>
                           </div>
@@ -238,35 +240,35 @@
                         <el-collapse-item title="More Details:" name="1">
                           <el-descriptions class="grid-content" :column="1" align="left" v-model="transDetails">
                             <el-descriptions-item label-class-name="my-label" label="Gas Limit & Usage by Txn:"
-                              label-align="center" align="left" class-name="my-content">
-                              <div class="block_height"><span>{{ transDetails.gasUsed }} | {{ transDetails.gasLimit }}
+                              label-align="center" align="left" width="500px" class-name="my-content">
+                              <div class="block_height"><span style="font-size: 14.4992px; color: #212529;">{{ transDetails.gasUsed }} | {{ transDetails.gasLimit }}
                                   ({{ratioValue}}%)</span></div>
                             </el-descriptions-item>
                             <el-descriptions-item label-class-name="my-label" label="Burnt Fees:" label-align="center"
                               align="left">
-                              <div class="block_height"><span>0.005224500901272524 MNT
+                              <div class="block_height"><span style="font-size: 14.4992px; color: #212529;">0.005224500901272524 MNT
                                   ($3.15)</span></div>
                             </el-descriptions-item>
                             <el-descriptions-item label-class-name="my-label" label="Other Attributes:"
                               label-align="center" align="left">
-                              <div class="block_height"> <el-button>Nonce: 1607650</el-button><el-button>Position In
-                                  Block:
-                                  208</el-button></div>
-
+                              <div class="block_height"> 
+                                <el-button style="width: 98.3px; height: 24.88px; font-size: 10.8744px; color: #6C757D; border-radius: 6px;">Nonce:&nbsp;<span style="font-size: 10.8744px; color: #000;">1607650</span></el-button>
+                                <el-button style="width: 123.9px; height: 24.88px; font-size: 10.8744px; color: #6C757D; border-radius: 6px;">Position In Block:&nbsp;<span style="font-size: 10.8744px; color: #000;">208</span></el-button>
+                              </div>
                             </el-descriptions-item>
                             <el-descriptions-item label-class-name="my-label" label="Input Data:" label-align="center"
                               align="left">
-                              <div class="block_height"><el-input style="width: 100%" :rows="2" type="textarea" disabled
-                                  :placeholder="transDetails.data" />
-                                <el-select v-model="value" placeholder="View Input As"
+                              <div class="block_height">
+                                 <el-input  style="width: 78vw;" type="textarea" :disabled="true" :placeholder="transDetails.data">
+                                 </el-input>
+                                <!-- <el-select v-model="value" placeholder="View Input As"
                                   style="width: 150px;margin-right:10px">
                                   <el-option v-for="item in options" :key="item.value" :label="item.label"
                                     :value="item.value" />
                                 </el-select>
                                 <el-button icon="Menu">Decode Input Data</el-button>
-                                <el-button icon="Position">Advanced Filter</el-button>
+                                <el-button icon="Position">Advanced Filter</el-button> -->
                               </div>
-
                             </el-descriptions-item>
                           </el-descriptions>
                         </el-collapse-item>
@@ -278,9 +280,12 @@
                       <el-descriptions class="grid-content_h2 grid-content" :column="1" align="center">
                         <el-descriptions-item label="Private Note:" label-align="center" align="left"
                           label-class-name="my-label" class-name="my-content" label-width="30%">
-                          <div class="block_height"> <span>To access the Private Note feature, you must be Logged
-                              In</span></div>
-
+                          <div class="block_height"> 
+                            <span style="font-size: 14.4992px; color: #212529; ">To access the 
+                              <span style="font-size: 14.4992px; color: #000;">Private Note</span> 
+                              feature, you must be 
+                              <span style="font-size: 14.4992px; color: #0784C3;">Logged In</span>
+                              </span></div>
                         </el-descriptions-item>
 
                       </el-descriptions>
@@ -288,15 +293,15 @@
                   </el-row>
                   <el-row>
                     <el-col :span="24" :xs="24" class="grid-content_h1 grid_content">
-                      <span>
-                        <el-icon>
+                      <span style="font-size: 12.5625px; color: #6C757D">
+                        <el-icon style="vertical-align: middle;">
                           <Loading />
                         </el-icon>
                         A transaction is a cryptographically signed instruction that changes the blockchain state. Block
                         explorers
                         track the details of all transactions in the network. Learn more about transactions in our
-                        Knowledge
-                        Base.</span>
+                        <span style="font-size: 12.5625px; color: #0784C3">Knowledge Base.</span>
+                       </span>
                     </el-col>
                   </el-row>
                 </el-tab-pane>
@@ -385,9 +390,7 @@
                             </el-descriptions>
                           </div>
                         </li>
-
                       </ul>
-
                     </el-col>
                   </el-row>
                 </el-tab-pane>
@@ -396,11 +399,9 @@
             </div>
           </el-col>
         </el-row>
-
       </el-main>
       <el-aside class="responsive-aside"></el-aside>
     </el-container>
-
   </div>
 </template>
 
@@ -763,5 +764,14 @@ body {
     /* padding: 0; */
     margin: 0;
   }
+}
+:deep(.el-descriptions__label:not(.is-bordered-label)) {
+    font-size: 14.4992px;
+    color: #6C757D;
+    width: 180px;
+}
+:deep(.el-collapse-item__header) {
+  font-size: 14.4992px;
+  color: #6C757D;
 }
 </style>

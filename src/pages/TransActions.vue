@@ -1,125 +1,131 @@
 <template>
   <div class="box">
-    
     <el-container class="container-xxl">
       <el-aside class="responsive-aside" ></el-aside>
       <el-main>
         <el-row>
-      <el-col :span="24">
-        <div class="grid-content ep-bg-purple-dark grid-content_h3">
-          <h3>Transactions</h3>
-        </div>
-      </el-col>
-    </el-row>
-    <el-row class="blocks_heade">
-      <el-col :span="5" :xs="24" :sm="12" :md="12" :lg="6">
-        <div class="grid-content ep-bg-purple-dark blocks_header">
-          <p>NETWORK UTILIZATION(24H)</p>
-          <el-link>5,028,546</el-link>
-        </div>
-      </el-col>
-      <el-col :span="5" align :xs="24" :sm="12" :md="12" :lg="6">
-        <div class="grid-content ep-bg-purple-dark blocks_header">
-          <p>NETWORK UTILIZATION(24H)</p>
-          <el-link>222(Average)</el-link>
-        </div>
-      </el-col>
-      <el-col :span="5" align :xs="24" :sm="12" :md="12" :lg="6">
-        <div class="grid-content ep-bg-purple-dark blocks_header">
-          <p>NETWORK UTILIZATION(24H)</p>
-          <el-link>2,373.55MNT(0.04%)</el-link>
-        </div>
-      </el-col>
-      <el-col :span="5" align :xs="24" :sm="12" :md="12" :lg="6">
-        <div class="grid-content ep-bg-purple-dark blocks_header">
-          <p>NETWORK UTILIZATION(24H)</p>
-          <el-link>0.2978 USD(18.64%)</el-link>
-        </div>
-      </el-col>
-    </el-row>
-    <el-row class="box-table">
-      <div class="demo-pagination-block box-table_header">
-        <div class="demonstration">More than {{total}} transactions found</div>
-        <el-pagination background v-model:current-page="currentPage4" v-model:page-size="pageSize4"
-          :page-sizes="[10, 25, 50, 100]" layout="sizes,prev, pager, next" :pager-count="5" :total="total" small
-          @size-change="handleSizeChange" @current-change="getTransAction" />
-      </div>
-      <el-table :data="tableData" style="width: 100%" size="default" > 
-        <el-table-column prop="hash" label="Txn Hash" width="200">
-          <template v-slot="scope">
-            <el-tooltip effect="dark" :content="scope.row.hash" placement="top">
-              <router-link class="skyblue-text ellipsis-text" :to="{ name: 'tx', params: { hash: scope.row.hash } }">
-              {{ scope.row.hash }}
-            </router-link>
-            </el-tooltip>
-          </template>
-        </el-table-column>
-        <el-table-column prop="method" label="Method " width="120">
-            <template v-slot="scope">
-              <el-tooltip :content="scope.row.method" placement="top">
-                <el-button>{{ scope.row.method }}</el-button>
-              </el-tooltip>
-            </template>
-        </el-table-column>
-        <el-table-column prop="blockNumber" label="Block" width="100">
-          <template v-slot="scope">
-            <router-link class="skyblue-text" :to="{ name: 'block', params: { blockNumber: scope.row.blockNumber } }">{{ scope.row.blockNumber }}</router-link>
-          </template>
-        </el-table-column>
-        <el-table-column prop="formattedTime" label="Age" width="150">
-        </el-table-column>
-        <el-table-column prop="from" label="From" width="250" align="center">
-          <template v-slot="scope">
-            <el-tooltip :content="scope.row.from" placement="top">
-              <router-link class="skyblue-text" :to="{ name: 'address', params: { address: scope.row.from } }">{{ scope.row.from }}</router-link>
-            </el-tooltip>
-            <el-tooltip v-if="!scope.row.isCopied" content="Copy Address" placement="top">
-              <el-button text icon="CopyDocument" @click="copyFormClipboard(scope.row.from,scope.row)">
-              </el-button>
-            </el-tooltip>
-            <el-tooltip v-else content="Copied!" placement="top">
-              <el-button text icon="Check" @click="copyFormClipboard(scope.row.from,scope.row)">
-              </el-button>
-            </el-tooltip>
-            <el-button style="margin-left:2.5rem" type="success" icon="right" circle plain />
-          </template>
-        </el-table-column>
-        <el-table-column prop="to" label="To" width="250" align="center">
-          <template v-slot="scope">
-            <el-tooltip v-if ="scope.row.to" content="Contract" placement="top">
-              <el-button  icon="Document" >
-              </el-button>
-            </el-tooltip>
-            <el-tooltip :content="scope.row.to" placement="top">
-              <router-link class="skyblue-text" :to="{ name: 'address', params: { address: scope.row.to } }">{{ scope.row.to }}</router-link>
-            </el-tooltip>
-            <!-- <el-tooltip v-if="scope.row.to" content="Copy Address" placement="top"> -->
-            <el-tooltip v-if="!scope.row.istoCopied" content="Copy Address" placement="top">
-              <el-button text icon="CopyDocument" @click="copyToClipboard(scope.row.to,scope.row)">
-              </el-button>
-            </el-tooltip>
-            <el-tooltip v-else content="Copied!" placement="top">
-              <el-button text icon="Check" @click="copyToClipboard(scope.row.to,scope.row)">
-              </el-button>
-            </el-tooltip>
-          </template>
-        </el-table-column>
-        <el-table-column prop="value" label="Value" width="200">
-          <template v-slot="scope">
-            <el-tooltip effect="dark" :content="`${scope.row.value}`" placement="top">
-              <span class="skyblue-text">{{ scope.row.value }}</span>
-            </el-tooltip>
-          </template>
-        </el-table-column>
-        <el-table-column prop="gasPrice" label="Gas Price" />
-      </el-table>
-      <div class="demo-pagination-block table_header">
-        <span>Show rows:</span>
-        <el-pagination background v-model:current-page="currentPage4" v-model:page-size="pageSize4"
-          :page-sizes="[10, 25, 50, 100]" :pager-count="5" small layout="sizes,prev, pager, next" :total="total"
-          @size-change="handleSizeChange" @current-change="getTransAction"/>
-      </div>
-    </el-row>
+          <el-col :span="24">
+            <div class="grid-content ep-bg-purple-dark grid-content_h3">
+              <h3 style="  color: #212529; font-size: 18.75px; font-weight: 500;">Transactions</h3>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row class="blocks_heade">
+          <el-col :span="5" :xs="24" :sm="12" :md="12" :lg="6">
+            <div class="grid-content ep-bg-purple-dark blocks_header">
+              <p>TRANSACTIONS (24H)</p>
+              <el-link>{{transactionCount24}}</el-link>
+            </div>
+          </el-col>
+          <el-col :span="5" align :xs="24" :sm="12" :md="12" :lg="6">
+            <div class="grid-content ep-bg-purple-dark blocks_header">
+              <p>TRANSACTIONS (1H)</p>
+              <el-link>{{transactionCount1}}</el-link>
+            </div>
+          </el-col>
+          <el-col :span="5" align :xs="24" :sm="12" :md="12" :lg="6">
+            <div class="grid-content ep-bg-purple-dark blocks_header">
+              <p>NETWORK TRANSACTIONS FEE (24H)</p>
+              <el-link>{{transactionFee24}}&nbsp;<span style="font-size: 12.2569px; color: #000; font-weight: 400;">(GWei)</span></el-link>
+            </div>
+          </el-col>
+          <el-col :span="5" align :xs="24" :sm="12" :md="12" :lg="6">
+            <div class="grid-content ep-bg-purple-dark blocks_header">
+              <p>AVG. TRANSACTIONS FEE (24H)</p>
+              <el-link >{{transactionAvgFee}}&nbsp;<span style="font-size: 12.2569px; color: #000; font-weight: 400;">(GWei)</span></el-link>
+            </div>
+          </el-col>
+        </el-row>
+        <el-row class="box-table">
+          <div class="demo-pagination-block box-table_header">
+            <div style="font-size: 14.4992px; color: #000;">More than {{total}} transactions found</div>
+            <el-pagination background v-model:current-page="currentPage4" v-model:page-size="pageSize4"
+              :page-sizes="[10, 25, 50, 100]" layout="sizes,prev, pager, next" :pager-count="5" :total="total" small
+              @size-change="handleSizeChange" @current-change="getTransAction" />
+          </div>
+          <el-table :data="tableData" style="width: 100%" size="default" :row-style="{ height: '70px' }" > 
+            <el-table-column prop="hash" label="Txn Hash" width="100  " >
+              <template v-slot="scope">
+                <el-tooltip effect="dark" :content="scope.row.hash" placement="top">
+                  <router-link class="skyblue-text ellipsis-text" :to="{ name: 'tx', params: { hash: scope.row.hash } }">
+                  {{ scope.row.hash.substring(0,10) + '...' }}
+                </router-link>
+                </el-tooltip>
+              </template>
+            </el-table-column>
+            <el-table-column prop="method" label="Method" width="94">
+                <template v-slot="scope">
+                  <el-tooltip :content="scope.row.method">
+                    <el-button style="border-radius: 8px;">{{ scope.row.method }}</el-button>
+                  </el-tooltip>
+                </template>
+            </el-table-column>
+            <el-table-column prop="blockNumber" label="Block" >
+              <template v-slot="scope">
+                <router-link class="skyblue-text" :to="{ name: 'block', params: { blockNumber: scope.row.blockNumber } }">{{ scope.row.blockNumber }}</router-link>
+              </template>
+            </el-table-column>
+            <el-table-column prop="formattedTime" label="Age" width="130">
+              <template v-slot="scope">
+                <span style="font-size: 14.4992px; color: #212529">{{ scope.row.formattedTime }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column prop="from" label="From" width="220">
+              <template v-slot="scope">
+                <el-tooltip :content="scope.row.from" placement="top">
+                  <router-link class="skyblue-text" :to="{ name: 'address', params: { address: scope.row.from } }">{{ scope.row.from.substring(0,10) + '...' }}</router-link>
+                </el-tooltip>
+                <el-tooltip v-if="!scope.row.isCopied" content="Copy Address" placement="top">
+                  <el-button text icon="CopyDocument" @click="copyFormClipboard(scope.row.from,scope.row)">
+                  </el-button>
+                </el-tooltip>
+                <el-tooltip v-else content="Copied!" placement="top">
+                  <el-button text icon="Check" @click="copyFormClipboard(scope.row.from,scope.row)">
+                  </el-button>
+                </el-tooltip>
+                <el-button style="margin-left:1.5rem" type="success" icon="right" circle plain />
+              </template>
+            </el-table-column>
+            <el-table-column prop="to" label="To"  width="220">
+              <template v-slot="scope">
+                <el-tooltip v-if ="scope.row.to" content="Contract" placement="top">
+                  <el-button  style="width: 1rem; height: 1rem;" icon="Document" >
+                  </el-button>
+                </el-tooltip>
+                <el-tooltip :content="scope.row.to" placement="top">
+                  <router-link class="skyblue-text" :to="{ name: 'address', params: { address: scope.row.to } }">{{ scope.row.to }}</router-link>
+                </el-tooltip>
+                <!-- <el-tooltip v-if="scope.row.to" content="Copy Address" placement="top"> -->
+                <el-tooltip v-if="!scope.row.istoCopied" content="Copy Address" placement="top">
+                  <el-button text icon="CopyDocument" @click="copyToClipboard(scope.row.to,scope.row)">
+                  </el-button>
+                </el-tooltip>
+                <el-tooltip v-else content="Copied!" placement="top">
+                  <el-button text icon="Check" @click="copyToClipboard(scope.row.to,scope.row)">
+                  </el-button>
+                </el-tooltip>
+              </template>
+            </el-table-column>
+            <el-table-column prop="value" label="Value" >
+              <template v-slot="scope">
+                <el-tooltip effect="dark" :content="`${scope.row.value}`" placement="top">
+                  <span class="skyblue-text">{{ scope.row.value }}</span>
+                </el-tooltip>
+              </template>
+            </el-table-column>
+            <el-table-column prop="gasPrice" label="Gas Price" >
+              <template v-slot="scope">
+               <span style="font-size: 14.4992px; color: #212529">{{ scope.row.gasPrice }}(GWei)</span>
+              </template>
+            </el-table-column>
+          </el-table>
+          <div class="demo-pagination-block table_header">
+            <span>Show rows:</span>
+            <el-pagination background v-model:current-page="currentPage4" v-model:page-size="pageSize4"
+              :page-sizes="[10, 25, 50, 100]" :pager-count="5" small layout="sizes,prev, pager, next" :total="total"
+              @size-change="handleSizeChange" @current-change="getTransAction"/>
+          </div>
+        </el-row>
       </el-main>
       <el-aside class="responsive-aside" ></el-aside>
     </el-container>
@@ -127,24 +133,46 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, reactive, computed, watch } from 'vue'
 import { ElMessage } from 'element-plus';
-import { getTransactionPage } from '@/api/transaction';
+import { getTransactionPage, getTransactionFee, getTransactionCount } from '@/api/transaction';
 import { formatUnits} from 'ethers';
-const tableData = ref([])
+import { getBlockHashTransaction } from '@/api/block'
+import { number } from 'echarts';
+let tableData = reactive([])
 const currentPage4 = ref(1)
 const pageSize4 = ref(10)
 const total = ref(0)
 const copiedText = ref('');
+let transactionCount = reactive([])
+let transactionCount24 = ref(0)
+let transactionCount1 = ref(0)
+let transactionFee24 = ref(0)
+let transactionAvgFee = ref(0)
 const handleSizeChange =()=>{
   getTransAction()
 }
+const {block} = defineProps({
+  block: {
+    type: [String],
+    required: true
+  }
+})
 const getTransAction = async (pager = 1) => {
   try {
+    let response = ''
     currentPage4.value = pager;
-    const response = await getTransactionPage(currentPage4.value, pageSize4.value)
-    tableData.value = response.data.list;
-    tableData.value.forEach(item => {
+    if (block == 'home') {
+      response = await getTransactionPage(currentPage4.value, pageSize4.value)
+      tableData = response.data.list;
+      total.value = response.data.total;
+    } else {
+      response = await getBlockHashTransaction(block)
+      console.log(response);
+      tableData.push(response.data);
+    }
+    tableData.forEach(item => {
+      item.gasPrice = formatUnits(item.gasPrice.toString(), 9)
       item.method = item.method ||item.methodHash;
       // const values = parseFloat(item.value) || 0;
   //     if (values > Number.MAX_SAFE_INTEGER) {
@@ -154,9 +182,8 @@ const getTransAction = async (pager = 1) => {
       const result = formatUnits(item.value.toString(),18)
       item.value = result;
     })
-    total.value = response.data.total;
     const currentTime = Math.floor(Date.now() / 1000);
-    tableData.value.forEach(item => {
+    tableData.forEach(item => {
       const timestamp = item.timestamp;
       const timeDifferenceInSeconds = currentTime - timestamp;
       let formattedTime;
@@ -205,8 +232,29 @@ function copyToClipboard(text,row) {
       ElMessage.error('Copy failed, please copy manually!');
     });
 }
-onMounted(() => {
-  getTransAction();
+let getTransactionFees = async () => {
+  let {data} =  await getTransactionFee()
+  let transactionFee24Tmp = formatUnits(data.txFee.toString(),9)
+  transactionFee24.value = Number(transactionFee24Tmp).toFixed(2)
+  let transactionAvgFeeTmp = formatUnits(Math.floor(data.avgTxFee).toString(),9)
+  transactionAvgFee.value = Number(transactionAvgFeeTmp).toFixed(4)
+}
+let getTransactionCounts = async () => {
+  let {data} =  await getTransactionCount()
+  transactionCount = data;
+  transactionCount24.value = transactionCount[1].count
+  transactionCount1.value = transactionCount[0].count
+}
+watch(() => transactionCount1, (newValue) => {
+  transactionCount1.value = newValue
+});
+watch(() => transactionCount24.count, (newValue) => {
+  transactionCount24.value = newValue
+});
+onMounted(async () => {
+  await getTransAction();
+  await getTransactionCounts();
+  await getTransactionFees();
 })
 </script>
 
@@ -233,7 +281,6 @@ onMounted(() => {
   padding: 19px 0;
   border-bottom: 1px solid #dcdfe6;
 }
-
 .blocks_heade {
   margin: 20px 2rem;
 }
@@ -249,22 +296,26 @@ onMounted(() => {
 
 .blocks_header p {
   font-size: 12px;
-  color: #88877d;
+  color: #6c757d;
+  margin-bottom: 4px;
 }
 
 .blocks_header .el-link {
-  font-weight: bold;
+  font-size: 18.75px;
+  color:  #081D35; 
 }
 
 .box-table {
   margin: 10px 2rem;
+  background-color: #fff;
+  border-radius: 15px;
 }
 
 .box-table_header {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin: 10px 0;
+  padding: 20px 15px 15px;
 }
 
 .table_header {
@@ -272,9 +323,9 @@ onMounted(() => {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  margin: 10px 0;
   color: #6c757d;
   font-size: 14px;
+  padding: 20px 15px 15px;
 }
 
 .table_header span {
@@ -348,7 +399,8 @@ onMounted(() => {
 }
 
 .skyblue-text {
-  color: #0693cc;
+  color: #0784C3;
+  font-size: 14.4992px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -364,5 +416,10 @@ onMounted(() => {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+:deep(.el-table--default .cell) {
+  font-size: 12.5625px;
+  color: #212529;
+  font-weight: 500;
 }
 </style>
