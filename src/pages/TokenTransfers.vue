@@ -21,7 +21,7 @@
                             :total="total" small @size-change="handleSizeChange" @current-change="getTransAction" />
                     </div>
                     <el-table :data="tableData" style="width: 100%" size="default" :row-style="{ height: '70px' }">
-                        <el-table-column prop="transactionHash " label="Txn Hash" width="250">
+                        <el-table-column prop="transactionHash " label="Txn Hash" width="150">
                             <template v-slot="scope">
                                 <router-link class="skyblue-text ellipsis-text"
                                     :to="{ name: 'tx', params: { hash: scope.row.transactionHash } }">
@@ -36,7 +36,7 @@
                                 </el-tooltip>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="blockNumber" label="Block">
+                        <el-table-column prop="blockNumber" label="Block" width="82">
                             <template v-slot="scope">
                                 <router-link class="skyblue-text"
                                     :to="{ name: 'block', params: { blockNumber: scope.row.blockNumber } }">{{

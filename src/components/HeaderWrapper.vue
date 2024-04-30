@@ -214,10 +214,6 @@ onMounted(()=>{
   .header_button {
     display: none;
   }
-
-  .mt-4 {
-    /* margin: 0 2.25rem; */
-  }
 }
 
 .fixed-header {

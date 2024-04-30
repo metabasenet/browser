@@ -56,7 +56,7 @@
             <el-table-column prop="method" label="Method" width="94">
                 <template v-slot="scope">
                   <el-tooltip :content="scope.row.method">
-                    <el-button style="border-radius: 8px;">{{ scope.row.method }}</el-button>
+                    <el-button style="border-radius: 8px; padding: 5px;">{{ scope.row.method }}</el-button>
                   </el-tooltip>
                 </template>
             </el-table-column>
@@ -115,7 +115,7 @@
             </el-table-column>
             <el-table-column prop="gasPrice" label="Gas Price" >
               <template v-slot="scope">
-               <span style="font-size: 14.4992px; color: #212529">{{ scope.row.gasPrice }}(GWei)</span>
+               <span style="font-size: 14.4992px; color: #212529">{{ scope.row.gasPrice }}<span style="font-size: 12px; color:#212529;">(GWei)</span></span>
               </template>
             </el-table-column>
           </el-table>
@@ -351,9 +351,7 @@ onMounted(async () => {
 }
 
 @media (min-width: 768px) {
-  .card-box {
-    /* flex-direction: row; */
-  }
+
 }
 
 @media (max-width: 768px) {

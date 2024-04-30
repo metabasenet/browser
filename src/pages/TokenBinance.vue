@@ -236,7 +236,7 @@
                       <template v-slot="scope">
                         <el-tooltip v-if="scope.row.method" :content="scope.row.method" placement="top">
                           <el-button
-                            style="font-size: 10.8744px; color: #000; width: 4rem; height:24.88px; border-radius: 6px;">{{
+                            style="font-size: 10.8744px; color: #000; padding:  5px; border-radius: 6px;">{{
                             scope.row.method }}</el-button>
                         </el-tooltip>
                       </template>
