@@ -1,6 +1,6 @@
 ## Try it now
 
-- [MNT](https://test.metabasenet.site/)
+- [MNT Browser](https://test.metabasenet.site/)
   The blockchain browser is a powerful tool for browsing, querying, and analyzing data on the blockchain. It provides us with a simple and intuitive way to browse blockchain transactions, blocks, addresses, and other information in a visual and interactive way.
 
 <!-- ## Recommended IDE Setup
