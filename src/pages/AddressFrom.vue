@@ -95,7 +95,7 @@
                 </li>
                 <li class="over_li">
                   <p class="title-item">MNT VALUE</p>
-                  <span class="content-item">$5,250,039,228.27 (@ $544.76/BNB)</span>
+                  <span class="content-item">$5,250,039,228.27 (@ $544.76/MNT)</span>
                 </li>
                 <li class="over_li">
                   <p class="title-item">TOKEN HOLDINGS</p>

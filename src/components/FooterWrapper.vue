@@ -28,18 +28,18 @@
                 <el-row class="footerbox-center">
                     <el-col :span="6" :xs="24" :sm="12" :md="6" :lg="6">
                         <div class="grid-content ep-bg-purple footer-center">
-                            <h2>Powered by BNB Beacon Chain</h2>
+                            <h2>Powered by MNT Beacon Chain</h2>
                             <el-button @click="addWork" style="width: 50%;" type="info" plain>
                                 <svg-icon name="fox" width="0.8rem" height="0.8rem"
                                     style="margin-right: 10px"></svg-icon>
-                                <span style="font-size: 12.5625px; color: #081D35;">Add BSC Network</span>
+                                <span style="font-size: 12.5625px; color: #081D35;">Add MSC Network</span>
                             </el-button>
                         </div>
                     </el-col>
                     <el-col :span="6" :xs="12" :sm="12" :md="6" :lg="6">
                         <div class="grid-content ep-bg-purple footer-center">
                             <h4>Company</h4>
-                            <el-link href="https://element-plus.org" :underline="false">Delegate to BscScan</el-link>
+                            <el-link href="https://element-plus.org" :underline="false">Delegate to MscScan</el-link>
                             <el-link href="https://element-plus.org" :underline="false">Brand Assets</el-link>
                             <el-link href="https://element-plus.org" :underline="false">Contact Us</el-link>
                             <el-link href="https://element-plus.org" :underline="false">Terms & Privacy </el-link>
@@ -54,7 +54,7 @@
                             <el-link href="https://element-plus.org" :underline="false">API Documentation</el-link>
                             <el-link href="https://element-plus.org" :underline="false">Knowledge Base</el-link>
                             <el-link href="https://element-plus.org" :underline="false">Network Status</el-link>
-                            <el-link href="https://element-plus.org" :underline="false">Learn BSC <el-icon>
+                            <el-link href="https://element-plus.org" :underline="false">Learn MSC <el-icon>
                                     <Promotion />
                                 </el-icon> </el-link>
                         </div>

@@ -1,3 +1,4 @@
+import router from './index';
 const routes =  [
 
     {

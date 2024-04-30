@@ -133,47 +133,47 @@
 </template>
 
 <script setup>
-import { ref, onMounted, reactive, computed, watch } from 'vue'
+import { ref, onMounted, reactive, computed, watch, nextTick, onUpdated } from 'vue'
 import { ElMessage } from 'element-plus';
 import { getTransactionPage, getTransactionFee, getTransactionCount } from '@/api/transaction';
 import { formatUnits} from 'ethers';
 import { getBlockHashTransaction } from '@/api/block'
 import { number } from 'echarts';
+import router from '@/router';
+import { onBeforeRouteUpdate, useRoute } from 'vue-router';
 let tableData = reactive([])
 const currentPage4 = ref(1)
 const pageSize4 = ref(10)
 const total = ref(0)
 const copiedText = ref('');
+const route = useRoute()
 let transactionCount = reactive([])
 let transactionCount24 = ref(0)
 let transactionCount1 = ref(0)
 let transactionFee24 = ref(0)
 let transactionAvgFee = ref(0)
-const handleSizeChange =()=>{
-  getTransAction()
-}
+
 const {block} = defineProps({
   block: {
     type: [String],
     required: true
   }
 })
-const getTransAction = async (pager = 1) => {
+const getTransAction = async (pager = 1,param = 0) => {
   try {
     let response = ''
     currentPage4.value = pager;
-    if (block == 'home') {
+    if (block == 'home' || param == 1) {
       response = await getTransactionPage(currentPage4.value, pageSize4.value)
       tableData = response.data.list;
       total.value = response.data.total;
     } else {
       response = await getBlockHashTransaction(block)
-      console.log(response);
       tableData.push(response.data);
     }
     tableData.forEach(item => {
       item.gasPrice = formatUnits(item.gasPrice.toString(), 9)
-      item.method = item.method ||item.methodHash;
+      item.method = item.method || item.methodHash;
       // const values = parseFloat(item.value) || 0;
   //     if (values > Number.MAX_SAFE_INTEGER) {
   //   console.error(`Invalid value detected: ${values}. Skipping formatting.`);
@@ -205,6 +205,9 @@ const getTransAction = async (pager = 1) => {
   } catch (error) {
     console.error('Error fetching data:', error)
   }
+}
+const handleSizeChange = () => {
+  getTransAction()
 }
 function copyFormClipboard(text,row) {
   row.isCopied = true;
@@ -245,16 +248,20 @@ let getTransactionCounts = async () => {
   transactionCount24.value = transactionCount[1].count
   transactionCount1.value = transactionCount[0].count
 }
-watch(() => transactionCount1, (newValue) => {
+watch(() => transactionCount1.value, (newValue) => {
   transactionCount1.value = newValue
 });
-watch(() => transactionCount24.count, (newValue) => {
+watch(() => transactionCount24.value, (newValue) => {
   transactionCount24.value = newValue
 });
 onMounted(async () => {
   await getTransAction();
   await getTransactionCounts();
   await getTransactionFees();
+})
+watch(() => route.params, () => {
+  
+  getTransAction(1,1)
 })
 </script>
 
