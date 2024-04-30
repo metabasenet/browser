@@ -249,7 +249,7 @@
               </el-table-column>
             </el-table>
             <div class="card-footer">
-              <router-link to="/txs" class="view-all">
+              <router-link to="/txs/home" class="view-all">
                 <span style="font-size: 12px; color: #6C757D;">VIEW ALL TRANSACTIONS</span>
                 <el-icon style="margin-left:3px">
                   <Right />
