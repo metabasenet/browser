@@ -38,7 +38,7 @@
         </el-form-item>
         <el-form-item >
           <el-form-item>
-          <el-checkbox v-model="rememberMe">I would like to receive the BscScan newsletter and <br>understand that I can unsubscribe at any time.</el-checkbox>
+          <el-checkbox v-model="rememberMe">I would like to receive the MscScan newsletter and <br>understand that I can unsubscribe at any time.</el-checkbox>
         </el-form-item >
           <el-button class="login_login" type="primary" @click="handleSubmit">Create an Account</el-button>
         </el-form-item>

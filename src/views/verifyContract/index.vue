@@ -17,7 +17,7 @@
                             </div>
                             <div>
                                 <p style="margin-bottom:20px">Source code verification provides transparency for users
-                                    interacting with smart contracts. By uploading the source code, BscScan will match
+                                    interacting with smart contracts. By uploading the source code, MscScan will match
                                     the compiled code with that on the blockchain. Just like contracts, a "smart
                                     contract" should provide end users with more information on what they are "digitally
                                     signing" for and give users an opportunity to audit the code to independently verify

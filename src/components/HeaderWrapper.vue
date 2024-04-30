@@ -36,8 +36,7 @@
         <div class="header-menu"><el-row :gutter="10">
             <el-col :span="24">
               <!-- menu-trigger="click" -->
-              <el-menu ellipsis class="el-menu-popper-demo"  router mode="horizontal"
-                :popper-offset="16">
+              <el-menu ellipsis class="el-menu-popper-demo" router mode="horizontal" :popper-offset="16">
                 <el-menu-item index="/">
                   <div class="el-img">
                     <img width="40" height="37" src="/header_img.png" alt="" />
@@ -46,23 +45,23 @@
                 </el-menu-item>
                 <div class="el_menu">
                   <el-menu-item index="/">Home</el-menu-item>
-                <el-sub-menu index="2">
-                  <template #title>Blockchain</template>
-                  <el-menu-item index="/blocks">View Blocks</el-menu-item>
-                  <el-menu-item index="/txs/home">Transactions</el-menu-item>
-                  <el-menu-item index="/accounts">Top Accounts</el-menu-item>
-                </el-sub-menu>
-                <el-sub-menu index="3" :popper-offset="8">
-                  <template #title>Tokens</template>
+                  <el-sub-menu index="2">
+                    <template #title>Blockchain</template>
+                    <el-menu-item index="/blocks">View Blocks</el-menu-item>
+                    <el-menu-item index="/txs/home">Transactions</el-menu-item>
+                    <el-menu-item index="/accounts">Top Accounts</el-menu-item>
+                  </el-sub-menu>
+                  <el-sub-menu index="3" :popper-offset="8">
+                    <template #title>Tokens</template>
                     <el-menu-item index="/tokens">Top Tokens<span>(ERC-20)</span></el-menu-item>
                     <el-menu-item index="/tokentxns">Token Transfers <span>(ERC-20)</span></el-menu-item>
-                </el-sub-menu>
-                <el-menu-item  index="/login"><el-icon>
+                  </el-sub-menu>
+                  <el-menu-item index="/login"><el-icon>
                       <User />
                     </el-icon>Sign In
-                </el-menu-item>
+                  </el-menu-item>
                 </div>
-                
+
               </el-menu>
             </el-col>
           </el-row>

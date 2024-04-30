@@ -104,8 +104,6 @@
                               </el-tooltip>
                             </div>
                           </div>
-
-
                         </el-descriptions-item>
                         <el-descriptions-item label="Timestamp:" label-align="center" align="left"
                           label-class-name="my-label">
