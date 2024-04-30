@@ -57,7 +57,6 @@
             <div class="grid-content ep-bg-purple-dark grid-content_h1">
               <el-tabs v-model="activeName" type="border-card" class="demo-tabs" @tab-click="handleClick">
                 <el-tab-pane label="OverView" name="overView">
-                  <!-- <el-button type="primary" round>OverView</el-button> -->
                   <el-row class="grid-content_row">
                     <el-col :span="24" :xs="24">
                       <el-descriptions class="grid-content_h2 grid-content_h1" size="default" v-model="transDetails"
@@ -101,7 +100,7 @@
                                 </div>
                               </router-link>
                               <el-tooltip content="Number of blocks validated since" placement="top">
-                                <el-button style="width: 10rem; height: 24.88px; border-radius: 6px; font-size: 10.8744px; color: #000;">{{ blockHeightDiff }} Block Confirmations</el-button>
+                                <el-button style="padding: 5px; border-radius: 6px; font-size: 10.8744px; color: #000;">{{ blockHeightDiff }} Block Confirmations</el-button>
                               </el-tooltip>
                             </div>
                           </div>
@@ -773,5 +772,9 @@ body {
 :deep(.el-collapse-item__header) {
   font-size: 14.4992px;
   color: #6C757D;
+}
+.demo-tabs {
+  border-radius: 15px;
+  border: 2px solid #dcdfe6;
 }
 </style>

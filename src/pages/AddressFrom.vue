@@ -244,7 +244,7 @@
                       <template v-slot="scope">
                         <el-tooltip :content="scope.row.method" placement="top">
                           <el-button v-if="scope.row.method"
-                            style="font-size: 10.8744px; color: #000; width: 4rem; height:24.88px; border-radius: 6px;">{{
+                            style="padding: 5px; font-size: 10.8744px; color: #000;  border-radius: 6px;">{{
                             scope.row.method }}</el-button>
                         </el-tooltip>
                       </template>
@@ -257,7 +257,7 @@
                         }" style="font-size: 14.4992px; color: #0784C3">{{ scope.row.blockNumber }}</router-link>
                       </template>
                     </el-table-column>
-                    <el-table-column prop="formattedTime" label="Age" width="112">
+                    <el-table-column prop="formattedTime" label="Age" width="127">
                       <template v-slot="scope">
                         <span style="font-size: 14.4992px; color: #212529">{{ scope.row.formattedTime }}</span>
                       </template>
@@ -348,7 +348,7 @@
                       small @size-change="handleSizeChange" @current-change="getContractList" />
                   </div>
                   <el-table :data="tableDatas" style="width: 100%" size="default" :row-style="{ height: '70px' }">
-                    <el-table-column prop="transactionHash" label="Txn Hash" width="200">
+                    <el-table-column prop="transactionHash" label="Txn Hash" width="150">
                       <template v-slot="scope">
                         <el-tooltip :content="scope.row.to" placement="top">
                           <router-link class="skyblue-text ellipsis-text" :to="{
@@ -363,7 +363,7 @@
                       <template v-slot="scope">
                         <el-tooltip :content="scope.row.method" placement="top">
                           <el-button
-                            style="font-size: 10.8744px; color: #000; width: 4rem; height:24.88px; border-radius: 6px;">{{
+                            style="font-size: 10.8744px; color: #000; padding: 5px; border-radius: 6px;">{{
                             scope.row.method }}</el-button>
                         </el-tooltip>
                       </template>
