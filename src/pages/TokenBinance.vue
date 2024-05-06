@@ -5,7 +5,7 @@
       <el-main>
         <el-row>
           <el-col :span="24">
-            <div class="grid-content darkb_button grid-content_h3">
+            <div class="darkb_button grid-content_h3">
               <h3 style="font-size: 18.75px; color: #212529;">
                 Token {{ ercName }} ({{
                 ercSymbol
@@ -152,7 +152,7 @@
             </div>
           </el-col> -->
           <el-col :span="5" align :xs="24" :sm="12" :md="12" :lg="12">
-            <div class="grid-content ep-bg-purple-dark blocks_header">
+            <div class="blocks_header" style="margin-right: 0">
               <ul class="over_ul">
                 <li>
                   <h3 class="title-item">Other Info</h3>
@@ -223,7 +223,7 @@
                       :page-sizes="[10, 20, 30, 40]" small background layout="sizes,prev, pager, next" :total="total"
                       class="mt-4" @size-change="handleSizeChange" @current-change="getContactList" />
                   </div>
-                  <el-table :data="tableData" style="width: 100%" size="default" :row-style="{ height: '70px' }">
+                  <el-table v-loading="loading" :data="tableData" style="width: 100%" size="default" :row-style="{ height: '70px' }">
                     <el-table-column prop="transactionHash" label="Txn Hash" width="100">
                       <template v-slot="scope">
                         <router-link class="skyblue-text ellipsis-text" :to="{
@@ -336,7 +336,7 @@
                       :page-sizes="[10, 20, 30, 40]" layout=" sizes, prev, pager, next," :pager-count="5" background
                       :total="holdTotal" small @size-change="handleSizeChange2" @current-change="getBalanceList" />
                   </div>
-                  <el-table :data="holdTableData" style="width: 100%" size="default" :row-style="{ height: '70px' }">
+                  <el-table v-loading="loading1" :data="holdTableData" style="width: 100%" size="default" :row-style="{ height: '70px' }">
                     <el-table-column type="index" width="60" align="center" label="Rank" />
                     <el-table-column prop="address" align="center" label="Address" width="250">
                       <template v-slot="scope">
@@ -1019,6 +1019,8 @@ const viewFunctions = ref([]);
 const writeContract = ref([]);
 let ercName = ref('');
 let ercSymbol = ref('');
+let loading = ref(false)
+let loading1 = ref(false)
 const { address } = defineProps({
   address: {
     type: [String],
@@ -1421,6 +1423,7 @@ const getIndividualQuery = async () => {
 
 const getBalanceList = async (pager = 1) => {
   try {
+    loading1.value = true
     if (address !== null) {
       currentPage4.value = pager;
       const response = await getContactBalance(
@@ -1432,12 +1435,14 @@ const getBalanceList = async (pager = 1) => {
       holdTotal.value = response.data.total;
 
     }
+    loading1.value = false
   } catch (error) {
     console.error("Error fetching block details:", error);
   }
 };
 let getContactList = async (pager = 1) => {
   try {
+    loading.value = true
     if (address !== null) {
       currentPage4.value = pager;
       const response = await getContactPage(
@@ -1457,6 +1462,7 @@ let getContactList = async (pager = 1) => {
             item.value = ethers.formatUnits(parseInt(values, 16).toString(), decimals);
       });
     }
+    loading.value = false
   } catch (error) {
     console.error("Error fetching block details:", error);
   }
@@ -1589,7 +1595,6 @@ onMounted(async () => {
 }
 
 .grid-content_h3 {
-  margin: 0 2rem;
   padding: 19px 0;
   border-bottom: 1px solid #dcdfe6;
 }
@@ -1607,8 +1612,6 @@ onMounted(async () => {
 
 .blocks_heade {
   margin-top: 1.25rem;
-  margin-left: 2rem;
-  margin-right: 2rem;
 }
 
 .blocks_header {
@@ -1792,7 +1795,6 @@ onMounted(async () => {
 .demo-tabs {
   background-color: #fff;
   border-radius: 15px;
-  margin-right: 10px;
   border: 2px solid #dcdfe6;
 }
 

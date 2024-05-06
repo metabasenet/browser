@@ -5,7 +5,7 @@
       <el-main>
         <el-row>
           <el-col :span="24">
-            <div class="grid-content darkb_button grid-content_h3">
+            <div class="grid-content_h3">
               <div style="display: flex; justify-content: flex-start; align-items: center">
                 <img src="@/images/Avatar.png"
                   style="width: 24px; height: 24px; border-radius: 100px; vertical-align: middle; margin-right: 5px;"
@@ -168,7 +168,7 @@
             </div>
           </el-col>
           <el-col :span="5" align :xs="24" :sm="8" :md="8" :lg="8">
-            <div class="grid-content ep-bg-purple-dark blocks_header">
+            <div class="blocks_header" style="margin-right: 0;">
               <ul class="over_ul">
                 <li>
                   <h3 style="font-size: 14.4992px; color: #212529; font-weight: 500">Other Info</h3>
@@ -229,7 +229,8 @@
                       :page-sizes="[10, 20, 30, 40]" background layout=" sizes, prev, pager, next, " :total="total"
                       small @size-change="handleSizeChange1" @current-change="getAddressList" />
                   </div>
-                  <el-table :data="tableData" style="width: 100%" size="default" :row-style="{ height: '70px' }">
+                  <el-table v-loading="loading" :data="tableData" style="width: 100%" size="default"
+                    :row-style="{ height: '70px' }">
                     <el-table-column prop="hash" label="Transaction Hash" width="125">
                       <template v-slot="scope">
                         <el-tooltip :content="scope.row.hash" placement="top">
@@ -336,6 +337,104 @@
                   </div>
                 </el-row>
               </el-tab-pane>
+              <el-tab-pane label="Internal Transactions" name="tab2">
+                <el-row class="box-table">
+                  <div class="demo-pagination-block box-table_header">
+                    <div class="demonstration" style="font-size: 14.4992px; color: #212529">
+                      More than <span style="font-size: 14.4992px; color: #0784C3">{{ tableDataInternal.length }}</span>
+                      Internal
+                      transactions found
+                    </div>
+                    <el-pagination :pager-count="5" v-model:current-page="currentPageInternal"
+                      v-model:page-size="pageSizeInternal" :page-sizes="[10, 20, 30, 40]" background
+                      layout=" sizes, prev, pager, next, " :total="tableDataInternal.length" small
+                      @size-change="handleSizeChangeInternal" @current-change="handleCurrentChangeInternal" />
+                  </div>
+                  <el-table v-loading="loading2" :data="tableDataInternal" style="width: 100%" size="default"
+                    :row-style="{ height: '70px' }">
+                    <el-table-column prop="transactionhash" label="Parent Transaction Hash" width="450">
+                      <template v-slot="scope">
+                        <el-tooltip :content="scope.row.transactionhash" placement="top">
+                          <router-link class="skyblue-text ellipsis-text" :to="{
+            name: 'tx', params: { hash: scope.row.transactionhash },
+                            }" style="font-size: 14.4992px; color: #0784C3">{{ scope.row.transactionhash }}
+                          </router-link>
+                        </el-tooltip>
+                      </template>
+                    </el-table-column>
+                    <el-table-column prop="utc" label="Age" width="127">
+                      <template v-slot="scope">
+                        <span style="font-size: 14.4992px; color: #212529">{{ scope.row.utc }}</span>
+                      </template>
+                    </el-table-column>
+                    <el-table-column prop="from" label="From" width="200" align="center">
+                      <template v-slot="scope">
+                        <div class="router_box">
+                          <el-tooltip :content="scope.row.from" placement="top">
+                            <router-link class="skyblue-text ellipsis-text" :to="{
+                                  name: 'address',
+                                  params: { address: scope.row.from },
+                                }" style="font-size: 14.4992px; color: #0784C3;">{{ scope.row.from.substring(0, 10) +
+                              '...'
+                              }}</router-link>
+                          </el-tooltip>
+                          <el-tooltip v-if="!scope.row.isCopied" content="Copy Address" placement="top">
+                            <el-button text icon="CopyDocument" @click="copyFormClipboard(scope.row.from, scope.row)">
+                            </el-button>
+                          </el-tooltip>
+                          <el-tooltip v-else content="Copied!" placement="top">
+                            <el-button text icon="Check" @click="copyFormClipboard(scope.row.from, scope.row)">
+                            </el-button>
+                          </el-tooltip>
+                          <el-button style="margin-left: 0.5rem" type="success" icon="right" circle plain />
+                        </div>
+                      </template>
+                    </el-table-column>
+                    <el-table-column prop="to" label="To" align="center" width="200">
+                      <template v-slot="scope">
+                        <div class="router_box">
+                          <el-tooltip content="Contract" placement="top">
+                            <el-button
+                              style="margin-right: 5px; margin-top: 5px; width: 12.69px; height: 15px; border-radius: 5px;"
+                              icon="Document">
+                            </el-button>
+                          </el-tooltip>
+                          <el-tooltip :content="scope.row.to" placement="top">
+                            <router-link class="skyblue-text ellipsis-text" :to="{
+            name: 'address',
+            params: { address: scope.row.to },
+          }" style="font-size: 14.4992px; color: #0784C3">{{ scope.row.to.substring(0, 10) + '...'
+                              }}</router-link>
+                          </el-tooltip>
+                          <el-tooltip v-if="!scope.row.istoCopied" content="Copy Address" placement="top">
+                            <el-button text icon="CopyDocument" @click="copyToClipboard(scope.row.to, scope.row)">
+                            </el-button>
+                          </el-tooltip>
+                          <el-tooltip v-else content="Copied!" placement="top">
+                            <el-button text icon="Check" @click="copyToClipboard(scope.row.to, scope.row)">
+                            </el-button>
+                          </el-tooltip>
+                        </div>
+                      </template>
+                    </el-table-column>
+                    <el-table-column prop="value" label="Value">
+                      <template v-slot="scope">
+                        <el-tooltip :content="`${scope.row.value}`" placement="top">
+                          <span class="ellipsis-text" style="font-size: 14.4992px; color: #212529;">{{
+                            scope.row.value
+                            }}</span>
+                        </el-tooltip>
+                      </template>
+                    </el-table-column>
+                  </el-table>
+                  <div class="demo-pagination-block box-table_header">
+                    <el-pagination :pager-count="5" v-model:current-page="currentPageInternal"
+                      v-model:page-size="pageSizeInternal" :page-sizes="[10, 20, 30, 40]" background
+                      layout=" sizes, prev, pager, next, " :total="tableDataInternal.length" small
+                      @size-change="handleSizeChangeInternal" @current-change="handleCurrentChangeInternal" />
+                  </div>
+                </el-row>
+              </el-tab-pane>
               <!-- <el-tab-pane label="Internal Transactions" name="tab2">Config</el-tab-pane> -->
               <el-tab-pane label="Token Transfers(ERC-20)" name="tab3"><el-row class="box-table">
                   <div class="demo-pagination-block box-table_header">
@@ -347,7 +446,8 @@
                       :page-sizes="[10, 20, 30, 40]" background layout=" sizes, prev, pager, next, " :total="totals"
                       small @size-change="handleSizeChange" @current-change="getContractList" />
                   </div>
-                  <el-table :data="tableDatas" style="width: 100%" size="default" :row-style="{ height: '70px' }">
+                  <el-table v-loading="loading1" :data="tableDatas" style="width: 100%" size="default"
+                    :row-style="{ height: '70px' }">
                     <el-table-column prop="transactionHash" label="Txn Hash" width="150">
                       <template v-slot="scope">
                         <el-tooltip :content="scope.row.to" placement="top">
@@ -362,8 +462,7 @@
                     <el-table-column prop="method" label="Method" width="100">
                       <template v-slot="scope">
                         <el-tooltip :content="scope.row.method" placement="top">
-                          <el-button
-                            style="font-size: 10.8744px; color: #000; padding: 5px; border-radius: 6px;">{{
+                          <el-button style="font-size: 10.8744px; color: #000; padding: 5px; border-radius: 6px;">{{
                             scope.row.method }}</el-button>
                         </el-tooltip>
                       </template>
@@ -479,6 +578,7 @@ import {
   getBalanceAddress,
   getselectAddress
 } from "@/api/address";
+import { getTransactionPlaform } from '@/api/transaction'
 const { address } = defineProps({
   address: {
     type: [String],
@@ -490,6 +590,7 @@ let tableData = reactive([]);
 const total = ref(0);
 const totals = ref(0);
 let tableDatas = reactive([]);
+let tableDataInternal = ref([])
 const cities = ref([])
 const values = ref('')
 // const individualQueryDetails = ref({})
@@ -500,6 +601,11 @@ const pageSize4 = ref(10);
 const copiedText = ref("");
 const getByBalance = ref({});
 const activeName = ref("tab1");
+let loading = ref(false)
+let loading1 = ref(false)
+let loading2 = ref(false)
+let currentPageInternal = ref(1);
+let pageSizeInternal = ref(10);
 const handleClick = (tab, event) => {
   console.log(tab.props.name);
   if (tab.props.name === "tab1") {
@@ -521,8 +627,37 @@ const handleClick = (tab, event) => {
 //     console.error('Error fetching details:', error);
 //   }
 // }
+const timestamps = () => {
+  const currentTime = Math.floor(Date.now() / 1000);
+  tableData.forEach((item) => {
+    const timestamp = item.timestamp;
+    const timeDifferenceInSeconds = currentTime - timestamp;
+    let formattedTime;
+    if (timeDifferenceInSeconds < 60) {
+      const absoluteTimeDifference = Math.abs(timeDifferenceInSeconds);
+      formattedTime = `${absoluteTimeDifference} seconds ago`;
+    } else if (
+      timeDifferenceInSeconds >= 60 &&
+      timeDifferenceInSeconds < 3600
+    ) {
+      const minutes = Math.floor(timeDifferenceInSeconds / 60);
+      formattedTime = `${minutes} minutes ago`;
+    } else if (
+      timeDifferenceInSeconds >= 3600 &&
+      timeDifferenceInSeconds < 86400
+    ) {
+      const hours = Math.floor(timeDifferenceInSeconds / 3600);
+      formattedTime = `${hours} hours ago`;
+    } else {
+      const days = Math.floor(timeDifferenceInSeconds / 86400);
+      formattedTime = `${days} days ago`;
+    }
+    item.formattedTime = formattedTime;
+  });
+};
 const getContractList = async (pager = 1) => {
   try {
+    loading1.value = true
     if (address !== null) {
       currentPage4.value = pager;
       const response = await getContractAddress(
@@ -566,12 +701,14 @@ const getContractList = async (pager = 1) => {
         item.formattedTime = formattedTime;
       });
     }
+    loading1.value = false
   } catch (error) {
     console.error("Error fetching details:", error);
   }
 };
 const getAddressList = async (pager = 1) => {
   try {
+    loading.value = true
     if (address !== null) {
       currentPage4.value = pager;
       const response = await getAddressPage(
@@ -584,13 +721,13 @@ const getAddressList = async (pager = 1) => {
       timestamps();
       tableData.forEach((item) => {
         item.TransactionFee = formatUnits((item.cumulativeGasUsed * item.effectiveGasPrice).toString(), 18);
-        item.value = formatUnits(item.value.toString(), 18);
         item.method = item.method ||item.methodHash;
-        const decimals = item.decimals || 0;
-            const values = item.value || 0;
-            item.value = formatUnits(parseInt(values, 16).toString(), decimals);
+        // const decimals = item.decimals || 0;
+        // const values = item.value || 0;
+        item.value = Number(formatUnits(item.value.toString(), 18)).toFixed(8);
       });
     }
+    loading.value = false
   } catch (error) {
     console.error("Error fetching details:", error);
   }
@@ -629,34 +766,6 @@ const getContractOrAddress = async () => {
     console.log(error);
   }
 }
-const timestamps = () => {
-  const currentTime = Math.floor(Date.now() / 1000);
-  tableData.forEach((item) => {
-    const timestamp = item.timestamp;
-    const timeDifferenceInSeconds = currentTime - timestamp;
-    let formattedTime;
-    if (timeDifferenceInSeconds < 60) {
-      const absoluteTimeDifference = Math.abs(timeDifferenceInSeconds);
-      formattedTime = `${absoluteTimeDifference} seconds ago`;
-    } else if (
-      timeDifferenceInSeconds >= 60 &&
-      timeDifferenceInSeconds < 3600
-    ) {
-      const minutes = Math.floor(timeDifferenceInSeconds / 60);
-      formattedTime = `${minutes} minutes ago`;
-    } else if (
-      timeDifferenceInSeconds >= 3600 &&
-      timeDifferenceInSeconds < 86400
-    ) {
-      const hours = Math.floor(timeDifferenceInSeconds / 3600);
-      formattedTime = `${hours} hours ago`;
-    } else {
-      const days = Math.floor(timeDifferenceInSeconds / 86400);
-      formattedTime = `${days} days ago`;
-    }
-    item.formattedTime = formattedTime;
-  });
-};
 const handleSizeChange1 = (val) => {
   getAddressList();
 };
@@ -710,11 +819,56 @@ function copyToClipboards(text) {
       ElMessage.error("Copy failed, please copy manually!");
     });
 }
+const getTransactionPlaforms = async (pager = 1) => {
+  try {
+    loading2.value = true
+    currentPageInternal.value = pager
+    let {data:{list}} = await getTransactionPlaform(address, currentPageInternal.value, pageSizeInternal.value)
+    tableDataInternal.value = list;
+
+    const currentTime = Math.floor(Date.now() / 1000);
+    tableDataInternal.value.forEach((item) => {
+      const timestamp = item.utc;
+      const timeDifferenceInSeconds = currentTime - timestamp;
+      let formattedTime;
+      if (timeDifferenceInSeconds < 60) {
+        const absoluteTimeDifference = Math.abs(timeDifferenceInSeconds);
+        formattedTime = `${absoluteTimeDifference} seconds ago`;
+      } else if (
+        timeDifferenceInSeconds >= 60 &&
+        timeDifferenceInSeconds < 3600
+      ) {
+        const minutes = Math.floor(timeDifferenceInSeconds / 60);
+        formattedTime = `${minutes} minutes ago`;
+      } else if (
+        timeDifferenceInSeconds >= 3600 &&
+        timeDifferenceInSeconds < 86400
+      ) {
+        const hours = Math.floor(timeDifferenceInSeconds / 3600);
+        formattedTime = `${hours} hours ago`;
+      } else {
+        const days = Math.floor(timeDifferenceInSeconds / 86400);
+        formattedTime = `${days} days ago`;
+      }
+      item.utc = formattedTime;
+    });
+    loading2.value = false
+  } catch (error) {
+    console.error(error);
+  }
+}
+let handleSizeChangeInternal = async () => {
+  getTransactionPlaforms()
+}
+let handleCurrentChangeInternal = async () => {
+  getTransactionPlaforms()
+}
 onMounted(() => {
   getAddressList();
   getBalanceList();
   getSelectList();
   getContractOrAddress();
+  getTransactionPlaforms();
 });
 </script>
 
@@ -754,15 +908,12 @@ onMounted(() => {
 }
 
 .grid-content_h3 {
-  margin: 0 2rem;
   padding: 19px 0;
   border-bottom: 1px solid #dcdfe6;
 }
 
 .blocks_heade {
   margin-top: 1.25rem;
-  margin-left: 2rem;
-  margin-right: 2rem;
 }
 
 .blocks_header {

@@ -5,7 +5,7 @@
       <el-main>
         <el-row>
           <el-col :span="24">
-            <div class="grid-content ep-bg-purple-dark grid-content_h3">
+            <div class="grid-content_h3">
               <h3 style="font-size: 18.75px; color: #212529; font-weight: 500;">Token Tracker(ERC-20)</h3>
             </div>
           </el-col>
@@ -16,7 +16,7 @@
             <el-input style="width: 15rem" placeholder="Please enter your search" v-model="searchText" prefix-icon="Search"
               @input="handleSearchInput" />
           </div>
-          <el-table size="default" :header-cell-style="{ color: '#0784c3', fontSize: '12.5625px' }" :data="filteredData"
+          <el-table v-loading="loading" size="default" :header-cell-style="{ color: '#0784c3', fontSize: '12.5625px' }" :data="filteredData"
             :default-sort="{ prop: ['price', 'chage', 'volume', 'virculating'], order: 'descending' }" style="width: 100%" :row-style="{ height: '70px' }">
             <el-table-column prop="contractaddress" label="Token" width="470">
               <template v-slot="scope">
@@ -77,16 +77,19 @@ const currentPage4 = ref(1)
 const total = ref(0)
 const searchText = ref('');
 const pageSize4 = ref(10)
+let loading = ref(false)
 const handleSizeChange = (val) => {
   // getTokenList()
 }
 const getTokenList = async (pager = 1) => {
   try {
+    loading.value = true
     currentPage4.value = pager;
     const response = await getTokenPage(currentPage4.value, pageSize4.value)
     tableData.value = response.data.list;
     console.log(tableData.value);
     total.value = response.data.total;
+    loading.value = false
   } catch (error) {
     console.error('Error fetching data:', error)
   }
@@ -133,7 +136,6 @@ onMounted(() => {
 }
 
 .grid-content_h3 {
-  margin: 0 2rem;
   padding: 19px 0;
   border-bottom: 1px solid #dcdfe6;
 }
@@ -161,7 +163,7 @@ onMounted(() => {
 }
 
 .box-table {
-  margin: 10px 2rem;
+  margin: 10px 0;
   background-color: #fff;
   border-radius: 15px;
 }

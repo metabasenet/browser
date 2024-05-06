@@ -6,20 +6,21 @@ const API = {
     TRANSACTION_RECORDS_URL: '/market/transcationCountByDay',
     TRANSACTION_FEE_URL: '/market/lastedTransactionFee',
     TRANSACTION_COUNT_URL: '/market/lastedTranscationCount',
-    TRANSACTION_INTERNAL_URL: '/transaction/getPlatformTransactionInfo'
+    TRANSACTION_INTERNAL_URL: '/transaction/getPlatformTransactionInfo',
+    TRANSACTION_PLATFORM_URL: '/transaction/getPlatformTransactionByAddress'
   }
-  export const getTransactionPage = (page, pageSize, timeout = 10000) => { 
+export const getTransactionPage = (page, pageSize, timeout = 10000) => { 
     const url = `${API.TRANSACION_PAGE_URL}?page=${page}&pageSize=${pageSize}`;
     const config = {
       timeout: timeout 
     };
     return request.get(url, config);
-  };
+};
 export const getTransactionDetail = (hash) => {
   const url = `${API.TRANSACION_DETAIL_URL}?hash=${hash}`;
   return request.get(url);
 };
-export const getTransactionLogs = (hash,page, pageSize) => {
+export const getTransactionLogs = (hash, page, pageSize) => {
   const url = `${API.TRANSACION_LOGS_URL}?hash=${hash}&page=${page}&pageSize=${pageSize}`;
   return request.get(url);
 };
@@ -37,5 +38,9 @@ export const getTransactionRecords = () => {
 };
 export const getTransactionInternal = (triHash) => {
   const url = `${API.TRANSACTION_INTERNAL_URL}?transactionHash=${triHash}`
+  return request.get(url);
+}
+export const getTransactionPlaform = (address, currentPage, pageSize) => {
+  const url = `${API.TRANSACTION_PLATFORM_URL}?address=${address}&page=${currentPage}&pageSize=${pageSize}`
   return request.get(url);
 }

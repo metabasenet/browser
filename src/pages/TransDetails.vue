@@ -5,7 +5,7 @@
       <el-main>
         <el-row>
           <el-col :span="24">
-            <div class="grid-content ep-bg-purple-dark grid-content_h3 darkb_button">
+            <div class=" grid-content_h3 darkb_button">
               <h3 style="font-size: 18.75px; color: #212529; font-weight: 500;">Transaction Details</h3>
               <!-- <div>
                 <el-dropdown style="margin-right:5px">
@@ -54,7 +54,7 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <div class="grid-content ep-bg-purple-dark grid-content_h1">
+            <div class=" grid-content_h1">
               <el-tabs v-model="activeName" type="border-card" class="demo-tabs" @tab-click="handleClick">
                 <el-tab-pane label="OverView" name="overView">
                   <el-row class="grid-content_row">
@@ -320,7 +320,7 @@
                 </el-tab-pane>
                 <el-tab-pane label="Internal Txns" name="internalTxns">
                   <el-row class="box-table">
-                    <el-table :data="tableData" style="width: 100%" size="default" :row-style="{ height: '70px' }">
+                    <el-table v-loading="loading" :data="tableData" style="width: 100%" size="default" :row-style="{ height: '70px' }">
                       <el-table-column prop="transactionhash" label="TrsHash" width="110">
                         <template v-slot="scope">
                           <el-tooltip :content="scope.row.transactionhash">
@@ -523,6 +523,7 @@ const lastestBlock = ref();
 const activeName = ref('overView')
 const page = ref(1)
 const pageSize = ref(100)
+let loading = ref(false)
 const options = [
   {
     value: 'Default View',
@@ -701,6 +702,7 @@ function copyToClipboardInternal(text, row) {
 }
 const getInterTransactions = async () => {
   try {
+    loading.value = true
     let { data } = await getTransactionInternal(hash);
     tableData.value = data;
     tableData.value.forEach(item => {
@@ -723,7 +725,7 @@ const getInterTransactions = async () => {
       }
       item.utc = formattedTime;
     })
-    
+    loading.value = false
   } catch (error) {
     console.log(error);
   }
@@ -781,8 +783,7 @@ body {
 }
 
 .grid-content_h1 {
-  padding: 19px 10px;
-  margin-left: 10px;
+  padding: 19px 0;
 }
 
 .grid-content_h1 span {
@@ -790,13 +791,7 @@ body {
   color: #6c757d;
 }
 
-.grid-content span {
-  font-size: 14px;
-  color: #6c757d;
-}
-
 .grid-content_h3 {
-  margin: 0 2rem;
   padding: 19px 0;
   border-bottom: 1px solid #dcdfe6;
 }

@@ -119,7 +119,8 @@
                   <Grid />
                 </el-icon>Customize</el-button> -->
             </div>
-            <el-table :data="tableData" style="width: 100%" :row-style="{ height: '70px' }">
+            <el-table v-loading="loading" :data="tableData" style="width: 100%"
+              :row-style="{ height: '70px' }">
               <el-table-column prop="number">
                 <template v-slot="scope">
                   <div style="display:flex;align-items: center;">
@@ -194,7 +195,7 @@
                   <Grid />
                 </el-icon>Customize</el-button> -->
             </div>
-            <el-table :data="tableDatas" style="width: 100%" :row-style="{ height: '70px' }">
+            <el-table v-loading="loading1" :data="tableDatas" style="width: 100%" :row-style="{ height: '70px' }">
               <el-table-column prop="number">
                 <template v-slot="scope">
                   <div style="display:flex;align-items: center;">
@@ -291,7 +292,8 @@ let transactionCount = ref()
 let transationHistory = reactive([])
 const input_item = ref('input_item')
 const gasPrice = ref()
-
+let loading = ref(false)
+let loading1 = ref(false)
 const getSearch = async () => {
   if (!homeSearch.value) {
     ElMessage.warning('Please enter your search')
@@ -336,10 +338,10 @@ const getSearch = async () => {
 
 const getBlockPageData = async (pager = 1) => {
   try {
+    loading.value = true
     currentPage4.value = pager;
     const response = await getBlockPage(currentPage4.value, pageSize4.value)
     tableData = response.data.list;
-    console.log(tableData);
     tableData.forEach(item => {
       const percentage = (item.gasused / item.gaslimit) * 100;
       item.percentage = percentage;
@@ -370,12 +372,14 @@ const getBlockPageData = async (pager = 1) => {
       }
       item.formattedTime = formattedTime;
     });
+    loading.value = false
   } catch (error) {
     console.error('Error fetching data:', error)
   }
 }
 const getTransAction = async (pager = 1) => {
   try {
+    loading1.value = true
     currentPage4.value = pager;
     const response = await getTransactionPage(currentPage4.value, pageSize4.value)
     tableDatas.value = response.data.list;
@@ -405,6 +409,7 @@ const getTransAction = async (pager = 1) => {
       }
       item.formattedTime = formattedTime;
     });
+    loading1.value = false
     // addGaspriceTotalToTableDatas();
   } catch (error) {
     console.error('Error fetching data:', error)

@@ -5,7 +5,7 @@
             <el-main>
                 <el-row>
                     <el-col :span="24">
-                        <div class="grid-content ep-bg-purple-dark grid-content_h3">
+                        <div class="grid-content_h3">
                             <h3 style="font-size: 18.75px; color: #212529; font-weight: 500;">Token Transfers (ERC-20)</h3>
                         </div>
                     </el-col>
@@ -20,7 +20,7 @@
                             :page-sizes="[10, 25, 50, 100]" :pager-count="5" layout="sizes,prev, pager, next"
                             :total="total" small @size-change="handleSizeChange" @current-change="getTransAction" />
                     </div>
-                    <el-table :data="tableData" style="width: 100%" size="default" :row-style="{ height: '70px' }">
+                    <el-table v-loading="loading" :data="tableData" style="width: 100%" size="default" :row-style="{ height: '70px' }">
                         <el-table-column prop="transactionHash " label="Txn Hash" width="150">
                             <template v-slot="scope">
                                 <router-link class="skyblue-text ellipsis-text"
@@ -122,11 +122,13 @@ const currentPage4 = ref(1)
 const pageSize4 = ref(10)
 const total = ref(0)
 const copiedText = ref('');
+let loading = ref(false)
 const handleSizeChange = (val) => {
     getTransAction()
 }
 const getTransAction = async (pager = 1) => {
     try {
+        loading.value = true
         currentPage4.value = pager;
         const response = await getAllContact(currentPage4.value, pageSize4.value)
         tableData.value = response.data.list;
@@ -138,6 +140,7 @@ const getTransAction = async (pager = 1) => {
         })
         total.value = response.data.total;
         timestamps();
+        loading.value = false
     } catch (error) {
         console.error('Error fetching data:', error)
     }
@@ -216,7 +219,6 @@ onMounted(() => {
 }
 
 .grid-content_h3 {
-    margin: 0 2rem;
     padding: 19px 0;
     border-bottom: 1px solid #dcdfe6;
 }
@@ -244,7 +246,7 @@ onMounted(() => {
 }
 
 .box-table {
-    margin: 10px 2rem;
+    margin: 10px 0;
     background-color: #fff;
     border-radius: 15px;
 }

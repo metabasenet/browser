@@ -5,7 +5,7 @@
       <el-main>
         <el-row>
           <el-col :span="24">
-            <div class="grid-content ep-bg-purple-dark grid-content_h3">
+            <div class="grid-content_h3">
               <h3 style="  color: #212529; font-size: 18.75px; font-weight: 500;">Transactions</h3>
             </div>
           </el-col>
@@ -30,7 +30,7 @@
             </div>
           </el-col>
           <el-col :span="5" align :xs="24" :sm="12" :md="12" :lg="6">
-            <div class="grid-content ep-bg-purple-dark blocks_header">
+            <div class="grid-content ep-bg-purple-dark blocks_header" style="margin-right: 0;">
               <p>AVG. TRANSACTIONS FEE (24H)</p>
               <el-link >{{transactionAvgFee}}&nbsp;<span style="font-size: 12.2569px; color: #000; font-weight: 400;">(GWei)</span></el-link>
             </div>
@@ -43,7 +43,7 @@
               :page-sizes="[10, 25, 50, 100]" layout="sizes,prev, pager, next" :pager-count="5" :total="total" small
               @size-change="handleSizeChange" @current-change="getTransAction" />
           </div>
-          <el-table :data="tableData" style="width: 100%" size="default" :row-style="{ height: '70px' }" > 
+          <el-table v-loading="loading" :data="tableData" style="width: 100%" size="default" :row-style="{ height: '70px' }" > 
             <el-table-column prop="hash" label="Txn Hash" width="100  " >
               <template v-slot="scope">
                 <el-tooltip effect="dark" :content="scope.row.hash" placement="top">
@@ -152,7 +152,7 @@ let transactionCount24 = ref(0)
 let transactionCount1 = ref(0)
 let transactionFee24 = ref(0)
 let transactionAvgFee = ref(0)
-
+let loading = ref(false)
 const {block} = defineProps({
   block: {
     type: [String],
@@ -161,6 +161,7 @@ const {block} = defineProps({
 })
 const getTransAction = async (pager = 1,param = 0) => {
   try {
+    loading.value = true
     let response = ''
     currentPage4.value = pager;
     if (block == 'home' || param == 1) {
@@ -168,8 +169,8 @@ const getTransAction = async (pager = 1,param = 0) => {
       tableData = response.data.list;
       total.value = response.data.total;
     } else {
-      response = await getBlockHashTransaction(block)
-      tableData.push(response.data);
+      let {data} = await getBlockHashTransaction(block)
+      tableData = data;
     }
     tableData.forEach(item => {
       item.gasPrice = formatUnits(item.gasPrice.toString(), 9)
@@ -202,6 +203,7 @@ const getTransAction = async (pager = 1,param = 0) => {
       }
       item.formattedTime = formattedTime;
     });
+    loading.value = false
   } catch (error) {
     console.error('Error fetching data:', error)
   }
@@ -284,12 +286,11 @@ watch(() => route.params, () => {
 }
 
 .grid-content_h3 {
-  margin: 0 2rem;
   padding: 19px 0;
   border-bottom: 1px solid #dcdfe6;
 }
 .blocks_heade {
-  margin: 20px 2rem;
+  margin: 20px 0;
 }
 
 .blocks_header {
@@ -313,7 +314,7 @@ watch(() => route.params, () => {
 }
 
 .box-table {
-  margin: 10px 2rem;
+  margin: 10px 0;
   background-color: #fff;
   border-radius: 15px;
 }

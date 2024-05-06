@@ -2,7 +2,7 @@ import request from '@/utils/request'
 const API = {
     BLOCK_PAGE_URL:'/block/page',
     BLOCK_DETAIL_URL:'/block/getByNumber',
-    BLOCK_HASH_TRANSACTIONS: 'transaction/getByBlockHash'
+    BLOCK_HASH_TRANSACTIONS: '/transaction/getByBlockHash'
   }
 export const getBlockPage = (page, pageSize) => {
   const url = `${API.BLOCK_PAGE_URL}?page=${page}&pageSize=${pageSize}`;

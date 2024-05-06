@@ -5,7 +5,7 @@
       <el-main>
         <el-row>
           <el-col :span="24">
-            <div class="grid-content ep-bg-purple-dark grid-content_h3">
+            <div class="grid-content_h3">
               <h3 style="font-size: 18.75px; color: #212529; font-weight: 500;">Blocks</h3>
             </div>
           </el-col>
@@ -46,7 +46,8 @@
               :page-sizes="[10, 25, 50, 100]" layout=" sizes, prev, pager, next, " :total="total" :pager-count="5"
               background small @size-change="handleSizeChange" @current-change="getBlockPageData" />
           </div>
-          <el-table :data="tableData" size="default" style="width: 100%" :row-style="{ height: '70px' }">
+          <el-table v-loading="loading" :data="tableData" size="default"
+            style="width: 100%" :row-style="{ height: '70px' }">
             <el-table-column prop="number" label="Block" width="100" style="font-size: 12px;">
               <template v-slot="scope">
                 <router-link class="skyblue-text" :to="{ name:'block',params:{blockNumber:scope.row.number} }">
@@ -127,9 +128,10 @@ const currentPage4 = ref(1)
 const total = ref(0)
 const pageSize4 = ref(10)
 const copiedText = ref('');
-
+let loading = ref(false)
 const getBlockPageData = async (pager = 1) => {
   try {
+    loading.value = true
     currentPage4.value = pager;
     const response = await getBlockPage(currentPage4.value, pageSize4.value)
     tableData = response.data.list;
@@ -162,6 +164,7 @@ const getBlockPageData = async (pager = 1) => {
       item.formattedTime = formattedTime;
     });
     addGaspriceTotalToTableData();
+    loading.value = false
   } catch (error) {
     console.error('Error fetching data:',error)
   }
@@ -218,7 +221,6 @@ function goTransactionPage(count, hash) {
   background-color: #f9fafc;
 }
 .grid-content_h3 {
-  margin: 0 2rem;
   padding: 19px 0;
   border-bottom: 1px solid #dcdfe6;
 }
@@ -241,7 +243,7 @@ function goTransactionPage(count, hash) {
   font-weight: bold;
 }
 .box-table{
-  margin: 10px 2rem;
+  margin: 10px 0;
   background-color: #fff;
   border-radius: 15px;
 }

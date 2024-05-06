@@ -5,14 +5,14 @@
       <el-main>
         <el-row>
           <el-col :span="24">
-            <div class="grid-content ep-bg-purple-dark grid-content_h3">
+            <div class="grid-content_h3">
               <h3 style="font-size: 18.75px; color: #212529; font-weight: 500;">Block<span class="header_span">#{{ blockNumber }}</span></h3>
             </div>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
-            <div class="grid-content ep-bg-purple-dark grid-content_h0">
+            <div class="grid-content_h0">
               <el-button style="width: 70.73px; height:  28.44px; background-color: #0784C3; font-size: 12.5625px; color: #fff; border-radius: 8px" >OverView</el-button>
             </div>
           </el-col>
@@ -279,11 +279,10 @@ function goTransactionPage () {
 
 .grid-content_h1 {
   /* margin: 0 2rem; */
-  padding: 19px 35px;
+  padding: 19px 5px;
 }
 
 .grid-content_h0 {
-  margin: 0 2rem;
   padding: 19px 0;
 }
 
@@ -292,19 +291,14 @@ function goTransactionPage () {
   color: #6c757d;
 }
 
-.grid-content span {
-  font-size: 14px;
-  color: #6c757d;
-}
-
 .grid-content_h3 {
-  margin: 0 2rem;
+  /* margin: 0 2rem; */
   padding: 19px 0;
   border-bottom: 1px solid #dcdfe6;
 }
 
 .grid-content_h2 {
-  margin: 5px 2rem;
+  margin: 5px 0;
   padding: 19px 20px;
   background-color: #fff;
   border: 1px solid #dcdfe6;
