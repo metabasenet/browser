@@ -315,7 +315,7 @@
                       <template v-slot="scope">
                         <el-tooltip :content="`${scope.row.TransactionFee}`" placement="top">
                           <span class="ellipsis-text" v-if="scope.row.TransactionFee"> {{ scope.row.TransactionFee
-                            }}<span style="font-size: 12px; color: #212529">(GWei)</span></span>
+                            }}</span>
                         </el-tooltip>
                       </template>
                     </el-table-column>
@@ -583,7 +583,8 @@ const getAddressList = async (pager = 1) => {
       total.value = response.data.total;
       timestamps();
       tableData.forEach((item) => {
-        item.TransactionFee = item.cumulativeGasUsed * item.effectiveGasPrice;
+        item.TransactionFee = formatUnits((item.cumulativeGasUsed * item.effectiveGasPrice).toString(), 18);
+        item.value = formatUnits(item.value.toString(), 18);
         item.method = item.method ||item.methodHash;
         const decimals = item.decimals || 0;
             const values = item.value || 0;
