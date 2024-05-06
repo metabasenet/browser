@@ -2,7 +2,7 @@
   <div class="common-layout">
     <el-container class="container-xxl">
       <div class="container_bgc"></div>
-      <el-aside class="responsive-aside"></el-aside>
+      <!-- <el-aside class="responsive-aside"></el-aside> -->
       <el-main>
         <div class="container">
           <el-row justify="center" class="homeOne-itemone">
@@ -259,7 +259,7 @@
           </div>
         </div>
       </el-main>
-      <el-aside class="responsive-aside"></el-aside>
+      <!-- <el-aside class="responsive-aside"></el-aside> -->
     </el-container>
   </div>
 </template>

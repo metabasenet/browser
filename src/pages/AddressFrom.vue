@@ -1,7 +1,7 @@
 <template>
   <div class="box">
     <el-container class="container-xxl">
-      <el-aside class="responsive-aside"></el-aside>
+      <!-- <el-aside class="responsive-aside"></el-aside> -->
       <el-main>
         <el-row>
           <el-col :span="24">
@@ -462,7 +462,7 @@
           </el-col>
         </el-row>
       </el-main>
-      <el-aside class="responsive-aside"></el-aside>
+      <!-- <el-aside class="responsive-aside"></el-aside> -->
     </el-container>
   </div>
 </template>
@@ -583,7 +583,7 @@ const getAddressList = async (pager = 1) => {
       total.value = response.data.total;
       timestamps();
       tableData.forEach((item) => {
-        item.TransactionFee = formatUnits(Math.floor((item.cumulativeGasUsed * item.effectiveGasPrice)).toString(), 9);
+        item.TransactionFee = item.cumulativeGasUsed * item.effectiveGasPrice;
         item.method = item.method ||item.methodHash;
         const decimals = item.decimals || 0;
             const values = item.value || 0;

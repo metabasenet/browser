@@ -1,7 +1,7 @@
 <template>
     <div class="footer">
         <el-container class="container-xxl">
-            <el-aside class="responsive-aside"></el-aside>
+            <!-- <el-aside class="responsive-aside"></el-aside> -->
             <el-main>
                 <el-row class="footer-box">
                     <el-col :span="24">
@@ -28,7 +28,8 @@
                 <el-row class="footerbox-center">
                     <el-col :span="6" :xs="24" :sm="12" :md="6" :lg="6">
                         <div class="grid-content ep-bg-purple footer-center">
-                            <h2>Powered by MNT Beacon Chain</h2>
+                            <h2 style="font-size: 16px; color: #212529; font-weight: 500;">Powered by MNT Beacon Chain
+                            </h2>
                             <el-button @click="addWork" style="width: 50%;" type="info" plain>
                                 <svg-icon name="fox" width="0.8rem" height="0.8rem"
                                     style="margin-right: 10px"></svg-icon>
@@ -38,7 +39,7 @@
                     </el-col>
                     <el-col :span="6" :xs="12" :sm="12" :md="6" :lg="6">
                         <div class="grid-content ep-bg-purple footer-center">
-                            <h4>Company</h4>
+                            <h4 style="font-size: 14.4992px; color: #212529; font-weight: 500;">Company</h4>
                             <el-link href="https://element-plus.org" :underline="false">Delegate to MscScan</el-link>
                             <el-link href="https://element-plus.org" :underline="false">Brand Assets</el-link>
                             <el-link href="https://element-plus.org" :underline="false">Contact Us</el-link>
@@ -50,7 +51,7 @@
                     </el-col>
                     <el-col :span="6" :xs="12" :sm="12" :md="6" :lg="6">
                         <div class="grid-content ep-bg-purple footer-center">
-                            <h4>Community</h4>
+                            <h4 style="font-size: 14.4992px; color: #212529; font-weight: 500;">Community</h4>
                             <el-link href="https://element-plus.org" :underline="false">API Documentation</el-link>
                             <el-link href="https://element-plus.org" :underline="false">Knowledge Base</el-link>
                             <el-link href="https://element-plus.org" :underline="false">Network Status</el-link>
@@ -61,7 +62,7 @@
                     </el-col>
                     <el-col :span="6" :xs="12" :sm="12" :md="6" :lg="6">
                         <div class="grid-content ep-bg-purple footer-center footer-Products">
-                            <h4>Products & Services</h4>
+                            <h4 style="font-size: 14.4992px; color: #212529; font-weight: 500;">Products & Services</h4>
                             <el-link href="https://element-plus.org" :underline="false">Advertise<el-icon>
                                     <Position />
                                 </el-icon></el-link>
@@ -86,7 +87,7 @@
                     </el-col>
                 </el-row>
             </el-main>
-            <el-aside class="responsive-aside"></el-aside>
+            <!-- <el-aside class="responsive-aside"></el-aside> -->
         </el-container>
     </div>
 </template>
