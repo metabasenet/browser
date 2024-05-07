@@ -24,13 +24,13 @@
             <div style="position: relative;">
               <el-button icon="ChromeFilled" class="header_button" size="large" style="margin-left:5px"
                 @click="showBox = !showBox"></el-button>
-              <div class="hide-box" v-show="showBox">
+              <div class="hide-box" v-show="showBox" @mouseleave="close">
                 <ul style="text-align: center;">
                   <li class="switch-chain"
-                    style="font-size: 12.5625px; color: #212529;margin-bottom: 40px; margin-top: 10px; cursor: pointer;"
+                    style="font-size: 12.5625px; color: #212529;margin-bottom: 0; margin-top: 30px; cursor: pointer;"
                     @click="chainSelect(1)">
                     Msc Mainnet</li>
-                  <li style="height: 1px; background-color: #adb5bd; margin: 30px 0;"></li>
+                  <li style="height: 1px; background-color: #adb5bd; margin: 25px 0;"></li>
                   <li class="switch-chain" style="font-size: 12.5625px; color: #212529; cursor: pointer;"
                     @click="chainSelect(0)">Msc Testnet
                   </li>
@@ -211,11 +211,14 @@ let getGasPrice = async ()=>{
   gasPrice.value = formatUnits(parseInt(res, 16), 9)
 }
 function chainSelect (v) {
-  // user.set_chainFlag(v)
-  sessionStorage.setItem("flag", v)
+  // sessionStorage.setItem("flag", v)
+  location.href = v == 1 ? config.domain_url : config.dev_url
   showBox.value = false
-  
-  location.href = v==1?config.domain_url:config.dev_url
+}
+function close () {
+  if (showBox.value == true) {
+    showBox.value = false
+  }
 }
 onMounted(()=>{
   getHeaderPrice()
@@ -333,8 +336,8 @@ onMounted(()=>{
   }
 }
 .hide-box {
-  width: 130px;
-  height: 140px;
+  width: 100px;
+  height: 130px;
   background-color: #FFF;
   border-radius: 12px;
   position: absolute;

@@ -4,10 +4,10 @@ import pinia from '@/store'
 import { useUserStore } from '@/store/user'
 import { config } from '@/config/config'
 //import.meta.env.VITE_APP_API_URL
-let user = useUserStore(pinia)
-const flag = sessionStorage.getItem('flag') || 1
+//location.hostname == config.main_url?config.main_url:config.test_url
+// const flag = sessionStorage.getItem('flag') || 1
 let request = axios.create({
-    baseURL: flag==1?config.main_url:config.test_url,
+    baseURL: location.hostname == config.domain_url?config.main_url:config.test_url,
     timeout: 15000,
 });
 request.interceptors.request.use((config) => {

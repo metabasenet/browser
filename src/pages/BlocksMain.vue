@@ -205,7 +205,7 @@ function copyToClipboard(text,row) {
         });
     }
 onMounted(() => {
-  getBlockPageData()
+  getBlockPageData();
 })
 function goTransactionPage(count, hash) {
   if (count == 0) {
