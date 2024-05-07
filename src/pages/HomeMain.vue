@@ -32,7 +32,7 @@
           </el-row>
           <el-row justify="center">
             <el-col :span="24" style="text-align: center">
-              <span class="input-bottom" style="font-size: 14.4992px; color: #fff;">Featured: Mscscan API - Need higher
+              <span class="input-bottom" style="font-size: 14.4992px; color: #fff;">Featured: Mntscan API - Need higher
                 call rates ?
                 <el-link style="color:#0784c3" href="#" target="_blank">Sign-up for a dedicated plan today!</el-link>
               </span>
@@ -60,7 +60,7 @@
                 </svg-icon>
               </div>
               <div class="cardOne-top-font">
-                <p class="card_p">MNT MARKET CAP ON MSC</p>
+                <p class="card_p">MNT MARKET CAP ON MNT</p>
                 <el-link></el-link>
               </div>
             </div>

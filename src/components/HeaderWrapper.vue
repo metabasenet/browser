@@ -29,10 +29,10 @@
                   <li class="switch-chain"
                     style="font-size: 12.5625px; color: #212529;margin-bottom: 0; margin-top: 30px; cursor: pointer;"
                     @click="chainSelect(1)">
-                    Msc Mainnet</li>
+                    Mnt Mainnet</li>
                   <li style="height: 1px; background-color: #adb5bd; margin: 25px 0;"></li>
                   <li class="switch-chain" style="font-size: 12.5625px; color: #212529; cursor: pointer;"
-                    @click="chainSelect(0)">Msc Testnet
+                    @click="chainSelect(0)">Mnt Testnet
                   </li>
                 </ul>
               </div>
