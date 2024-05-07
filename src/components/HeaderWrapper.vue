@@ -21,7 +21,17 @@
               </template>
             </el-input>
             <el-button icon="Sunny" class="header_button" size="large" style="margin-left:5px"></el-button>
-            <el-button icon="ChromeFilled" class="header_button" size="large" style="margin-left:5px"></el-button>
+            <div style="position: relative;">
+              <el-button icon="ChromeFilled" class="header_button" size="large" style="margin-left:5px"
+               ></el-button>
+              <div class="hide-box" v-show="showBox">
+                <ul style="text-align: center;">
+                  <li style="font-size: 12.5625px; color: #212529;margin-bottom: 40px; margin-top: 10px; cursor: pointer;">Msc Mainnet</li>
+                  <li style="height: 1px; background-color: #adb5bd; margin: 30px 0;"></li>
+                  <li style="font-size: 12.5625px; color: #212529; cursor: pointer;">Msc Testnet</li>
+                </ul>
+              </div>
+            </div>
           </div>
           <!-- <el-row :gutter="10" class="header_row ">
             <el-col :span="1" :xs="0" :sm="11" :md="11" :lg="1" style="background-color: red;"></el-col>
@@ -54,7 +64,8 @@
             <el-col :span="1" :xs="0" :sm="0" :md="1" :lg="1"></el-col>
           </el-row> -->
         </div>
-        <div class="header-menu" style="padding: 0 10px; display: flex; align-items: center; justify-content: space-between;">
+        <div class="header-menu"
+          style="padding: 0 10px; display: flex; align-items: center; justify-content: space-between;">
           <div style="display: flex; align-items: center; padding: 0 20px;">
             <img width="40" height="37" src="/header_img.png" alt="" />
             <span style="font-size:1.4rem;color:#00a186">MNT</span>
@@ -135,6 +146,7 @@ const homeSearch = ref('')
 const select = ref('');
 const headerPrice = ref('')
 const gasPrice = ref()
+let showBox = ref(false)
 const getSearch = async () => {
   if (!homeSearch.value) {
     ElMessage.warning('Please enter your search')
@@ -304,5 +316,14 @@ onMounted(()=>{
   .header-menu {
     margin-top: 0;
   }
+}
+.hide-box {
+  width: 130px;
+  height: 140px;
+  background-color: #FFF;
+  border-radius: 12px;
+  position: absolute;
+  right: 1px;
+  padding: 15px;
 }
 </style>

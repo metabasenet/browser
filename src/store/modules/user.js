@@ -7,6 +7,7 @@ export const useUserStore = defineStore('user', {
             token: SET_USER(),
             // username:'',
             // avatar:'',
+            // chainFlag: 1,
 
         }
     },
