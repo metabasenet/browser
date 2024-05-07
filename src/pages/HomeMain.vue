@@ -277,8 +277,7 @@ import { getPriceInfo } from '@/api/headerprice';
 import * as echarts from 'echarts';
 import { Search } from '@element-plus/icons-vue';
 import { ethers, formatUnits } from "ethers";
-// import useUserStore from '@/store/modules/user'
-// let userStore = useUserStore()
+
 let tableData = reactive([])
 const tableDatas = ref([])
 const homeSearch = ref('')

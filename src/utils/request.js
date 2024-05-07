@@ -1,9 +1,13 @@
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
-
-import { useUserStore } from '@/store/modules/user';
+import pinia from '@/store'
+import { useUserStore } from '@/store/user'
+import { config } from '@/config/config'
+//import.meta.env.VITE_APP_API_URL
+let user = useUserStore(pinia)
+const flag = sessionStorage.getItem('flag') || 1
 let request = axios.create({
-    baseURL: import.meta.env.VITE_APP_API_URL,
+    baseURL: flag==1?config.main_url:config.test_url,
     timeout: 15000,
 });
 request.interceptors.request.use((config) => {

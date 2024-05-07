@@ -43,7 +43,7 @@
 
 <script setup>
 import { reactive, ref } from 'vue'
-import { useUserStore } from '@/store/modules/user'
+import { useUserStore } from '@/store/user'
 import { useRouter } from 'vue-router';
 import { ElNotification  } from 'element-plus'
 let useStore = useUserStore();
@@ -129,4 +129,4 @@ function handlePasswordView() {
   height: 5vh;
   border-radius: 10px;
 }
-</style>
+</style>@/store/user

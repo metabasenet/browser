@@ -23,12 +23,17 @@
             <el-button icon="Sunny" class="header_button" size="large" style="margin-left:5px"></el-button>
             <div style="position: relative;">
               <el-button icon="ChromeFilled" class="header_button" size="large" style="margin-left:5px"
-               ></el-button>
+                @click="showBox = !showBox"></el-button>
               <div class="hide-box" v-show="showBox">
                 <ul style="text-align: center;">
-                  <li style="font-size: 12.5625px; color: #212529;margin-bottom: 40px; margin-top: 10px; cursor: pointer;">Msc Mainnet</li>
+                  <li class="switch-chain"
+                    style="font-size: 12.5625px; color: #212529;margin-bottom: 40px; margin-top: 10px; cursor: pointer;"
+                    @click="chainSelect(1)">
+                    Msc Mainnet</li>
                   <li style="height: 1px; background-color: #adb5bd; margin: 30px 0;"></li>
-                  <li style="font-size: 12.5625px; color: #212529; cursor: pointer;">Msc Testnet</li>
+                  <li class="switch-chain" style="font-size: 12.5625px; color: #212529; cursor: pointer;"
+                    @click="chainSelect(0)">Msc Testnet
+                  </li>
                 </ul>
               </div>
             </div>
@@ -142,10 +147,13 @@ import { getPriceInfo } from '@/api/headerprice';
 import { ElMessage } from 'element-plus'
 import { ethers, formatUnits } from "ethers";
 import { config } from '@/config/config';
+import { useUserStore } from '@/store/user'
+import pinia from '@/store';
 const homeSearch = ref('')
 const select = ref('');
 const headerPrice = ref('')
 const gasPrice = ref()
+const user = useUserStore(pinia)
 let showBox = ref(false)
 const getSearch = async () => {
   if (!homeSearch.value) {
@@ -201,6 +209,13 @@ let getGasPrice = async ()=>{
   const provider = new ethers.JsonRpcProvider(config.rpc_adress);
   const res = await provider.send("eth_gasPrice");
   gasPrice.value = formatUnits(parseInt(res, 16), 9)
+}
+function chainSelect (v) {
+  // user.set_chainFlag(v)
+  sessionStorage.setItem("flag", v)
+  showBox.value = false
+  
+  location.href = v==1?config.domain_url:config.dev_url
 }
 onMounted(()=>{
   getHeaderPrice()
@@ -325,5 +340,8 @@ onMounted(()=>{
   position: absolute;
   right: 1px;
   padding: 15px;
+}
+.switch-chain:hover {
+  background-color: #0784c3;
 }
 </style>
