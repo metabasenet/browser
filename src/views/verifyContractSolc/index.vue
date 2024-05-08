@@ -378,9 +378,6 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.el-row {
-    /* margin: 0 0.75rem; */
-}
 
 .container-xxl {
     background-color: #fafbfc;
