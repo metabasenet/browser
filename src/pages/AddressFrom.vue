@@ -558,6 +558,7 @@
                       small @size-change="handleSizeChange" @current-change="getContractList" /> -->
                 </el-row>
               </el-tab-pane>
+<<<<<<< HEAD
              <div v-if="ifContract">
               <el-tab-pane  v-if="!verifystatused" label="Contract" name="tab4">
                 <el-row :gutter="10">
@@ -1063,6 +1064,8 @@
                 </el-tabs>
               </el-tab-pane>
              </div>
+=======
+>>>>>>> 53e11174e031704d7a9c0e758018740b15c21926
               <!-- <el-tab-pane label="NFT Transfers" name="tab4">Task</el-tab-pane> -->
             </el-tabs>
           </el-col>
@@ -1117,6 +1120,7 @@ let loading1 = ref(false)
 let loading2 = ref(false)
 let currentPageInternal = ref(1);
 let pageSizeInternal = ref(10);
+<<<<<<< HEAD
 const verifystatused = ref(0);
 const viewFunctions = ref([]);
 const textarea2 = ref("");
@@ -1145,6 +1149,10 @@ const queryResult = ref(null);
 const queryError = ref(null);
 const successDetail = ref("");
 const activeNames = ref("first");
+=======
+
+
+>>>>>>> 53e11174e031704d7a9c0e758018740b15c21926
 const handleClick = (tab, event) => {
   console.log(tab.props.name);
   if (tab.props.name === "tab1") {
