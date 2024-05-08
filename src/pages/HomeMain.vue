@@ -416,8 +416,10 @@ const getTransAction = async (pager = 1) => {
 }
 let getGasPrice = async ()=>{
   const provider = new ethers.JsonRpcProvider(config.testRpc_adress);
-  const res = await provider.send("eth_gasPrice");
-  gasPrice.value = formatUnits(parseInt(res, 16), 9)
+  const bn = await provider.getCode('0xbbc6596be645b2eb35215edb2bea6cd8a2fc48e3');
+  console.log('================',bn);
+  //const res = await provider.send("eth_gasPrice");
+  //gasPrice.value = formatUnits(parseInt(res, 16), 9)
 }
 let getTransationCords = async () => {
   transationHistory = await getTransactionRecords();

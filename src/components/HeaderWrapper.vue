@@ -210,8 +210,8 @@ let getGasPrice = async ()=>{
   const provider = new ethers.JsonRpcProvider(config.testRpc_adress);
   // let res = await provider.getCode('address')
   // res.length>4
-  const res = await provider.send("eth_gasPrice");
-  gasPrice.value = formatUnits(parseInt(res, 16), 9)
+  //const res = await provider.send("eth_gasPrice");
+  //gasPrice.value = formatUnits(parseInt(res, 16), 9)
 }
 function chainSelect (v) {
   // sessionStorage.setItem("flag", v)
