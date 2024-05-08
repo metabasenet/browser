@@ -1414,6 +1414,7 @@ const getIndividualQuery = async () => {
     if (address !== null) {
       const response = await getTokenInquire(address);
       individualQueryDetails = response.data;
+      console.log(individualQueryDetails);
       ercName.value = individualQueryDetails.ercName
       ercSymbol.value = individualQueryDetails.ercSymbol
     }
@@ -1459,8 +1460,8 @@ let getContactList = async (pager = 1) => {
         item.method = item.method ||item.methodHash;
         // item.TransactionFee = item.cumulativeGasUsed * item.effectiveGasPrice;
         const decimals = individualQueryDetails.decimals || 0;
-            const values = item.value || 0;
-            item.value = ethers.formatUnits(parseInt(values, 16).toString(), decimals);
+        const values = item.value || 0;
+        item.value = ethers.formatUnits(BigInt(values), decimals);
       });
     }
     loading.value = false
@@ -1544,9 +1545,9 @@ function copyToClipboard(text, row) {
     });
 }
 onMounted(async () => {
+  await getIndividualQuery();
   await getContactList();
   await getContactDetail();
-  await getIndividualQuery();
   getTransationCount();
   // getBalanceList();
 });

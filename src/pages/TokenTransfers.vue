@@ -136,7 +136,7 @@ const getTransAction = async (pager = 1) => {
             item.method = item.method ||item.methodHash;
             const decimals = item.decimals || 0;
             const values = item.value || 0;
-            item.value = ethers.formatUnits(parseInt(values, 16).toString(), decimals);
+            item.value = ethers.formatUnits(BigInt(values), decimals);
         })
         total.value = response.data.total;
         timestamps();
