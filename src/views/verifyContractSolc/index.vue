@@ -154,9 +154,12 @@
                                                 <el-form-item prop="files">
                                                     <template #label>
                                                         <!-- :auto-upload="false" -->
-                                                        <el-upload action="#" :before-upload="beforeUpload" show-file-list :http-request="uploadFiles"
-                                                            :file-list="fileList" :before-remove="beforeRemove" :auto-upload="true"><el-button
-                                                                size="small" type="primary">Select file</el-button>
+                                                        <el-upload action="#" :before-upload="beforeUpload"
+                                                            show-file-list :http-request="uploadFiles"
+                                                            :before-remove="beforeRemove" :file-list="fileList"
+                                                            :auto-upload="true">
+                                                            <el-button size="small" type="primary">Select
+                                                                file</el-button>
                                                             <div class="el-upload__tip">Only.sol files can be uploaded
                                                             </div>
                                                         </el-upload>
@@ -168,9 +171,10 @@
                                                         class="verify_file">
                                                         <span>File {{ index + 1 }} of {{
                                                             formInline.testfile.length }}:</span> <span>{{ item.fileName
-                                                                ||
-                                                                item.name }}</span>
-                                                        <el-input v-model="item.sourceCode" type="textarea" disabled :rows="8" />
+                                                            ||
+                                                            item.name }}</span>
+                                                        <el-input v-model="item.sourceCode" type="textarea" disabled
+                                                            :rows="8" />
                                                     </div>
                                                 </el-form-item>
                                             </el-col>
@@ -178,9 +182,10 @@
                                                 <el-form-item>
                                                     <el-button type="primary" size="large" @click="onSubmit">Verify and
                                                         Publish</el-button>
-                                                    <el-button type="info" size="large" @click="resetForm(formInline)">Reset</el-button>
                                                     <el-button type="info" size="large"
-                                                    @click="returnHome">Return to main</el-button>
+                                                        @click="resetForm(formInline)">Reset</el-button>
+                                                    <el-button type="info" size="large" @click="returnHome">Return to
+                                                        main</el-button>
                                                 </el-form-item>
                                             </el-col>
                                         </el-form>
@@ -237,9 +242,9 @@ const resetForm = (formEl) => {
 const returnHome = ()=>{
     router.push({ name: 'home' });
 }
-const uploadFiles=async(file)=>{
+const uploadFiles = async (file) => {
     console.log(file)
-    submitForm(file, fileList);
+    await submitForm(file, fileList);
 
 }
 const getContactDetail = async () => {
@@ -336,17 +341,14 @@ const submitForm = async (file, fileList) => {
                 handleUploadError(uploadResponse.error, file, fileList);
             }
         } catch (error) {
-
+            console.error(error);
         }
 };
-const beforeRemove = (file, fileList) => {
-    deleteUploaded(file.name, fileList)
-    // return ElMessage.success('Successfully deleted');
-};
-const deleteUploaded = async (fileName, fileList) => {
+const beforeRemove = async (file, fileList) => {
+    // deleteUploaded(file.name, fileList)
     try {
-        if (address !== null & fileName !== null) {
-            const response = await deleteFile(address, fileName);
+        if (address !== null & file.name !== null) {
+            const response = await deleteFile(address, file.name);
             ElMessage.success('Successfully deleted');
             formInline.value.testfile = fileList
             // formInline.value.testfile = '';
@@ -355,7 +357,21 @@ const deleteUploaded = async (fileName, fileList) => {
     } catch (error) {
         console.error("Error fetching block details:", error);
     }
-}
+    // return ElMessage.success('Successfully deleted');
+};
+// const deleteUploaded = async (fileName, fileList) => {
+//     try {
+//         if (address !== null & fileName !== null) {
+//             const response = await deleteFile(address, fileName);
+//             ElMessage.success('Successfully deleted');
+//             formInline.value.testfile = fileList
+//             // formInline.value.testfile = '';
+//             // formInline.value.fileName = '';
+//         }
+//     } catch (error) {
+//         console.error("Error fetching block details:", error);
+//     }
+// }
 onMounted(() => {
     // getContactDetail();
 });
