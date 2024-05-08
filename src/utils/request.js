@@ -7,7 +7,9 @@ import { config } from '@/config/config'
 //location.hostname == config.main_url?config.main_url:config.test_url
 // const flag = sessionStorage.getItem('flag') || 1
 let request = axios.create({
-    baseURL: location.hostname == config.domainUser_url?config.main_url:config.test_url,
+    // baseURL: location.hostname == config.domainUser_url?config.main_url:config.test_url,
+    // baseURL: config.main_url,
+    baseURL: config.test_url,
     timeout: 15000,
 });
 request.interceptors.request.use((config) => {

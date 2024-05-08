@@ -146,7 +146,7 @@
                     <el-tooltip class="box-item" effect="dark" :content="address" placement="top-start">
                       <router-link style="font-size: 14.4992px; color: #0784C3;" class="skyblue-text ellipsis-text"
                         :to="{ name: 'address', params: { address: address } }">{{
-                        address.substring(0,30) + '...'
+                          address.substring(0, 30) + '...'
                         }}</router-link>
                     </el-tooltip>
                     <!-- <span class="content-item">from 12 hrs ago</span> -->
@@ -184,7 +184,7 @@
                     <el-tooltip class="box-item" effect="dark" :content="address" placement="top-start">
                       <router-link class="skyblue-text ellipsis-text" style="font-size: 14.4992px; color: #0784C3"
                         :to="{ name: 'address', params: { address: address } }">{{
-                        address.substring(0,25) + '...' }}</router-link>
+                          address.substring(0, 25) + '...' }}</router-link>
                     </el-tooltip>
                     <el-tooltip v-if="!istoCopied" content="Copy Address" placement="top">
                       <el-button text icon="CopyDocument" @click="copyToClipboards(address)">
@@ -246,7 +246,7 @@
                         <el-tooltip :content="scope.row.method" placement="top">
                           <el-button v-if="scope.row.method"
                             style="padding: 5px; font-size: 10.8744px; color: #000;  border-radius: 6px;">{{
-                            scope.row.method }}</el-button>
+                              scope.row.method }}</el-button>
                         </el-tooltip>
                       </template>
                     </el-table-column>
@@ -270,7 +270,7 @@
                             <router-link class="skyblue-text ellipsis-text" :to="{
                               name: 'address',
                               params: { address: scope.row.from },
-                            }" style="font-size: 14.4992px; color: #0784C3;">{{ scope.row.from.substring(0,10) + '...'
+                            }" style="font-size: 14.4992px; color: #0784C3;">{{ scope.row.from.substring(0, 10) + '...'
                               }}</router-link>
                           </el-tooltip>
                           <el-tooltip v-if="!scope.row.isCopied" content="Copy Address" placement="top">
@@ -298,7 +298,7 @@
                             <router-link class="skyblue-text ellipsis-text" :to="{
                               name: 'address',
                               params: { address: scope.row.to },
-                            }" style="font-size: 14.4992px; color: #0784C3">{{ scope.row.to.substring(0,10) + '...'
+                            }" style="font-size: 14.4992px; color: #0784C3">{{ scope.row.to.substring(0, 10) + '...'
                               }}</router-link>
                           </el-tooltip>
                           <el-tooltip v-if="!scope.row.istoCopied" content="Copy Address" placement="top">
@@ -325,7 +325,7 @@
                         <el-tooltip :content="`${scope.row.value}`" placement="top">
                           <span class="ellipsis-text">{{
                             scope.row.value
-                            }}</span>
+                          }}</span>
                         </el-tooltip>
                       </template>
                     </el-table-column>
@@ -356,8 +356,8 @@
                       <template v-slot="scope">
                         <el-tooltip :content="scope.row.transactionhash" placement="top">
                           <router-link class="skyblue-text ellipsis-text" :to="{
-            name: 'tx', params: { hash: scope.row.transactionhash },
-                            }" style="font-size: 14.4992px; color: #0784C3">{{ scope.row.transactionhash }}
+                            name: 'tx', params: { hash: scope.row.transactionhash },
+                          }" style="font-size: 14.4992px; color: #0784C3">{{ scope.row.transactionhash }}
                           </router-link>
                         </el-tooltip>
                       </template>
@@ -372,10 +372,10 @@
                         <div class="router_box">
                           <el-tooltip :content="scope.row.from" placement="top">
                             <router-link class="skyblue-text ellipsis-text" :to="{
-                                  name: 'address',
-                                  params: { address: scope.row.from },
-                                }" style="font-size: 14.4992px; color: #0784C3;">{{ scope.row.from.substring(0, 10) +
-                              '...'
+                              name: 'address',
+                              params: { address: scope.row.from },
+                            }" style="font-size: 14.4992px; color: #0784C3;">{{ scope.row.from.substring(0, 10) +
+                                  '...'
                               }}</router-link>
                           </el-tooltip>
                           <el-tooltip v-if="!scope.row.isCopied" content="Copy Address" placement="top">
@@ -401,9 +401,9 @@
                           </el-tooltip>
                           <el-tooltip :content="scope.row.to" placement="top">
                             <router-link class="skyblue-text ellipsis-text" :to="{
-            name: 'address',
-            params: { address: scope.row.to },
-          }" style="font-size: 14.4992px; color: #0784C3">{{ scope.row.to.substring(0, 10) + '...'
+                              name: 'address',
+                              params: { address: scope.row.to },
+                            }" style="font-size: 14.4992px; color: #0784C3">{{ scope.row.to.substring(0, 10) + '...'
                               }}</router-link>
                           </el-tooltip>
                           <el-tooltip v-if="!scope.row.istoCopied" content="Copy Address" placement="top">
@@ -422,7 +422,7 @@
                         <el-tooltip :content="`${scope.row.value}`" placement="top">
                           <span class="ellipsis-text" style="font-size: 14.4992px; color: #212529;">{{
                             scope.row.value
-                            }}</span>
+                          }}</span>
                         </el-tooltip>
                       </template>
                     </el-table-column>
@@ -441,7 +441,8 @@
                   <div class="demo-pagination-block box-table_header">
                     <div class="demonstration" style="font-size: 14.4992px; color: #212529;">
                       Latest {{ totals }} ERC-20 Token Transfer Events (<span
-                        style="font-size: 14.4992px; color: #0784C3;">View All</span>)
+                        style="font-size: 14.4992px; color: #0784C3;">View
+                        All</span>)
                     </div>
                     <el-pagination :pager-count="5" v-model:current-page="currentPage4" v-model:page-size="pageSize4"
                       :page-sizes="[10, 20, 30, 40]" background layout=" sizes, prev, pager, next, " :total="totals"
@@ -489,7 +490,7 @@
                             <router-link class="skyblue-text ellipsis-text" :to="{
                               name: 'address',
                               params: { address: scope.row.from },
-                            }" style="font-size: 14.4992px; color: #0784C3;">{{ scope.row.from.substring(0,10) + '...'
+                            }" style="font-size: 14.4992px; color: #0784C3;">{{ scope.row.from.substring(0, 10) + '...'
                               }}</router-link>
                           </el-tooltip>
                           <el-tooltip v-if="!scope.row.isCopied" content="Copy Address" placement="top">
@@ -517,7 +518,7 @@
                             <router-link class="skyblue-text ellipsis-text" :to="{
                               name: 'address',
                               params: { address: scope.row.to },
-                            }" style="font-size: 14.4992px; color: #0784C3">{{ scope.row.to.substring(0,10) + '...'
+                            }" style="font-size: 14.4992px; color: #0784C3">{{ scope.row.to.substring(0, 10) + '...'
                               }}</router-link>
                           </el-tooltip>
                           <el-tooltip v-if="!scope.row.istoCopied" content="Copy Address" placement="top">
@@ -536,7 +537,7 @@
                         <el-tooltip :content="`${scope.row.value}`" placement="top">
                           <span class="ellipsis-text" style="font-size: 14.4992px; color: #212529">{{
                             scope.row.value
-                            }}</span>
+                          }}</span>
                         </el-tooltip>
                       </template>
                     </el-table-column>
@@ -557,7 +558,8 @@
                       small @size-change="handleSizeChange" @current-change="getContractList" /> -->
                 </el-row>
               </el-tab-pane>
-              <el-tab-pane v-if="verifystatused === 0 || !verifystatused" label="Contract" name="tab4">
+             <div v-if="ifContract">
+              <el-tab-pane  v-if="!verifystatused" label="Contract" name="tab4">
                 <el-row :gutter="10">
                   <el-col :span="24">
                     <div class="grid-content_h2 grid-contents">
@@ -568,11 +570,11 @@
                           </el-icon>
                           Are you the contract creator?
                           <router-link class="skyblue-text" :to="{
-            name: 'verifyContract',
-            params: {
-              address: individualQueryDetails.contractaddress,
-            },
-          }">Verify and Publish </router-link>your contract source code today!
+                            name: 'verifyContract',
+                            params: {
+                              address: individualQueryDetails.contractaddress,
+                            },
+                          }">Verify and Publish </router-link>your contract source code today!
                         </p>
                         <el-button type="info">Decompile Bytecode
                           <el-icon>
@@ -696,7 +698,7 @@
                               <div class="grid-content_h2 grid-contents">
                                 <div>
                                   <span>File {{ index + 1 }} of {{
-            contractSource.sourceCode.length }}:</span> <span>{{ item.fileName }}</span>
+                                    contractSource.sourceCode.length }}:</span> <span>{{ item.fileName }}</span>
                                 </div>
                                 <div>
                                   <el-button type="info" icon="Edit" />
@@ -866,7 +868,7 @@
                                         {{ queryResult }}
                                       </p>
                                       <p>{{
-            queryError }}</p>
+                                        queryError }}</p>
                                     </div>
                                   </el-form-item>
                                 </el-form>
@@ -1060,6 +1062,7 @@
                   </el-tab-pane>
                 </el-tabs>
               </el-tab-pane>
+             </div>
               <!-- <el-tab-pane label="NFT Transfers" name="tab4">Task</el-tab-pane> -->
             </el-tabs>
           </el-col>
@@ -1075,13 +1078,15 @@ import { ref, onMounted, defineProps, reactive } from "vue";
 import { useRoute } from "vue-router";
 import { ElMessage } from "element-plus";
 import { ethers, formatUnits } from "ethers";
-import {config} from '@/config/config'
+import { config } from '@/config/config'
 import {
   getAddressPage,
   getContractAddress,
   getBalanceAddress,
   getselectAddress
 } from "@/api/address";
+import { getFileInfo } from "@/api/upload";
+import { getContractDetail } from "@/api/verifyContract";
 import { getTransactionPlaform } from '@/api/transaction'
 const { address } = defineProps({
   address: {
@@ -1097,21 +1102,49 @@ let tableDatas = reactive([]);
 let tableDataInternal = ref([])
 const cities = ref([])
 const values = ref('')
-// const individualQueryDetails = ref({})
+let individualQueryDetails = reactive({});
 const route = useRoute();
 const contract = ref(route.query.contract);
+const ifContract = ref(false);
 const currentPage4 = ref(1);
 const pageSize4 = ref(10);
 const copiedText = ref("");
 const getByBalance = ref({});
 const activeName = ref("tab1");
+const contractSource = ref({});
 let loading = ref(false)
 let loading1 = ref(false)
 let loading2 = ref(false)
 let currentPageInternal = ref(1);
 let pageSizeInternal = ref(10);
 const verifystatused = ref(0);
-
+const viewFunctions = ref([]);
+const textarea2 = ref("");
+let results = ref("");
+const writeContract = ref([]);
+const actives = ref([]);
+const formModels = ref({});
+const formModel = ref({});
+const form = ref({
+  name: "",
+  region: "",
+  customValue: '',
+  date1: "",
+  date2: "",
+  delivery: false,
+  type: [],
+  resource: "",
+  desc: "",
+});
+let dialogFormVisible = ref(false);
+let dialogFormVisibles = ref(false);
+const InputIndex = ref('');
+const FunctionIndex = ref('');
+let responsed = ref(false);
+const queryResult = ref(null);
+const queryError = ref(null);
+const successDetail = ref("");
+const activeNames = ref("first");
 const handleClick = (tab, event) => {
   console.log(tab.props.name);
   if (tab.props.name === "tab1") {
@@ -1120,8 +1153,322 @@ const handleClick = (tab, event) => {
     console.log(tab.props.name);
   } else if (tab.props.name === "tab3") {
     getContractList();
+  } else if (tab.props.name === "tab4") {
+    if (verifystatused.value == "1") {
+      getFileInfos();
+      getItemName();
+    }
   }
 };
+const getFileInfos = async () => {
+  try {
+    if (address !== null) {
+      const response = await getFileInfo(address);
+      console.log(response);
+      if (response && response.length > 0) {
+        contractSource.value = contractSource.value || {};
+        contractSource.value.sourceCode = response;
+      } else {
+        console.warn('getFileInfo did not return any data or was invalid.');
+      }
+    }
+  } catch (error) {
+    console.error("Error fetching block details:", error);
+  }
+};
+const getItemName = async () => {
+  try {
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    if (!contractSource.value || !contractSource.value.contractaddress) {
+      throw new Error('Contract address is not initialized or invalid.');
+    }
+    const contract = new ethers.Contract(
+      contractSource.value.contractaddress,
+      contractSource.value.abi,
+      provider
+    );
+
+    const promises = viewFunctions.value.map(async (item, index) => {
+      try {
+        if (item.inputs && item.inputs.length === 0) {
+          item.detail = await contract[item.name]();
+          viewDetails.value[index] = item.detail;
+        } else {
+          item.detail = '';
+        }
+      } catch (error) {
+        console.error(`An error occurred while calling ${item.name}:`, error);
+        item.detail = '';
+      }
+    });
+    await Promise.all(promises);
+    if (viewFunctions.value.length === viewDetails.value.length) {
+      viewFunctions.value.forEach((obj, index) => {
+        obj.detail = viewDetails.value[index];
+      })
+    }
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+};
+const getIndividualQuery = async () => {
+  try {
+    if (address !== null) {
+      const response = await getTokenInquire(address);
+      individualQueryDetails = response.data;
+    }
+  } catch (error) {
+    console.error("Error fetching block details:", error);
+  }
+};
+const getContactDetail = async () => {
+  console.log('1111111111111111111111111111111');
+  try {
+    if (address !== null) {
+      const response = await getContractDetail(address);
+      console.log('22222222222222222222222222222222',response);
+      verifystatused.value = response.data?.verifystatus;
+      // verifystatused.value = '1';
+      contractSource.value = response.data;
+      // contractSource.value.abi = JSON.parse(response.data?.abi);
+      let abi;
+      if (response.data && typeof response.data.abi === 'string') {
+        try {
+          abi = JSON.parse(response.data.abi);
+          viewFunctions.value = abi.filter(
+            (item) => item.type === "function" && item.stateMutability === "view" || item.stateMutability == 'prue'
+          );
+          writeContract.value = abi.filter(
+            (item) => item.type === "function" && item.stateMutability === "nonpayable" || item.stateMutability == 'payable'
+          );
+        } catch (error) {
+          abi = null;
+        }
+      } else {
+        // console.warn('ABI is undefined or not a string.');
+        abi = null;
+      }
+    }
+  } catch (error) {
+    console.error("Error fetching block details:", error);
+  }
+};
+const connectWallet = async () => {
+  // const chainId = '0x2267';
+  // const rpcUrl = 'https://test2.metabasenet.site/rpc';
+  // if (window.ethereum) {
+  //   try {
+  //     await ethereum.request({
+  //       method: 'wallet_switchEthereumChain',
+  //       params: [{
+  //         chainId: chainId 
+  //       }]
+  //     })
+  //     console.log('wallet_switchEthereumChain');
+  //   } catch (e) {
+  //     console.log('(e as any).code', e.code);
+  //     if (e.code == 4902) {
+  //       try {
+  //         console.log('wallet_addEthereumChain');
+  //         await ethereum.request({
+  //           method: 'wallet_addEthereumChain',
+  //           params: [
+  //             {
+  //               chainId: chainId, 
+  //               chainName: 'MNT Testnet',
+  //               nativeCurrency: {
+  //                 name: 'MNT',
+  //                 symbol: 'MNT',
+  //                 decimals: 18
+  //               },
+  //               rpcUrls: [rpcUrl], 
+  //             }
+  //           ]
+  //         })
+  //       } catch (ee) {
+  //         //
+  //       }
+  //     } else if (e.code == 4001) return
+  //   }
+  // }
+
+  if (typeof window.ethereum !== "undefined") {
+    try {
+      dialogFormVisible.value = false;
+      const accounts = await ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      const account = accounts[0];
+
+      if (account.length >= 10) {
+        const firstPart = account.substring(0, 6);
+        const lastPart = account.substring(account.length - 4);
+        const result = firstPart + "..." + lastPart;
+        results.value = result;
+      }
+
+      // const provider = new ethers.providers.Web3Provider(window.ethereum);
+      // const provider = new ethers.BrowserProvider(window.ethereum,"https://test.metabasenet.site/rpc");
+      // // const provider = new ethers.JsonRpcProvider("https://test.metabasenet.site/rpc");
+      // let byteCode = await provider.getCode(contractAddress);
+      // return byteCode;
+      // }
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      // const provider = new ethers.BrowserProvider(window.ethereum, "https://test2.metabasenet.site/rpc");
+      const signer = await provider.getSigner();
+      const contract = new ethers.Contract(
+        contractSource.value.contractaddress,
+        contractSource.value.abi,
+        signer
+      );
+
+      //  const amountInWei = ethers.utils.parseEther(amountInEther);
+      // const balance = await contract.provider.getBalance(account);
+      const balance = await provider.getBalance(account);
+      // const balance = await contract.balanceOf(account);
+
+      // console.log("Balance:", ethers.utils.formatEther(balance));
+      const totalSupply = await contract.totalSupply();
+      // console.log("Total Token Supply:", ethers.utils.formatEther(totalSupply));
+
+
+      const allowance = await contract.allowance(account, anotherAccount);
+
+      // console.log(
+      //   "Allowance for anotherAccount:",
+      //   ethers.formatEther(allowance)
+      // );
+      const approveTxn = await contract.approve(anotherAccount, amountInEther);
+      const receipt = await approveTxn.wait();
+      // console.log("Approval Transaction:", receipt);
+      const transferTxn = await contract.transfer(address, amountInEther);
+      const transferReceipt = await transferTxn.wait();
+      // console.log("Transfer Transaction:", transferReceipt);
+      const transferFromTxn = await contract
+        .connect(signer)
+        .transferFrom(fromAccount, address, amountInEther);
+      const transferFromReceipt = await transferFromTxn.wait();
+      // console.log("Transfer From Transaction:", transferFromReceipt);
+      let byteCode = await provider.getCode(contractAddress);
+      return byteCode;
+    } catch (error) {
+
+      console.error("Failed to connect to MetaMask", error);
+    }
+  } else {
+    console.error("MetaMask is not installed!");
+  }
+};
+const toggleAll = () => {
+  if (actives.value.length === viewFunctions.value.length) {
+    actives.value = [];
+  } else {
+    actives.value = viewFunctions.value.map((_, index) => index.toString());
+  }
+}
+const resetAll = () => {
+  actives.value = [];
+  viewFunctions.value.forEach((item) => {
+    item.inputs.forEach((input) => {
+      input.value = '';
+    })
+  })
+}
+const toggleAll2 = () => {
+  if (actives.value.length === writeContract.value.length) {
+    actives.value = [];
+  } else {
+    actives.value = writeContract.value.map((_, index) => index.toString());
+  }
+}
+const resetAll2 = () => {
+  actives.value = [];
+  writeContract.value.forEach((item) => {
+    item.inputs.forEach((input) => {
+      input.value = '';
+    })
+  })
+}
+const openWeb = () => {
+  dialogFormVisible.value = true;
+};
+const handleClicks = (tab, event) => {
+  if (tab.props.name === "first") {
+    // getContactList();
+  } else if (tab.props.name === "second") {
+  } else if (tab.props.name === "third") {
+    // getContractList()
+  }
+};
+const openDialog = (functionIndex, inputIndex) => {
+  showCustomInput.value = false;
+  form.value.region = '';
+  dialogFormVisibles.value = true;
+  InputIndex.value = inputIndex;
+  FunctionIndex.value = functionIndex;
+}
+const addSelect = (value) => {
+  dialogFormVisibles.value = false;
+  console.log(writeContract.value[FunctionIndex.value].inputs[InputIndex.value]);
+  let itemInput = writeContract.value[FunctionIndex.value].inputs[InputIndex.value];
+  itemInput.value ||= 1;
+  itemInput.value *= value;
+}
+const submitWrite = async (item) => {
+  // v-if="!results".value
+  successDetail.value = "";
+  loseDetail.value = "";
+  if (typeof window.ethereum !== "undefined" && results.value) {
+    responsed.value = true;
+    try {
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      // const provider = new ethers.BrowserProvider(window.ethereum, "https://test2.metabasenet.site/rpc");
+      const signer = await provider.getSigner();
+      const contract = new ethers.Contract(contractSource.value.contractaddress, contractSource.value.abi, signer);
+      const params = item.inputs.reduce((acc, input) => {
+        acc[input.name] = input.value;
+        return acc;
+      }, {});
+      const valuesArray = Object.values(params);
+      try {
+        let res = await contract[item.name](...valuesArray);
+        successDetail.value = 'success';
+      } catch (error) {
+        loseDetail.value = error.revert.args[0];
+      }
+      // console.log(res);
+      //  let res = await contract["transfer"]("0xe6897baC8439E77Cb662b18CF68a897c13aCacb5",0)
+    } catch (error) {
+      queryError.value = error.message;
+    }
+  } else {
+    ElMessage.error("Please install or connect MetaMask!");
+  }
+
+}
+const handleQuery = async (functionItem) => {
+  responsed.value = true;
+  try {
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    // const provider = new ethers.BrowserProvider(window.ethereum, "https://test2.metabasenet.site/rpc");
+    const signer = await provider.getSigner();
+    // const contract = new ethers.Contract(contractSource.value.contractaddress, contractSource.value.abi, provider);
+    const contract = new ethers.Contract(contractSource.value.contractaddress, contractSource.value.abi, signer);
+    // let res11 = await contract["transfer"]("0xe6897baC8439E77Cb662b18CF68a897c13aCacb5","5");
+    const params = functionItem.inputs.reduce((acc, input) => {
+      acc[input.name] = input.value;
+      return acc;
+    }, {});
+    // let res = await contract[functionItem.name](params.account);
+    const valuesArray = Object.values(params);
+    // let res = await contract["symbol"]();
+    let res = await contract[functionItem.name](...valuesArray);
+    // const res = await contract[functionItem.functionName](...Object.values(params));
+    queryResult.value = res;
+  } catch (error) {
+    queryError.value = error.message;
+  }
+}
 // const getIndividualQuery = async () => {
 //   try {
 //     if (address !== null) {
@@ -1174,10 +1521,10 @@ const getContractList = async (pager = 1) => {
 
       tableDatas = response.data.list;
       tableDatas.forEach((item) => {
-          item.method = item.method ||item.methodHash;
+        item.method = item.method || item.methodHash;
         const decimals = item.decimals || 0;
-            const values = item.value || 0;
-            item.value = formatUnits(parseInt(values, 16).toString(), decimals);
+        const values = item.value || 0;
+        item.value = formatUnits(parseInt(values, 16).toString(), decimals);
       });
       totals.value = response.data.total;
       const currentTime = Math.floor(Date.now() / 1000);
@@ -1227,7 +1574,7 @@ const getAddressList = async (pager = 1) => {
       timestamps();
       tableData.forEach((item) => {
         item.TransactionFee = formatUnits((item.cumulativeGasUsed * item.effectiveGasPrice).toString(), 18);
-        item.method = item.method ||item.methodHash;
+        item.method = item.method || item.methodHash;
         // const decimals = item.decimals || 0;
         // const values = item.value || 0;
         item.value = Number(formatUnits(item.value.toString(), 18)).toFixed(8);
@@ -1263,9 +1610,11 @@ const getContractOrAddress = async () => {
   try {
     await provider.getCode(address).then(code => {
       if (code.length > 4) {
-        contract.value = "contract"
+        // contract.value = "contract"
+        ifContract.value = true
       } else {
-        contract.value = "address"
+        // contract.value = "address"
+        ifContract.value =false
       }
     })
   } catch (error) {
@@ -1329,7 +1678,7 @@ const getTransactionPlaforms = async (pager = 1) => {
   try {
     loading2.value = true
     currentPageInternal.value = pager
-    let {data:{list}} = await getTransactionPlaform(address, currentPageInternal.value, pageSizeInternal.value)
+    let { data: { list } } = await getTransactionPlaform(address, currentPageInternal.value, pageSizeInternal.value)
     tableDataInternal.value = list;
 
     const currentTime = Math.floor(Date.now() / 1000);
@@ -1371,6 +1720,7 @@ let handleCurrentChangeInternal = async () => {
 }
 onMounted(() => {
   getAddressList();
+  getContactDetail();
   getBalanceList();
   getSelectList();
   getContractOrAddress();
@@ -1398,6 +1748,13 @@ onMounted(() => {
 .responsive-aside {
   width: 0rem;
   transition: width 0.5s ease;
+}
+.successDetail {
+  color: green;
+
+}
+.loseDetail {
+  color: red;
 }
 
 @media (min-width: 768px) {
@@ -1588,19 +1945,23 @@ onMounted(() => {
   background-color: #fff;
   border-radius: 15px;
 }
+
 .title-item {
-  font-size:  12px;
-  color:  #6C757D;
+  font-size: 12px;
+  color: #6C757D;
 }
+
 .content-item {
   font-size: 14.4992px;
   color: #212529;
 }
+
 :deep(.el-table--default .cell) {
   font-size: 12.5625px;
   color: #212529;
   font-weight: 500;
 }
+
 .grid-content_h2 {
   margin: 0 2rem;
   padding: 10px 0;
@@ -1611,19 +1972,23 @@ onMounted(() => {
   align-items: center;
   justify-content: space-between;
 }
+
 .block_height {
   display: inline-block;
 }
+
 .darkb_button {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 }
+
 .contracts_info {
   margin: 10px 0;
   display: flex;
   justify-content: space-between;
 }
+
 .collapsed {
   width: 100%;
   display: flex;
@@ -1632,15 +1997,18 @@ onMounted(() => {
   /* background-color: #f8f9fa; */
   /* border-radius: 10px; */
 }
+
 .wrap-text {
   white-space: normal;
   word-break: break-all;
   background-color: #e9ecef;
   border-radius: 9px;
 }
+
 .fox_box {
   display: flex;
 }
+
 .uints {
   font-size: 13px;
   font-style: italic;

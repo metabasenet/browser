@@ -1384,6 +1384,7 @@ const getContactDetail = async () => {
     if (address !== null) {
       const response = await getContractDetail(address);
       verifystatused.value = response.data?.verifystatus;
+      // verifystatused.value = '1';
       contractSource.value = response.data;
       // contractSource.value.abi = JSON.parse(response.data?.abi);
       let abi;
