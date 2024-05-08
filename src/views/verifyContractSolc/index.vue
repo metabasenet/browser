@@ -151,14 +151,16 @@
                                                 </el-form-item>
                                             </el-col>
                                             <el-col :span="24">
-                                                <el-form-item prop="files">
+                                                <el-form-item>
                                                     <template #label>
                                                         <!-- :auto-upload="false" -->
                                                         <el-upload action="#" :before-upload="beforeUpload"
                                                             show-file-list :http-request="uploadFiles"
                                                             :before-remove="beforeRemove" :file-list="fileList"
                                                             :auto-upload="true">
-                                                            <el-button size="small" type="primary">Select
+                                                            <el-button
+                                                                :disabled="(formInline.contractname != '' && formInline.optimization != undefined||'')?false:true"
+                                                                size="small" type="primary">Select
                                                                 file</el-button>
                                                             <div class="el-upload__tip">Only.sol files can be uploaded
                                                             </div>
@@ -202,7 +204,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router';
 import { getContractDetail } from "@/api/verifyContract";
 import { getVertityUpload, getFileInfo, deleteFile, submissionContract } from "@/api/upload";
@@ -372,8 +374,10 @@ const beforeRemove = async (file, fileList) => {
 //         console.error("Error fetching block details:", error);
 //     }
 // }
+
 onMounted(() => {
     // getContactDetail();
+    
 });
 </script>
 

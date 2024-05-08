@@ -213,9 +213,7 @@ const onSubmit = async (formEl) => {
 const getContactDetail = async () => {
     try {
         if (address !== null) {
-            const response = await getContractDetail(
-                address
-            );
+            const response = await getContractDetail(address);
             if (response.data && response.data.contractaddress) {
                 sizeForm.value.contractaddress = response.data.contractaddress;
             } else {
