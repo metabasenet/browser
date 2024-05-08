@@ -415,7 +415,7 @@ const getTransAction = async (pager = 1) => {
   }
 }
 let getGasPrice = async ()=>{
-  const provider = new ethers.JsonRpcProvider(config.rpc_adress);
+  const provider = new ethers.JsonRpcProvider(config.testRpc_adress);
   const res = await provider.send("eth_gasPrice");
   gasPrice.value = formatUnits(parseInt(res, 16), 9)
 }
@@ -484,7 +484,7 @@ onMounted(() => {
   // userStore.userInfo()
 })
 async function getLastestHeight() {
-  const provider = new ethers.JsonRpcProvider(config.rpc_adress);
+  const provider = new ethers.JsonRpcProvider(config.testRpc_adress);
   const blockNumber = await provider.getBlockNumber()
   lastestBlock.value = blockNumber
 }

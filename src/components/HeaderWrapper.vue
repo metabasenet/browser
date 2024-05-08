@@ -24,15 +24,16 @@
             <div style="position: relative;">
               <el-button icon="ChromeFilled" class="header_button" size="large" style="margin-left:5px"
                 @click="showBox = !showBox"></el-button>
-              <div class="hide-box" v-show="showBox" @mouseleave="close">
+              <!-- @mouseleave="close" -->
+              <div class="hide-box" v-show="showBox">
                 <ul style="text-align: center;">
                   <li class="switch-chain"
                     style="font-size: 12.5625px; color: #212529;margin-bottom: 0; margin-top: 30px; cursor: pointer;"
                     @click="chainSelect(1)">
-                    Mnt Mainnet</li>
+                    MNT Mainnet</li>
                   <li style="height: 1px; background-color: #adb5bd; margin: 25px 0;"></li>
                   <li class="switch-chain" style="font-size: 12.5625px; color: #212529; cursor: pointer;"
-                    @click="chainSelect(0)">Mnt Testnet
+                    @click="chainSelect(0)">MNT Testnet
                   </li>
                 </ul>
               </div>
@@ -206,7 +207,9 @@ const getHeaderPrice = async () => {
   }
 }
 let getGasPrice = async ()=>{
-  const provider = new ethers.JsonRpcProvider(config.rpc_adress);
+  const provider = new ethers.JsonRpcProvider(config.testRpc_adress);
+  // let res = await provider.getCode('address')
+  // res.length>4
   const res = await provider.send("eth_gasPrice");
   gasPrice.value = formatUnits(parseInt(res, 16), 9)
 }

@@ -742,7 +742,7 @@ let ratioValue = computed(()=>{
 })
 
 async function getLastestHeight () {
-  const provider = new ethers.JsonRpcProvider(config.rpc_adress);
+  const provider = new ethers.JsonRpcProvider(config.testRpc_adress);
   const blockNumber =  await provider.getBlockNumber()
   lastestBlock.value = blockNumber
 }

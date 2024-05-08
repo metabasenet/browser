@@ -487,7 +487,8 @@
                         <el-button type="info">Decompile Bytecode
                           <el-icon>
                             <Share />
-                          </el-icon></el-button>
+                          </el-icon>
+                        </el-button>
                         <el-button type="info">Switch To Opcodes View</el-button>
                         <el-button type="info">Switch To Opcodes View</el-button>
                       </div>
@@ -541,7 +542,7 @@
                         </el-descriptions>
                         <el-row :gutter="10">
                           <el-col :span="24">
-                            <div class="grid-content ep-bg-purple-dark grid-content_h2 darkb_button">
+                            <div class="grid-content_h2 darkb_button">
                               <h4>
                                 <el-icon style="margin-right: 5px">
                                   <Tickets />
@@ -1342,6 +1343,7 @@ const handleClicks = (tab, event) => {
   }
 };
 const handleClick = (tab, event) => {
+  console.log(tab);
   if (tab.props.name === "tab1") {
     getContactList();
   } else if (tab.props.name === "tab2") {
@@ -1359,8 +1361,6 @@ const handleClick = (tab, event) => {
     if (verifystatused.value == "1") {
       getFileInfos();
       getItemName();
-    } else {
-
     }
   }
 };
@@ -1695,13 +1695,6 @@ onMounted(async () => {
 .ContentPlaceHolder1 {
   margin-right: 5.75rem;
 }
-
-@media (min-width: 768px) {
-  .card-box {
-    /* flex-direction: row; */
-  }
-}
-
 
 .card-left {
   display: flex;

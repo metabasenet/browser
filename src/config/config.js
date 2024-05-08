@@ -1,5 +1,7 @@
 const config = {
-    rpc_adress: 'https://rpc.metabasenet.site',
+    //test-rpc 'https://test.metabasenet.site/rpc-102'
+    testRpc_adress: 'https://test.metabasenet.site/rpc-102',
+    mainRpc_address: 'https://rpc.metabasenet.site',
     rpc_testAdress: 'https://test.metabasenet.site/rpc',
     test_url: 'https://test.metabasenet.site/test-api',
     main_url: 'https://main.metabasenet.site/main-api',
