@@ -159,7 +159,7 @@
                                                             :before-remove="beforeRemove" :file-list="fileList"
                                                             :auto-upload="true">
                                                             <el-button
-                                                                :disabled="(formInline.contractname != '' && formInline.optimization != undefined||'')?false:true"
+                                                                :disabled="(formInline.contractname && formInline.optimization)?false:true"
                                                                 size="small" type="primary">Select
                                                                 file</el-button>
                                                             <div class="el-upload__tip">Only.sol files can be uploaded
