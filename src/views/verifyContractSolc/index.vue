@@ -34,10 +34,11 @@
                                                 is a timeout of up to 45 seconds for each contract compiled.</p>
                                             <p>3. For programatic contract verification, check out the Contract API
                                                 Endpoint</p>
-                                        </el-alert></el-col>
+                                        </el-alert>
+                                    </el-col>
                                     <el-col :xs="24" :sm="24" :md="24" :lg="24">
-                                        <el-form :inline="true" :rules="rules" :model="formInline"
-                                            class="demo-form-inline" label-position="top">
+                                        <el-form :inline="true" :model="formInline" class="demo-form-inline"
+                                            label-position="top">
                                             <el-col :xs="24" :sm="24" :md="24" :lg="7">
                                                 <el-form-item label="Contract Address">
                                                     <el-input v-model="formInline.contractaddress" disabled />
@@ -158,12 +159,15 @@
                                                             show-file-list :http-request="uploadFiles"
                                                             :before-remove="beforeRemove" :file-list="fileList"
                                                             :auto-upload="true">
-                                                            <el-button
-                                                                :disabled="(formInline.contractname && formInline.optimization)?false:true"
-                                                                size="small" type="primary">Select
+
+                                                            <el-button :disabled="(formInline.contractname &&
+                    formInline.optimization) ? false : true" size="small" type="primary">Select
                                                                 file</el-button>
-                                                            <div class="el-upload__tip">Only.sol files can be uploaded
-                                                            </div>
+                                                            <template #tip>
+                                                                <div class="el-upload__tip">
+                                                                    Only.sol files can be uploaded
+                                                                </div>
+                                                            </template>
                                                         </el-upload>
                                                         <!-- <el-button type="primary" @click="submitForm">UPLOAD</el-button> -->
                                                         <!-- <el-button type="primary" @click="deleteUploaded">Delete server
@@ -171,10 +175,9 @@
                                                     </template>
                                                     <div v-for="(item, index) in formInline.testfile" :key="index"
                                                         class="verify_file">
-                                                        <span>File {{ index + 1 }} of {{
-                                                            formInline.testfile.length }}:</span> <span>{{ item.fileName
-                                                            ||
-                                                            item.name }}</span>
+                                                        <span>File {{ index + 1 }} of {{ formInline.testfile.length
+                                                            }}:</span>
+                                                        <span>{{ item.fileName || item.name }}</span>
                                                         <el-input v-model="item.sourceCode" type="textarea" disabled
                                                             :rows="8" />
                                                     </div>
@@ -204,7 +207,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, watch } from 'vue'
+import { ref, onMounted, computed, watch, onUnmounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router';
 import { getContractDetail } from "@/api/verifyContract";
 import { getVertityUpload, getFileInfo, deleteFile, submissionContract } from "@/api/upload";

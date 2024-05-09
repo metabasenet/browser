@@ -8,6 +8,7 @@ export const useUserStore = defineStore('user', {
             // username:'',
             // avatar:'',
             chainFlag: 1,
+            mntPrice: ''
 
         }
     },
@@ -29,12 +30,8 @@ export const useUserStore = defineStore('user', {
                 this.avatar = reuslt.data.avatar;
             }
         },
-        set_chainFlag (value) {
-            if (value == 1) {
-                this.chainFlag = 1
-            } else {
-                this.chainFlag = 0
-            }
+        set_mntPrice (value) {
+            this.mntPrice = value;
         }
     },
     getters: {

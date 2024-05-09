@@ -24,16 +24,19 @@
             <div style="position: relative;">
               <el-button icon="ChromeFilled" class="header_button" size="large" style="margin-left:5px"
                 @click="showBox = !showBox"></el-button>
-              <!-- @mouseleave="close" -->
-              <div class="hide-box" v-show="showBox">
+              <div class="hide-box" v-show="showBox" @mouseleave="close">
                 <ul style="text-align: center;">
                   <li class="switch-chain"
-                    style="font-size: 12.5625px; color: #212529;margin-bottom: 0; margin-top: 30px; cursor: pointer;"
+                    style="font-size: 12.5625px; color: #212529; cursor: pointer; border-radius: 3px;"
                     @click="chainSelect(1)">
-                    MNT Mainnet</li>
-                  <li style="height: 1px; background-color: #adb5bd; margin: 25px 0;"></li>
-                  <li class="switch-chain" style="font-size: 12.5625px; color: #212529; cursor: pointer;"
-                    @click="chainSelect(0)">MNT Testnet
+                    <span :class="localDomain == config.domainUser_url ? 'chainSelected' :'chainSelect'">MNT
+                      Mainnet</span>
+                  </li>
+                  <li style="height: 1px; background-color: #adb5bd; margin: 15px 0;"></li>
+                  <li class="switch-chain"
+                    style="font-size: 12.5625px; color: #212529; cursor: pointer;  border-radius: 3px;"
+                    @click="chainSelect(0)"><span
+                      :class="localDomain == config.domainUser_url ? 'chainSelect' : 'chainSelected'">MNT Testnet</span>
                   </li>
                 </ul>
               </div>
@@ -141,7 +144,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, useSSRContext } from 'vue'
 import router from '@/router'
 import { getSearchInfo } from '@/api/home';
 import { getPriceInfo } from '@/api/headerprice';
@@ -156,6 +159,8 @@ const headerPrice = ref('')
 const gasPrice = ref()
 const user = useUserStore(pinia)
 let showBox = ref(false)
+let localDomain = location.hostname;
+
 const getSearch = async () => {
   if (!homeSearch.value) {
     ElMessage.warning('Please enter your search')
@@ -202,6 +207,7 @@ const getHeaderPrice = async () => {
   try {
     const response = await getPriceInfo()
     headerPrice.value = response.price;
+    user.set_mntPrice(response.price)
   } catch (error) {
     console.error('Error fetching data:', error)
   }
@@ -340,14 +346,23 @@ onMounted(()=>{
 }
 .hide-box {
   width: 100px;
-  height: 130px;
+  height: 90px;
   background-color: #FFF;
   border-radius: 12px;
   position: absolute;
   right: 1px;
-  padding: 15px;
+  padding: 20px 10px;
 }
 .switch-chain:hover {
-  background-color: #0784c3;
+  background-color: #adb5bd;
+}
+.switch-chain span:hover {
+  color: #0784c3;
+}
+.chainSelect {
+  color: #212529;
+}
+.chainSelected {
+  color: #0784c3;
 }
 </style>
