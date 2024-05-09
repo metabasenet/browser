@@ -223,7 +223,8 @@
                       :page-sizes="[10, 20, 30, 40]" small background layout="sizes,prev, pager, next" :total="total"
                       class="mt-4" @size-change="handleSizeChange" @current-change="getContactList" />
                   </div>
-                  <el-table v-loading="loading" :data="tableData" style="width: 100%" size="default" :row-style="{ height: '70px' }">
+                  <el-table v-loading="loading" :data="tableData" style="width: 100%" size="default"
+                    :row-style="{ height: '70px' }">
                     <el-table-column prop="transactionHash" label="Txn Hash" width="100">
                       <template v-slot="scope">
                         <router-link class="skyblue-text ellipsis-text" :to="{
@@ -235,8 +236,7 @@
                     <el-table-column prop="method" label="Method " width="88">
                       <template v-slot="scope">
                         <el-tooltip v-if="scope.row.method" :content="scope.row.method" placement="top">
-                          <el-button
-                            style="font-size: 10.8744px; color: #000; padding:  5px; border-radius: 6px;">{{
+                          <el-button style="font-size: 10.8744px; color: #000; padding:  5px; border-radius: 6px;">{{
                             scope.row.method }}</el-button>
                         </el-tooltip>
                       </template>
@@ -336,7 +336,8 @@
                       :page-sizes="[10, 20, 30, 40]" layout=" sizes, prev, pager, next," :pager-count="5" background
                       :total="holdTotal" small @size-change="handleSizeChange2" @current-change="getBalanceList" />
                   </div>
-                  <el-table v-loading="loading1" :data="holdTableData" style="width: 100%" size="default" :row-style="{ height: '70px' }">
+                  <el-table v-loading="loading1" :data="holdTableData" style="width: 100%" size="default"
+                    :row-style="{ height: '70px' }">
                     <el-table-column type="index" width="60" align="center" label="Rank" />
                     <el-table-column prop="address" align="center" label="Address" width="250">
                       <template v-slot="scope">
@@ -467,7 +468,7 @@
                 </el-row>
               </el-tab-pane> -->
               <!-- <el-tab-pane label="DEX Trades" name="tab4">DEX Trades</el-tab-pane> -->
-              <el-tab-pane v-if="verifystatused === 0 || !verifystatused" label="Contract" name="tab5">
+              <el-tab-pane v-if="verifystatused == 0 || !verifystatused" label="Contract" name="tab5">
                 <el-row :gutter="10">
                   <el-col :span="24">
                     <div class="grid-content_h2 grid-contents">
@@ -505,7 +506,7 @@
                     Contract
                   </el-badge>
                 </template>
-                <el-tabs type="card" v-model="activeNames" class="demo-tabs" @tab-click="handleClicks">
+                <el-tabs type="card" v-model="activeNames" class="demo-tabs">
                   <el-tab-pane label="Code" name="first">
                     <el-row :gutter="10">
                       <el-col :span="24">
@@ -554,7 +555,7 @@
                                   <el-button type="info" plain><span class="el-dropdown-link">
                                       Open In<el-icon class="el-icon--right"><arrow-down /></el-icon>
                                     </span></el-button>
-                                  <template #dropdown>
+                                  <!-- <template #dropdown>
                                     <el-dropdown-menu>
                                       <el-dropdown-item icon="Plus">Action 1</el-dropdown-item>
                                       <el-dropdown-item icon="CirclePlusFilled">
@@ -564,13 +565,13 @@
                                       <el-dropdown-item icon="Check">Action 4</el-dropdown-item>
                                       <el-dropdown-item icon="CircleCheck">Action 5</el-dropdown-item>
                                     </el-dropdown-menu>
-                                  </template>
+                                  </template> -->
                                 </el-dropdown>
                                 <el-dropdown trigger="click" style="margin-left: 5px">
                                   <el-button type="info" plain><span class="el-dropdown-link">
                                       Outline<el-icon class="el-icon--right"><arrow-down /></el-icon>
                                     </span></el-button>
-                                  <template #dropdown>
+                                  <!-- <template #dropdown>
                                     <el-dropdown-menu>
                                       <el-dropdown-item icon="Plus">Action 1</el-dropdown-item>
                                       <el-dropdown-item icon="CirclePlusFilled">
@@ -580,13 +581,13 @@
                                       <el-dropdown-item icon="Check">Action 4</el-dropdown-item>
                                       <el-dropdown-item icon="CircleCheck">Action 5</el-dropdown-item>
                                     </el-dropdown-menu>
-                                  </template>
+                                  </template> -->
                                 </el-dropdown>
                                 <el-dropdown trigger="click" style="margin-left: 5px">
                                   <el-button type="info" plain><span class="el-dropdown-link">
                                       More Options<el-icon class="el-icon--right"><arrow-down /></el-icon>
                                     </span></el-button>
-                                  <template #dropdown>
+                                  <!-- <template #dropdown>
                                     <el-dropdown-menu>
                                       <el-dropdown-item icon="Plus">Action 1</el-dropdown-item>
                                       <el-dropdown-item icon="CirclePlusFilled">
@@ -596,7 +597,7 @@
                                       <el-dropdown-item icon="Check">Action 4</el-dropdown-item>
                                       <el-dropdown-item icon="CircleCheck">Action 5</el-dropdown-item>
                                     </el-dropdown-menu>
-                                  </template>
+                                  </template> -->
                                 </el-dropdown>
                               </div>
                             </div>
@@ -702,7 +703,7 @@
                       </el-col>
                     </el-row>
                   </el-tab-pane>
-                  <el-tab-pane label="Read Contract">
+                  <el-tab-pane label="Read Contract" name="second">
                     <el-row :gutter="10">
                       <el-col v-if="!results" :xs="24" :sm="24" :md="24" :lg="24"><el-button plain @click="openWeb">
                           <svg-icon name="reddot" width=".8rem" height=".8rem" style="margin-right: 5px"></svg-icon>
@@ -728,7 +729,7 @@
 
                       <el-col :xs="24" :sm="24" :md="24" :lg="24">
                         <div class="demo-collapse">
-                          <el-collapse @change="handleChange" v-model="actives">
+                          <el-collapse v-model="actives">
                             <el-collapse-item v-for="(functionItem, index) in viewFunctions" :key="index"
                               :name="index.toString()">
                               <template #title>
@@ -843,7 +844,7 @@
                       </el-col>
                       <el-col :xs="24" :sm="24" :md="24" :lg="24">
                         <div class="demo-collapse">
-                          <el-collapse @change="handleChange" v-model="actives">
+                          <el-collapse v-model="actives">
                             <el-collapse-item v-for="(item, index) in writeContract" :key="index"
                               :name="index.toString()">
                               <template #title>
@@ -999,14 +1000,12 @@ const actives = ref([])
 const total = ref(0)
 const holdTableData = ref([]);
 const holdTotal = ref(0);
-let individualQueryDetails = reactive({});
 const currentPage4 = ref(1);
 const textarea2 = ref("");
 const pageSize4 = ref(10);
 const copiedText = ref("");
 const activeName = ref("tab1");
 const activeNames = ref("first");
-const verifystatused = ref(0);
 const contractSource = ref({});
 const queryResult = ref(null);
 const queryError = ref(null);
@@ -1018,8 +1017,6 @@ const activeNamese = ref(["1"]);
 const viewDetails = ref([]);
 const viewFunctions = ref([]);
 const writeContract = ref([]);
-let ercName = ref('');
-let ercSymbol = ref('');
 let loading = ref(false)
 let loading1 = ref(false)
 const { address } = defineProps({
@@ -1045,15 +1042,55 @@ const form = ref({
   desc: "",
 });
 const showCustomInput = ref(false);
-const rules = ref({
-  address: [{ required: true, message: "Required", trigger: "blur" }],
-  spender: [
-    { required: true, message: "This field is required.", trigger: "blur" },
-  ],
-});
-// const handleChange = (val) => {
-//   console.log(val);
-// };
+
+let ercName = ref('');
+let ercSymbol = ref('');
+let individualQueryDetails = reactive({});
+const getIndividualQuery = async () => {
+  try {
+    if (address !== null) {
+      const response = await getTokenInquire(address);
+      individualQueryDetails = response.data;
+      ercName.value = individualQueryDetails.ercName
+      ercSymbol.value = individualQueryDetails.ercSymbol
+    }
+  } catch (error) {
+    console.error("Error fetching block details:", error);
+  }
+};
+
+let verifystatused = ref(0);
+const getContactDetail = async () => {
+  try {
+    if (address !== null) {
+      const {data} = await getContractDetail(address);
+      console.log(data);
+      verifystatused.value = data ? data.verifystatus:0;
+      contractSource.value = data;
+      // contractSource.value.abi = JSON.parse(response.data?.abi);
+      let abi;
+      if (data && typeof data.abi === 'string') {
+        try {
+          abi = JSON.parse(data.abi);
+          viewFunctions.value = abi.filter(
+            (item) => item.type === "function" && item.stateMutability === "view" || item.stateMutability == 'prue'
+          );
+          writeContract.value = abi.filter(
+            (item) => item.type === "function" && item.stateMutability === "nonpayable" || item.stateMutability == 'payable'
+          );
+        } catch (error) {
+          abi = null;
+        }
+      } else {
+        // console.warn('ABI is undefined or not a string.');
+        abi = null;
+      }
+    }
+  } catch (error) {
+    console.error("Error fetching block details:", error);
+  }
+};
+getContactDetail()
 const getTransationCount = async () => {
   try {
     if (address !== null) {
@@ -1198,28 +1235,23 @@ const connectWallet = async () => {
       const balance = await provider.getBalance(account);
       // const balance = await contract.balanceOf(account);
 
-      // console.log("Balance:", ethers.utils.formatEther(balance));
       const totalSupply = await contract.totalSupply();
-      // console.log("Total Token Supply:", ethers.utils.formatEther(totalSupply));
 
 
       const allowance = await contract.allowance(account, anotherAccount);
 
-      // console.log(
-      //   "Allowance for anotherAccount:",
-      //   ethers.formatEther(allowance)
-      // );
+
       const approveTxn = await contract.approve(anotherAccount, amountInEther);
       const receipt = await approveTxn.wait();
-      // console.log("Approval Transaction:", receipt);
+
       const transferTxn = await contract.transfer(address, amountInEther);
       const transferReceipt = await transferTxn.wait();
-      // console.log("Transfer Transaction:", transferReceipt);
+
       const transferFromTxn = await contract
         .connect(signer)
         .transferFrom(fromAccount, address, amountInEther);
       const transferFromReceipt = await transferFromTxn.wait();
-      // console.log("Transfer From Transaction:", transferFromReceipt);
+
       let byteCode = await provider.getCode(contractAddress);
       return byteCode;
     } catch (error) {
@@ -1266,7 +1298,6 @@ const submitWrite = async (item) => {
       } catch (error) {
         loseDetail.value = error.revert.args[0];
       }
-      // console.log(res);
       //  let res = await contract["transfer"]("0xe6897baC8439E77Cb662b18CF68a897c13aCacb5",0)
     } catch (error) {
       queryError.value = error.message;
@@ -1334,16 +1365,8 @@ const getItemName = async () => {
     console.error("An error occurred:", error);
   }
 };
-const handleClicks = (tab, event) => {
-  if (tab.props.name === "first") {
-    // getContactList();
-  } else if (tab.props.name === "second") {
-  } else if (tab.props.name === "third") {
-    // getContractList()
-  }
-};
+
 const handleClick = (tab, event) => {
-  console.log(tab);
   if (tab.props.name === "tab1") {
     getContactList();
   } else if (tab.props.name === "tab2") {
@@ -1379,49 +1402,7 @@ const getFileInfos = async () => {
     console.error("Error fetching block details:", error);
   }
 };
-const getContactDetail = async () => {
-  try {
-    if (address !== null) {
-      const response = await getContractDetail(address);
-      verifystatused.value = response.data?.verifystatus;
-      // verifystatused.value = '1';
-      contractSource.value = response.data;
-      // contractSource.value.abi = JSON.parse(response.data?.abi);
-      let abi;
-      if (response.data && typeof response.data.abi === 'string') {
-        try {
-          abi = JSON.parse(response.data.abi);
-          viewFunctions.value = abi.filter(
-            (item) => item.type === "function" && item.stateMutability === "view" || item.stateMutability == 'prue'
-          );
-          writeContract.value = abi.filter(
-            (item) => item.type === "function" && item.stateMutability === "nonpayable" || item.stateMutability == 'payable'
-          );
-        } catch (error) {
-          abi = null;
-        }
-      } else {
-        // console.warn('ABI is undefined or not a string.');
-        abi = null;
-      }
-    }
-  } catch (error) {
-    console.error("Error fetching block details:", error);
-  }
-};
-const getIndividualQuery = async () => {
-  try {
-    if (address !== null) {
-      const response = await getTokenInquire(address);
-      individualQueryDetails = response.data;
-      console.log(individualQueryDetails);
-      ercName.value = individualQueryDetails.ercName
-      ercSymbol.value = individualQueryDetails.ercSymbol
-    }
-  } catch (error) {
-    console.error("Error fetching block details:", error);
-  }
-};
+
 
 const getBalanceList = async (pager = 1) => {
   try {
@@ -1497,14 +1478,13 @@ const timestamps = () => {
     item.formattedTime = formattedTime;
   });
 };
-const handleSizeChange = (val) => {
+const handleSizeChange = () => {
   getContactList();
 };
-const handleSizeChange2 = (val) => {
+const handleSizeChange2 = () => {
   getBalanceList();
 };
-const handleCurrentChange = (val) => {
-};
+
 function copyFormClipboard(text, row) {
   row.isCopied = true;
   setTimeout(() => { row.isCopied = false; }, 2000);
@@ -1547,7 +1527,6 @@ function copyToClipboard(text, row) {
 onMounted(async () => {
   await getIndividualQuery();
   await getContactList();
-  await getContactDetail();
   getTransationCount();
   // getBalanceList();
 });
@@ -1619,7 +1598,7 @@ onMounted(async () => {
 .blocks_header {
   background-color: #fff;
   padding: 10px 10px;
-  border: 2px solid #dcdfe6;
+  border: 1px solid #dcdfe6;
   border-radius: 10px;
   margin-right: 10px;
   margin-top: 10px;
@@ -1790,17 +1769,12 @@ onMounted(async () => {
 .demo-tabs {
   background-color: #fff;
   border-radius: 15px;
-  border: 2px solid #dcdfe6;
 }
 
 :deep(.el-badge__content.is-fixed) {
   right: 0;
 }
 
-/* :deep(.my-label) {
-  width: 200px;
-  display: inline-block;
-} */
 
 .block_height {
   display: inline-block;
