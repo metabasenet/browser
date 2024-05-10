@@ -603,7 +603,8 @@
                             </div>
                           </el-col>
                           <el-col :span="24">
-                            <div v-for="(item, index) in contractSource.sourceCode" :key="index">
+                            <div v-for="(item, index) in contractSource.sourceCode?contractSource.sourceCode:[]"
+                              :key="index">
                               <div class="grid-content_h2 grid-contents">
                                 <div>
                                   <span>File {{ index + 1 }} of {{
@@ -726,7 +727,6 @@
                           </div>
                         </div>
                       </el-col>
-
                       <el-col :xs="24" :sm="24" :md="24" :lg="24">
                         <div class="demo-collapse">
                           <el-collapse v-model="actives">
@@ -764,10 +764,6 @@
                                       flex-direction: column;
                                       flex-wrap: wrap;
                                     ">
-                                      <!-- <p>
-                                        [ allowance(address,address) method
-                                        Response ]
-                                      </p> -->
                                       <p class="uints" style="
                                         display: flex;
                                         align-items: center;
@@ -845,7 +841,7 @@
                       <el-col :xs="24" :sm="24" :md="24" :lg="24">
                         <div class="demo-collapse">
                           <el-collapse v-model="actives">
-                            <el-collapse-item v-for="(item, index) in writeContract" :key="index"
+                            <el-collapse-item v-for="(item, index) in writeContract" :key="item.name"
                               :name="index.toString()">
                               <template #title>
                                 <div class="collapsed">
@@ -860,11 +856,11 @@
                                   </div>
                                 </div>
                               </template>
-                              <div v-if="item.inputs.length !== 0">
+                              <div v-if="item.inputs.length != 0">
                                 <el-form :model="formModels" label-position="top">
                                   <el-form-item v-for="(
                                       input, inputIndex
-                                    ) in item.inputs" :key="inputIndex" :prop="input.name">
+                                    ) in item.inputs" :key="input.name" :prop="input.name">
                                     <template #label>
                                       <span>{{ input.name }}</span>
                                       <el-button style="margin-left: 5px;" v-if="input.type === 'uint256'" type="info"
@@ -879,33 +875,32 @@
                                   </el-form-item>
                                   <el-form-item>
                                   </el-form-item>
-                                  <el-form-item v-if="responsed">
+                                  <el-form-item v-show="responsed">
                                     <div style="
                                       display: flex;
                                       flex-direction: column;
                                       flex-wrap: wrap;
                                     ">
-                                      <!-- <p>
-                                        [ allowance(address,address) method
-                                        Response ]
-                                      </p> -->
                                       <p class="uints" style="
                                         display: flex;
                                         align-items: center;
                                         margin: 10px;
                                       ">
                                         <svg-icon name="right"></svg-icon>
-                                        <span class="successDetail" v-if="successDetail">uint256:{{ successDetail
+                                        <span class="successDetail" v-show="successDetail">uint256:{{ successDetail
                                           }}</span>
-                                        <span class="loseDetail" v-else-if="loseDetail">uint256:{{ loseDetail }}</span>
+                                        <span class="loseDetail" v-show="loseDetail">uint256:{{ loseDetail }}</span>
                                       </p>
                                     </div>
                                   </el-form-item>
                                 </el-form>
                               </div>
                               <div v-else>
-
-                                <div>{{ item.outputs[0].name }} <span class="uints">{{ queryError
+                                <div>
+                                  <span>
+                                    {{ item.outputs.length == 0 ? '' : item.outputs[0].name }}
+                                  </span>
+                                  <span class="uints">{{ queryError
                                     }}</span>
                                 </div>
                               </div>
@@ -1064,32 +1059,54 @@ const getContactDetail = async () => {
   try {
     if (address !== null) {
       const {data} = await getContractDetail(address);
-      console.log(data);
-      verifystatused.value = data ? data.verifystatus:0;
-      contractSource.value = data;
-      // contractSource.value.abi = JSON.parse(response.data?.abi);
-      let abi;
-      if (data && typeof data.abi === 'string') {
-        try {
-          abi = JSON.parse(data.abi);
-          viewFunctions.value = abi.filter(
-            (item) => item.type === "function" && item.stateMutability === "view" || item.stateMutability == 'prue'
-          );
-          writeContract.value = abi.filter(
-            (item) => item.type === "function" && item.stateMutability === "nonpayable" || item.stateMutability == 'payable'
-          );
-        } catch (error) {
-          abi = null;
-        }
+      verifystatused.value = data ? 1 : 0;
+      if (verifystatused.value == 1) {
+        contractSource.value = data;
+        let abi;
+        abi = JSON.parse(data.abi);
+        viewFunctions.value = abi.filter(
+          (item) => item.type === "function" && item.stateMutability === "view" || item.stateMutability == 'prue'
+        );
+        writeContract.value = abi.filter(
+          (item) => item.type === "function" && item.stateMutability === "nonpayable" || item.stateMutability == 'payable'
+        );
+        console.log(writeContract);    
       } else {
-        // console.warn('ABI is undefined or not a string.');
-        abi = null;
-      }
+        return
+      } 
     }
   } catch (error) {
     console.error("Error fetching block details:", error);
   }
 };
+// const getContactDetail = async () => {
+//   try {
+//     if (address !== null) {
+//       const {data} = await getContractDetail(address);
+//       verifystatused.value = data ? 1 : 0;
+//       contractSource.value = data;
+//       let abi;
+//       if (data && typeof data.abi === 'string') {
+//         try {
+//           abi = JSON.parse(data.abi);
+//           viewFunctions.value = abi.filter(
+//             (item) => item.type === "function" && item.stateMutability === "view" || item.stateMutability == 'prue'
+//           );
+//           writeContract.value = abi.filter(
+//             (item) => item.type === "function" && item.stateMutability === "nonpayable" || item.stateMutability == 'payable'
+//           );
+//         } catch (error) {
+//           abi = null;
+//         }
+//       } else {
+//         // console.warn('ABI is undefined or not a string.');
+//         abi = null;
+//       }
+//     }
+//   } catch (error) {
+//     console.error("Error fetching block details:", error);
+//   }
+// };
 getContactDetail()
 const getTransationCount = async () => {
   try {

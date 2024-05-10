@@ -1018,7 +1018,8 @@
                                 </div>
                                 <div v-else>
 
-                                  <div>{{ item.outputs[0].name }} <span class="uints">{{ queryError
+                                  <div><span>{{ item.outputs.length == 0 ? '' : item.outputs[0].name }} </span><span
+                                      class="uints">{{ queryError
                                       }}</span>
                                   </div>
                                 </div>
