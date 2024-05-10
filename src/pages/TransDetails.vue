@@ -505,7 +505,7 @@
 <script setup>
 import { ref, onMounted, computed, reactive, watch } from 'vue'
 import { ElMessage } from 'element-plus';
-import { getTransactionDetail, getTransactionLogs, getTransactionInternal } from '@/api/transaction';
+import { getTransactionDetail, getTransactionLogs, getTransactionInternal, getInternalTransactionTest } from '@/api/transaction';
 import { ethers,formatUnits } from "ethers";
 import {config} from '@/config/config'
 import moment from 'moment'
@@ -703,8 +703,15 @@ function copyToClipboardInternal(text, row) {
 const getInterTransactions = async () => {
   try {
     loading.value = true
-    let { data } = await getTransactionInternal(hash);
-    tableData.value = data;
+    if(location.hostname == config.domainUser_url) {
+      let {data} = await getTransactionInternal(hash);
+      tableData.value = data;
+    } else {
+      let {data} = await getInternalTransactionTest(hash)
+      console.log('8888888', data);
+      tableData.value = data;
+    }
+
     tableData.value.forEach(item => {
       const currentTime = Math.floor(Date.now() / 1000);
       const timestamp = item.utc;
@@ -742,7 +749,7 @@ let ratioValue = computed(()=>{
 })
 
 async function getLastestHeight () {
-  const provider = new ethers.JsonRpcProvider(config.testRpc_adress);
+  const provider = new ethers.JsonRpcProvider(location.hostname == config.domainUser_url ? config.mainRpc_address : config.testRpc_adress);
   const blockNumber =  await provider.getBlockNumber()
   lastestBlock.value = blockNumber
 }

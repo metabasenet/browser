@@ -11,7 +11,6 @@
                   style="width: 24px; height: 24px; border-radius: 100px; vertical-align: middle; margin-right: 5px;"
                   alt="">
                 <span style="font-size: 18.75px; color: #212529; margin-right: 6px; ">{{ contract }}</span>
-                <!-- <h3>{{ contract }}</h3> -->
                 <span class="ellipsis-text" style="font-size: 15px; color: #212529">{{ address }}</span>
                 <el-tooltip v-if="!istoCopied" content="Copy Address" placement="top">
                   <el-button text icon="CopyDocument" @click="copyToClipboards(address)">
@@ -140,7 +139,7 @@
                     <span class="ellipsis-text" style="color:#6c757d">(CSupply: 551,557.859909)</span>
                   </el-tooltip> -->
                 </li>
-                <li class="over_li">
+                <li class="over_li" v-if="contract == 'Address'">
                   <p class="title-item">LAST TXN SENT</p>
                   <div class="over_div">
                     <el-tooltip class="box-item" effect="dark" :content="address" placement="top-start">
@@ -151,9 +150,25 @@
                     </el-tooltip>
                     <!-- <span class="content-item">from 12 hrs ago</span> -->
                   </div>
-
                 </li>
-                <li class="over_li">
+                <li class="over_li" v-else>
+                  <p class="title-item">CONTRACTCREATOR:</p>
+                  <div class="over_div">
+                    <el-tooltip :content="contractMessage.creator"><span
+                        style="font-size: 14.4992px; color: #0784C3; cursor: pointer;">{{
+                        contractMessage.creator.substring(0,17) + '...'
+                        }}</span></el-tooltip> at txn <el-tooltip :content="contractMessage.transactionHash"><span
+                        style="font-size: 14.4992px; color: #0784C3; cursor: pointer; ">{{
+                        contractMessage.transactionHash.substring(0,18) + '...' }}</span></el-tooltip>
+                    <!-- <el-tooltip class="box-item" effect="dark" :content="address" placement="top-start">
+                      <router-link style="font-size: 14.4992px; color: #0784C3;" class="skyblue-text ellipsis-text"
+                        :to="{ name: 'address', params: { address: address } }">{{
+                        address.substring(0, 30) + '...'
+                        }}</router-link>
+                    </el-tooltip> -->
+                  </div>
+                </li>
+                <li class="over_li" v-if="contract == 'Address'">
                   <p class="title-item">TOTAL TRANSFERS</p>
                   <span class="content-item">{{ total }}</span>
                   <!-- <el-tooltip class="box-item" effect="dark"
@@ -163,6 +178,12 @@
                       <Warning />
                     </el-icon>
                   </el-tooltip> -->
+                </li>
+                <li class="over_li" v-else>
+                  <p class="title-item">TOKENTRACKER</p>
+                  <div style="font-size: 14.4992px; color: #0784C3; cursor: pointer; ">
+                    {{ contractMessage.ercName }}({{ contractMessage.ercSymbol }})
+                  </div>
                 </li>
               </ul>
             </div>
@@ -196,10 +217,10 @@
                     </el-tooltip>
                   </div>
                 </li>
-                <li class="over_li">
+                <!-- <li class="over_li">
                   <p class="title-item">HOLDERS</p>
-                  <span class="content-item">1,886,491 (0.00%)</span>
-                </li>
+                  <span class="content-item">1,886,491</span>
+                </li> -->
                 <li class="over_li">
                   <p class="title-item">TOTAL TRANSFERS</p>
                   <span class="content-item">{{ total }}</span>
@@ -1089,8 +1110,10 @@ import {
 import { getFileInfo } from "@/api/upload";
 import { getContractDetail } from "@/api/verifyContract";
 import { getTransactionPlaform } from '@/api/transaction'
+import {getInternalTxnTest} from '@/api/address'
 import { useUserStore } from '@/store/user'
 import pinia from '@/store';
+import {getTokenInquire} from '@/api/toTokens'
 const user = useUserStore(pinia)
 const { address } = defineProps({
   address: {
@@ -1607,13 +1630,21 @@ const getSelectList = async () => {
     console.error("Error fetching details:", error);
   }
 };
+let contractMessage = ref({
+  creator: '',
+  transactionHash: '',
+  ercName: '',
+  ercSymbol: ''
+})
 const getContractOrAddress = async () => {
-  const provider = new ethers.JsonRpcProvider(config.testRpc_adress);
+  const provider = new ethers.JsonRpcProvider(location.hostname == config.domainUser_url ? config.mainRpc_address : config.testRpc_adress);
   try {
-    await provider.getCode(address).then(code => {
+    await provider.getCode(address).then( async (code) => {
       if (code.length > 4) {
         contract.value = "Contract"
         ifContract.value = true
+        let {data} = await getTokenInquire(address)
+        contractMessage.value = data
       } else {
         contract.value = "Address"
         ifContract.value =false
@@ -1680,9 +1711,13 @@ const getTransactionPlaforms = async (pager = 1) => {
   try {
     loading2.value = true
     currentPageInternal.value = pager
-    let { data: { list } } = await getTransactionPlaform(address, currentPageInternal.value, pageSizeInternal.value)
-    tableDataInternal.value = list;
-
+    if (location.hostname == config.domainUser_url) {
+      let { data: { list } } = await getTransactionPlaform(address, currentPageInternal.value, pageSizeInternal.value)
+      tableDataInternal.value = list;
+    } else {
+      let { data: { list } } = await getInternalTxnTest(address, currentPageInternal.value, pageSizeInternal.value)
+      tableDataInternal.value = list;
+    }
     const currentTime = Math.floor(Date.now() / 1000);
     tableDataInternal.value.forEach((item) => {
       const timestamp = item.utc;

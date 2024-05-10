@@ -167,38 +167,42 @@ const getSearch = async () => {
     return
   }
   try {
-    const response = await getSearchInfo(homeSearch.value, select.value);
+    const response = await getSearchInfo(homeSearch.value);
     if (!response.data || Object.keys(response.data).length === 0) {
       ElMessage.warning('No data found')
       return
-    } else if (select.value === '1' || response.data.block) {
+    } else if (response.data.block) {
       let number = response.data.block.number
       router.push({ name: 'block', params: { blockNumber: number } });
       homeSearch.value = '';
-    } else if (select.value === '2' || response.data.transaction) {
+    } else if (response.data.transaction) {
       let hash = response.data.transaction.hash
       router.push({ name: 'tx', params: { hash: hash } });
       homeSearch.value = '';
-    } else if (select.value === '3' || response.data.address || response.data.contract) {
-      if(response.data.contract){
-        let contractaddress = response.data.contract.contractaddress
-        let contract = Object.keys(response.data)[0]
-        console.log(contract);
-        router.push({ name: 'address', params: { address: contractaddress },query:{contract} });
-        homeSearch.value = '';
-      }else{
-        let address = response.data.address.address
-        let contract = Object.keys(response.data)[0]
-        router.push({ name: 'address', params: { address: address },query:{contract} });
-        homeSearch.value = '';
-      }
-    }else if (select.value === '4' || response.data.contract) {
-      let contractAddress = response.data.contract.contractaddress
-      router.push({ name: 'token', params: { address: contractAddress } });
+    } else if (response.data.address || response.data.contract) {
+      // if(response.data.contract){
+      //   let contractaddress = response.data.contract.contractaddress
+      //   let contract = Object.keys(response.data)[0]
+      //   console.log(contract);
+      //   router.push({ name: 'address', params: { address: contractaddress },query:{contract} });
+      //   homeSearch.value = '';
+      // }else{
+      //   let address = response.data.address.address
+      //   let contract = Object.keys(response.data)[0]
+      //   router.push({ name: 'address', params: { address: address },query:{contract} });
+      //   homeSearch.value = '';
+      // }
+      let address = response.data.address.address
+      router.push({ name: 'address', params: { address: address } });
       homeSearch.value = '';
     } else {
       ElMessage.warning('No data found')
     }
+    // else if (response.data.contract) {
+    //   let contractAddress = response.data.contract.contractaddress
+    //   router.push({ name: 'token', params: { address: contractAddress } });
+    //   homeSearch.value = '';
+    // } 
   } catch (error) {
 
   }
@@ -213,7 +217,7 @@ const getHeaderPrice = async () => {
   }
 }
 let getGasPrice = async ()=>{
-  const provider = new ethers.JsonRpcProvider(config.testRpc_adress);
+  const provider = new ethers.JsonRpcProvider(location.hostname == config.domainUser_url ? config.mainRpc_address:config.testRpc_adress);
   // let res = await provider.getCode('address')
   // res.length>4
   //const res = await provider.send("eth_gasPrice");
