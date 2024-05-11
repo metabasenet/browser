@@ -870,7 +870,7 @@
                                     <el-form-item>
                                       <span class="uints">{{ functionItem.outputs[0].internalType }}</span>
                                     </el-form-item>
-                                    <el-form-item v-if="responsed">
+                                    <el-form-item v-if="responsed == functionItem.name">
                                       <div style="
                                       display: flex;
                                       flex-direction: column;
@@ -886,10 +886,10 @@
                                         margin: 10px;
                                       ">
                                           <svg-icon name="right"></svg-icon>uint256:
-                                          {{ queryResult }}
+                                          {{ queryResult[functionItem.name] }}
                                         </p>
-                                        <p>{{
-                                          queryError }}</p>
+                                        <!-- <p>{{
+                                          queryError }}</p> -->
                                       </div>
                                     </el-form-item>
                                   </el-form>
@@ -972,7 +972,7 @@
                                     </div>
                                   </div>
                                 </template>
-                                <div v-if="item.inputs.length !== 0">
+                                <div v-if="item.inputs.length != 0">
                                   <el-form :model="formModels" label-position="top">
                                     <el-form-item v-for="(
                                       input, inputIndex
@@ -991,7 +991,7 @@
                                     </el-form-item>
                                     <el-form-item>
                                     </el-form-item>
-                                    <el-form-item v-if="responsed">
+                                    <el-form-item v-if="responsedWrite == item.name">
                                       <div style="
                                       display: flex;
                                       flex-direction: column;
@@ -1018,9 +1018,10 @@
                                 </div>
                                 <div v-else>
 
-                                  <div><span>{{ item.outputs.length == 0 ? '' : item.outputs[0].name }} </span><span
+                                  <div><span>{{ item.outputs.length == 0 ? '' : item.outputs[0].name }} </span>
+                                    <!-- <span
                                       class="uints">{{ queryError
-                                      }}</span>
+                                      }}</span> -->
                                   </div>
                                 </div>
                               </el-collapse-item>
@@ -1168,8 +1169,9 @@ let dialogFormVisible = ref(false);
 let dialogFormVisibles = ref(false);
 const InputIndex = ref('');
 const FunctionIndex = ref('');
-let responsed = ref(false);
-const queryResult = ref(null);
+let responsed = ref('');
+let responsedWrite = ref('')
+const queryResult = ref({});
 const queryError = ref(null);
 const successDetail = ref("");
 const activeNames = ref("first");
@@ -1249,30 +1251,59 @@ const getIndividualQuery = async () => {
     console.error("Error fetching block details:", error);
   }
 };
+// const getContactDetail = async () => {
+//   try {
+//     if (address !== null) {
+//       const response = await getContractDetail(address);
+//       verifystatused.value = response.data?.verifystatus;
+//       // verifystatused.value = '1';
+//       contractSource.value = response.data;
+//       // contractSource.value.abi = JSON.parse(response.data?.abi);
+//       let abi;
+//       if (response.data && typeof response.data.abi === 'string') {
+//         try {
+//           abi = JSON.parse(response.data.abi);
+//           viewFunctions.value = abi.filter(
+//             (item) => item.type === "function" && item.stateMutability === "view" || item.stateMutability == 'prue'
+//           );
+//           viewFunctions.value.forEach((item)=>{
+//             queryResult.value[item.name] = ""
+//           })
+//           writeContract.value = abi.filter(
+//             (item) => item.type === "function" && item.stateMutability === "nonpayable" || item.stateMutability == 'payable'
+//           );
+//         } catch (error) {
+//           abi = null;
+//         }
+//       } else {
+//         // console.warn('ABI is undefined or not a string.');
+//         abi = null;
+//       }
+//     }
+//   } catch (error) {
+//     console.error("Error fetching block details:", error);
+//   }
+// };
 const getContactDetail = async () => {
   try {
     if (address !== null) {
-      const response = await getContractDetail(address);
-      verifystatused.value = response.data?.verifystatus;
-      // verifystatused.value = '1';
-      contractSource.value = response.data;
-      // contractSource.value.abi = JSON.parse(response.data?.abi);
-      let abi;
-      if (response.data && typeof response.data.abi === 'string') {
-        try {
-          abi = JSON.parse(response.data.abi);
-          viewFunctions.value = abi.filter(
-            (item) => item.type === "function" && item.stateMutability === "view" || item.stateMutability == 'prue'
-          );
-          writeContract.value = abi.filter(
-            (item) => item.type === "function" && item.stateMutability === "nonpayable" || item.stateMutability == 'payable'
-          );
-        } catch (error) {
-          abi = null;
-        }
+      const { data } = await getContractDetail(address);
+      verifystatused.value = data ? 1 : 0;
+      if (verifystatused.value == 1) {
+        contractSource.value = data;
+        let abi;
+        abi = JSON.parse(data.abi);
+        viewFunctions.value = abi.filter(
+          (item) => item.type === "function" && item.stateMutability === "view" || item.stateMutability == 'prue'
+        );
+        viewFunctions.value.forEach((item) => {
+          queryResult.value[item.name] = ""
+        })
+        writeContract.value = abi.filter(
+          (item) => item.type === "function" && item.stateMutability === "nonpayable" || item.stateMutability == 'payable'
+        );
       } else {
-        // console.warn('ABI is undefined or not a string.');
-        abi = null;
+        return
       }
     }
   } catch (error) {
@@ -1445,7 +1476,7 @@ const submitWrite = async (item) => {
   successDetail.value = "";
   loseDetail.value = "";
   if (typeof window.ethereum !== "undefined" && results.value) {
-    responsed.value = true;
+    responsedWrite.value = item.name;
     try {
       const provider = new ethers.BrowserProvider(window.ethereum);
       // const provider = new ethers.BrowserProvider(window.ethereum, "https://test2.metabasenet.site/rpc");
@@ -1473,7 +1504,7 @@ const submitWrite = async (item) => {
 
 }
 const handleQuery = async (functionItem) => {
-  responsed.value = true;
+  responsed.value = functionItem.name;
   try {
     const provider = new ethers.BrowserProvider(window.ethereum);
     // const provider = new ethers.BrowserProvider(window.ethereum, "https://test2.metabasenet.site/rpc");
@@ -1490,7 +1521,7 @@ const handleQuery = async (functionItem) => {
     // let res = await contract["symbol"]();
     let res = await contract[functionItem.name](...valuesArray);
     // const res = await contract[functionItem.functionName](...Object.values(params));
-    queryResult.value = res;
+    queryResult.value[functionItem.name] = res;
   } catch (error) {
     queryError.value = error.message;
   }
@@ -1603,7 +1634,8 @@ const getAddressList = async (pager = 1) => {
         item.method = item.method || item.methodHash;
         // const decimals = item.decimals || 0;
         // const values = item.value || 0;
-        item.value = Number(formatUnits(item.value.toString(), 18)).toFixed(8);
+        // item.value = Number(formatUnits(item.value.toString(), 18)).toFixed(8);
+        item.value = formatUnits(BigInt(item.value), 18);
       });
     }
     loading.value = false

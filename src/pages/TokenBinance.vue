@@ -758,7 +758,7 @@
                                   <el-form-item>
                                     <span class="uints">{{ functionItem.outputs[0].internalType }}</span>
                                   </el-form-item>
-                                  <el-form-item v-if="responsed">
+                                  <el-form-item v-if="responsed==functionItem.name">
                                     <div style="
                                       display: flex;
                                       flex-direction: column;
@@ -770,10 +770,10 @@
                                         margin: 10px;
                                       ">
                                         <svg-icon name="right"></svg-icon>uint256:
-                                        {{ queryResult }}
+                                        {{ queryResult[functionItem.name] }}
                                       </p>
-                                      <p>{{
-                                        queryError }}</p>
+                                      <!-- <p>{{
+                                        queryError }}</p> -->
                                     </div>
                                   </el-form-item>
                                 </el-form>
@@ -875,7 +875,7 @@
                                   </el-form-item>
                                   <el-form-item>
                                   </el-form-item>
-                                  <el-form-item v-show="responsed">
+                                  <el-form-item v-if="responsedWrite == item.name">
                                     <div style="
                                       display: flex;
                                       flex-direction: column;
@@ -900,8 +900,8 @@
                                   <span>
                                     {{ item.outputs.length == 0 ? '' : item.outputs[0].name }}
                                   </span>
-                                  <span class="uints">{{ queryError
-                                    }}</span>
+                                  <!-- <span class="uints">{{ queryError
+                                    }}</span> -->
                                 </div>
                               </div>
                             </el-collapse-item>
@@ -990,6 +990,7 @@ const sizeForm = ref({
 let results = ref("");
 const copyratius = ref(false);
 let responsed = ref(false);
+let responsedWrite = ref('');
 let tableData = reactive([]);
 const actives = ref([])
 const total = ref(0)
@@ -1002,7 +1003,7 @@ const copiedText = ref("");
 const activeName = ref("tab1");
 const activeNames = ref("first");
 const contractSource = ref({});
-const queryResult = ref(null);
+const queryResult = ref({});
 const queryError = ref(null);
 const successDetail = ref("");
 const loseDetail = ref("");
@@ -1067,10 +1068,12 @@ const getContactDetail = async () => {
         viewFunctions.value = abi.filter(
           (item) => item.type === "function" && item.stateMutability === "view" || item.stateMutability == 'prue'
         );
+        viewFunctions.value.forEach((item)=>{
+          queryResult.value[item.name] = ""
+        })
         writeContract.value = abi.filter(
           (item) => item.type === "function" && item.stateMutability === "nonpayable" || item.stateMutability == 'payable'
-        );
-        console.log(writeContract);    
+        );  
       } else {
         return
       } 
@@ -1217,7 +1220,7 @@ const connectWallet = async () => {
   //   }
   // }
 
-  if (typeof window.ethereum !== "undefined") {
+  if (typeof(window.ethereum) !== "undefined") {
     try {
       dialogFormVisible.value = false;
       const accounts = await ethereum.request({
@@ -1298,7 +1301,7 @@ const submitWrite = async (item) => {
   successDetail.value = "";
   loseDetail.value = "";
   if (typeof window.ethereum !== "undefined" && results.value) {
-    responsed.value = true;
+    responsedWrite.value = item.name;
     try {
       const provider = new ethers.BrowserProvider(window.ethereum);
       // const provider = new ethers.BrowserProvider(window.ethereum, "https://test2.metabasenet.site/rpc");
@@ -1325,7 +1328,7 @@ const submitWrite = async (item) => {
 
 }
 const handleQuery = async (functionItem) => {
-  responsed.value = true;
+  responsed.value = functionItem.name;
   try {
     const provider = new ethers.BrowserProvider(window.ethereum);
     // const provider = new ethers.BrowserProvider(window.ethereum, "https://test2.metabasenet.site/rpc");
@@ -1342,7 +1345,7 @@ const handleQuery = async (functionItem) => {
     // let res = await contract["symbol"]();
     let res = await contract[functionItem.name](...valuesArray);
     // const res = await contract[functionItem.functionName](...Object.values(params));
-    queryResult.value = res;
+    queryResult.value[functionItem.name] = res;
   } catch (error) {
     queryError.value = error.message;
   }

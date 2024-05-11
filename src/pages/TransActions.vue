@@ -248,7 +248,7 @@ let getTransactionCounts = async () => {
   let {data} =  await getTransactionCount()
   transactionCount = data;
   transactionCount24.value = transactionCount[1].count
-  transactionCount1.value = transactionCount[0].count
+  transactionCount1.value = transactionCount[0].count || 0
 }
 watch(() => transactionCount1.value, (newValue) => {
   transactionCount1.value = newValue
