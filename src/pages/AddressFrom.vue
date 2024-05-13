@@ -89,7 +89,7 @@
               </el-tooltip> -->
                   <!-- <span style="font-weight: bold;"> ETH </span> -->
                   <el-tooltip class="box-item" effect="dark" content="CSupply: 551,557.859909" placement="top-start">
-                    <span class="content-item">{{ getByBalance.balance }}</span>
+                    <span class="content-item">{{ getByBalance.balance||0 }}</span>
                   </el-tooltip>
                 </li>
                 <li class="over_li">
@@ -842,8 +842,8 @@
                         <el-col :xs="24" :sm="24" :md="24" :lg="24">
                           <div class="demo-collapse">
                             <el-collapse @change="handleChange" v-model="actives">
-                              <el-collapse-item v-for="(functionItem, index) in viewFunctions" :key="index"
-                                :name="index.toString()">
+                              <el-collapse-item v-for="(functionItem, index) in viewFunctions"
+                                :key="functionItem.contractname" :name="functionItem.name">
                                 <template #title>
                                   <div class="collapsed">
                                     <div>{{ index + 1 }}_{{ functionItem.name }}</div>
@@ -857,12 +857,12 @@
                                     </div>
                                   </div>
                                 </template>
-                                <div v-if="functionItem.inputs.length !== 0">
+                                <div v-if="functionItem.inputs.length != 0">
                                   <el-form :model="formModel" label-position="top">
                                     <el-form-item v-for="(
                                       input, inputIndex
                                     ) in functionItem.inputs" :key="inputIndex" :prop="input.name" :label="input.name">
-                                      <el-input size="large" v-model="input.value" placeholder="Enter value"></el-input>
+                                      <el-input size="large" v-model="input.value" :placeholder="input.type"></el-input>
                                     </el-form-item>
                                     <el-form-item>
                                       <el-button type="info" plain @click="handleQuery(functionItem)">Query</el-button>
@@ -870,7 +870,7 @@
                                     <el-form-item>
                                       <span class="uints">{{ functionItem.outputs[0].internalType }}</span>
                                     </el-form-item>
-                                    <el-form-item v-if="responsed == functionItem.name">
+                                    <el-form-item v-if="readShow[functionItem.name] == functionItem.name">
                                       <div style="
                                       display: flex;
                                       flex-direction: column;
@@ -957,8 +957,8 @@
                         <el-col :xs="24" :sm="24" :md="24" :lg="24">
                           <div class="demo-collapse">
                             <el-collapse @change="handleChange" v-model="actives">
-                              <el-collapse-item v-for="(item, index) in writeContract" :key="index"
-                                :name="index.toString()">
+                              <el-collapse-item v-for="(item, index) in writeContract" :key="item.name"
+                                :name="item.name">
                                 <template #title>
                                   <div class="collapsed">
                                     <div>{{ index + 1 }}_{{ item.name }}</div>
@@ -984,14 +984,15 @@
                                             <Plus />
                                           </el-icon></el-button>
                                       </template>
-                                      <el-input size="large" v-model="input.value" :placeholder="input.name"></el-input>
+                                      <el-input size="large" v-model="input.value"
+                                        :placeholder="`${input.name} (${input.type})`"></el-input>
                                     </el-form-item>
                                     <el-form-item>
                                       <el-button type="primary" @click="submitWrite(item)">Write</el-button>
                                     </el-form-item>
                                     <el-form-item>
                                     </el-form-item>
-                                    <el-form-item v-if="responsedWrite == item.name">
+                                    <el-form-item v-if="writeShow[item.name] == item.name">
                                       <div style="
                                       display: flex;
                                       flex-direction: column;
@@ -1007,9 +1008,11 @@
                                         margin: 10px;
                                       ">
                                           <svg-icon name="right"></svg-icon>
-                                          <span class="successDetail" v-if="successDetail">uint256:{{ successDetail
+                                          <span class="successDetail"
+                                            v-if="successDetail[item.name] == 'success'">uint256:{{
+                                            successDetail[item.name]
                                             }}</span>
-                                          <span class="loseDetail" v-else-if="loseDetail">uint256:{{ loseDetail
+                                          <span class="loseDetail" v-else>uint256:{{ loseDetail[item.name]
                                             }}</span>
                                         </p>
                                       </div>
@@ -1167,14 +1170,17 @@ const form = ref({
 });
 let dialogFormVisible = ref(false);
 let dialogFormVisibles = ref(false);
+let showCustomInput = ref(false)
 const InputIndex = ref('');
 const FunctionIndex = ref('');
-let responsed = ref('');
-let responsedWrite = ref('')
+let readShow = reactive({});
+let writeShow = reactive({})
 const queryResult = ref({});
 const queryError = ref(null);
-const successDetail = ref("");
+let successDetail = reactive({});
+let loseDetail = reactive({})
 const activeNames = ref("first");
+const viewDetails = ref([]);
 const handleClick = (tab, event) => {
   console.log(tab.props.name);
   if (tab.props.name === "tab1") {
@@ -1206,6 +1212,33 @@ const getFileInfos = async () => {
     console.error("Error fetching block details:", error);
   }
 };
+const handleSelectChange = (value) => {
+  if (value === 'Custom') {
+    showCustomInput.value = true;
+    form.value.customValue = '';
+  } else {
+    showCustomInput.value = false;
+    form.value.customValue = '';
+  }
+}
+const handleInput = (value) => {
+  form.value.customValue = value.replace(/[^\d]/g, '')
+  const intValue = parseInt(value, 10);
+  if (isNaN(intValue) || intValue < 1 || intValue > 18) {
+    form.value.customValue = form.value.customValue.slice(0, -1);
+    ElMessage.error('Please enter a number between 1 and 18');
+  }
+}
+const handleInputBlur = () => {
+  const customValue = parseInt(form.value.customValue, 10);
+  if (!isNaN(customValue) && customValue >= 1 && customValue <= 18) {
+    form.value.region = Math.pow(10, customValue);
+  } else {
+    form.value.region = ''
+    ElMessage.error('Please enter a number between 1 and 18');
+    return
+  }
+}
 const getItemName = async () => {
   try {
     const provider = new ethers.BrowserProvider(window.ethereum);
@@ -1297,11 +1330,17 @@ const getContactDetail = async () => {
           (item) => item.type === "function" && item.stateMutability === "view" || item.stateMutability == 'prue'
         );
         viewFunctions.value.forEach((item) => {
-          queryResult.value[item.name] = ""
+          queryResult.value[item.name] = ''
+          readShow[item.name] = ''
         })
         writeContract.value = abi.filter(
           (item) => item.type === "function" && item.stateMutability === "nonpayable" || item.stateMutability == 'payable'
         );
+        writeContract.value.forEach((item)=>{
+          writeShow[item.name] = ''
+          successDetail[item.name] = ''
+          loseDetail[item.name] = ''
+        })
       } else {
         return
       }
@@ -1310,6 +1349,7 @@ const getContactDetail = async () => {
     console.error("Error fetching block details:", error);
   }
 };
+getContactDetail();
 const connectWallet = async () => {
   // const chainId = '0x2267';
   // const rpcUrl = 'https://test2.metabasenet.site/rpc';
@@ -1467,31 +1507,42 @@ const openDialog = (functionIndex, inputIndex) => {
 const addSelect = (value) => {
   dialogFormVisibles.value = false;
   console.log(writeContract.value[FunctionIndex.value].inputs[InputIndex.value]);
-  let itemInput = writeContract.value[FunctionIndex.value].inputs[InputIndex.value];
-  itemInput.value ||= 1;
-  itemInput.value *= value;
+  // let itemInput = writeContract.value[FunctionIndex.value].inputs[InputIndex.value];
+  // itemInput.value ||= 1;
+  // itemInput.value *= value;
+  writeContract.value[FunctionIndex.value].inputs[InputIndex.value].value = form.value.region.toString();
 }
 const submitWrite = async (item) => {
   // v-if="!results".value
-  successDetail.value = "";
-  loseDetail.value = "";
+  successDetail[item.name] = "";
+  loseDetail[item.name] = "";
   if (typeof window.ethereum !== "undefined" && results.value) {
-    responsedWrite.value = item.name;
+    writeShow[item.name] = item.name;
     try {
       const provider = new ethers.BrowserProvider(window.ethereum);
       // const provider = new ethers.BrowserProvider(window.ethereum, "https://test2.metabasenet.site/rpc");
       const signer = await provider.getSigner();
       const contract = new ethers.Contract(contractSource.value.contractaddress, contractSource.value.abi, signer);
+      let flag = 0;
       const params = item.inputs.reduce((acc, input) => {
-        acc[input.name] = input.value;
+        flag++
+        if (input.value.indexOf('[') != -1 && input.value.indexOf(']') != -1) {
+          input.value = input.value.substring(1, input.value.length - 2)
+        }
+        acc[`${input.name}${flag}`] = input.value.split(',');
         return acc;
       }, {});
       const valuesArray = Object.values(params);
+      for (let i = 0; i < valuesArray.length; i++) {
+        if (valuesArray[i].length == 1) {
+          valuesArray[i] = valuesArray[i][0]
+        }
+      }
       try {
         let res = await contract[item.name](...valuesArray);
-        successDetail.value = 'success';
+        successDetail[item.name] = 'success';
       } catch (error) {
-        loseDetail.value = error.revert.args[0];
+        loseDetail[item.name] = error.revert.args[0];
       }
       // console.log(res);
       //  let res = await contract["transfer"]("0xe6897baC8439E77Cb662b18CF68a897c13aCacb5",0)
@@ -1504,7 +1555,7 @@ const submitWrite = async (item) => {
 
 }
 const handleQuery = async (functionItem) => {
-  responsed.value = functionItem.name;
+  readShow[functionItem.name] = functionItem.name;
   try {
     const provider = new ethers.BrowserProvider(window.ethereum);
     // const provider = new ethers.BrowserProvider(window.ethereum, "https://test2.metabasenet.site/rpc");
@@ -1512,12 +1563,22 @@ const handleQuery = async (functionItem) => {
     // const contract = new ethers.Contract(contractSource.value.contractaddress, contractSource.value.abi, provider);
     const contract = new ethers.Contract(contractSource.value.contractaddress, contractSource.value.abi, signer);
     // let res11 = await contract["transfer"]("0xe6897baC8439E77Cb662b18CF68a897c13aCacb5","5");
+    let flag = 0;
     const params = functionItem.inputs.reduce((acc, input) => {
-      acc[input.name] = input.value;
+      flag++;
+      if (input.value.indexOf('[') != -1 && input.value.indexOf(']') != -1) {
+        input.value = input.value.substring(1, input.value.length - 2)
+      }
+      acc[`${input.name}${flag}`] = input.value.split(',');
       return acc;
     }, {});
     // let res = await contract[functionItem.name](params.account);
     const valuesArray = Object.values(params);
+    for (let i = 0; i < valuesArray.length; i++) {
+      if (valuesArray[i].length == 1) {
+        valuesArray[i] = valuesArray[i][0]
+      }
+    }
     // let res = await contract["symbol"]();
     let res = await contract[functionItem.name](...valuesArray);
     // const res = await contract[functionItem.functionName](...Object.values(params));
@@ -1647,6 +1708,7 @@ const getBalanceList = async () => {
   try {
     if (address !== null) {
       const response = await getBalanceAddress(address);
+      console.log('1111111111111',response);
       getByBalance.value = response.data[0] || {};
     }
   } catch (error) {
@@ -1669,10 +1731,10 @@ let contractMessage = ref({
   ercName: '',
   ercSymbol: ''
 })
-const getContractOrAddress = async () => {
+const getContractOrAddress = () => {
   const provider = new ethers.JsonRpcProvider(location.hostname == config.domainUser_url ? config.mainRpc_address : config.testRpc_adress);
   try {
-    await provider.getCode(address).then( async (code) => {
+    provider.getCode(address).then( async (code) => {
       if (code.length > 4) {
         contract.value = "Contract"
         ifContract.value = true
@@ -1789,11 +1851,10 @@ let handleCurrentChangeInternal = async () => {
   getTransactionPlaforms()
 }
 let mntValue = computed(()=>{
-  return Number(getByBalance.value.balance) * Number(user.mntPrice)
+  return Number(getByBalance.value.balance || 0) * Number(user.mntPrice)
 })
 onMounted(() => {
   getAddressList();
-  getContactDetail();
   getBalanceList();
   getSelectList();
   getContractOrAddress();

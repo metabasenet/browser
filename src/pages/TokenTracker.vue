@@ -72,6 +72,7 @@
 <script setup>
 import { ref, computed,onMounted } from 'vue'
 import { getTokenPage } from '@/api/toTokens';
+import { ethers } from 'ethers';
 const tableData = ref([])
 const currentPage4 = ref(1)
 const total = ref(0)
@@ -87,7 +88,7 @@ const getTokenList = async (pager = 1) => {
     currentPage4.value = pager;
     const response = await getTokenPage(currentPage4.value, pageSize4.value)
     tableData.value = response.data.list;
-    console.log(tableData.value);
+    console.log('111111',tableData.value);
     total.value = response.data.total;
     loading.value = false
   } catch (error) {
@@ -96,6 +97,9 @@ const getTokenList = async (pager = 1) => {
 }
 const filteredData = computed(() => {
   return tableData.value.filter(item => {
+    const decimals = item.decimals || 0;
+    const values = item.totalSupply
+    item.totalSupply= ethers.formatUnits(values.toLocaleString('en-US').replace(/,/g, ''), decimals);
     if (item.ercName && searchText.value) {
       return item.name.toLowerCase().includes(searchText.value.toLowerCase());
     }

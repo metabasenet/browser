@@ -192,7 +192,7 @@ const getSearch = async () => {
       //   router.push({ name: 'address', params: { address: address },query:{contract} });
       //   homeSearch.value = '';
       // }
-      let address = response.data.address.address
+      let address = response.data.address ? response.data.address.address : response.data.contract.contractaddress
       router.push({ name: 'address', params: { address: address } });
       homeSearch.value = '';
     } else {

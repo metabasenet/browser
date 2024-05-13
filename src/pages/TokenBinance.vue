@@ -730,8 +730,8 @@
                       <el-col :xs="24" :sm="24" :md="24" :lg="24">
                         <div class="demo-collapse">
                           <el-collapse v-model="actives">
-                            <el-collapse-item v-for="(functionItem, index) in viewFunctions" :key="index"
-                              :name="index.toString()">
+                            <el-collapse-item v-for="(functionItem, index) in viewFunctions" :key="functionItem.name"
+                              :name="functionItem.name">
                               <template #title>
                                 <div class="collapsed">
                                   <div>{{ index + 1 }}_{{ functionItem.name }}</div>
@@ -750,7 +750,7 @@
                                   <el-form-item v-for="(
                                       input, inputIndex
                                     ) in functionItem.inputs" :key="inputIndex" :prop="input.name" :label="input.name">
-                                    <el-input size="large" v-model="input.value" placeholder="Enter value"></el-input>
+                                    <el-input size="large" v-model="input.value" :placeholder="input.type"></el-input>
                                   </el-form-item>
                                   <el-form-item>
                                     <el-button type="info" plain @click="handleQuery(functionItem)">Query</el-button>
@@ -758,7 +758,7 @@
                                   <el-form-item>
                                     <span class="uints">{{ functionItem.outputs[0].internalType }}</span>
                                   </el-form-item>
-                                  <el-form-item v-if="responsed==functionItem.name">
+                                  <el-form-item v-if="readShow[functionItem.name]==functionItem.name">
                                     <div style="
                                       display: flex;
                                       flex-direction: column;
@@ -841,8 +841,7 @@
                       <el-col :xs="24" :sm="24" :md="24" :lg="24">
                         <div class="demo-collapse">
                           <el-collapse v-model="actives">
-                            <el-collapse-item v-for="(item, index) in writeContract" :key="item.name"
-                              :name="index.toString()">
+                            <el-collapse-item v-for="(item, index) in writeContract" :key="item.name" :name="item.name">
                               <template #title>
                                 <div class="collapsed">
                                   <div>{{ index + 1 }}_{{ item.name }}</div>
@@ -868,14 +867,12 @@
                                           <Plus />
                                         </el-icon></el-button>
                                     </template>
-                                    <el-input size="large" v-model="input.value" :placeholder="input.name"></el-input>
+                                    <el-input size="large" v-model="input.value" :placeholder="`${input.name} (${input.type})`"></el-input>
                                   </el-form-item>
                                   <el-form-item>
                                     <el-button type="primary" @click="submitWrite(item)">Write</el-button>
                                   </el-form-item>
-                                  <el-form-item>
-                                  </el-form-item>
-                                  <el-form-item v-if="responsedWrite == item.name">
+                                  <el-form-item v-if="writeShow[item.name] == item.name">
                                     <div style="
                                       display: flex;
                                       flex-direction: column;
@@ -887,9 +884,12 @@
                                         margin: 10px;
                                       ">
                                         <svg-icon name="right"></svg-icon>
-                                        <span class="successDetail" v-show="successDetail">uint256:{{ successDetail
+                                        <span class="successDetail"
+                                          v-if="successDetail[item.name] == 'success'">uint256:{{
+                                          successDetail[item.name]
                                           }}</span>
-                                        <span class="loseDetail" v-show="loseDetail">uint256:{{ loseDetail }}</span>
+                                        <span class="loseDetail" v-else>uint256:{{
+                                          loseDetail[item.name]?loseDetail[item.name]:'fail' }}</span>
                                       </p>
                                     </div>
                                   </el-form-item>
@@ -929,7 +929,7 @@
                       <template #footer>
                         <div class="dialog-footer">
                           <el-button @click="dialogFormVisibles = false">Cancel</el-button>
-                          <el-button type="primary" @click="addSelect(form.region)">
+                          <el-button type="primary" @click="addSelect">
                             Add
                           </el-button>
                         </div>
@@ -983,6 +983,7 @@ import { getContactPage, getTokenInquire, getContactBalance, getContractTransati
 import { getFileInfo } from "@/api/upload";
 import { getContractDetail } from "@/api/verifyContract";
 import { ethers, formatUnits } from "ethers";
+import { config } from "@/config/config";
 const sizeForm = ref({
   address: "",
   spender: "",
@@ -990,7 +991,6 @@ const sizeForm = ref({
 let results = ref("");
 const copyratius = ref(false);
 let responsed = ref(false);
-let responsedWrite = ref('');
 let tableData = reactive([]);
 const actives = ref([])
 const total = ref(0)
@@ -1005,8 +1005,8 @@ const activeNames = ref("first");
 const contractSource = ref({});
 const queryResult = ref({});
 const queryError = ref(null);
-const successDetail = ref("");
-const loseDetail = ref("");
+const successDetail = reactive({});
+const loseDetail = reactive({});
 let dialogFormVisible = ref(false);
 let dialogFormVisibles = ref(false);
 const activeNamese = ref(["1"]);
@@ -1041,20 +1041,24 @@ const showCustomInput = ref(false);
 
 let ercName = ref('');
 let ercSymbol = ref('');
-let individualQueryDetails = reactive({});
+let individualQueryDetails = ref({});
 const getIndividualQuery = async () => {
   try {
     if (address !== null) {
       const response = await getTokenInquire(address);
-      individualQueryDetails = response.data;
-      ercName.value = individualQueryDetails.ercName
-      ercSymbol.value = individualQueryDetails.ercSymbol
+      individualQueryDetails.value = response.data;
+      const decimals = individualQueryDetails.value.decimals || 0;
+      const values = individualQueryDetails.value.totalSupply
+      individualQueryDetails.value.totalSupply = ethers.formatUnits(values.toLocaleString('en-US').replace(/,/g, ''), decimals);
+      ercName.value = individualQueryDetails.value.ercName
+      ercSymbol.value = individualQueryDetails.value.ercSymbol
     }
   } catch (error) {
     console.error("Error fetching block details:", error);
   }
 };
-
+let readShow = reactive({})
+let writeShow = reactive({});
 let verifystatused = ref(0);
 const getContactDetail = async () => {
   try {
@@ -1069,11 +1073,18 @@ const getContactDetail = async () => {
           (item) => item.type === "function" && item.stateMutability === "view" || item.stateMutability == 'prue'
         );
         viewFunctions.value.forEach((item)=>{
-          queryResult.value[item.name] = ""
+          queryResult.value[item.name] = ''
+          readShow[item.name] = ''
         })
         writeContract.value = abi.filter(
           (item) => item.type === "function" && item.stateMutability === "nonpayable" || item.stateMutability == 'payable'
-        );  
+        );
+        writeContract.value.forEach((item)=>{
+          writeShow[item.name] = ''
+          successDetail[item.name] = ''
+          loseDetail[item.name] = ''
+        })  
+        console.log('00009999',writeContract.value);
       } else {
         return
       } 
@@ -1082,34 +1093,6 @@ const getContactDetail = async () => {
     console.error("Error fetching block details:", error);
   }
 };
-// const getContactDetail = async () => {
-//   try {
-//     if (address !== null) {
-//       const {data} = await getContractDetail(address);
-//       verifystatused.value = data ? 1 : 0;
-//       contractSource.value = data;
-//       let abi;
-//       if (data && typeof data.abi === 'string') {
-//         try {
-//           abi = JSON.parse(data.abi);
-//           viewFunctions.value = abi.filter(
-//             (item) => item.type === "function" && item.stateMutability === "view" || item.stateMutability == 'prue'
-//           );
-//           writeContract.value = abi.filter(
-//             (item) => item.type === "function" && item.stateMutability === "nonpayable" || item.stateMutability == 'payable'
-//           );
-//         } catch (error) {
-//           abi = null;
-//         }
-//       } else {
-//         // console.warn('ABI is undefined or not a string.');
-//         abi = null;
-//       }
-//     }
-//   } catch (error) {
-//     console.error("Error fetching block details:", error);
-//   }
-// };
 getContactDetail()
 const getTransationCount = async () => {
   try {
@@ -1222,8 +1205,40 @@ const connectWallet = async () => {
 
   if (typeof(window.ethereum) !== "undefined") {
     try {
+      // ethers.utils.hexValue
       dialogFormVisible.value = false;
-      const accounts = await ethereum.request({
+      const providers = ethereum;
+      // const mainChainId = 8807;
+      // const testChainId = 102
+      // const chainId = "0x2267";
+      let chainName = location.hostname == config.domainUser_url ? 'MNT Mainnet' : 'MNT Testnet';
+      const chainId = location.hostname == config.domainUser_url ? '0x2277' : '0x66';
+      const blockExplorerUrls = location.hostname == config.domainUser_url ? 'https://main.metabasenet.site/' : 'https://test.metabasenet.site/'  
+      const rpcUrl = location.hostname == config.domainUser_url ? config.rpc_testAdress: config.rpc_TestAddress;
+      try {
+        await providers.request({ method: 'wallet_switchEthereumChain', params: [{ chainId }] });
+      } catch (error) {
+        if (error.code == 4902) {
+          await providers.request({
+            method: 'wallet_addEthereumChain',
+            params: [
+              {
+                rpcUrls: [rpcUrl],
+                chainId,
+                chainName,
+                nativeCurrency: {
+                  name: 'MNT',
+                  symbol: 'MNT',
+                  decimals: 18,
+                },
+                blockExplorerUrls: [blockExplorerUrls],
+              }
+            ]
+          });
+          await providers.request({ method: 'wallet_switchEthereumChain', params: [{ chainId }] });
+        }
+      }
+      const accounts = await providers.request({
         method: "eth_requestAccounts",
       });
       const account = accounts[0];
@@ -1289,34 +1304,45 @@ const openDialog = (functionIndex, inputIndex) => {
   InputIndex.value = inputIndex;
   FunctionIndex.value = functionIndex;
 }
-const addSelect = (value) => {
+const addSelect = () => {
   dialogFormVisibles.value = false;
   console.log(writeContract.value[FunctionIndex.value].inputs[InputIndex.value]);
-  let itemInput = writeContract.value[FunctionIndex.value].inputs[InputIndex.value];
-  itemInput.value ||= 1;
-  itemInput.value *= value;
+  writeContract.value[FunctionIndex.value].inputs[InputIndex.value].value = form.value.region.toString();
+  // itemInput.value ||= 1;
+  // itemInput.value *= value;
 }
 const submitWrite = async (item) => {
   // v-if="!results".value
-  successDetail.value = "";
-  loseDetail.value = "";
+  successDetail[item.name] = "";
+  loseDetail[item.name] = "";
   if (typeof window.ethereum !== "undefined" && results.value) {
-    responsedWrite.value = item.name;
+    writeShow[item.name] = item.name;
     try {
       const provider = new ethers.BrowserProvider(window.ethereum);
       // const provider = new ethers.BrowserProvider(window.ethereum, "https://test2.metabasenet.site/rpc");
       const signer = await provider.getSigner();
       const contract = new ethers.Contract(contractSource.value.contractaddress, contractSource.value.abi, signer);
+      let flag = 0;
       const params = item.inputs.reduce((acc, input) => {
-        acc[input.name] = input.value;
+        flag++
+        if (input.value.indexOf('[') != -1 && input.value.indexOf(']') != -1) {
+          input.value = input.value.substring(1, input.value.length - 2)
+        }
+        acc[`${input.name}${flag}`] = input.value.split(',');
         return acc;
       }, {});
       const valuesArray = Object.values(params);
+      for (let i = 0; i < valuesArray.length; i++) {
+        if (valuesArray[i].length == 1) {
+          valuesArray[i] = valuesArray[i][0]
+        }
+      }
+      console.log('write',valuesArray);
       try {
         let res = await contract[item.name](...valuesArray);
-        successDetail.value = 'success';
+        successDetail[item.name] = 'success';
       } catch (error) {
-        loseDetail.value = error.revert.args[0];
+        loseDetail[item.name] = error.revert.args[0];
       }
       //  let res = await contract["transfer"]("0xe6897baC8439E77Cb662b18CF68a897c13aCacb5",0)
     } catch (error) {
@@ -1328,7 +1354,7 @@ const submitWrite = async (item) => {
 
 }
 const handleQuery = async (functionItem) => {
-  responsed.value = functionItem.name;
+  readShow[functionItem.name] = functionItem.name;
   try {
     const provider = new ethers.BrowserProvider(window.ethereum);
     // const provider = new ethers.BrowserProvider(window.ethereum, "https://test2.metabasenet.site/rpc");
@@ -1336,12 +1362,23 @@ const handleQuery = async (functionItem) => {
     // const contract = new ethers.Contract(contractSource.value.contractaddress, contractSource.value.abi, provider);
     const contract = new ethers.Contract(contractSource.value.contractaddress, contractSource.value.abi, signer);
     // let res11 = await contract["transfer"]("0xe6897baC8439E77Cb662b18CF68a897c13aCacb5","5");
+    let flag = 0;
     const params = functionItem.inputs.reduce((acc, input) => {
-      acc[input.name] = input.value;
+      flag++;
+      if( input.value.indexOf('[') != -1 && input.value.indexOf(']') != -1) {
+        input.value = input.value.substring(1,input.value.length-2)
+      }
+      acc[`${input.name}${flag}`] = input.value.split(',');
       return acc;
     }, {});
     // let res = await contract[functionItem.name](params.account);
     const valuesArray = Object.values(params);
+    for (let i = 0; i < valuesArray.length;i++) {
+      if (valuesArray[i].length == 1) {
+        valuesArray[i] = valuesArray[i][0]
+      }
+    }
+    console.log(valuesArray)
     // let res = await contract["symbol"]();
     let res = await contract[functionItem.name](...valuesArray);
     // const res = await contract[functionItem.functionName](...Object.values(params));
@@ -1381,6 +1418,7 @@ const getItemName = async () => {
         obj.detail = viewDetails.value[index];
       })
     }
+    console.log('1111111',viewFunctions);
   } catch (error) {
     console.error("An error occurred:", error);
   }
@@ -1460,7 +1498,7 @@ let getContactList = async (pager = 1) => {
         // item.effectiveGasPrice = formatUnits(item.effectiveGasPrice.toString(), 9)
         item.method = item.method ||item.methodHash;
         // item.TransactionFee = item.cumulativeGasUsed * item.effectiveGasPrice;
-        const decimals = individualQueryDetails.decimals || 0;
+        const decimals = individualQueryDetails.value.decimals || 0;
         const values = item.value || 0;
         item.value = ethers.formatUnits(BigInt(values), decimals);
       });

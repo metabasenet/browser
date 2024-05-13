@@ -98,23 +98,27 @@ async function addWork() {
     try {
         if (typeof ethereum !== 'undefined') {
             const provider = ethereum;
-            const networkId = 8807;
-            const chainId = "0x2267";
-            const rpcUrl = config.rpc_testAdress;
+            // const networkId = 8807;
+            // const chainId = "0x2267";
+            // const rpcUrl = location.hostname == config.domainUser_url ? config.rpc_testAdress: config.rpc_TestAddress;
+            let chainName = location.hostname == config.domainUser_url ? 'MNT Mainnet' : 'MNT Testnet';
+            const chainId = location.hostname == config.domainUser_url ? '0x2277' : '0x66';
+            const blockExplorerUrls = location.hostname == config.domainUser_url ? 'https://main.metabasenet.site/' : 'https://test.metabasenet.site/'
+            const rpcUrl = location.hostname == config.domainUser_url ? config.rpc_testAdress : config.rpc_TestAddress;
             await provider.request({
                 method: 'wallet_addEthereumChain',
                 params: [
                     {
-                        chainId: chainId,
+                        chainId,
                         rpcUrls: [rpcUrl],
-                        chainName: 'MNT Mainnet',
+                        chainName,
                         nativeCurrency: {
                             name: 'MNT',
                             symbol: 'MNT',
                             decimals: 18,
                         },
                         // blockExplorerUrls: [`https://test.metabasenet.site/chain/${chainId}`],
-                        blockExplorerUrls: [`https://test.metabasenet.site/`],
+                        blockExplorerUrls: [blockExplorerUrls],
                     },
                 ],
             });
@@ -123,7 +127,7 @@ async function addWork() {
                     console.log('Network added and activated successfully!');
                 }
             });
-            await provider.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: chainId }] });
+            await provider.request({ method: 'wallet_switchEthereumChain', params: [{ chainId }] });
         } else {
             console.error('MetaMask is not installed!');
         }
