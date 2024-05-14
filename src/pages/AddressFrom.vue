@@ -8,8 +8,8 @@
             <div class="grid-content_h3">
               <div style="display: flex; justify-content: flex-start; align-items: center">
                 <img src="@/images/Avatar.png"
-                  style="width: 24px; height: 24px; border-radius: 100px; vertical-align: middle; margin-right: 5px;"
-                  alt="">
+                     style="width: 24px; height: 24px; border-radius: 100px; vertical-align: middle; margin-right: 5px;"
+                     alt="">
                 <span style="font-size: 18.75px; color: #212529; margin-right: 6px; ">{{ contract }}</span>
                 <span class="ellipsis-text" style="font-size: 15px; color: #212529">{{ address }}</span>
                 <el-tooltip v-if="!istoCopied" content="Copy Address" placement="top">
@@ -44,7 +44,7 @@
               <div>
                 <el-tag type="info" style="color: #000; background-color: #fff; border-radius: 10px;">ERC-20</el-tag>
                 <el-tag type="info"
-                  style="color: #000; background-color: #fff; border-radius: 10px;">Cross-Chain</el-tag>
+                        style="color: #000; background-color: #fff; border-radius: 10px;">Cross-Chain</el-tag>
                 <el-tag type="info" style="color: #000; background-color: #fff; border-radius: 10px;"># Binance</el-tag>
                 <el-tag type="info" style="color: #000; background-color: #fff; border-radius: 10px;">#
                   Binance-Peg</el-tag>
@@ -89,12 +89,12 @@
               </el-tooltip> -->
                   <!-- <span style="font-weight: bold;"> ETH </span> -->
                   <el-tooltip class="box-item" effect="dark" content="CSupply: 551,557.859909" placement="top-start">
-                    <span class="content-item">{{ getByBalance.balance||0 }}</span>
+                    <span class="content-item">{{ getByBalance.balance || 0 }}</span>
                   </el-tooltip>
                 </li>
                 <li class="over_li">
                   <p class="title-item">MNT VALUE</p>
-                  <span class="content-item">{{ mntValue}}</span>
+                  <span class="content-item">{{ mntValue }}</span>
                 </li>
                 <li class="over_li">
                   <p class="title-item">TOKEN HOLDINGS</p>
@@ -104,10 +104,10 @@
                         <p class="erc_p">ERC-20 Tokens</p>
                       </template>
                       <el-option v-for="(item, index) in cities" :key="index" :label="item.ercName"
-                        :value="item.decimals || ''">
+                                 :value="item.decimals || ''">
                         <router-link v-if="item.decimals !== null"
-                          :to="{ name: 'token', params: { address: item.address } }"
-                          style="display: flex; height:50px; flex-direction: column; line-height: 1.5; padding-top: 5px; padding-bottom: 5px;">
+                                     :to="{ name: 'token', params: { address: item.address } }"
+                                     style="display: flex; height:50px; flex-direction: column; line-height: 1.5; padding-top: 5px; padding-bottom: 5px;">
                           <p style="margin: 0; color: black;
                             font-weight:400;
                             font-size: 12px; ">{{ item.ercName }} ({{ item.ercSymbol }})</p>
@@ -144,9 +144,9 @@
                   <div class="over_div">
                     <el-tooltip class="box-item" effect="dark" :content="address" placement="top-start">
                       <router-link style="font-size: 14.4992px; color: #0784C3;" class="skyblue-text ellipsis-text"
-                        :to="{ name: 'address', params: { address: address } }">{{
-                        address.substring(0, 30) + '...'
-                        }}</router-link>
+                                   :to="{ name: 'address', params: { address: address } }">{{
+            address.substring(0, 30) + '...'
+          }}</router-link>
                     </el-tooltip>
                     <!-- <span class="content-item">from 12 hrs ago</span> -->
                   </div>
@@ -155,11 +155,11 @@
                   <p class="title-item">CONTRACTCREATOR:</p>
                   <div class="over_div">
                     <el-tooltip :content="contractMessage.creator"><span
-                        style="font-size: 14.4992px; color: #0784C3; cursor: pointer;">{{
-                        contractMessage.creator.substring(0,17) + '...'
-                        }}</span></el-tooltip> at txn <el-tooltip :content="contractMessage.transactionHash"><span
-                        style="font-size: 14.4992px; color: #0784C3; cursor: pointer; ">{{
-                        contractMessage.transactionHash.substring(0,18) + '...' }}</span></el-tooltip>
+                            style="font-size: 14.4992px; color: #0784C3; cursor: pointer;">{{
+            contractMessage.creator.substring(0, 17) + '...'
+          }}</span></el-tooltip> at txn <el-tooltip :content="contractMessage.transactionHash"><span
+                            style="font-size: 14.4992px; color: #0784C3; cursor: pointer; ">{{
+            contractMessage.transactionHash.substring(0, 18) + '...' }}</span></el-tooltip>
                     <!-- <el-tooltip class="box-item" effect="dark" :content="address" placement="top-start">
                       <router-link style="font-size: 14.4992px; color: #0784C3;" class="skyblue-text ellipsis-text"
                         :to="{ name: 'address', params: { address: address } }">{{
@@ -204,8 +204,8 @@
                     </el-tooltip>
                     <el-tooltip class="box-item" effect="dark" :content="address" placement="top-start">
                       <router-link class="skyblue-text ellipsis-text" style="font-size: 14.4992px; color: #0784C3"
-                        :to="{ name: 'address', params: { address: address } }">{{
-                        address.substring(0, 25) + '...' }}</router-link>
+                                   :to="{ name: 'address', params: { address: address } }">{{
+            address.substring(0, 25) + '...' }}</router-link>
                     </el-tooltip>
                     <el-tooltip v-if="!istoCopied" content="Copy Address" placement="top">
                       <el-button text icon="CopyDocument" @click="copyToClipboards(address)">
@@ -247,18 +247,19 @@
                       More than <span style="font-size: 14.4992px; color: #0784C3">{{ total }}</span> transactions found
                     </div>
                     <el-pagination :pager-count="5" v-model:current-page="currentPage4" v-model:page-size="pageSize4"
-                      :page-sizes="[10, 20, 30, 40]" background layout=" sizes, prev, pager, next, " :total="total"
-                      small @size-change="handleSizeChange1" @current-change="getAddressList" />
+                                   :page-sizes="[10, 20, 30, 40]" background layout=" sizes, prev, pager, next, "
+                                   :total="total"
+                                   small @size-change="handleSizeChange1" @current-change="getAddressList" />
                   </div>
                   <el-table v-loading="loading" :data="tableData" style="width: 100%" size="default"
-                    :row-style="{ height: '70px' }">
+                            :row-style="{ height: '70px' }">
                     <el-table-column prop="hash" label="Transaction Hash" width="125">
                       <template v-slot="scope">
                         <el-tooltip :content="scope.row.hash" placement="top">
                           <router-link class="skyblue-text ellipsis-text" :to="{
-                            name: 'tx',
-                            params: { hash: scope.row.hash },
-                          }" style="font-size: 14.4992px; color: #0784C3">{{ scope.row.hash }}</router-link>
+            name: 'tx',
+            params: { hash: scope.row.hash },
+          }" style="font-size: 14.4992px; color: #0784C3">{{ scope.row.hash }}</router-link>
                         </el-tooltip>
                       </template>
                     </el-table-column>
@@ -266,17 +267,17 @@
                       <template v-slot="scope">
                         <el-tooltip :content="scope.row.method" placement="top">
                           <el-button v-if="scope.row.method"
-                            style="padding: 5px; font-size: 10.8744px; color: #000;  border-radius: 6px;">{{
-                            scope.row.method }}</el-button>
+                                     style="padding: 5px; font-size: 10.8744px; color: #000;  border-radius: 6px;">{{
+            scope.row.method }}</el-button>
                         </el-tooltip>
                       </template>
                     </el-table-column>
                     <el-table-column prop="blockNumber" label="Block" width="88">
                       <template v-slot="scope">
                         <router-link class="skyblue-text" :to="{
-                          name: 'block',
-                          params: { blockNumber: scope.row.blockNumber },
-                        }" style="font-size: 14.4992px; color: #0784C3">{{ scope.row.blockNumber }}</router-link>
+            name: 'block',
+            params: { blockNumber: scope.row.blockNumber },
+          }" style="font-size: 14.4992px; color: #0784C3">{{ scope.row.blockNumber }}</router-link>
                       </template>
                     </el-table-column>
                     <el-table-column prop="formattedTime" label="Age" width="127">
@@ -289,9 +290,9 @@
                         <div class="router_box">
                           <el-tooltip :content="scope.row.from" placement="top">
                             <router-link class="skyblue-text ellipsis-text" :to="{
-                              name: 'address',
-                              params: { address: scope.row.from },
-                            }" style="font-size: 14.4992px; color: #0784C3;">{{ scope.row.from.substring(0, 10) + '...'
+            name: 'address',
+            params: { address: scope.row.from },
+          }" style="font-size: 14.4992px; color: #0784C3;">{{ scope.row.from.substring(0, 10) + '...'
                               }}</router-link>
                           </el-tooltip>
                           <el-tooltip v-if="!scope.row.isCopied" content="Copy Address" placement="top">
@@ -311,15 +312,15 @@
                         <div class="router_box">
                           <el-tooltip content="Contract" placement="top">
                             <el-button
-                              style="margin-right: 5px; margin-top: 5px; width: 12.69px; height: 15px; border-radius: 5px;"
-                              icon="Document">
+                                       style="margin-right: 5px; margin-top: 5px; width: 12.69px; height: 15px; border-radius: 5px;"
+                                       icon="Document">
                             </el-button>
                           </el-tooltip>
                           <el-tooltip :content="scope.row.to" placement="top">
                             <router-link class="skyblue-text ellipsis-text" :to="{
-                              name: 'address',
-                              params: { address: scope.row.to },
-                            }" style="font-size: 14.4992px; color: #0784C3">{{ scope.row.to.substring(0, 10) + '...'
+            name: 'address',
+            params: { address: scope.row.to },
+          }" style="font-size: 14.4992px; color: #0784C3">{{ scope.row.to.substring(0, 10) + '...'
                               }}</router-link>
                           </el-tooltip>
                           <el-tooltip v-if="!scope.row.istoCopied" content="Copy Address" placement="top">
@@ -345,16 +346,17 @@
                       <template v-slot="scope">
                         <el-tooltip :content="`${scope.row.value}`" placement="top">
                           <span class="ellipsis-text">{{
-                            scope.row.value
-                            }}</span>
+            scope.row.value
+          }}</span>
                         </el-tooltip>
                       </template>
                     </el-table-column>
                   </el-table>
                   <div class="demo-pagination-block box-table_header">
                     <el-pagination :pager-count="5" v-model:current-page="currentPage4" v-model:page-size="pageSize4"
-                      :page-sizes="[10, 20, 30, 40]" background layout=" sizes, prev, pager, next, " :total="total"
-                      small @size-change="handleSizeChange1" @current-change="getAddressList" />
+                                   :page-sizes="[10, 20, 30, 40]" background layout=" sizes, prev, pager, next, "
+                                   :total="total"
+                                   small @size-change="handleSizeChange1" @current-change="getAddressList" />
                   </div>
                 </el-row>
               </el-tab-pane>
@@ -367,18 +369,19 @@
                       transactions found
                     </div>
                     <el-pagination :pager-count="5" v-model:current-page="currentPageInternal"
-                      v-model:page-size="pageSizeInternal" :page-sizes="[10, 20, 30, 40]" background
-                      layout=" sizes, prev, pager, next, " :total="tableDataInternal.length" small
-                      @size-change="handleSizeChangeInternal" @current-change="handleCurrentChangeInternal" />
+                                   v-model:page-size="pageSizeInternal" :page-sizes="[10, 20, 30, 40]" background
+                                   layout=" sizes, prev, pager, next, " :total="tableDataInternal.length" small
+                                   @size-change="handleSizeChangeInternal"
+                                   @current-change="handleCurrentChangeInternal" />
                   </div>
                   <el-table v-loading="loading2" :data="tableDataInternal" style="width: 100%" size="default"
-                    :row-style="{ height: '70px' }">
+                            :row-style="{ height: '70px' }">
                     <el-table-column prop="transactionhash" label="Parent Transaction Hash" width="450">
                       <template v-slot="scope">
                         <el-tooltip :content="scope.row.transactionhash" placement="top">
                           <router-link class="skyblue-text ellipsis-text" :to="{
-                            name: 'tx', params: { hash: scope.row.transactionhash },
-                          }" style="font-size: 14.4992px; color: #0784C3">{{ scope.row.transactionhash }}
+            name: 'tx', params: { hash: scope.row.transactionhash },
+          }" style="font-size: 14.4992px; color: #0784C3">{{ scope.row.transactionhash }}
                           </router-link>
                         </el-tooltip>
                       </template>
@@ -393,10 +396,10 @@
                         <div class="router_box">
                           <el-tooltip :content="scope.row.from" placement="top">
                             <router-link class="skyblue-text ellipsis-text" :to="{
-                              name: 'address',
-                              params: { address: scope.row.from },
-                            }" style="font-size: 14.4992px; color: #0784C3;">{{ scope.row.from.substring(0, 10) +
-                              '...'
+            name: 'address',
+            params: { address: scope.row.from },
+          }" style="font-size: 14.4992px; color: #0784C3;">{{ scope.row.from.substring(0, 10) +
+            '...'
                               }}</router-link>
                           </el-tooltip>
                           <el-tooltip v-if="!scope.row.isCopied" content="Copy Address" placement="top">
@@ -416,15 +419,15 @@
                         <div class="router_box">
                           <el-tooltip content="Contract" placement="top">
                             <el-button
-                              style="margin-right: 5px; margin-top: 5px; width: 12.69px; height: 15px; border-radius: 5px;"
-                              icon="Document">
+                                       style="margin-right: 5px; margin-top: 5px; width: 12.69px; height: 15px; border-radius: 5px;"
+                                       icon="Document">
                             </el-button>
                           </el-tooltip>
                           <el-tooltip :content="scope.row.to" placement="top">
                             <router-link class="skyblue-text ellipsis-text" :to="{
-                              name: 'address',
-                              params: { address: scope.row.to },
-                            }" style="font-size: 14.4992px; color: #0784C3">{{ scope.row.to.substring(0, 10) + '...'
+            name: 'address',
+            params: { address: scope.row.to },
+          }" style="font-size: 14.4992px; color: #0784C3">{{ scope.row.to.substring(0, 10) + '...'
                               }}</router-link>
                           </el-tooltip>
                           <el-tooltip v-if="!scope.row.istoCopied" content="Copy Address" placement="top">
@@ -442,17 +445,18 @@
                       <template v-slot="scope">
                         <el-tooltip :content="`${scope.row.value}`" placement="top">
                           <span class="ellipsis-text" style="font-size: 14.4992px; color: #212529;">{{
-                            scope.row.value
-                            }}</span>
+            scope.row.value
+          }}</span>
                         </el-tooltip>
                       </template>
                     </el-table-column>
                   </el-table>
                   <div class="demo-pagination-block box-table_header">
                     <el-pagination :pager-count="5" v-model:current-page="currentPageInternal"
-                      v-model:page-size="pageSizeInternal" :page-sizes="[10, 20, 30, 40]" background
-                      layout=" sizes, prev, pager, next, " :total="tableDataInternal.length" small
-                      @size-change="handleSizeChangeInternal" @current-change="handleCurrentChangeInternal" />
+                                   v-model:page-size="pageSizeInternal" :page-sizes="[10, 20, 30, 40]" background
+                                   layout=" sizes, prev, pager, next, " :total="tableDataInternal.length" small
+                                   @size-change="handleSizeChangeInternal"
+                                   @current-change="handleCurrentChangeInternal" />
                   </div>
                 </el-row>
               </el-tab-pane>
@@ -462,23 +466,24 @@
                   <div class="demo-pagination-block box-table_header">
                     <div class="demonstration" style="font-size: 14.4992px; color: #212529;">
                       Latest {{ totals }} ERC-20 Token Transfer Events (<span
-                        style="font-size: 14.4992px; color: #0784C3;">View
+                            style="font-size: 14.4992px; color: #0784C3;">View
                         All</span>)
                     </div>
                     <el-pagination :pager-count="5" v-model:current-page="currentPage4" v-model:page-size="pageSize4"
-                      :page-sizes="[10, 20, 30, 40]" background layout=" sizes, prev, pager, next, " :total="totals"
-                      small @size-change="handleSizeChange" @current-change="getContractList" />
+                                   :page-sizes="[10, 20, 30, 40]" background layout=" sizes, prev, pager, next, "
+                                   :total="totals"
+                                   small @size-change="handleSizeChange" @current-change="getContractList" />
                   </div>
                   <el-table v-loading="loading1" :data="tableDatas" style="width: 100%" size="default"
-                    :row-style="{ height: '70px' }">
+                            :row-style="{ height: '70px' }">
                     <el-table-column prop="transactionHash" label="Txn Hash" width="150">
                       <template v-slot="scope">
                         <el-tooltip :content="scope.row.to" placement="top">
                           <router-link class="skyblue-text ellipsis-text" :to="{
-                            name: 'tx',
-                            params: { hash: scope.row.transactionHash },
-                          }" style="font-size: 14.4992px; color: #0784C3;">{{
-                            scope.row.transactionHash }}</router-link>
+            name: 'tx',
+            params: { hash: scope.row.transactionHash },
+          }" style="font-size: 14.4992px; color: #0784C3;">{{
+            scope.row.transactionHash }}</router-link>
                         </el-tooltip>
                       </template>
                     </el-table-column>
@@ -486,16 +491,16 @@
                       <template v-slot="scope">
                         <el-tooltip :content="scope.row.method" placement="top">
                           <el-button style="font-size: 10.8744px; color: #000; padding: 5px; border-radius: 6px;">{{
-                            scope.row.method }}</el-button>
+            scope.row.method }}</el-button>
                         </el-tooltip>
                       </template>
                     </el-table-column>
                     <el-table-column prop="blockNumber" label="Block" width="88">
                       <template v-slot="scope">
                         <router-link class="skyblue-text" :to="{
-                          name: 'block',
-                          params: { blockNumber: scope.row.blockNumber },
-                        }" style="font-size: 14.4992px; color: #0784C3">{{ scope.row.blockNumber
+            name: 'block',
+            params: { blockNumber: scope.row.blockNumber },
+          }" style="font-size: 14.4992px; color: #0784C3">{{ scope.row.blockNumber
                           }}</router-link>
                       </template>
                     </el-table-column>
@@ -509,9 +514,9 @@
                         <div class="router_box">
                           <el-tooltip :content="scope.row.from" placement="top">
                             <router-link class="skyblue-text ellipsis-text" :to="{
-                              name: 'address',
-                              params: { address: scope.row.from },
-                            }" style="font-size: 14.4992px; color: #0784C3;">{{ scope.row.from.substring(0, 10) + '...'
+            name: 'address',
+            params: { address: scope.row.from },
+          }" style="font-size: 14.4992px; color: #0784C3;">{{ scope.row.from.substring(0, 10) + '...'
                               }}</router-link>
                           </el-tooltip>
                           <el-tooltip v-if="!scope.row.isCopied" content="Copy Address" placement="top">
@@ -531,15 +536,15 @@
                         <div class="router_box">
                           <el-tooltip content="Contract" placement="top">
                             <el-button
-                              style="margin-right: 5px; margin-top: 4px; width: 12.69px; height: 15px; border-radius: 5px;"
-                              icon="Document" @click="copyToClipboard(scope.row.to)">
+                                       style="margin-right: 5px; margin-top: 4px; width: 12.69px; height: 15px; border-radius: 5px;"
+                                       icon="Document" @click="copyToClipboard(scope.row.to)">
                             </el-button>
                           </el-tooltip>
                           <el-tooltip :content="scope.row.to" placement="top">
                             <router-link class="skyblue-text ellipsis-text" :to="{
-                              name: 'address',
-                              params: { address: scope.row.to },
-                            }" style="font-size: 14.4992px; color: #0784C3">{{ scope.row.to.substring(0, 10) + '...'
+            name: 'address',
+            params: { address: scope.row.to },
+          }" style="font-size: 14.4992px; color: #0784C3">{{ scope.row.to.substring(0, 10) + '...'
                               }}</router-link>
                           </el-tooltip>
                           <el-tooltip v-if="!scope.row.istoCopied" content="Copy Address" placement="top">
@@ -557,8 +562,8 @@
                       <template v-slot="scope">
                         <el-tooltip :content="`${scope.row.value}`" placement="top">
                           <span class="ellipsis-text" style="font-size: 14.4992px; color: #212529">{{
-                            scope.row.value
-                            }}</span>
+            scope.row.value
+          }}</span>
                         </el-tooltip>
                       </template>
                     </el-table-column>
@@ -591,11 +596,11 @@
                             </el-icon>
                             Are you the contract creator?
                             <router-link class="skyblue-text" :to="{
-                            name: 'verifyContract',
-                            params: {
-                              address: individualQueryDetails.contractaddress,
-                            },
-                          }">Verify and Publish </router-link>your contract source code today!
+            name: 'verifyContract',
+            params: {
+              address: individualQueryDetails.contractaddress,
+            },
+          }">Verify and Publish </router-link>your contract source code today!
                           </p>
                           <el-button type="info">Decompile Bytecode
                             <el-icon>
@@ -626,8 +631,9 @@
                             <template #title>
                               <div>
                                 <svg-icon name="true" width="1rem" height="1rem"
-                                  style="margin-right: 5px"></svg-icon><span>Contract Source Code Verified </span><span
-                                  style="color: #6c757d">(Exact Match)</span>
+                                          style="margin-right: 5px"></svg-icon><span>Contract Source Code Verified
+                                </span><span
+                                      style="color: #6c757d">(Exact Match)</span>
                               </div>
 
                             </template>
@@ -719,7 +725,7 @@
                                 <div class="grid-content_h2 grid-contents">
                                   <div>
                                     <span>File {{ index + 1 }} of {{
-                                      contractSource.sourceCode.length }}:</span> <span>{{ item.fileName }}</span>
+            contractSource.sourceCode.length }}:</span> <span>{{ item.fileName }}</span>
                                   </div>
                                   <div>
                                     <el-button type="info" icon="Edit" />
@@ -729,7 +735,7 @@
                                 </div>
                                 <div class="grid-content_h2">
                                   <el-input v-model="item.sourceCode" disabled style="height: 300px" :rows="16"
-                                    type="textarea" />
+                                            type="textarea" />
                                 </div>
                               </div>
                             </el-col>
@@ -761,7 +767,7 @@
                               </div>
                               <div class="grid-content_h2">
                                 <el-input v-model="contractSource.abi" disabled style="height: 200px" :rows="10"
-                                  type="textarea" />
+                                          type="textarea" />
                               </div>
                             </el-col>
                             <el-col :span="24">
@@ -843,7 +849,7 @@
                           <div class="demo-collapse">
                             <el-collapse v-model="actives">
                               <el-collapse-item v-for="(functionItem, index) in viewFunctions"
-                                :key="functionItem.contractname" :name="functionItem.name">
+                                                :key="functionItem.contractname" :name="functionItem.name">
                                 <template #title>
                                   <div class="collapsed">
                                     <div>{{ index + 1 }}_{{ functionItem.name }}</div>
@@ -963,7 +969,7 @@
                           <div class="demo-collapse">
                             <el-collapse v-model="actives">
                               <el-collapse-item v-for="(item, index) in writeContract" :key="item.name"
-                                :name="item.name">
+                                                :name="item.name">
                                 <template #title>
                                   <div class="collapsed">
                                     <div>{{ index + 1 }}_{{ item.name }}</div>
@@ -985,7 +991,7 @@
                                       <template #label>
                                         <span>{{ input.name }}</span>
                                         <el-button style="margin-left: 5px;" v-if="input.type === 'uint256'" type="info"
-                                          plain @click="openDialog(index, inputIndex)"><el-icon>
+                                                   plain @click="openDialog(index, inputIndex)"><el-icon>
                                             <Plus />
                                           </el-icon></el-button>
                                       </template>
@@ -1018,9 +1024,9 @@
                                       ">
                                           <svg-icon name="right"></svg-icon>
                                           <span class="successDetail"
-                                            v-if="successDetail[item.name] == 'success'">uint256:{{
-                                            successDetail[item.name]
-                                            }}</span>
+                                                v-if="successDetail[item.name] == 'success'">uint256:{{
+            successDetail[item.name]
+          }}</span>
                                           <span class="loseDetail" v-else>uint256:{{ loseDetail[item.name]
                                             }}</span>
                                         </p>
@@ -1045,7 +1051,7 @@
                         <el-form :model="form">
                           <el-form-item>
                             <el-select size="large" v-model="form.region" @change="handleSelectChange"
-                              placeholder="Select">
+                                       placeholder="Select">
                               <el-option label="10⁶" value="1000000" />
                               <el-option label="10⁸" value="100000000" />
                               <el-option label="10¹⁸" value="1000000000000000000" />
@@ -1053,7 +1059,7 @@
                             </el-select>
                             <div v-if="showCustomInput" style="width:100%">
                               <el-input style="margin-top: 10px" v-model="form.customValue" size="large" type="number"
-                                :min="1" :max="18" @blur="handleInputBlur" @input="handleInput"></el-input>
+                                        :min="1" :max="18" @blur="handleInputBlur" @input="handleInput"></el-input>
                               <p>Enter the number of zeroes to add. Example: 3 to add three (000) zeroes.</p>
                             </div>
                           </el-form-item>
@@ -1124,10 +1130,10 @@ import {
 import { getFileInfo } from "@/api/upload";
 import { getContractDetail } from "@/api/verifyContract";
 import { getTransactionPlaform } from '@/api/transaction'
-import {getInternalTxnTest} from '@/api/address'
+import { getInternalTxnTest } from '@/api/address'
 import { useUserStore } from '@/store/user'
 import pinia from '@/store';
-import {getTokenInquire} from '@/api/toTokens'
+import { getTokenInquire } from '@/api/toTokens'
 const user = useUserStore(pinia)
 const { address } = defineProps({
   address: {
@@ -1345,7 +1351,7 @@ const getContactDetail = async () => {
         writeContract.value = abi.filter(
           (item) => item.type === "function" && item.stateMutability === "nonpayable" || item.stateMutability == 'payable'
         );
-        writeContract.value.forEach((item)=>{
+        writeContract.value.forEach((item) => {
           writeShow[item.name] = ''
           successDetail[item.name] = ''
           loseDetail[item.name] = ''
@@ -1758,7 +1764,7 @@ let contractMessage = ref({
 const getContractOrAddress = () => {
   const provider = new ethers.JsonRpcProvider(location.hostname == config.domainUser_url ? config.mainRpc_address : config.testRpc_adress);
   try {
-    provider.getCode(address).then( async (code) => {
+    provider.getCode(address).then(async (code) => {
       if (code.length > 4) {
         contract.value = "Contract"
         ifContract.value = true
@@ -1771,7 +1777,7 @@ const getContractOrAddress = () => {
         } 
       } else {
         contract.value = "Address"
-        ifContract.value =false
+        ifContract.value = false
       }
     })
   } catch (error) {
@@ -1876,7 +1882,7 @@ let handleSizeChangeInternal = async () => {
 let handleCurrentChangeInternal = async () => {
   getTransactionPlaforms()
 }
-let mntValue = computed(()=>{
+let mntValue = computed(() => {
   return Number(getByBalance.value.balance || 0) * Number(user.mntPrice)
 })
 onMounted(() => {
@@ -1909,10 +1915,12 @@ onMounted(() => {
   width: 0rem;
   transition: width 0.5s ease;
 }
+
 .successDetail {
   color: green;
 
 }
+
 .loseDetail {
   color: red;
 }
