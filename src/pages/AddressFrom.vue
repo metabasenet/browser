@@ -794,7 +794,7 @@
                                 </div>
                               </div>
                               <div class="grid-content_h2">
-                                <el-input v-model="contractSource.bytecode" style="height: 200px" :rows="10"
+                                <el-input v-model="byteCode" :rows="10"
                                   type="textarea" disabled />
                               </div>
                             </el-col>
@@ -841,7 +841,7 @@
 
                         <el-col :xs="24" :sm="24" :md="24" :lg="24">
                           <div class="demo-collapse">
-                            <el-collapse @change="handleChange" v-model="actives">
+                            <el-collapse v-model="actives">
                               <el-collapse-item v-for="(functionItem, index) in viewFunctions"
                                 :key="functionItem.contractname" :name="functionItem.name">
                                 <template #title>
@@ -862,7 +862,12 @@
                                     <el-form-item v-for="(
                                       input, inputIndex
                                     ) in functionItem.inputs" :key="inputIndex" :prop="input.name" :label="input.name">
-                                      <el-input size="large" v-model="input.value" :placeholder="input.type"></el-input>
+                                      <el-form :rules="rulesRead" style="width: 100%;">
+                                        <el-form-item prop="address">
+                                          <el-input v-model="input.value"
+                                        :placeholder="input.type"></el-input>
+                                        </el-form-item>
+                                      </el-form>
                                     </el-form-item>
                                     <el-form-item>
                                       <el-button type="info" plain @click="handleQuery(functionItem)">Query</el-button>
@@ -872,24 +877,24 @@
                                     </el-form-item>
                                     <el-form-item v-if="readShow[functionItem.name] == functionItem.name">
                                       <div style="
-                                      display: flex;
-                                      flex-direction: column;
-                                      flex-wrap: wrap;
-                                    ">
-                                        <!-- <p>
-                                        [ allowance(address,address) method
-                                        Response ]
-                                      </p> -->
-                                        <p class="uints" style="
                                         display: flex;
-                                        align-items: center;
-                                        margin: 10px;
+                                        flex-direction: column;
+                                        flex-wrap: wrap;
                                       ">
+                                        <!-- <p>
+                                          [ allowance(address,address) method
+                                          Response ]
+                                        </p> -->
+                                        <p class="uints" style="
+                                          display: flex;
+                                          align-items: center;
+                                          margin: 10px;
+                                        ">
                                           <svg-icon name="right"></svg-icon>uint256:
                                           {{ queryResult[functionItem.name] }}
                                         </p>
                                         <!-- <p>{{
-                                          queryError }}</p> -->
+                                            queryError }}</p> -->
                                       </div>
                                     </el-form-item>
                                   </el-form>
@@ -956,7 +961,7 @@
                         </el-col>
                         <el-col :xs="24" :sm="24" :md="24" :lg="24">
                           <div class="demo-collapse">
-                            <el-collapse @change="handleChange" v-model="actives">
+                            <el-collapse v-model="actives">
                               <el-collapse-item v-for="(item, index) in writeContract" :key="item.name"
                                 :name="item.name">
                                 <template #title>
@@ -984,8 +989,12 @@
                                             <Plus />
                                           </el-icon></el-button>
                                       </template>
-                                      <el-input size="large" v-model="input.value"
-                                        :placeholder="`${input.name} (${input.type})`"></el-input>
+                                      <el-form :rules="rules" style="width: 100%;">
+                                        <el-form-item :prop="input.type == 'address' ? 'address' :'uint256'">
+                                          <el-input v-model="input.value"
+                                            :placeholder="`${input.name} (${input.type})`"></el-input>
+                                        </el-form-item>
+                                      </el-form>
                                     </el-form-item>
                                     <el-form-item>
                                       <el-button type="primary" @click="submitWrite(item)">Write</el-button>
@@ -1181,6 +1190,13 @@ let successDetail = reactive({});
 let loseDetail = reactive({})
 const activeNames = ref("first");
 const viewDetails = ref([]);
+let rules = reactive({
+  address: [{ required: true, message: 'Please input address', trigger: 'blur' }],
+  uint256: [{required: true, message: 'Please input value', trigger: 'blur'}],
+})
+let rulesRead = reactive({
+  address: [{ required: true, message: 'Please input address', trigger: 'blur' }],
+})
 const handleClick = (tab, event) => {
   console.log(tab.props.name);
   if (tab.props.name === "tab1") {
@@ -1200,7 +1216,6 @@ const getFileInfos = async () => {
   try {
     if (address !== null) {
       const response = await getFileInfo(address);
-      console.log(response);
       if (response && response.length > 0) {
         contractSource.value = contractSource.value || {};
         contractSource.value.sourceCode = response;
@@ -1241,27 +1256,30 @@ const handleInputBlur = () => {
 }
 const getItemName = async () => {
   try {
-    const provider = new ethers.BrowserProvider(window.ethereum);
+    // const provider = new ethers.BrowserProvider(window.ethereum);
+    const readProvider = new ethers.JsonRpcProvider(config.testRpc_adress)
     if (!contractSource.value || !contractSource.value.contractaddress) {
       throw new Error('Contract address is not initialized or invalid.');
     }
     const contract = new ethers.Contract(
       contractSource.value.contractaddress,
       contractSource.value.abi,
-      provider
+      readProvider
     );
 
     const promises = viewFunctions.value.map(async (item, index) => {
       try {
-        if (item.inputs && item.inputs.length === 0) {
-          item.detail = await contract[item.name]();
+        if (item.inputs.length == 0) {
+
+          console.log(item.name)
+          item.detail = await contract[item.name.toString()]();
           viewDetails.value[index] = item.detail;
         } else {
           item.detail = '';
         }
       } catch (error) {
-        console.error(`An error occurred while calling ${item.name}:`, error);
         item.detail = '';
+        console.error(`An error occurred while calling ${item.name}:`, error);
       }
     });
     await Promise.all(promises);
@@ -1272,16 +1290,6 @@ const getItemName = async () => {
     }
   } catch (error) {
     console.error("An error occurred:", error);
-  }
-};
-const getIndividualQuery = async () => {
-  try {
-    if (address !== null) {
-      const response = await getTokenInquire(address);
-      individualQueryDetails = response.data;
-    }
-  } catch (error) {
-    console.error("Error fetching block details:", error);
   }
 };
 // const getContactDetail = async () => {
@@ -1329,6 +1337,7 @@ const getContactDetail = async () => {
         viewFunctions.value = abi.filter(
           (item) => item.type === "function" && item.stateMutability === "view" || item.stateMutability == 'prue'
         );
+        console.log('read',viewFunctions)
         viewFunctions.value.forEach((item) => {
           queryResult.value[item.name] = ''
           readShow[item.name] = ''
@@ -1392,7 +1401,35 @@ const connectWallet = async () => {
   if (typeof window.ethereum !== "undefined") {
     try {
       dialogFormVisible.value = false;
-      const accounts = await ethereum.request({
+      const providers = ethereum;
+      let chainName = location.hostname == config.domainUser_url ? 'MNT Mainnet' : 'MNT Testnet';
+      const chainId = location.hostname == config.domainUser_url ? '0x2277' : '0x66';
+      const blockExplorerUrls = location.hostname == config.domainUser_url ? 'https://main.metabasenet.site/' : 'https://test.metabasenet.site/'
+      const rpcUrl = location.hostname == config.domainUser_url ? config.rpc_testAdress : config.rpc_TestAddress;
+      try {
+        await providers.request({ method: 'wallet_switchEthereumChain', params: [{ chainId }] });
+      } catch (error) {
+        if (error.code == 4902) {
+          await providers.request({
+            method: 'wallet_addEthereumChain',
+            params: [
+              {
+                rpcUrls: [rpcUrl],
+                chainId,
+                chainName,
+                nativeCurrency: {
+                  name: 'MNT',
+                  symbol: 'MNT',
+                  decimals: 18,
+                },
+                blockExplorerUrls: [blockExplorerUrls],
+              }
+            ]
+          });
+          await providers.request({ method: 'wallet_switchEthereumChain', params: [{ chainId }] });
+        }
+      }
+      const accounts = await providers.request({
         method: "eth_requestAccounts",
       });
       const account = accounts[0];
@@ -1506,7 +1543,6 @@ const openDialog = (functionIndex, inputIndex) => {
 }
 const addSelect = (value) => {
   dialogFormVisibles.value = false;
-  console.log(writeContract.value[FunctionIndex.value].inputs[InputIndex.value]);
   // let itemInput = writeContract.value[FunctionIndex.value].inputs[InputIndex.value];
   // itemInput.value ||= 1;
   // itemInput.value *= value;
@@ -1587,17 +1623,6 @@ const handleQuery = async (functionItem) => {
     queryError.value = error.message;
   }
 }
-// const getIndividualQuery = async () => {
-//   try {
-//     if (address !== null) {
-//       const response = await getTokenInquire(address);
-//       individualQueryDetails.value = response.data;
-//       
-//     }
-//   } catch (error) {
-//     console.error('Error fetching details:', error);
-//   }
-// }
 const timestamps = () => {
   const currentTime = Math.floor(Date.now() / 1000);
   tableData.forEach((item) => {
@@ -1708,7 +1733,6 @@ const getBalanceList = async () => {
   try {
     if (address !== null) {
       const response = await getBalanceAddress(address);
-      console.log('1111111111111',response);
       getByBalance.value = response.data[0] || {};
     }
   } catch (error) {
@@ -1739,7 +1763,12 @@ const getContractOrAddress = () => {
         contract.value = "Contract"
         ifContract.value = true
         let {data} = await getTokenInquire(address)
-        contractMessage.value = data
+        contractMessage.value = data || {
+          creator: 'nothing',
+          transactionHash: 'nothing',
+          ercName: 'nothing',
+          ercSymbol: 'nothing'
+        } 
       } else {
         contract.value = "Address"
         ifContract.value =false
@@ -1754,9 +1783,6 @@ const handleSizeChange1 = (val) => {
 };
 const handleSizeChange = (val) => {
   getContractList();
-};
-const handleCurrentChange = (val) => {
-  console.log(`current page: ${val}`);
 };
 function copyFormClipboard(text, row) {
   row.isCopied = true;

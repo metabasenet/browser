@@ -750,7 +750,12 @@
                                   <el-form-item v-for="(
                                       input, inputIndex
                                     ) in functionItem.inputs" :key="inputIndex" :prop="input.name" :label="input.name">
-                                    <el-input size="large" v-model="input.value" :placeholder="input.type"></el-input>
+                                    <el-form :rules="rulesRead" style="width: 100%;">
+                                      <el-form-item prop="address">
+                                        <el-input v-model="input.value"
+                                          :placeholder="input.type"></el-input>
+                                      </el-form-item>
+                                    </el-form>
                                   </el-form-item>
                                   <el-form-item>
                                     <el-button type="info" plain @click="handleQuery(functionItem)">Query</el-button>
@@ -867,7 +872,12 @@
                                           <Plus />
                                         </el-icon></el-button>
                                     </template>
-                                    <el-input size="large" v-model="input.value" :placeholder="`${input.name} (${input.type})`"></el-input>
+                                    <el-form :rules="rules" style="width: 100%;">
+                                      <el-form-item :prop="input.type == 'address' ? 'address' : 'uint256'">
+                                        <el-input v-model="input.value"
+                                          :placeholder="`${input.name} (${input.type})`"></el-input>
+                                      </el-form-item>
+                                    </el-form>
                                   </el-form-item>
                                   <el-form-item>
                                     <el-button type="primary" @click="submitWrite(item)">Write</el-button>
@@ -1015,6 +1025,13 @@ const viewFunctions = ref([]);
 const writeContract = ref([]);
 let loading = ref(false)
 let loading1 = ref(false)
+let rules = reactive({
+  address: [{ required: true, message: 'Please input address', trigger: 'blur' }],
+  uint256: [{ required: true, message: 'Please input value', trigger: 'blur' }],
+})
+let rulesRead = reactive({
+  address: [{ required: true, message: 'Please input address', trigger: 'blur' }],
+})
 const { address } = defineProps({
   address: {
     type: [String],
@@ -1389,14 +1406,15 @@ const handleQuery = async (functionItem) => {
 }
 const getItemName = async () => {
   try {
-    const provider = new ethers.BrowserProvider(window.ethereum);
+    // const provider = new ethers.BrowserProvider(window.ethereum);
+    const readProvider = new ethers.JsonRpcProvider(config.testRpc_adress)
     if (!contractSource.value || !contractSource.value.contractaddress) {
       throw new Error('Contract address is not initialized or invalid.');
     }
     const contract = new ethers.Contract(
       contractSource.value.contractaddress,
       contractSource.value.abi,
-      provider
+      readProvider
     );
 
     const promises = viewFunctions.value.map(async (item, index) => {
