@@ -800,7 +800,7 @@
                                 </div>
                               </div>
                               <div class="grid-content_h2">
-                                <el-input v-model="byteCode" :rows="10"
+                                <el-input v-model="contractSource.bytecode" :rows="10"
                                   type="textarea" disabled />
                               </div>
                             </el-col>
