@@ -1042,11 +1042,11 @@ const viewFunctions = ref([]);
 const writeContract = ref([]);
 let loading = ref(false)
 let loading1 = ref(false)
-let rules = reactive({
+const rules = reactive({
   value: [{ required: true, message: 'Please input address', trigger: 'blur' }],
   count: [{required: true, message: 'Please input value', trigger: 'blur'}],
 })
-let rulesRead = reactive({
+const rulesRead = reactive({
   count: [{required: true, message: 'Please input value', trigger: 'blur'}],
   value: [{ required: true, message: 'Please input address', trigger: 'blur' }],
 })

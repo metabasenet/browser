@@ -1128,7 +1128,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, defineProps, reactive, computed } from "vue";
+import { ref, onMounted, reactive, computed } from "vue";
 import { useRoute } from "vue-router";
 import { ElMessage } from "element-plus";
 import { ethers, formatUnits } from "ethers";
