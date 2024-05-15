@@ -320,7 +320,8 @@
                 </el-tab-pane>
                 <el-tab-pane label="Internal Txns" name="internalTxns">
                   <el-row class="box-table">
-                    <el-table v-loading="loading" :data="tableData" style="width: 100%" size="default" :row-style="{ height: '70px' }">
+                    <el-table v-loading="loading" :data="tableData" style="width: 100%" size="default"
+                      :row-style="{ height: '70px' }">
                       <el-table-column prop="transactionhash" label="TrsHash" width="110">
                         <template v-slot="scope">
                           <el-tooltip :content="scope.row.transactionhash">
@@ -388,7 +389,8 @@
                       <el-table-column prop="value" label="Value" align="center">
                         <template v-slot="scope">
                           <el-tooltip :content="`${scope.row.value}`" placement="top">
-                            <span style="font-size: 14.4992px; color: #212529;">{{ scope.row.value }}</span>
+                            <span style="font-size: 14.4992px; color: #212529;">{{ scope.row.value }}<span
+                                style="font-size: 12px;">(MNT)</span></span>
                           </el-tooltip>
                         </template>
                       </el-table-column>
@@ -445,15 +447,15 @@
                                 label-class-name="my-label" class-name="my-content" label-width="30%">
                                 <div class="block_height" style="margin-bottom: 6px;">
                                   <div style="display:flex; align-items: center" v-if="item.methodHash">
-                                    <el-tag type="succes">0:</el-tag><span
-                                      class="skyblue-text ellipsis-text">{{ item.methodHash }}
+                                    <el-tag type="succes">0:</el-tag><span class="skyblue-text ellipsis-text">{{
+                                      item.methodHash }}
                                     </span>
                                   </div>
                                 </div>
                                 <div class="block_height" style="margin-left: 196px;">
                                   <div style="display:flex; align-items: center" v-if="item.from">
-                                    <el-tag type="warning">1:</el-tag><router-link
-                                      class="skyblue-text ellipsis-text" :to="{
+                                    <el-tag type="warning">1:</el-tag><router-link class="skyblue-text ellipsis-text"
+                                      :to="{
                                           name: 'address',
                                           params: { address: item.from },
                                         }">{{ item.from }}
@@ -462,8 +464,7 @@
                                 </div>
                                 <div class="block_heights" style="margin-left: 196px;">
                                   <div style="display:flex; align-items: center" v-if="item.to">
-                                    <el-tag type="info">2:</el-tag><router-link class="skyblue-text ellipsis-text"
-                                      :to="{
+                                    <el-tag type="info">2:</el-tag><router-link class="skyblue-text ellipsis-text" :to="{
                                         name: 'address',
                                         params: { address: item.to },
                                       }">{{ item.to }}
@@ -713,6 +714,7 @@ const getInterTransactions = async () => {
     }
 
     tableData.value.forEach(item => {
+      item.value = ethers.formatUnits(parseInt(item.value, 16).toString(), 18);
       const currentTime = Math.floor(Date.now() / 1000);
       const timestamp = item.utc;
       const timeDifferenceInSeconds = currentTime - timestamp;
