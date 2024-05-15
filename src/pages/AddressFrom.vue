@@ -618,140 +618,113 @@
                       Contract
                     </el-badge>
                   </template>
-                  <el-tabs type="card" v-model="activeNames" class="demo-tabs" @tab-click="handleClicks">
-                    <el-tab-pane label="Code" name="first">
-                      <el-row :gutter="10">
-                        <el-col :span="24">
-                          <el-descriptions :column="2" class="grid-content_h3">
-                            <template #title>
+                  <div style="display: flex; justify-content: flex-start; margin-bottom: 16px;">
+                    <div :class="button_titleOne" @click="switchPage(0)">Code</div>
+                    <div :class="button_titleTwo" @click="switchPage(1)">Read Contract</div>
+                    <div :class="button_titleThree" @click="switchPage(2)">Write Contract</div>
+                  </div>
+                  <el-card style="border-radius: 12px" v-show="button_titleOne == 'button_title_selected'">
+                    <el-row :gutter="10">
+                      <el-col :span="24">
+                        <el-descriptions :column="2" class="grid-content_h3">
+                          <template #title>
+                            <div>
+                              <svg-icon name="true" width="1rem" height="1rem"
+                                style="margin-right: 5px"></svg-icon><span>Contract Source Code Verified </span><span
+                                style="color: #6c757d">(Exact Match)</span>
+                            </div>
+
+                          </template>
+                          <el-descriptions-item label="Contract Name:" label-class-name="my-label">
+                            <div class="block_height">
+                              <span>{{ contractSource.contractname }}</span>
+                            </div>
+                          </el-descriptions-item>
+                          <el-descriptions-item label="Optimization Enabled:" label-class-name="my-label">
+                            <div class="block_height">
+                              <span v-if="contractSource.optimization === 1">YES</span>
+                              <span v-else>NO</span>
+                            </div>
+                          </el-descriptions-item>
+                          <el-descriptions-item label="Compiler Version:" label-class-name="my-label">
+                            <div class="block_height">
+                              <span>{{ contractSource.compilerversion }}</span>
+                            </div>
+                          </el-descriptions-item>
+                          <el-descriptions-item label="Other Settings:" label-class-name="my-label">
+                            <div class="block_height">
+                              <span>{{ contractSource.other }}</span>
+                            </div>
+                          </el-descriptions-item>
+                        </el-descriptions>
+                        <el-row :gutter="10">
+                          <el-col :span="24">
+                            <div class="grid-content_h2 darkb_button">
+                              <h4>
+                                <el-icon style="margin-right: 5px">
+                                  <Tickets />
+                                </el-icon>Contract Source Code<span style="color: #6c757d">(Exact Match)</span>
+                              </h4>
+
                               <div>
-                                <svg-icon name="true" width="1rem" height="1rem"
-                                  style="margin-right: 5px"></svg-icon><span>Contract Source Code Verified
-                                </span><span style="color: #6c757d">(Exact Match)</span>
+                                <el-dropdown trigger="click">
+                                  <el-button type="info" plain><span class="el-dropdown-link">
+                                      Open In<el-icon class="el-icon--right"><arrow-down /></el-icon>
+                                    </span></el-button>
+                                  <!-- <template #dropdown>
+                                    <el-dropdown-menu>
+                                      <el-dropdown-item icon="Plus">Action 1</el-dropdown-item>
+                                      <el-dropdown-item icon="CirclePlusFilled">
+                                        Action 2
+                                      </el-dropdown-item>
+                                      <el-dropdown-item icon="CirclePlus">Action 3</el-dropdown-item>
+                                      <el-dropdown-item icon="Check">Action 4</el-dropdown-item>
+                                      <el-dropdown-item icon="CircleCheck">Action 5</el-dropdown-item>
+                                    </el-dropdown-menu>
+                                  </template> -->
+                                </el-dropdown>
+                                <el-dropdown trigger="click" style="margin-left: 5px">
+                                  <el-button type="info" plain><span class="el-dropdown-link">
+                                      Outline<el-icon class="el-icon--right"><arrow-down /></el-icon>
+                                    </span></el-button>
+                                  <!-- <template #dropdown>
+                                    <el-dropdown-menu>
+                                      <el-dropdown-item icon="Plus">Action 1</el-dropdown-item>
+                                      <el-dropdown-item icon="CirclePlusFilled">
+                                        Action 2
+                                      </el-dropdown-item>
+                                      <el-dropdown-item icon="CirclePlus">Action 3</el-dropdown-item>
+                                      <el-dropdown-item icon="Check">Action 4</el-dropdown-item>
+                                      <el-dropdown-item icon="CircleCheck">Action 5</el-dropdown-item>
+                                    </el-dropdown-menu>
+                                  </template> -->
+                                </el-dropdown>
+                                <el-dropdown trigger="click" style="margin-left: 5px">
+                                  <el-button type="info" plain><span class="el-dropdown-link">
+                                      More Options<el-icon class="el-icon--right"><arrow-down /></el-icon>
+                                    </span></el-button>
+                                  <!-- <template #dropdown>
+                                    <el-dropdown-menu>
+                                      <el-dropdown-item icon="Plus">Action 1</el-dropdown-item>
+                                      <el-dropdown-item icon="CirclePlusFilled">
+                                        Action 2
+                                      </el-dropdown-item>
+                                      <el-dropdown-item icon="CirclePlus">Action 3</el-dropdown-item>
+                                      <el-dropdown-item icon="Check">Action 4</el-dropdown-item>
+                                      <el-dropdown-item icon="CircleCheck">Action 5</el-dropdown-item>
+                                    </el-dropdown-menu>
+                                  </template> -->
+                                </el-dropdown>
                               </div>
-
-                            </template>
-                            <el-descriptions-item label="Contract Name:" label-class-name="my-label">
-                              <div class="block_height">
-                                <span>{{ contractSource.contractname }}</span>
-                              </div>
-                            </el-descriptions-item>
-                            <el-descriptions-item label="Optimization Enabled:" label-class-name="my-label">
-                              <div class="block_height">
-                                <span v-if="contractSource.optimization === 1">YES</span>
-                                <span v-else>NO</span>
-                              </div>
-                            </el-descriptions-item>
-                            <el-descriptions-item label="Compiler Version:" label-class-name="my-label">
-                              <div class="block_height">
-                                <span>{{ contractSource.compilerversion }}</span>
-                              </div>
-                            </el-descriptions-item>
-                            <el-descriptions-item label="Other Settings:" label-class-name="my-label">
-                              <div class="block_height">
-                                <span>{{ contractSource.other }}</span>
-                              </div>
-                            </el-descriptions-item>
-                          </el-descriptions>
-                          <el-row :gutter="10">
-                            <el-col :span="24">
-                              <div class="grid-content_h2 darkb_button">
-                                <h4>
-                                  <el-icon style="margin-right: 5px">
-                                    <Tickets />
-                                  </el-icon>Contract Source Code<span style="color: #6c757d">(Exact Match)</span>
-                                </h4>
-
-                                <div>
-                                  <el-dropdown trigger="click">
-                                    <el-button type="info" plain><span class="el-dropdown-link">
-                                        Open In<el-icon class="el-icon--right"><arrow-down /></el-icon>
-                                      </span></el-button>
-                                    <template #dropdown>
-                                      <el-dropdown-menu>
-                                        <el-dropdown-item icon="Plus">Action 1</el-dropdown-item>
-                                        <el-dropdown-item icon="CirclePlusFilled">
-                                          Action 2
-                                        </el-dropdown-item>
-                                        <el-dropdown-item icon="CirclePlus">Action 3</el-dropdown-item>
-                                        <el-dropdown-item icon="Check">Action 4</el-dropdown-item>
-                                        <el-dropdown-item icon="CircleCheck">Action 5</el-dropdown-item>
-                                      </el-dropdown-menu>
-                                    </template>
-                                  </el-dropdown>
-                                  <el-dropdown trigger="click" style="margin-left: 5px">
-                                    <el-button type="info" plain><span class="el-dropdown-link">
-                                        Outline<el-icon class="el-icon--right"><arrow-down /></el-icon>
-                                      </span></el-button>
-                                    <template #dropdown>
-                                      <el-dropdown-menu>
-                                        <el-dropdown-item icon="Plus">Action 1</el-dropdown-item>
-                                        <el-dropdown-item icon="CirclePlusFilled">
-                                          Action 2
-                                        </el-dropdown-item>
-                                        <el-dropdown-item icon="CirclePlus">Action 3</el-dropdown-item>
-                                        <el-dropdown-item icon="Check">Action 4</el-dropdown-item>
-                                        <el-dropdown-item icon="CircleCheck">Action 5</el-dropdown-item>
-                                      </el-dropdown-menu>
-                                    </template>
-                                  </el-dropdown>
-                                  <el-dropdown trigger="click" style="margin-left: 5px">
-                                    <el-button type="info" plain><span class="el-dropdown-link">
-                                        More Options<el-icon class="el-icon--right"><arrow-down /></el-icon>
-                                      </span></el-button>
-                                    <template #dropdown>
-                                      <el-dropdown-menu>
-                                        <el-dropdown-item icon="Plus">Action 1</el-dropdown-item>
-                                        <el-dropdown-item icon="CirclePlusFilled">
-                                          Action 2
-                                        </el-dropdown-item>
-                                        <el-dropdown-item icon="CirclePlus">Action 3</el-dropdown-item>
-                                        <el-dropdown-item icon="Check">Action 4</el-dropdown-item>
-                                        <el-dropdown-item icon="CircleCheck">Action 5</el-dropdown-item>
-                                      </el-dropdown-menu>
-                                    </template>
-                                  </el-dropdown>
-                                </div>
-                              </div>
-                            </el-col>
-                            <el-col :span="24">
-                              <div v-for="(item, index) in contractSource.sourceCode" :key="index">
-                                <div class="grid-content_h2 grid-contents">
-                                  <div>
-                                    <span>File {{ index + 1 }} of {{
-                                      contractSource.sourceCode.length }}:</span> <span>{{ item.fileName }}</span>
-                                  </div>
-                                  <div>
-                                    <el-button type="info" icon="Edit" />
-                                    <el-button type="info" icon="Share" />
-                                    <el-button type="info" icon="Delete" />
-                                  </div>
-                                </div>
-                                <div class="grid-content_h2">
-                                  <el-input v-model="item.sourceCode" disabled style="height: 300px" :rows="16"
-                                    type="textarea" />
-                                </div>
-                              </div>
-                            </el-col>
-                            <el-col :span="24">
-                              <div class="grid-content_h2">
-                                <h4 style="margin-bottom: 10px">
-                                  <el-icon style="margin-right: 5px">
-                                    <Tickets />
-                                  </el-icon>Contract Security Audit<span style="color: #6c757d">(Exact Match)</span>
-                                </h4>
-                                <span style="margin-left: 5px; font-size: 10px">
-                                  <el-icon>
-                                    <Close />
-                                  </el-icon>No Contract Security Audit Submitted</span>-<el-link>Submit Audit
-                                  Here</el-link>
-                              </div>
+                            </div>
+                          </el-col>
+                          <el-col :span="24">
+                            <div v-for="(item, index) in contractSource.sourceCode ? contractSource.sourceCode : []"
+                              :key="index">
                               <div class="grid-content_h2 grid-contents">
                                 <div>
-                                  <span><el-icon>
-                                      <Operation />
-                                    </el-icon>
-                                    Contract ABI</span>
+                                  <span>File {{ index + 1 }} of {{
+            contractSource.sourceCode.length }}:</span> <span>{{ item.fileName }}</span>
                                 </div>
                                 <div>
                                   <el-button type="info" icon="Edit" />
@@ -760,362 +733,382 @@
                                 </div>
                               </div>
                               <div class="grid-content_h2">
-                                <el-input v-model="contractSource.abi" disabled style="height: 200px" :rows="10"
+                                <el-input v-model="item.sourceCode" disabled style="height: 300px" :rows="16"
                                   type="textarea" />
                               </div>
-                            </el-col>
-                            <el-col :span="24">
-                              <div class="grid-content_h2 grid-contents">
-                                <div>
-                                  <span><el-icon>
-                                      <Switch />
-                                    </el-icon>
-                                    Contract Creation Code</span>
-                                </div>
-                                <div>
-                                  <el-button class="decompile" type="info">Decompile Bytecode
-                                    <el-icon>
-                                      <Share />
-                                    </el-icon></el-button>
-                                  <el-button type="info">Switch To Opcodes View</el-button>
-                                </div>
-                              </div>
-                              <div class="grid-content_h2">
-                                <el-input v-model="textarea2" style="height: 200px" :rows="10" type="textarea" />
-                              </div>
-                            </el-col>
-                            <el-col :span="24">
-                              <div class="grid-content_h2 grid-contents">
-                                <div>
-                                  <span><el-icon>
-                                      <Switch />
-                                    </el-icon>
-                                    Deployed Bytecode</span>
-                                </div>
-                              </div>
-                              <div class="grid-content_h2">
-                                <el-input v-model="contractSource.bytecode" :rows="10" type="textarea" disabled />
-                              </div>
-                            </el-col>
-                            <el-col :span="24">
-                              <div class="grid-content_h2 grid-contents">
-                                <div>
-                                  <span><el-icon>
-                                      <Switch />
-                                    </el-icon>
-                                    Deployed Bytecode Sourcemap</span>
-                                </div>
-                              </div>
-                              <div class="grid-content_h2">
-                                <el-input v-model="textarea2" style="height: 200px" :rows="10" type="textarea" />
-                              </div>
-                            </el-col>
-                          </el-row>
-                        </el-col>
-                      </el-row>
-                    </el-tab-pane>
-                    <el-tab-pane label="Read Contract">
-                      <el-row :gutter="10">
-                        <el-col v-if="!results" :xs="24" :sm="24" :md="24" :lg="24"><el-button plain @click="openWeb">
-                            <svg-icon name="reddot" width=".8rem" height=".8rem" style="margin-right: 5px"></svg-icon>
-                            Connect to Web3
-                          </el-button></el-col>
-                        <el-col v-else :xs="24" :sm="24" :md="24" :lg="24"><el-button plain @click="openWeb">
-                            <svg-icon name="greendot" width=".8rem" height=".8rem" style="margin-right: 5px"></svg-icon>
-                            Connect to Web3 [{{ results }}]
-                          </el-button></el-col>
-                        <el-col :xs="24" :sm="24" :md="24" :lg="24">
-                          <div class="contracts_info">
-                            <div>
-                              <el-icon>
-                                <Document />
-                              </el-icon>Read Contract Information
                             </div>
-                            <div>
-                              <el-button text type="" @click="toggleAll">[Expand all]</el-button>
-                              <el-button text type="" @click="resetAll">[Reset]</el-button>
+                          </el-col>
+                          <el-col :span="24">
+                            <div class="grid-content_h2">
+                              <h4 style="margin-bottom: 10px">
+                                <el-icon style="margin-right: 5px">
+                                  <Tickets />
+                                </el-icon>Contract Security Audit<span style="color: #6c757d">(Exact Match)</span>
+                              </h4>
+                              <span style="margin-left: 5px; font-size: 10px">
+                                <el-icon>
+                                  <Close />
+                                </el-icon>No Contract Security Audit Submitted</span>-<el-link>Submit Audit
+                                Here</el-link>
                             </div>
+                            <div class="grid-content_h2 grid-contents">
+                              <div>
+                                <span><el-icon>
+                                    <Operation />
+                                  </el-icon>
+                                  Contract ABI</span>
+                              </div>
+                              <div>
+                                <el-button type="info" icon="Edit" />
+                                <el-button type="info" icon="Share" />
+                                <el-button type="info" icon="Delete" />
+                              </div>
+                            </div>
+                            <div class="grid-content_h2">
+                              <el-input v-model="contractSource.abi" disabled style="height: 200px" :rows="10"
+                                type="textarea" />
+                            </div>
+                          </el-col>
+                          <el-col :span="24">
+                            <div class="grid-content_h2 grid-contents">
+                              <div>
+                                <span><el-icon>
+                                    <Switch />
+                                  </el-icon>
+                                  Contract Creation Code</span>
+                              </div>
+                              <div>
+                                <el-button class="decompile" type="info">Decompile Bytecode
+                                  <el-icon>
+                                    <Share />
+                                  </el-icon></el-button>
+                                <el-button type="info">Switch To Opcodes View</el-button>
+                              </div>
+                            </div>
+                            <div class="grid-content_h2">
+                              <el-input v-model="textarea2" style="height: 200px" :rows="10" type="textarea" />
+                            </div>
+                          </el-col>
+                          <el-col :span="24">
+                            <div class="grid-content_h2 grid-contents">
+                              <div>
+                                <span><el-icon>
+                                    <Switch />
+                                  </el-icon>
+                                  Deployed Bytecode</span>
+                              </div>
+                            </div>
+                            <div class="grid-content_h2">
+                              <el-input v-model="contractSource.bytecode" style="height: 200px" :rows="10"
+                                type="textarea" disabled />
+                            </div>
+                          </el-col>
+                          <el-col :span="24">
+                            <div class="grid-content_h2 grid-contents">
+                              <div>
+                                <span><el-icon>
+                                    <Switch />
+                                  </el-icon>
+                                  Deployed Bytecode Sourcemap</span>
+                              </div>
+                            </div>
+                            <div class="grid-content_h2">
+                              <el-input v-model="textarea2" style="height: 200px" :rows="10" type="textarea" />
+                            </div>
+                          </el-col>
+                        </el-row>
+                      </el-col>
+                    </el-row>
+                  </el-card>
+                  <el-card style="border-radius: 12px" v-show="button_titleTwo == 'button_title_selected'">
+                    <el-row :gutter="10">
+                      <el-col v-if="!results" :xs="24" :sm="24" :md="24" :lg="24"><el-button plain @click="openWeb">
+                          <svg-icon name="reddot" width=".8rem" height=".8rem" style="margin-right: 5px"></svg-icon>
+                          Connect to Web3
+                        </el-button></el-col>
+                      <el-col v-else :xs="24" :sm="24" :md="24" :lg="24"><el-button plain @click="openWeb">
+                          <svg-icon name="greendot" width=".8rem" height=".8rem" style="margin-right: 5px"></svg-icon>
+                          Connect to Web3 [{{ results }}]
+                        </el-button></el-col>
+                      <el-col :xs="24" :sm="24" :md="24" :lg="24">
+                        <div class="contracts_info">
+                          <div>
+                            <el-icon>
+                              <Document />
+                            </el-icon>Read Contract Information
                           </div>
-                        </el-col>
-
-                        <el-col :xs="24" :sm="24" :md="24" :lg="24">
-                          <div class="demo-collapse">
-                            <el-collapse v-model="actives">
-                              <el-collapse-item v-for="(functionItem, index) in viewFunctions"
-                                :key="functionItem.contractname" :name="functionItem.name">
-                                <template #title>
-                                  <div class="collapsed">
-                                    <div>{{ index + 1 }}_{{ functionItem.name }}</div>
-                                    <div>
-                                      <el-tooltip effect="dark" content="Copy Method Name" placement="top">
-                                        <el-button text icon="CopyDocument"></el-button>
-                                      </el-tooltip>
-                                      <el-tooltip effect="dark" content="Copy Permalink" placement="top">
-                                        <el-button icon="Link"></el-button>
-                                      </el-tooltip>
-                                    </div>
+                          <div>
+                            <el-button text type="" @click="toggleAll">[Expand all]</el-button>
+                            <el-button text type="" @click="resetAll">[Reset]</el-button>
+                          </div>
+                        </div>
+                      </el-col>
+                      <el-col :xs="24" :sm="24" :md="24" :lg="24">
+                        <div class="demo-collapse">
+                          <el-collapse v-model="actives">
+                            <el-collapse-item v-for="(functionItem, index) in viewFunctions" :key="functionItem.name"
+                              :name="functionItem.name">
+                              <template #title>
+                                <div class="collapsed">
+                                  <div>{{ index + 1 }}_{{ functionItem.name }}</div>
+                                  <div>
+                                    <el-tooltip effect="dark" content="Copy Method Name" placement="top">
+                                      <el-button text icon="CopyDocument"></el-button>
+                                    </el-tooltip>
+                                    <el-tooltip effect="dark" content="Copy Permalink" placement="top">
+                                      <el-button icon="Link"></el-button>
+                                    </el-tooltip>
                                   </div>
-                                </template>
-                                <div v-if="functionItem.inputs.length != 0">
-                                  <el-form :model="formModel" label-position="top">
-                                    <el-form v-for="(
+                                </div>
+                              </template>
+                              <div v-if="functionItem.inputs.length !== 0">
+                                <el-form :model="formModel" label-position="top">
+                                  <el-form v-for="(
                                       input, inputIndex
                                     ) in functionItem.inputs" :key="inputIndex" :model="input" :rules="rulesRead">
-                                      <el-form-item prop="count" :label="input.name" v-if="input.type == 'uint256'">
-                                        <el-input v-model="input.count" :placeholder="input.type"></el-input>
-                                      </el-form-item>
-                                      <el-form-item prop="value" :label="input.name" v-else>
-                                        <el-input v-model="input.value" :placeholder="input.type"></el-input>
-                                      </el-form-item>
-                                    </el-form>
-                                    <el-form-item>
-                                      <el-button type="info" plain @click="handleQuery(functionItem)">Query</el-button>
+                                    <el-form-item prop="count" :label="input.name" v-if="input.type == 'uint256'">
+                                      <el-input v-model="input.count" :placeholder="input.type"></el-input>
                                     </el-form-item>
-                                    <el-form-item>
-                                      <span class="uints">{{ functionItem.outputs[0].internalType }}</span>
-                                    </el-form-item>
-                                    <el-form-item v-if="readShow[functionItem.name] == functionItem.name">
-                                      <div style="
-                                        display: flex;
-                                        flex-direction: column;
-                                        flex-wrap: wrap;
-                                      ">
-                                        <!-- <p>
-                                          [ allowance(address,address) method
-                                          Response ]
-                                        </p> -->
-                                        <p class="uints" style="
-                                          display: flex;
-                                          align-items: center;
-                                          margin: 10px;
-                                        ">
-                                          <svg-icon name="right"></svg-icon>uint256:
-                                          {{ queryResult[functionItem.name] }}
-                                        </p>
-                                        <!-- <p>{{
-                                            queryError }}</p> -->
-                                      </div>
+                                    <el-form-item prop="value" :label="input.name" v-else>
+                                      <el-input v-model="input.value" :placeholder="input.type"></el-input>
                                     </el-form-item>
                                   </el-form>
-                                </div>
-                                <div v-else>
-                                  <span class="uints">{{ functionItem.detail }}</span>
-                                </div>
-                              </el-collapse-item>
-                            </el-collapse>
-                          </div>
-                        </el-col>
-                      </el-row>
-                      <el-dialog v-model="dialogFormVisible" title="Connect a Wallet" width="500">
-                        <el-form :model="form">
-                          <el-form-item>
-                            <p class="wrap-text">
-                              <el-icon style="margin-right: 5px">
-                                <Warning />
-                              </el-icon>Connecting wallet for read function is optional,
-                              useful if you want to call certain functions or
-                              simply use your wallet's node.
-                            </p>
-                          </el-form-item>
-                          <el-form-item style="display: flex">
-                            <el-button @click="connectWallet" size="large" plain class="fox_box" style="flex-grow: 1">
-                              <p>MetaMask</p>
-                              <svg-icon name="fox" width="1rem" height="1rem" style="margin-left: 10px">
-                              </svg-icon>
-                            </el-button>
-                          </el-form-item>
-                        </el-form>
-                        <template #footer>
-                          <div class="dialog-footer">
-                            <el-button @click="dialogFormVisible = false">Cancel</el-button>
-                            <el-button type="primary" @click="dialogFormVisible = false">
-                              Confirm
-                            </el-button>
-                          </div>
-                        </template>
-                      </el-dialog>
-                    </el-tab-pane>
-                    <el-tab-pane label="Write Contract" name="third">
-                      <el-row :gutter="10">
-                        <el-col v-if="!results" :xs="24" :sm="24" :md="24" :lg="24"><el-button plain @click="openWeb">
-                            <svg-icon name="reddot" width=".8rem" height=".8rem" style="margin-right: 5px"></svg-icon>
-                            Connect to Web3
-                          </el-button></el-col>
-                        <el-col v-else :xs="24" :sm="24" :md="24" :lg="24"><el-button @click="openWeb">
-                            <svg-icon name="greendot" width=".8rem" height=".8rem" style="margin-right: 5px"></svg-icon>
-                            Connect to Web3 [{{ results }}]
-                          </el-button></el-col>
-                        <el-col :xs="24" :sm="24" :md="24" :lg="24">
-                          <div class="contracts_info">
-                            <div>
-                              <el-icon>
-                                <Document />
-                              </el-icon>Read Contract Information
-                            </div>
-                            <div>
-                              <el-button text type="" @click="toggleAll2">[Expand all]</el-button>
-                              <el-button text type="" @click="resetAll2">[Reset]</el-button>
-                            </div>
-                          </div>
-                        </el-col>
-                        <el-col :xs="24" :sm="24" :md="24" :lg="24">
-                          <div class="demo-collapse">
-                            <el-collapse v-model="actives">
-                              <el-collapse-item v-for="(item, index) in writeContract" :key="item.name"
-                                :name="item.name">
-                                <template #title>
-                                  <div class="collapsed">
-                                    <div>{{ index + 1 }}_{{ item.name }}</div>
-                                    <div>
-                                      <el-tooltip effect="dark" content="Copy Method Name" placement="top">
-                                        <el-button text icon="CopyDocument"></el-button>
-                                      </el-tooltip>
-                                      <el-tooltip effect="dark" content="Copy Permalink" placement="top">
-                                        <el-button icon="Link"></el-button>
-                                      </el-tooltip>
-                                    </div>
-                                  </div>
-                                </template>
-                                <div v-if="item.inputs.length != 0">
-                                  <el-form :model="writePayable" :rules="formModels" label-position="top">
-                                    <el-form-item v-if="item.stateMutability == 'payable'" :prop="item.name">
-                                      <template #label>
-                                        <span>{{ item.name }}</span>
-                                        <el-button style="margin-left: 5px;" type="info"
-                                          plain @click="payableDialog(index)"><el-icon>
-                                            <Plus />
-                                          </el-icon></el-button>
-                                      </template>
-                                      <el-input v-model="writePayable[item.name]"
-                                        placeholder="payableAmount"></el-input>
-                                    </el-form-item>
-                                    <el-form v-for="(
-                                      input, inputIndex
-                                    ) in item.inputs" :key="inputIndex" :model="input" :rules="rules">
-                                      <el-form-item v-if="input.type=='uint256'" prop="count">
-                                        <template #label>
-                                          <span>{{ input.name }}</span>
-                                          <el-button style="margin-left: 5px;" v-if="input.type === 'uint256'"
-                                            type="info" plain @click="openDialog(index, inputIndex)"><el-icon>
-                                              <Plus />
-                                            </el-icon></el-button>
-                                        </template>
-                                        <el-input v-model="input.count"
-                                          :placeholder="`${input.name} (${input.type})`"></el-input>
-                                      </el-form-item>
-                                      <el-form-item v-else prop="value">
-                                        <template #label>
-                                          <span>{{ input.name }}</span>
-                                          <el-button style="margin-left: 5px;" v-if="input.type === 'uint256'"
-                                            type="info" plain @click="openDialog(index, inputIndex)"><el-icon>
-                                              <Plus />
-                                            </el-icon></el-button>
-                                        </template>
-                                        <el-input v-model="input.value"
-                                          :placeholder="`${input.name} (${input.type})`"></el-input>
-                                      </el-form-item>
-                                    </el-form>
-                                    <el-form-item>
-                                      <el-button type="primary" @click="submitWrite(item)">Write</el-button>
-                                    </el-form-item>
-                                    <el-form-item>
-                                    </el-form-item>
-                                    <el-form-item v-if="writeShow[item.name] == item.name">
-                                      <div style="
+                                  <el-form-item>
+                                    <el-button type="info" plain @click="handleQuery(functionItem)">Query</el-button>
+                                  </el-form-item>
+                                  <el-form-item>
+                                    <span class="uints">{{ functionItem.outputs[0].internalType }}</span>
+                                  </el-form-item>
+                                  <el-form-item v-if="readShow[functionItem.name] == functionItem.name">
+                                    <div style="
                                       display: flex;
                                       flex-direction: column;
                                       flex-wrap: wrap;
                                     ">
-                                        <!-- <p>
-                                        [ allowance(address,address) method
-                                        Response ]
-                                      </p> -->
-                                        <p class="uints" style="
+                                      <p class="uints" style="
                                         display: flex;
                                         align-items: center;
                                         margin: 10px;
                                       ">
-                                          <svg-icon name="right"></svg-icon>
-                                          <span class="successDetail"
-                                            v-if="successDetail[item.name] == 'success'">uint256:{{
-                                            successDetail[item.name]
-                                            }}</span>
-                                          <span class="loseDetail" v-else>uint256:{{ loseDetail[item.name]
-                                            }}</span>
-                                        </p>
-                                      </div>
-                                    </el-form-item>
-                                  </el-form>
-                                </div>
-                                <div v-else>
-
-                                  <div><span>{{ item.outputs.length == 0 ? '' : item.outputs[0].name }} </span>
-                                    <!-- <span
-                                      class="uints">{{ queryError
-                                      }}</span> -->
+                                        <svg-icon name="right"></svg-icon>uint256:
+                                        {{ queryResult[functionItem.name] }}
+                                      </p>
+                                      <!-- <p>{{
+                                        queryError }}</p> -->
+                                    </div>
+                                  </el-form-item>
+                                </el-form>
+                              </div>
+                              <div v-else>
+                                <span class="uints">{{ functionItem.detail }}</span>
+                              </div>
+                            </el-collapse-item>
+                          </el-collapse>
+                        </div>
+                      </el-col>
+                    </el-row>
+                    <el-dialog v-model="dialogFormVisible" title="Connect a Wallet" width="500">
+                      <el-form :model="form">
+                        <el-form-item>
+                          <p class="wrap-text">
+                            <el-icon style="margin-right: 5px">
+                              <Warning />
+                            </el-icon>Connecting wallet for read function is optional,
+                            useful if you want to call certain functions or
+                            simply use your wallet's node.
+                          </p>
+                        </el-form-item>
+                        <el-form-item style="display: flex">
+                          <el-button @click="connectWallet" size="large" plain class="fox_box" style="flex-grow: 1">
+                            <p>MetaMask</p>
+                            <svg-icon name="fox" width="1rem" height="1rem" style="margin-left: 10px">
+                            </svg-icon>
+                          </el-button>
+                        </el-form-item>
+                      </el-form>
+                      <template #footer>
+                        <div class="dialog-footer">
+                          <el-button @click="dialogFormVisible = false">Cancel</el-button>
+                          <el-button type="primary" @click="dialogFormVisible = false">
+                            Confirm
+                          </el-button>
+                        </div>
+                      </template>
+                    </el-dialog>
+                  </el-card>
+                  <el-card style="border-radius: 12px" v-show="button_titleThree == 'button_title_selected'">
+                    <el-row :gutter="10">
+                      <el-col v-if="!results" :xs="24" :sm="24" :md="24" :lg="24"><el-button plain @click="openWeb">
+                          <svg-icon name="reddot" width=".8rem" height=".8rem" style="margin-right: 5px"></svg-icon>
+                          Connect to Web3
+                        </el-button></el-col>
+                      <el-col v-else :xs="24" :sm="24" :md="24" :lg="24"><el-button @click="openWeb">
+                          <svg-icon name="greendot" width=".8rem" height=".8rem" style="margin-right: 5px"></svg-icon>
+                          Connect to Web3 [{{ results }}]
+                        </el-button></el-col>
+                      <el-col :xs="24" :sm="24" :md="24" :lg="24">
+                        <div class="contracts_info">
+                          <div>
+                            <el-icon>
+                              <Document />
+                            </el-icon>Read Contract Information
+                          </div>
+                          <div>
+                            <el-button text type="" @click="toggleAll2">[Expand all]</el-button>
+                            <el-button text type="" @click="resetAll2">[Reset]</el-button>
+                          </div>
+                        </div>
+                      </el-col>
+                      <el-col :xs="24" :sm="24" :md="24" :lg="24">
+                        <div class="demo-collapse">
+                          <el-collapse v-model="actives">
+                            <el-collapse-item v-for="(item, index) in writeContract" :key="item.name" :name="item.name">
+                              <template #title>
+                                <div class="collapsed">
+                                  <div>{{ index + 1 }}_{{ item.name }}</div>
+                                  <div>
+                                    <el-tooltip effect="dark" content="Copy Method Name" placement="top">
+                                      <el-button text icon="CopyDocument"></el-button>
+                                    </el-tooltip>
+                                    <el-tooltip effect="dark" content="Copy Permalink" placement="top">
+                                      <el-button icon="Link"></el-button>
+                                    </el-tooltip>
                                   </div>
                                 </div>
-                              </el-collapse-item>
-                            </el-collapse>
+                              </template>
+                              <div v-if="item.inputs.length != 0">
+                                <el-form :model="writePayable" :rules="formModels" label-position="top">
+                                  <el-form-item v-if="item.stateMutability == 'payable'" :prop="item.name">
+                                    <template #label>
+                                      <span>{{ item.name }}</span>
+                                      <el-button style="margin-left: 5px;" type="info" plain
+                                        @click="payableDialog(index)"><el-icon>
+                                          <Plus />
+                                        </el-icon></el-button>
+                                    </template>
+                                    <el-input v-model="writePayable[item.name]" placeholder="payableAmount"></el-input>
+                                  </el-form-item>
+                                  <el-form v-for="(
+                                      input, inputIndex
+                                    ) in item.inputs" :key="inputIndex" :model="input" :rules="rules">
+                                    <el-form-item v-if="input.type == 'uint256'" prop="count">
+                                      <template #label>
+                                        <span>{{ input.name }}</span>
+                                        <el-button style="margin-left: 5px;" v-if="input.type === 'uint256'" type="info"
+                                          plain @click="openDialog(index, inputIndex)"><el-icon>
+                                            <Plus />
+                                          </el-icon></el-button>
+                                      </template>
+                                      <el-input v-model="input.count"
+                                        :placeholder="`${input.name} (${input.type})`"></el-input>
+                                    </el-form-item>
+                                    <el-form-item v-else prop="value">
+                                      <template #label>
+                                        <span>{{ input.name }}</span>
+                                        <el-button style="margin-left: 5px;" v-if="input.type === 'uint256'" type="info"
+                                          plain @click="openDialog(index, inputIndex)"><el-icon>
+                                            <Plus />
+                                          </el-icon></el-button>
+                                      </template>
+                                      <el-input v-model="input.value"
+                                        :placeholder="`${input.name} (${input.type})`"></el-input>
+                                    </el-form-item>
+                                  </el-form>
+                                  <el-form-item>
+                                    <el-button type="primary" @click="submitWrite(item)">Write</el-button>
+                                  </el-form-item>
+                                  <el-form-item v-if="writeShow[item.name] == item.name">
+                                    <div style="
+                                      display: flex;
+                                      flex-direction: column;
+                                      flex-wrap: wrap;
+                                    ">
+                                      <p class="uints" style="
+                                        display: flex;
+                                        align-items: center;
+                                        margin: 10px;
+                                      ">
+                                        <svg-icon name="right"></svg-icon>
+                                        <span class="successDetail"
+                                          v-if="successDetail[item.name] == 'success'">uint256:{{
+            successDetail[item.name]
+          }}</span>
+                                        <span class="loseDetail" v-else>uint256:{{
+              loseDetail[item.name] ? loseDetail[item.name] : 'fail' }}</span>
+                                      </p>
+                                    </div>
+                                  </el-form-item>
+                                </el-form>
+                              </div>
+                              <div v-else>
+                                <div>
+                                  <span>
+                                    {{ item.outputs.length == 0 ? '' : item.outputs[0].name }}
+                                  </span>
+                                  <!-- <span class="uints">{{ queryError
+                                    }}</span> -->
+                                </div>
+                              </div>
+                            </el-collapse-item>
+                          </el-collapse>
+                        </div>
+                      </el-col>
+                    </el-row>
+                    <el-dialog v-model="dialogFormVisibles" title="Add Zeroes" width="500">
+                      <el-form :model="form">
+                        <el-form-item>
+                          <el-select size="large" v-model="form.region" @change="handleSelectChange"
+                            placeholder="Select">
+                            <el-option label="10⁶" value="1000000" />
+                            <el-option label="10⁸" value="100000000" />
+                            <el-option label="10¹⁸" value="1000000000000000000" />
+                            <el-option label="Custom" value="Custom" />
+                          </el-select>
+                          <div v-if="showCustomInput" style="width:100%">
+                            <el-input style="margin-top: 10px" v-model="form.customValue" size="large" type="number"
+                              :min="1" :max="18" @blur="handleInputBlur" @input="handleInput"></el-input>
+                            <p>Enter the number of zeroes to add. Example: 3 to add three (000) zeroes.</p>
                           </div>
-                        </el-col>
-                      </el-row>
-                      <el-dialog v-model="dialogFormVisibles" title="Add Zeroes" width="500">
-                        <el-form :model="form">
-                          <el-form-item>
-                            <el-select size="large" v-model="form.region" @change="handleSelectChange"
-                              placeholder="Select">
-                              <el-option label="10⁶" value="1000000" />
-                              <el-option label="10⁸" value="100000000" />
-                              <el-option label="10¹⁸" value="1000000000000000000" />
-                              <el-option label="Custom" value="Custom" />
-                            </el-select>
-                            <div v-if="showCustomInput" style="width:100%">
-                              <el-input style="margin-top: 10px" v-model="form.customValue" size="large" type="number"
-                                :min="1" :max="18" @blur="handleInputBlur" @input="handleInput"></el-input>
-                              <p>Enter the number of zeroes to add. Example: 3 to add three (000) zeroes.</p>
-                            </div>
-                          </el-form-item>
-                        </el-form>
-                        <template #footer>
-                          <div class="dialog-footer">
-                            <el-button @click="dialogFormVisibles = false">Cancel</el-button>
-                            <el-button type="primary" @click="addSelect(form.region)">
-                              Add
-                            </el-button>
-                          </div>
-                        </template>
-                      </el-dialog>
-                      <el-dialog v-model="dialogFormVisible" title="Connect a Wallet" width="500">
-                        <el-form :model="form">
-                          <el-form-item>
-                            <p class="wrap-text">
-                              <el-icon style="margin-right: 5px">
-                                <Warning />
-                              </el-icon>Connecting wallet for read function is optional,
-                              useful if you want to call certain functions or
-                              simply use your wallet's node.
-                            </p>
-                          </el-form-item>
-                          <el-form-item style="display: flex">
-                            <el-button @click="connectWallet" size="large" plain class="fox_box" style="flex-grow: 1">
-                              <p>MetaMask</p>
-                              <svg-icon name="fox" width="1rem" height="1rem" style="margin-left: 10px">
-                              </svg-icon>
-                            </el-button>
-                          </el-form-item>
-                        </el-form>
-                        <template #footer>
-                          <div class="dialog-footer">
-                            <el-button @click="dialogFormVisible = false">Cancel</el-button>
-                            <el-button type="primary" @click="dialogFormVisible = false">
-                              Confirm
-                            </el-button>
-                          </div>
-                        </template>
-                      </el-dialog>
-                    </el-tab-pane>
-                  </el-tabs>
+                        </el-form-item>
+                      </el-form>
+                      <template #footer>
+                        <div class="dialog-footer">
+                          <el-button @click="dialogFormVisibles = false">Cancel</el-button>
+                          <el-button type="primary" @click="addSelect">
+                            Add
+                          </el-button>
+                        </div>
+                      </template>
+                    </el-dialog>
+                    <el-dialog v-model="dialogFormVisible" title="Connect a Wallet" width="500">
+                      <el-form :model="form">
+                        <el-form-item>
+                          <p class="wrap-text">
+                            <el-icon style="margin-right: 5px">
+                              <Warning />
+                            </el-icon>Connecting wallet for read function is optional,
+                            useful if you want to call certain functions or
+                            simply use your wallet's node.
+                          </p>
+                        </el-form-item>
+                        <el-form-item style="display: flex">
+                          <el-button @click="connectWallet" size="large" plain class="fox_box" style="flex-grow: 1">
+                            <p>MetaMask</p>
+                            <svg-icon name="fox" width="1rem" height="1rem" style="margin-left: 10px">
+                            </svg-icon>
+                          </el-button>
+                        </el-form-item>
+                      </el-form>
+                      <template #footer>
+                        <div class="dialog-footer">
+                          <el-button @click="dialogFormVisible = false">Cancel</el-button>
+                          <el-button type="primary" @click="dialogFormVisible = false">
+                            Confirm
+                          </el-button>
+                        </div>
+                      </template>
+                    </el-dialog>
+                  </el-card>
                 </el-tab-pane>
               </div>
             </el-tabs>
@@ -1610,7 +1603,12 @@ const handleQuery = async (functionItem) => {
       }
     }
     let res = await contract[functionItem.name](...valuesArray);
-    queryResult.value[functionItem.name] = res.toString();
+    queryResult.value[functionItem.name] = res.JSON.stringify(res, (key, value) => {
+      if (typeof value === 'bigint') {
+        return value.toString();
+      }
+      return value;
+    });
   } catch (error) {
     queryError.value = error.message;
   }
@@ -1871,6 +1869,27 @@ let handleCurrentChangeInternal = async () => {
 let mntValue = computed(() => {
   return Number(getByBalance.value.balance || 0) * Number(user.mntPrice)
 })
+let button_titleOne = ref('button_title_selected')
+let button_titleTwo = ref('button_title')
+let button_titleThree = ref('button_title')
+function switchPage(v) {
+  if (v == 0) {
+    button_titleOne.value = 'button_title';
+    button_titleTwo.value = 'button_title';
+    button_titleThree.value = 'button_title';
+    button_titleOne.value = 'button_title_selected';
+  } else if (v == 1) {
+    button_titleOne.value = 'button_title';
+    button_titleTwo.value = 'button_title';
+    button_titleThree.value = 'button_title';
+    button_titleTwo.value = 'button_title_selected';
+  } else if (v == 2) {
+    button_titleOne.value = 'button_title';
+    button_titleTwo.value = 'button_title';
+    button_titleThree.value = 'button_title';
+    button_titleThree.value = 'button_title_selected';
+  }
+}
 onMounted(() => {
   getAddressList();
   getBalanceList();
@@ -2166,5 +2185,23 @@ onMounted(() => {
 .uints {
   font-size: 13px;
   font-style: italic;
+}
+.button_title {
+  padding: 4.8px 9.6px;
+  font-size: 12.5625px;
+  color: #081D35;
+  border-radius:  8px;
+  background-color: #E9ECEF;
+  margin-right: 5px;
+  cursor: pointer;
+}
+.button_title_selected {
+  padding: 4.8px 9.6px;
+  font-size: 12.5625px;
+  color: #fff;
+  border-radius:  8px;
+  background-color: #0784C3;
+  margin-right: 5px;
+  cursor: pointer;
 }
 </style>
