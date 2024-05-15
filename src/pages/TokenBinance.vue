@@ -865,6 +865,10 @@
                                   <el-form-item v-if="item.stateMutability == 'payable'" :prop="item.name">
                                     <template #label>
                                       <span>{{ item.name }}</span>
+                                      <el-button style="margin-left: 5px;" type="info"
+                                        plain @click="payableDialog(index)"><el-icon>
+                                          <Plus />
+                                        </el-icon></el-button>
                                     </template>
                                     <el-input v-model="writePayable[item.name]" placeholder="payableAmount"></el-input>
                                   </el-form-item>
@@ -1249,52 +1253,10 @@ const handleInputBlur = () => {
   }
 }
 const connectWallet = async () => {
-  // const chainId = '0x2267';
-  // const rpcUrl = 'https://test2.metabasenet.site/rpc';
-  // if (window.ethereum) {
-  //   try {
-  //     await ethereum.request({
-  //       method: 'wallet_switchEthereumChain',
-  //       params: [{
-  //         chainId: chainId 
-  //       }]
-  //     })
-  //     console.log('wallet_switchEthereumChain');
-  //   } catch (e) {
-  //     console.log('(e as any).code', e.code);
-  //     if (e.code == 4902) {
-  //       try {
-  //         console.log('wallet_addEthereumChain');
-  //         await ethereum.request({
-  //           method: 'wallet_addEthereumChain',
-  //           params: [
-  //             {
-  //               chainId: chainId, 
-  //               chainName: 'MNT Testnet',
-  //               nativeCurrency: {
-  //                 name: 'MNT',
-  //                 symbol: 'MNT',
-  //                 decimals: 18
-  //               },
-  //               rpcUrls: [rpcUrl], 
-  //             }
-  //           ]
-  //         })
-  //       } catch (ee) {
-  //         //
-  //       }
-  //     } else if (e.code == 4001) return
-  //   }
-  // }
-
   if (typeof(window.ethereum) !== "undefined") {
     try {
-      // ethers.utils.hexValue
       dialogFormVisible.value = false;
       const providers = ethereum;
-      // const mainChainId = 8807;
-      // const testChainId = 102
-      // const chainId = "0x2267";
       let chainName = location.hostname == config.domainUser_url ? 'MNT Mainnet' : 'MNT Testnet';
       const chainId = location.hostname == config.domainUser_url ? '0x2277' : '0x66';
       const blockExplorerUrls = location.hostname == config.domainUser_url ? 'https://main.metabasenet.site/' : 'https://test.metabasenet.site/'  
@@ -1388,9 +1350,19 @@ const openDialog = (functionIndex, inputIndex) => {
   InputIndex.value = inputIndex;
   FunctionIndex.value = functionIndex;
 }
+const payableDialog = (functionIndex) => {
+  showCustomInput.value = false;
+  form.value.region = '';
+  dialogFormVisibles.value = true;
+  FunctionIndex.value = functionIndex;
+}
 const addSelect = () => {
   dialogFormVisibles.value = false;
-  writeContract.value[FunctionIndex.value].inputs[InputIndex.value].count = form.value.region.toString();
+ if (writeContract.value[FunctionIndex.value].stateMutability == 'payable') {
+    writePayable[writeContract.value[FunctionIndex.value].name] *= form.value.region.toString();
+  } else {
+    writeContract.value[FunctionIndex.value].inputs[InputIndex.value].count *= form.value.region.toString();
+  }
 }
 const submitWrite = async (item) => {
   successDetail[item.name] = "";

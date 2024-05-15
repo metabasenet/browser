@@ -981,6 +981,10 @@
                                     <el-form-item v-if="item.stateMutability == 'payable'" :prop="item.name">
                                       <template #label>
                                         <span>{{ item.name }}</span>
+                                        <el-button style="margin-left: 5px;" type="info"
+                                          plain @click="payableDialog(index)"><el-icon>
+                                            <Plus />
+                                          </el-icon></el-button>
                                       </template>
                                       <el-input v-model="writePayable[item.name]"
                                         placeholder="payableAmount"></el-input>
@@ -1499,12 +1503,21 @@ const openDialog = (functionIndex, inputIndex) => {
   InputIndex.value = inputIndex;
   FunctionIndex.value = functionIndex;
 }
+
+const payableDialog = (functionIndex) => {
+  showCustomInput.value = false;
+  form.value.region = '';
+  dialogFormVisibles.value = true;
+  FunctionIndex.value = functionIndex;
+}
 const addSelect = (value) => {
   dialogFormVisibles.value = false;
-  // let itemInput = writeContract.value[FunctionIndex.value].inputs[InputIndex.value];
-  // itemInput.value ||= 1;
-  // itemInput.value *= value;
-  writeContract.value[FunctionIndex.value].inputs[InputIndex.value].count = form.value.region.toString();
+  if (writeContract.value[FunctionIndex.value].stateMutability == 'payable') {
+    writePayable[writeContract.value[FunctionIndex.value].name] *= form.value.region.toString();
+  } else {
+    writeContract.value[FunctionIndex.value].inputs[InputIndex.value].count *= form.value.region.toString();
+  }
+  
 }
 
 const submitWrite = async (item) => {
