@@ -99,7 +99,7 @@ const filteredData = computed(() => {
   return tableData.value.filter(item => {
     const decimals = item.decimals || 0;
     const values = item.totalSupply
-    item.totalSupply= ethers.formatUnits(values.toLocaleString('en-US').replace(/,/g, ''), decimals);
+    item.totalSupply= ethers.formatUnits(values, decimals);
     if (item.ercName && searchText.value) {
       return item.name.toLowerCase().includes(searchText.value.toLowerCase());
     }

@@ -8,8 +8,8 @@
             <div class="grid-content_h3">
               <div style="display: flex; justify-content: flex-start; align-items: center">
                 <img src="@/images/Avatar.png"
-                     style="width: 24px; height: 24px; border-radius: 100px; vertical-align: middle; margin-right: 5px;"
-                     alt="">
+                  style="width: 24px; height: 24px; border-radius: 100px; vertical-align: middle; margin-right: 5px;"
+                  alt="">
                 <span style="font-size: 18.75px; color: #212529; margin-right: 6px; ">{{ contract }}</span>
                 <span class="ellipsis-text" style="font-size: 15px; color: #212529">{{ address }}</span>
                 <el-tooltip v-if="!istoCopied" content="Copy Address" placement="top">
@@ -44,7 +44,7 @@
               <div>
                 <el-tag type="info" style="color: #000; background-color: #fff; border-radius: 10px;">ERC-20</el-tag>
                 <el-tag type="info"
-                        style="color: #000; background-color: #fff; border-radius: 10px;">Cross-Chain</el-tag>
+                  style="color: #000; background-color: #fff; border-radius: 10px;">Cross-Chain</el-tag>
                 <el-tag type="info" style="color: #000; background-color: #fff; border-radius: 10px;"># Binance</el-tag>
                 <el-tag type="info" style="color: #000; background-color: #fff; border-radius: 10px;">#
                   Binance-Peg</el-tag>
@@ -104,10 +104,10 @@
                         <p class="erc_p">ERC-20 Tokens</p>
                       </template>
                       <el-option v-for="(item, index) in cities" :key="index" :label="item.ercName"
-                                 :value="item.decimals || ''">
+                        :value="item.decimals || ''">
                         <router-link v-if="item.decimals !== null"
-                                     :to="{ name: 'token', params: { address: item.address } }"
-                                     style="display: flex; height:50px; flex-direction: column; line-height: 1.5; padding-top: 5px; padding-bottom: 5px;">
+                          :to="{ name: 'token', params: { address: item.address } }"
+                          style="display: flex; height:50px; flex-direction: column; line-height: 1.5; padding-top: 5px; padding-bottom: 5px;">
                           <p style="margin: 0; color: black;
                             font-weight:400;
                             font-size: 12px; ">{{ item.ercName }} ({{ item.ercSymbol }})</p>
@@ -144,9 +144,9 @@
                   <div class="over_div">
                     <el-tooltip class="box-item" effect="dark" :content="address" placement="top-start">
                       <router-link style="font-size: 14.4992px; color: #0784C3;" class="skyblue-text ellipsis-text"
-                                   :to="{ name: 'address', params: { address: address } }">{{
-            address.substring(0, 30) + '...'
-          }}</router-link>
+                        :to="{ name: 'address', params: { address: address } }">{{
+                        address.substring(0, 30) + '...'
+                        }}</router-link>
                     </el-tooltip>
                     <!-- <span class="content-item">from 12 hrs ago</span> -->
                   </div>
@@ -155,11 +155,11 @@
                   <p class="title-item">CONTRACTCREATOR:</p>
                   <div class="over_div">
                     <el-tooltip :content="contractMessage.creator"><span
-                            style="font-size: 14.4992px; color: #0784C3; cursor: pointer;">{{
-            contractMessage.creator.substring(0, 17) + '...'
-          }}</span></el-tooltip> at txn <el-tooltip :content="contractMessage.transactionHash"><span
-                            style="font-size: 14.4992px; color: #0784C3; cursor: pointer; ">{{
-            contractMessage.transactionHash.substring(0, 18) + '...' }}</span></el-tooltip>
+                        style="font-size: 14.4992px; color: #0784C3; cursor: pointer;">{{
+                        contractMessage.creator.substring(0, 17) + '...'
+                        }}</span></el-tooltip> at txn <el-tooltip :content="contractMessage.transactionHash"><span
+                        style="font-size: 14.4992px; color: #0784C3; cursor: pointer; ">{{
+                        contractMessage.transactionHash.substring(0, 18) + '...' }}</span></el-tooltip>
                     <!-- <el-tooltip class="box-item" effect="dark" :content="address" placement="top-start">
                       <router-link style="font-size: 14.4992px; color: #0784C3;" class="skyblue-text ellipsis-text"
                         :to="{ name: 'address', params: { address: address } }">{{
@@ -204,8 +204,8 @@
                     </el-tooltip>
                     <el-tooltip class="box-item" effect="dark" :content="address" placement="top-start">
                       <router-link class="skyblue-text ellipsis-text" style="font-size: 14.4992px; color: #0784C3"
-                                   :to="{ name: 'address', params: { address: address } }">{{
-            address.substring(0, 25) + '...' }}</router-link>
+                        :to="{ name: 'address', params: { address: address } }">{{
+                        address.substring(0, 25) + '...' }}</router-link>
                     </el-tooltip>
                     <el-tooltip v-if="!istoCopied" content="Copy Address" placement="top">
                       <el-button text icon="CopyDocument" @click="copyToClipboards(address)">
@@ -247,12 +247,11 @@
                       More than <span style="font-size: 14.4992px; color: #0784C3">{{ total }}</span> transactions found
                     </div>
                     <el-pagination :pager-count="5" v-model:current-page="currentPage4" v-model:page-size="pageSize4"
-                                   :page-sizes="[10, 20, 30, 40]" background layout=" sizes, prev, pager, next, "
-                                   :total="total"
-                                   small @size-change="handleSizeChange1" @current-change="getAddressList" />
+                      :page-sizes="[10, 20, 30, 40]" background layout=" sizes, prev, pager, next, " :total="total"
+                      small @size-change="handleSizeChange1" @current-change="getAddressList" />
                   </div>
                   <el-table v-loading="loading" :data="tableData" style="width: 100%" size="default"
-                            :row-style="{ height: '70px' }">
+                    :row-style="{ height: '70px' }">
                     <el-table-column prop="hash" label="Transaction Hash" width="125">
                       <template v-slot="scope">
                         <el-tooltip :content="scope.row.hash" placement="top">
@@ -267,8 +266,8 @@
                       <template v-slot="scope">
                         <el-tooltip :content="scope.row.method" placement="top">
                           <el-button v-if="scope.row.method"
-                                     style="padding: 5px; font-size: 10.8744px; color: #000;  border-radius: 6px;">{{
-            scope.row.method }}</el-button>
+                            style="padding: 5px; font-size: 10.8744px; color: #000;  border-radius: 6px;">{{
+                            scope.row.method }}</el-button>
                         </el-tooltip>
                       </template>
                     </el-table-column>
@@ -312,8 +311,8 @@
                         <div class="router_box">
                           <el-tooltip content="Contract" placement="top">
                             <el-button
-                                       style="margin-right: 5px; margin-top: 5px; width: 12.69px; height: 15px; border-radius: 5px;"
-                                       icon="Document">
+                              style="margin-right: 5px; margin-top: 5px; width: 12.69px; height: 15px; border-radius: 5px;"
+                              icon="Document">
                             </el-button>
                           </el-tooltip>
                           <el-tooltip :content="scope.row.to" placement="top">
@@ -346,17 +345,16 @@
                       <template v-slot="scope">
                         <el-tooltip :content="`${scope.row.value}`" placement="top">
                           <span class="ellipsis-text">{{
-            scope.row.value
-          }}</span>
+                            scope.row.value
+                            }}</span>
                         </el-tooltip>
                       </template>
                     </el-table-column>
                   </el-table>
                   <div class="demo-pagination-block box-table_header">
                     <el-pagination :pager-count="5" v-model:current-page="currentPage4" v-model:page-size="pageSize4"
-                                   :page-sizes="[10, 20, 30, 40]" background layout=" sizes, prev, pager, next, "
-                                   :total="total"
-                                   small @size-change="handleSizeChange1" @current-change="getAddressList" />
+                      :page-sizes="[10, 20, 30, 40]" background layout=" sizes, prev, pager, next, " :total="total"
+                      small @size-change="handleSizeChange1" @current-change="getAddressList" />
                   </div>
                 </el-row>
               </el-tab-pane>
@@ -369,13 +367,12 @@
                       transactions found
                     </div>
                     <el-pagination :pager-count="5" v-model:current-page="currentPageInternal"
-                                   v-model:page-size="pageSizeInternal" :page-sizes="[10, 20, 30, 40]" background
-                                   layout=" sizes, prev, pager, next, " :total="tableDataInternal.length" small
-                                   @size-change="handleSizeChangeInternal"
-                                   @current-change="handleCurrentChangeInternal" />
+                      v-model:page-size="pageSizeInternal" :page-sizes="[10, 20, 30, 40]" background
+                      layout=" sizes, prev, pager, next, " :total="tableDataInternal.length" small
+                      @size-change="handleSizeChangeInternal" @current-change="handleCurrentChangeInternal" />
                   </div>
                   <el-table v-loading="loading2" :data="tableDataInternal" style="width: 100%" size="default"
-                            :row-style="{ height: '70px' }">
+                    :row-style="{ height: '70px' }">
                     <el-table-column prop="transactionhash" label="Parent Transaction Hash" width="450">
                       <template v-slot="scope">
                         <el-tooltip :content="scope.row.transactionhash" placement="top">
@@ -399,7 +396,7 @@
             name: 'address',
             params: { address: scope.row.from },
           }" style="font-size: 14.4992px; color: #0784C3;">{{ scope.row.from.substring(0, 10) +
-            '...'
+                              '...'
                               }}</router-link>
                           </el-tooltip>
                           <el-tooltip v-if="!scope.row.isCopied" content="Copy Address" placement="top">
@@ -419,8 +416,8 @@
                         <div class="router_box">
                           <el-tooltip content="Contract" placement="top">
                             <el-button
-                                       style="margin-right: 5px; margin-top: 5px; width: 12.69px; height: 15px; border-radius: 5px;"
-                                       icon="Document">
+                              style="margin-right: 5px; margin-top: 5px; width: 12.69px; height: 15px; border-radius: 5px;"
+                              icon="Document">
                             </el-button>
                           </el-tooltip>
                           <el-tooltip :content="scope.row.to" placement="top">
@@ -445,18 +442,17 @@
                       <template v-slot="scope">
                         <el-tooltip :content="`${scope.row.value}`" placement="top">
                           <span class="ellipsis-text" style="font-size: 14.4992px; color: #212529;">{{
-            scope.row.value
-          }}</span>
+                            scope.row.value
+                            }}</span>
                         </el-tooltip>
                       </template>
                     </el-table-column>
                   </el-table>
                   <div class="demo-pagination-block box-table_header">
                     <el-pagination :pager-count="5" v-model:current-page="currentPageInternal"
-                                   v-model:page-size="pageSizeInternal" :page-sizes="[10, 20, 30, 40]" background
-                                   layout=" sizes, prev, pager, next, " :total="tableDataInternal.length" small
-                                   @size-change="handleSizeChangeInternal"
-                                   @current-change="handleCurrentChangeInternal" />
+                      v-model:page-size="pageSizeInternal" :page-sizes="[10, 20, 30, 40]" background
+                      layout=" sizes, prev, pager, next, " :total="tableDataInternal.length" small
+                      @size-change="handleSizeChangeInternal" @current-change="handleCurrentChangeInternal" />
                   </div>
                 </el-row>
               </el-tab-pane>
@@ -466,16 +462,15 @@
                   <div class="demo-pagination-block box-table_header">
                     <div class="demonstration" style="font-size: 14.4992px; color: #212529;">
                       Latest {{ totals }} ERC-20 Token Transfer Events (<span
-                            style="font-size: 14.4992px; color: #0784C3;">View
+                        style="font-size: 14.4992px; color: #0784C3;">View
                         All</span>)
                     </div>
                     <el-pagination :pager-count="5" v-model:current-page="currentPage4" v-model:page-size="pageSize4"
-                                   :page-sizes="[10, 20, 30, 40]" background layout=" sizes, prev, pager, next, "
-                                   :total="totals"
-                                   small @size-change="handleSizeChange" @current-change="getContractList" />
+                      :page-sizes="[10, 20, 30, 40]" background layout=" sizes, prev, pager, next, " :total="totals"
+                      small @size-change="handleSizeChange" @current-change="getContractList" />
                   </div>
                   <el-table v-loading="loading1" :data="tableDatas" style="width: 100%" size="default"
-                            :row-style="{ height: '70px' }">
+                    :row-style="{ height: '70px' }">
                     <el-table-column prop="transactionHash" label="Txn Hash" width="150">
                       <template v-slot="scope">
                         <el-tooltip :content="scope.row.to" placement="top">
@@ -483,7 +478,7 @@
             name: 'tx',
             params: { hash: scope.row.transactionHash },
           }" style="font-size: 14.4992px; color: #0784C3;">{{
-            scope.row.transactionHash }}</router-link>
+                            scope.row.transactionHash }}</router-link>
                         </el-tooltip>
                       </template>
                     </el-table-column>
@@ -491,7 +486,7 @@
                       <template v-slot="scope">
                         <el-tooltip :content="scope.row.method" placement="top">
                           <el-button style="font-size: 10.8744px; color: #000; padding: 5px; border-radius: 6px;">{{
-            scope.row.method }}</el-button>
+                            scope.row.method }}</el-button>
                         </el-tooltip>
                       </template>
                     </el-table-column>
@@ -536,8 +531,8 @@
                         <div class="router_box">
                           <el-tooltip content="Contract" placement="top">
                             <el-button
-                                       style="margin-right: 5px; margin-top: 4px; width: 12.69px; height: 15px; border-radius: 5px;"
-                                       icon="Document" @click="copyToClipboard(scope.row.to)">
+                              style="margin-right: 5px; margin-top: 4px; width: 12.69px; height: 15px; border-radius: 5px;"
+                              icon="Document" @click="copyToClipboard(scope.row.to)">
                             </el-button>
                           </el-tooltip>
                           <el-tooltip :content="scope.row.to" placement="top">
@@ -562,8 +557,8 @@
                       <template v-slot="scope">
                         <el-tooltip :content="`${scope.row.value}`" placement="top">
                           <span class="ellipsis-text" style="font-size: 14.4992px; color: #212529">{{
-            scope.row.value
-          }}</span>
+                            scope.row.value
+                            }}</span>
                         </el-tooltip>
                       </template>
                     </el-table-column>
@@ -631,9 +626,8 @@
                             <template #title>
                               <div>
                                 <svg-icon name="true" width="1rem" height="1rem"
-                                          style="margin-right: 5px"></svg-icon><span>Contract Source Code Verified
-                                </span><span
-                                      style="color: #6c757d">(Exact Match)</span>
+                                  style="margin-right: 5px"></svg-icon><span>Contract Source Code Verified
+                                </span><span style="color: #6c757d">(Exact Match)</span>
                               </div>
 
                             </template>
@@ -725,7 +719,7 @@
                                 <div class="grid-content_h2 grid-contents">
                                   <div>
                                     <span>File {{ index + 1 }} of {{
-            contractSource.sourceCode.length }}:</span> <span>{{ item.fileName }}</span>
+                                      contractSource.sourceCode.length }}:</span> <span>{{ item.fileName }}</span>
                                   </div>
                                   <div>
                                     <el-button type="info" icon="Edit" />
@@ -735,7 +729,7 @@
                                 </div>
                                 <div class="grid-content_h2">
                                   <el-input v-model="item.sourceCode" disabled style="height: 300px" :rows="16"
-                                            type="textarea" />
+                                    type="textarea" />
                                 </div>
                               </div>
                             </el-col>
@@ -767,7 +761,7 @@
                               </div>
                               <div class="grid-content_h2">
                                 <el-input v-model="contractSource.abi" disabled style="height: 200px" :rows="10"
-                                          type="textarea" />
+                                  type="textarea" />
                               </div>
                             </el-col>
                             <el-col :span="24">
@@ -800,8 +794,7 @@
                                 </div>
                               </div>
                               <div class="grid-content_h2">
-                                <el-input v-model="contractSource.bytecode" :rows="10"
-                                  type="textarea" disabled />
+                                <el-input v-model="contractSource.bytecode" :rows="10" type="textarea" disabled />
                               </div>
                             </el-col>
                             <el-col :span="24">
@@ -849,7 +842,7 @@
                           <div class="demo-collapse">
                             <el-collapse v-model="actives">
                               <el-collapse-item v-for="(functionItem, index) in viewFunctions"
-                                                :key="functionItem.contractname" :name="functionItem.name">
+                                :key="functionItem.contractname" :name="functionItem.name">
                                 <template #title>
                                   <div class="collapsed">
                                     <div>{{ index + 1 }}_{{ functionItem.name }}</div>
@@ -865,16 +858,16 @@
                                 </template>
                                 <div v-if="functionItem.inputs.length != 0">
                                   <el-form :model="formModel" label-position="top">
-                                    <el-form-item v-for="(
+                                    <el-form v-for="(
                                       input, inputIndex
-                                    ) in functionItem.inputs" :key="inputIndex" :prop="input.name" :label="input.name">
-                                      <el-form :rules="rulesRead" style="width: 100%;">
-                                        <el-form-item prop="address">
-                                          <el-input v-model="input.value"
-                                        :placeholder="input.type"></el-input>
-                                        </el-form-item>
-                                      </el-form>
-                                    </el-form-item>
+                                    ) in functionItem.inputs" :key="inputIndex" :model="input" :rules="rulesRead">
+                                      <el-form-item prop="count" :label="input.name" v-if="input.type == 'uint256'">
+                                        <el-input v-model="input.count" :placeholder="input.type"></el-input>
+                                      </el-form-item>
+                                      <el-form-item prop="value" :label="input.name" v-else>
+                                        <el-input v-model="input.value" :placeholder="input.type"></el-input>
+                                      </el-form-item>
+                                    </el-form>
                                     <el-form-item>
                                       <el-button type="info" plain @click="handleQuery(functionItem)">Query</el-button>
                                     </el-form-item>
@@ -969,7 +962,7 @@
                           <div class="demo-collapse">
                             <el-collapse v-model="actives">
                               <el-collapse-item v-for="(item, index) in writeContract" :key="item.name"
-                                                :name="item.name">
+                                :name="item.name">
                                 <template #title>
                                   <div class="collapsed">
                                     <div>{{ index + 1 }}_{{ item.name }}</div>
@@ -984,24 +977,40 @@
                                   </div>
                                 </template>
                                 <div v-if="item.inputs.length != 0">
-                                  <el-form :model="formModels" label-position="top">
-                                    <el-form-item v-for="(
-                                      input, inputIndex
-                                    ) in item.inputs" :key="inputIndex" :prop="input.name">
+                                  <el-form :model="writePayable" :rules="formModels" label-position="top">
+                                    <el-form-item v-if="item.stateMutability == 'payable'" :prop="item.name">
                                       <template #label>
-                                        <span>{{ input.name }}</span>
-                                        <el-button style="margin-left: 5px;" v-if="input.type === 'uint256'" type="info"
-                                                   plain @click="openDialog(index, inputIndex)"><el-icon>
-                                            <Plus />
-                                          </el-icon></el-button>
+                                        <span>{{ item.name }}</span>
                                       </template>
-                                      <el-form :rules="rules" style="width: 100%;">
-                                        <el-form-item :prop="input.type == 'address' ? 'address' :'uint256'">
-                                          <el-input v-model="input.value"
-                                            :placeholder="`${input.name} (${input.type})`"></el-input>
-                                        </el-form-item>
-                                      </el-form>
+                                      <el-input v-model="writePayable[item.name]"
+                                        placeholder="payableAmount"></el-input>
                                     </el-form-item>
+                                    <el-form v-for="(
+                                      input, inputIndex
+                                    ) in item.inputs" :key="inputIndex" :model="input" :rules="rules">
+                                      <el-form-item v-if="input.type=='uint256'" prop="count">
+                                        <template #label>
+                                          <span>{{ input.name }}</span>
+                                          <el-button style="margin-left: 5px;" v-if="input.type === 'uint256'"
+                                            type="info" plain @click="openDialog(index, inputIndex)"><el-icon>
+                                              <Plus />
+                                            </el-icon></el-button>
+                                        </template>
+                                        <el-input v-model="input.count"
+                                          :placeholder="`${input.name} (${input.type})`"></el-input>
+                                      </el-form-item>
+                                      <el-form-item v-else prop="value">
+                                        <template #label>
+                                          <span>{{ input.name }}</span>
+                                          <el-button style="margin-left: 5px;" v-if="input.type === 'uint256'"
+                                            type="info" plain @click="openDialog(index, inputIndex)"><el-icon>
+                                              <Plus />
+                                            </el-icon></el-button>
+                                        </template>
+                                        <el-input v-model="input.value"
+                                          :placeholder="`${input.name} (${input.type})`"></el-input>
+                                      </el-form-item>
+                                    </el-form>
                                     <el-form-item>
                                       <el-button type="primary" @click="submitWrite(item)">Write</el-button>
                                     </el-form-item>
@@ -1024,9 +1033,9 @@
                                       ">
                                           <svg-icon name="right"></svg-icon>
                                           <span class="successDetail"
-                                                v-if="successDetail[item.name] == 'success'">uint256:{{
-            successDetail[item.name]
-          }}</span>
+                                            v-if="successDetail[item.name] == 'success'">uint256:{{
+                                            successDetail[item.name]
+                                            }}</span>
                                           <span class="loseDetail" v-else>uint256:{{ loseDetail[item.name]
                                             }}</span>
                                         </p>
@@ -1051,7 +1060,7 @@
                         <el-form :model="form">
                           <el-form-item>
                             <el-select size="large" v-model="form.region" @change="handleSelectChange"
-                                       placeholder="Select">
+                              placeholder="Select">
                               <el-option label="10⁶" value="1000000" />
                               <el-option label="10⁸" value="100000000" />
                               <el-option label="10¹⁸" value="1000000000000000000" />
@@ -1059,7 +1068,7 @@
                             </el-select>
                             <div v-if="showCustomInput" style="width:100%">
                               <el-input style="margin-top: 10px" v-model="form.customValue" size="large" type="number"
-                                        :min="1" :max="18" @blur="handleInputBlur" @input="handleInput"></el-input>
+                                :min="1" :max="18" @blur="handleInputBlur" @input="handleInput"></el-input>
                               <p>Enter the number of zeroes to add. Example: 3 to add three (000) zeroes.</p>
                             </div>
                           </el-form-item>
@@ -1105,7 +1114,6 @@
                   </el-tabs>
                 </el-tab-pane>
               </div>
-              <!-- <el-tab-pane label="NFT Transfers" name="tab4">Task</el-tab-pane> -->
             </el-tabs>
           </el-col>
         </el-row>
@@ -1170,7 +1178,7 @@ const textarea2 = ref("");
 let results = ref("");
 const writeContract = ref([]);
 const actives = ref([]);
-const formModels = ref({});
+const formModels = reactive({});
 const formModel = ref({});
 const form = ref({
   name: "",
@@ -1196,12 +1204,14 @@ let successDetail = reactive({});
 let loseDetail = reactive({})
 const activeNames = ref("first");
 const viewDetails = ref([]);
+let readContractInput = reactive({});
 let rules = reactive({
-  address: [{ required: true, message: 'Please input address', trigger: 'blur' }],
-  uint256: [{required: true, message: 'Please input value', trigger: 'blur'}],
+  value: [{ required: true, message: 'Please input address', trigger: 'blur' }],
+  count: [{required: true, message: 'Please input value', trigger: 'blur'}],
 })
 let rulesRead = reactive({
-  address: [{ required: true, message: 'Please input address', trigger: 'blur' }],
+  count: [{required: true, message: 'Please input value', trigger: 'blur'}],
+  value: [{ required: true, message: 'Please input address', trigger: 'blur' }],
 })
 const handleClick = (tab, event) => {
   console.log(tab.props.name);
@@ -1262,7 +1272,6 @@ const handleInputBlur = () => {
 }
 const getItemName = async () => {
   try {
-    // const provider = new ethers.BrowserProvider(window.ethereum);
     const readProvider = new ethers.JsonRpcProvider(config.testRpc_adress)
     if (!contractSource.value || !contractSource.value.contractaddress) {
       throw new Error('Contract address is not initialized or invalid.');
@@ -1276,8 +1285,6 @@ const getItemName = async () => {
     const promises = viewFunctions.value.map(async (item, index) => {
       try {
         if (item.inputs.length == 0) {
-
-          console.log(item.name)
           item.detail = await contract[item.name.toString()]();
           viewDetails.value[index] = item.detail;
         } else {
@@ -1298,39 +1305,7 @@ const getItemName = async () => {
     console.error("An error occurred:", error);
   }
 };
-// const getContactDetail = async () => {
-//   try {
-//     if (address !== null) {
-//       const response = await getContractDetail(address);
-//       verifystatused.value = response.data?.verifystatus;
-//       // verifystatused.value = '1';
-//       contractSource.value = response.data;
-//       // contractSource.value.abi = JSON.parse(response.data?.abi);
-//       let abi;
-//       if (response.data && typeof response.data.abi === 'string') {
-//         try {
-//           abi = JSON.parse(response.data.abi);
-//           viewFunctions.value = abi.filter(
-//             (item) => item.type === "function" && item.stateMutability === "view" || item.stateMutability == 'prue'
-//           );
-//           viewFunctions.value.forEach((item)=>{
-//             queryResult.value[item.name] = ""
-//           })
-//           writeContract.value = abi.filter(
-//             (item) => item.type === "function" && item.stateMutability === "nonpayable" || item.stateMutability == 'payable'
-//           );
-//         } catch (error) {
-//           abi = null;
-//         }
-//       } else {
-//         // console.warn('ABI is undefined or not a string.');
-//         abi = null;
-//       }
-//     }
-//   } catch (error) {
-//     console.error("Error fetching block details:", error);
-//   }
-// };
+let writePayable = reactive({})
 const getContactDetail = async () => {
   try {
     if (address !== null) {
@@ -1341,20 +1316,35 @@ const getContactDetail = async () => {
         let abi;
         abi = JSON.parse(data.abi);
         viewFunctions.value = abi.filter(
-          (item) => item.type === "function" && item.stateMutability === "view" || item.stateMutability == 'prue'
+          (item) => item.type === "function" && (item.stateMutability === "view" || item.stateMutability == 'prue')
         );
-        console.log('read',viewFunctions)
         viewFunctions.value.forEach((item) => {
           queryResult.value[item.name] = ''
           readShow[item.name] = ''
+          if (item.inputs.length != 0) {
+            item.inputs.forEach((inputsItem) => {
+              inputsItem.value = ''
+              inputsItem.count = ''
+            })
+          }
         })
-        writeContract.value = abi.filter(
-          (item) => item.type === "function" && item.stateMutability === "nonpayable" || item.stateMutability == 'payable'
+        console.log('read',viewFunctions.value)
+        writeContract.value = abi.filter( 
+            (item) => item.type === "function" && (item.stateMutability === "nonpayable" || item.stateMutability == 'payable')
         );
+        console.log('write',writeContract.value)
         writeContract.value.forEach((item) => {
           writeShow[item.name] = ''
           successDetail[item.name] = ''
           loseDetail[item.name] = ''
+          writePayable[item.name] = ''
+          formModels[item.name] = [{ required: true, message: 'Please input value', trigger: 'blur' }]
+          if (item.inputs.length != 0) {
+            item.inputs.forEach((inputsItem) => {
+              inputsItem.value = ''
+              inputsItem.count = ''
+            })
+          }
         })
       } else {
         return
@@ -1366,44 +1356,6 @@ const getContactDetail = async () => {
 };
 getContactDetail();
 const connectWallet = async () => {
-  // const chainId = '0x2267';
-  // const rpcUrl = 'https://test2.metabasenet.site/rpc';
-  // if (window.ethereum) {
-  //   try {
-  //     await ethereum.request({
-  //       method: 'wallet_switchEthereumChain',
-  //       params: [{
-  //         chainId: chainId 
-  //       }]
-  //     })
-  //     console.log('wallet_switchEthereumChain');
-  //   } catch (e) {
-  //     console.log('(e as any).code', e.code);
-  //     if (e.code == 4902) {
-  //       try {
-  //         console.log('wallet_addEthereumChain');
-  //         await ethereum.request({
-  //           method: 'wallet_addEthereumChain',
-  //           params: [
-  //             {
-  //               chainId: chainId, 
-  //               chainName: 'MNT Testnet',
-  //               nativeCurrency: {
-  //                 name: 'MNT',
-  //                 symbol: 'MNT',
-  //                 decimals: 18
-  //               },
-  //               rpcUrls: [rpcUrl], 
-  //             }
-  //           ]
-  //         })
-  //       } catch (ee) {
-  //         //
-  //       }
-  //     } else if (e.code == 4001) return
-  //   }
-  // }
-
   if (typeof window.ethereum !== "undefined") {
     try {
       dialogFormVisible.value = false;
@@ -1552,26 +1504,33 @@ const addSelect = (value) => {
   // let itemInput = writeContract.value[FunctionIndex.value].inputs[InputIndex.value];
   // itemInput.value ||= 1;
   // itemInput.value *= value;
-  writeContract.value[FunctionIndex.value].inputs[InputIndex.value].value = form.value.region.toString();
+  writeContract.value[FunctionIndex.value].inputs[InputIndex.value].count = form.value.region.toString();
 }
+
 const submitWrite = async (item) => {
-  // v-if="!results".value
   successDetail[item.name] = "";
   loseDetail[item.name] = "";
   if (typeof window.ethereum !== "undefined" && results.value) {
     writeShow[item.name] = item.name;
     try {
       const provider = new ethers.BrowserProvider(window.ethereum);
-      // const provider = new ethers.BrowserProvider(window.ethereum, "https://test2.metabasenet.site/rpc");
       const signer = await provider.getSigner();
       const contract = new ethers.Contract(contractSource.value.contractaddress, contractSource.value.abi, signer);
       let flag = 0;
       const params = item.inputs.reduce((acc, input) => {
-        flag++
-        if (input.value.indexOf('[') != -1 && input.value.indexOf(']') != -1) {
-          input.value = input.value.substring(1, input.value.length - 2)
+        if (input.type == 'uint256') {
+          flag++
+          if (input.count.indexOf('[') != -1 && input.count.indexOf(']') != -1) {
+            input.count = input.count.substring(1, input.count.length - 2)
+          }
+          acc[`${input.name}${flag}`] = input.count.split(',');
+        } else {
+          flag++
+          if (input.value.indexOf('[') != -1 && input.value.indexOf(']') != -1) {
+            input.value = input.value.substring(1, input.value.length - 2)
+          }
+          acc[`${input.name}${flag}`] = input.value.split(',');
         }
-        acc[`${input.name}${flag}`] = input.value.split(',');
         return acc;
       }, {});
       const valuesArray = Object.values(params);
@@ -1581,13 +1540,15 @@ const submitWrite = async (item) => {
         }
       }
       try {
-        let res = await contract[item.name](...valuesArray);
+        if (item.stateMutability == 'nonpayable') {
+          let res = await contract[item.name](...valuesArray);
+        } else {
+          let res = await contract[item.name](...valuesArray,{value: writePayable[item.name]});
+        }
         successDetail[item.name] = 'success';
       } catch (error) {
         loseDetail[item.name] = error.revert.args[0];
       }
-      // console.log(res);
-      //  let res = await contract["transfer"]("0xe6897baC8439E77Cb662b18CF68a897c13aCacb5",0)
     } catch (error) {
       queryError.value = error.message;
     }
@@ -1600,31 +1561,35 @@ const handleQuery = async (functionItem) => {
   readShow[functionItem.name] = functionItem.name;
   try {
     const provider = new ethers.BrowserProvider(window.ethereum);
-    // const provider = new ethers.BrowserProvider(window.ethereum, "https://test2.metabasenet.site/rpc");
     const signer = await provider.getSigner();
-    // const contract = new ethers.Contract(contractSource.value.contractaddress, contractSource.value.abi, provider);
+  
     const contract = new ethers.Contract(contractSource.value.contractaddress, contractSource.value.abi, signer);
-    // let res11 = await contract["transfer"]("0xe6897baC8439E77Cb662b18CF68a897c13aCacb5","5");
+  
     let flag = 0;
     const params = functionItem.inputs.reduce((acc, input) => {
-      flag++;
-      if (input.value.indexOf('[') != -1 && input.value.indexOf(']') != -1) {
-        input.value = input.value.substring(1, input.value.length - 2)
+      if (input.type == 'uint256') {
+        flag++;
+        if (input.count.indexOf('[') != -1 && input.count.indexOf(']') != -1) {
+          input.count = input.count.substring(1, input.value.length - 2)
+        }
+        acc[`${input.name}${flag}`] = input.count.split(',');
+      } else {
+        flag++;
+        if (input.value.indexOf('[') != -1 && input.value.indexOf(']') != -1) {
+          input.value = input.value.substring(1, input.value.length - 2)
+        }
+        acc[`${input.name}${flag}`] = input.value.split(',');
       }
-      acc[`${input.name}${flag}`] = input.value.split(',');
       return acc;
     }, {});
-    // let res = await contract[functionItem.name](params.account);
     const valuesArray = Object.values(params);
     for (let i = 0; i < valuesArray.length; i++) {
       if (valuesArray[i].length == 1) {
         valuesArray[i] = valuesArray[i][0]
       }
     }
-    // let res = await contract["symbol"]();
     let res = await contract[functionItem.name](...valuesArray);
-    // const res = await contract[functionItem.functionName](...Object.values(params));
-    queryResult.value[functionItem.name] = res;
+    queryResult.value[functionItem.name] = res.toString();
   } catch (error) {
     queryError.value = error.message;
   }
@@ -1761,7 +1726,7 @@ let contractMessage = ref({
   ercName: '',
   ercSymbol: ''
 })
-const getContractOrAddress = () => {
+const getContractOrAddress = async () => {
   const provider = new ethers.JsonRpcProvider(location.hostname == config.domainUser_url ? config.mainRpc_address : config.testRpc_adress);
   try {
     provider.getCode(address).then(async (code) => {

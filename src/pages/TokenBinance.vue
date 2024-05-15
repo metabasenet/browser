@@ -1,7 +1,6 @@
 <template>
   <div class="box">
     <el-container class="container-xxl">
-      <!-- <el-aside class="responsive-aside"></el-aside> -->
       <el-main>
         <el-row>
           <el-col :span="24">
@@ -94,7 +93,8 @@
                     " placement="top-start">
                     <span class="content-item">{{ individualQueryDetails.totalSupply }}</span>
                   </el-tooltip>
-                  <span class="content-item" style="font-weight: bold"> {{ individualQueryDetails.ercSymbol }} </span>
+                  <span class="content-item" style="font-weight: bold"> {{ individualQueryDetails.ercSymbol || 'nothing'
+                    }} </span>
                 </li>
                 <li class="over_li">
                   <p>HOLDERS</p>
@@ -158,7 +158,7 @@
                   <h3 class="title-item">Other Info</h3>
                 </li>
                 <li class="over_li">
-                  <p>TOKEN CONTRACT ({{ individualQueryDetails.decimals }})</p>
+                  <p>TOKEN CONTRACT ({{ individualQueryDetails.decimals || 'nothing'}})</p>
                   <div class="over_div">
                     <el-tooltip class="box-item" effect="dark" content="Contract" placement="top-start">
                       <el-icon>
@@ -747,16 +747,16 @@
                               </template>
                               <div v-if="functionItem.inputs.length !== 0">
                                 <el-form :model="formModel" label-position="top">
-                                  <el-form-item v-for="(
+                                  <el-form v-for="(
                                       input, inputIndex
-                                    ) in functionItem.inputs" :key="inputIndex" :prop="input.name" :label="input.name">
-                                    <el-form :rules="rulesRead" style="width: 100%;">
-                                      <el-form-item prop="address">
-                                        <el-input v-model="input.value"
-                                          :placeholder="input.type"></el-input>
-                                      </el-form-item>
-                                    </el-form>
-                                  </el-form-item>
+                                    ) in functionItem.inputs" :key="inputIndex" :model="input" :rules="rulesRead">
+                                    <el-form-item prop="count" :label="input.name" v-if="input.type == 'uint256'">
+                                      <el-input v-model="input.count" :placeholder="input.type"></el-input>
+                                    </el-form-item>
+                                    <el-form-item prop="value" :label="input.name" v-else>
+                                      <el-input v-model="input.value" :placeholder="input.type"></el-input>
+                                    </el-form-item>
+                                  </el-form>
                                   <el-form-item>
                                     <el-button type="info" plain @click="handleQuery(functionItem)">Query</el-button>
                                   </el-form-item>
@@ -861,24 +861,39 @@
                                 </div>
                               </template>
                               <div v-if="item.inputs.length != 0">
-                                <el-form :model="formModels" label-position="top">
-                                  <el-form-item v-for="(
-                                      input, inputIndex
-                                    ) in item.inputs" :key="input.name" :prop="input.name">
+                                <el-form :model="writePayable" :rules="formModels" label-position="top">
+                                  <el-form-item v-if="item.stateMutability == 'payable'" :prop="item.name">
                                     <template #label>
-                                      <span>{{ input.name }}</span>
-                                      <el-button style="margin-left: 5px;" v-if="input.type === 'uint256'" type="info"
-                                        plain @click="openDialog(index, inputIndex)"><el-icon>
-                                          <Plus />
-                                        </el-icon></el-button>
+                                      <span>{{ item.name }}</span>
                                     </template>
-                                    <el-form :rules="rules" style="width: 100%;">
-                                      <el-form-item :prop="input.type == 'address' ? 'address' : 'uint256'">
-                                        <el-input v-model="input.value"
-                                          :placeholder="`${input.name} (${input.type})`"></el-input>
-                                      </el-form-item>
-                                    </el-form>
+                                    <el-input v-model="writePayable[item.name]" placeholder="payableAmount"></el-input>
                                   </el-form-item>
+                                  <el-form v-for="(
+                                      input, inputIndex
+                                    ) in item.inputs" :key="inputIndex" :model="input" :rules="rules">
+                                    <el-form-item v-if="input.type == 'uint256'" prop="count">
+                                      <template #label>
+                                        <span>{{ input.name }}</span>
+                                        <el-button style="margin-left: 5px;" v-if="input.type === 'uint256'" type="info"
+                                          plain @click="openDialog(index, inputIndex)"><el-icon>
+                                            <Plus />
+                                          </el-icon></el-button>
+                                      </template>
+                                      <el-input v-model="input.count"
+                                        :placeholder="`${input.name} (${input.type})`"></el-input>
+                                    </el-form-item>
+                                    <el-form-item v-else prop="value">
+                                      <template #label>
+                                        <span>{{ input.name }}</span>
+                                        <el-button style="margin-left: 5px;" v-if="input.type === 'uint256'" type="info"
+                                          plain @click="openDialog(index, inputIndex)"><el-icon>
+                                            <Plus />
+                                          </el-icon></el-button>
+                                      </template>
+                                      <el-input v-model="input.value"
+                                        :placeholder="`${input.name} (${input.type})`"></el-input>
+                                    </el-form-item>
+                                  </el-form>
                                   <el-form-item>
                                     <el-button type="primary" @click="submitWrite(item)">Write</el-button>
                                   </el-form-item>
@@ -976,12 +991,10 @@
                   </el-tab-pane>
                 </el-tabs>
               </el-tab-pane>
-              <!-- <el-tab-pane label="NFT Transfers" name="tab6">Task</el-tab-pane> -->
             </el-tabs>
           </el-col>
         </el-row>
       </el-main>
-      <!-- <el-aside class="responsive-aside"></el-aside> -->
     </el-container>
   </div>
 </template>
@@ -1026,11 +1039,12 @@ const writeContract = ref([]);
 let loading = ref(false)
 let loading1 = ref(false)
 let rules = reactive({
-  address: [{ required: true, message: 'Please input address', trigger: 'blur' }],
-  uint256: [{ required: true, message: 'Please input value', trigger: 'blur' }],
+  value: [{ required: true, message: 'Please input address', trigger: 'blur' }],
+  count: [{required: true, message: 'Please input value', trigger: 'blur'}],
 })
 let rulesRead = reactive({
-  address: [{ required: true, message: 'Please input address', trigger: 'blur' }],
+  count: [{required: true, message: 'Please input value', trigger: 'blur'}],
+  value: [{ required: true, message: 'Please input address', trigger: 'blur' }],
 })
 const { address } = defineProps({
   address: {
@@ -1041,7 +1055,9 @@ const { address } = defineProps({
 const transfers = ref('')
 const FunctionIndex = ref('');
 const InputIndex = ref('');
-const formModels = ref({});
+const formModels = reactive({
+
+});
 const formModel = ref({});
 const form = ref({
   name: "",
@@ -1063,10 +1079,47 @@ const getIndividualQuery = async () => {
   try {
     if (address !== null) {
       const response = await getTokenInquire(address);
-      individualQueryDetails.value = response.data;
+      individualQueryDetails.value = response.data ? response.data : {
+        blockHash
+          :
+          "nothing",
+        blockNumber
+          :
+          0,
+        contractAddress
+          :
+          "nothing",
+        createTime
+          :
+          null,
+        creator
+          :
+          "nothing",
+        decimals
+          :
+          0,
+        ercName
+          :
+          "nothing",
+        ercSymbol
+          :
+          "nothing",
+        holders
+          :
+          0,
+        status
+          :
+          0,
+        totalSupply
+          :
+          "0",
+        transactionHash
+          :
+          "nothing"
+      }
       const decimals = individualQueryDetails.value.decimals || 0;
       const values = individualQueryDetails.value.totalSupply
-      individualQueryDetails.value.totalSupply = ethers.formatUnits(values.toLocaleString('en-US').replace(/,/g, ''), decimals);
+      individualQueryDetails.value.totalSupply = ethers.formatUnits(values, decimals);
       ercName.value = individualQueryDetails.value.ercName
       ercSymbol.value = individualQueryDetails.value.ercSymbol
     }
@@ -1077,6 +1130,7 @@ const getIndividualQuery = async () => {
 let readShow = reactive({})
 let writeShow = reactive({});
 let verifystatused = ref(0);
+let writePayable = reactive({})
 const getContactDetail = async () => {
   try {
     if (address !== null) {
@@ -1087,21 +1141,34 @@ const getContactDetail = async () => {
         let abi;
         abi = JSON.parse(data.abi);
         viewFunctions.value = abi.filter(
-          (item) => item.type === "function" && item.stateMutability === "view" || item.stateMutability == 'prue'
+          (item) => item.type === "function" && (item.stateMutability === "view" || item.stateMutability == 'prue')
         );
         viewFunctions.value.forEach((item)=>{
           queryResult.value[item.name] = ''
           readShow[item.name] = ''
+          if (item.inputs.length != 0) {
+            item.inputs.forEach((inputsItem) => {
+              inputsItem.value = ''
+              inputsItem.count = ''
+            })
+          }
         })
         writeContract.value = abi.filter(
-          (item) => item.type === "function" && item.stateMutability === "nonpayable" || item.stateMutability == 'payable'
+          (item) => item.type === "function" && (item.stateMutability === "nonpayable" || item.stateMutability == 'payable')
         );
         writeContract.value.forEach((item)=>{
           writeShow[item.name] = ''
           successDetail[item.name] = ''
           loseDetail[item.name] = ''
+          writePayable[item.name] = ''
+          formModels[item.name] = [{ required: true, message: 'Please input value', trigger: 'blur' }]
+          if (item.inputs.length != 0) {
+            item.inputs.forEach((inputsItem) => {
+              inputsItem.value = ''
+              inputsItem.count = ''
+            })
+          }
         })  
-        console.log('00009999',writeContract.value);
       } else {
         return
       } 
@@ -1323,29 +1390,32 @@ const openDialog = (functionIndex, inputIndex) => {
 }
 const addSelect = () => {
   dialogFormVisibles.value = false;
-  console.log(writeContract.value[FunctionIndex.value].inputs[InputIndex.value]);
-  writeContract.value[FunctionIndex.value].inputs[InputIndex.value].value = form.value.region.toString();
-  // itemInput.value ||= 1;
-  // itemInput.value *= value;
+  writeContract.value[FunctionIndex.value].inputs[InputIndex.value].count = form.value.region.toString();
 }
 const submitWrite = async (item) => {
-  // v-if="!results".value
   successDetail[item.name] = "";
   loseDetail[item.name] = "";
   if (typeof window.ethereum !== "undefined" && results.value) {
     writeShow[item.name] = item.name;
     try {
       const provider = new ethers.BrowserProvider(window.ethereum);
-      // const provider = new ethers.BrowserProvider(window.ethereum, "https://test2.metabasenet.site/rpc");
       const signer = await provider.getSigner();
       const contract = new ethers.Contract(contractSource.value.contractaddress, contractSource.value.abi, signer);
       let flag = 0;
       const params = item.inputs.reduce((acc, input) => {
-        flag++
-        if (input.value.indexOf('[') != -1 && input.value.indexOf(']') != -1) {
-          input.value = input.value.substring(1, input.value.length - 2)
+        if (input.type == 'uint256') {
+          flag++
+          if (input.count.indexOf('[') != -1 && input.count.indexOf(']') != -1) {
+            input.count = input.count.substring(1, input.count.length - 2)
+          }
+          acc[`${input.name}${flag}`] = input.count.split(',');
+        } else {
+          flag++
+          if (input.value.indexOf('[') != -1 && input.value.indexOf(']') != -1) {
+            input.value = input.value.substring(1, input.value.length - 2)
+          }
+          acc[`${input.name}${flag}`] = input.value.split(',');
         }
-        acc[`${input.name}${flag}`] = input.value.split(',');
         return acc;
       }, {});
       const valuesArray = Object.values(params);
@@ -1356,12 +1426,15 @@ const submitWrite = async (item) => {
       }
       console.log('write',valuesArray);
       try {
-        let res = await contract[item.name](...valuesArray);
+        if (item.stateMutability == 'nonpayable') {
+          let res = await contract[item.name](...valuesArray);
+        } else {
+          let res = await contract[item.name](...valuesArray, { value: writePayable[item.name] });
+        }
         successDetail[item.name] = 'success';
       } catch (error) {
         loseDetail[item.name] = error.revert.args[0];
       }
-      //  let res = await contract["transfer"]("0xe6897baC8439E77Cb662b18CF68a897c13aCacb5",0)
     } catch (error) {
       queryError.value = error.message;
     }
@@ -1374,39 +1447,41 @@ const handleQuery = async (functionItem) => {
   readShow[functionItem.name] = functionItem.name;
   try {
     const provider = new ethers.BrowserProvider(window.ethereum);
-    // const provider = new ethers.BrowserProvider(window.ethereum, "https://test2.metabasenet.site/rpc");
+   
     const signer = await provider.getSigner();
-    // const contract = new ethers.Contract(contractSource.value.contractaddress, contractSource.value.abi, provider);
+   
     const contract = new ethers.Contract(contractSource.value.contractaddress, contractSource.value.abi, signer);
-    // let res11 = await contract["transfer"]("0xe6897baC8439E77Cb662b18CF68a897c13aCacb5","5");
     let flag = 0;
     const params = functionItem.inputs.reduce((acc, input) => {
-      flag++;
-      if( input.value.indexOf('[') != -1 && input.value.indexOf(']') != -1) {
-        input.value = input.value.substring(1,input.value.length-2)
+      if (input.type == 'uint256') {
+        flag++;
+        if (input.count.indexOf('[') != -1 && input.count.indexOf(']') != -1) {
+          input.count = input.count.substring(1, input.value.length - 2)
+        }
+        acc[`${input.name}${flag}`] = input.count.split(',');
+      } else {
+        flag++;
+        if (input.value.indexOf('[') != -1 && input.value.indexOf(']') != -1) {
+          input.value = input.value.substring(1, input.value.length - 2)
+        }
+        acc[`${input.name}${flag}`] = input.value.split(',');
       }
-      acc[`${input.name}${flag}`] = input.value.split(',');
       return acc;
     }, {});
-    // let res = await contract[functionItem.name](params.account);
     const valuesArray = Object.values(params);
     for (let i = 0; i < valuesArray.length;i++) {
       if (valuesArray[i].length == 1) {
         valuesArray[i] = valuesArray[i][0]
       }
     }
-    console.log(valuesArray)
-    // let res = await contract["symbol"]();
     let res = await contract[functionItem.name](...valuesArray);
-    // const res = await contract[functionItem.functionName](...Object.values(params));
-    queryResult.value[functionItem.name] = res;
+    queryResult.value[functionItem.name] = res.toString();
   } catch (error) {
     queryError.value = error.message;
   }
 }
 const getItemName = async () => {
   try {
-    // const provider = new ethers.BrowserProvider(window.ethereum);
     const readProvider = new ethers.JsonRpcProvider(config.testRpc_adress)
     if (!contractSource.value || !contractSource.value.contractaddress) {
       throw new Error('Contract address is not initialized or invalid.');
@@ -1453,7 +1528,6 @@ const handleClick = (tab, event) => {
     }
 
   } else if (tab.props.name === "tab3") {
-    // getContractList()
   } else if (tab.props.name === "tab4") {
 
   } else if (tab.props.name === "tab5") {
@@ -1604,7 +1678,7 @@ onMounted(async () => {
   await getIndividualQuery();
   await getContactList();
   getTransationCount();
-  // getBalanceList();
+  getBalanceList();
 });
 </script>
 
