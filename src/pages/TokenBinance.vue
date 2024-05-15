@@ -1204,6 +1204,7 @@ const resetAll = () => {
   viewFunctions.value.forEach((item) => {
     item.inputs.forEach((input) => {
       input.value = '';
+      input.count = '';
     })
   })
 }
@@ -1216,9 +1217,13 @@ const toggleAll2 = () => {
 }
 const resetAll2 = () => {
   actives.value = [];
+  for (let key in writePayable) {
+    writePayable[key] = ''
+  }
   writeContract.value.forEach((item) => {
     item.inputs.forEach((input) => {
       input.value = '';
+      input.count = ''
     })
   })
 }
@@ -1355,12 +1360,15 @@ const payableDialog = (functionIndex) => {
   form.value.region = '';
   dialogFormVisibles.value = true;
   FunctionIndex.value = functionIndex;
+  InputIndex.value = '';
 }
 const addSelect = () => {
   dialogFormVisibles.value = false;
- if (writeContract.value[FunctionIndex.value].stateMutability == 'payable') {
-    writePayable[writeContract.value[FunctionIndex.value].name] *= form.value.region.toString();
+  if (!InputIndex.value) {
+    writePayable[writeContract.value[FunctionIndex.value].name] = writePayable[writeContract.value[FunctionIndex.value].name] || 1
+    writePayable[writeContract.value[FunctionIndex.value].name]  *= form.value.region.toString();
   } else {
+    writeContract.value[FunctionIndex.value].inputs[InputIndex.value].count = writeContract.value[FunctionIndex.value].inputs[InputIndex.value].count || 1
     writeContract.value[FunctionIndex.value].inputs[InputIndex.value].count *= form.value.region.toString();
   }
 }
