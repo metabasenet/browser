@@ -2,7 +2,7 @@ import router from '@/router';
 import nprogress from 'nprogress';
 import 'nprogress/nprogress.css';
 router.beforeEach((to, from, next) => {
-    document.title = 'MNT-' + to.name;
+    document.title = 'MNT Smart Chain ' + to.name + ' | MNTScan';
     nprogress.start();
     next();
 })
