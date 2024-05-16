@@ -55,7 +55,7 @@
         <el-row>
           <el-col :span="24">
             <div class=" grid-content_h1">
-              <el-tabs v-model="activeName" type="border-card" class="demo-tabs" @tab-click="handleClick">
+              <el-tabs v-model="activeName" class="demo-tabs">
                 <el-tab-pane label="OverView" name="overView">
                   <el-row class="grid-content_row">
                     <el-col :span="24" :xs="24">
@@ -241,7 +241,7 @@
                   </el-row>
                   <el-row class="grid-content_h2">
                     <el-col :span="24" :xs="24">
-                      <el-collapse @change="handleChange">
+                      <el-collapse>
                         <el-collapse-item title="More Details:" name="1">
                           <el-descriptions class="grid-content" :column="1" align="left" v-model="transDetails">
                             <el-descriptions-item label-class-name="my-label" label="Gas Limit & Usage by Txn:"
@@ -270,15 +270,23 @@
                             <el-descriptions-item label-class-name="my-label" label="Input Data:" label-align="center"
                               align="left">
                               <div class="block_height">
-                                <el-input style="width: 78vw;" type="textarea" :disabled="true"
-                                  :placeholder="transDetails.data">
+                                <el-input v-show="currentValue == 'Original'" style="width: 85vw;" :rows="4 "
+                                  type="textarea" :disabled="true" :placeholder="transDetails.data">
                                 </el-input>
-                                <!-- <el-select v-model="value" placeholder="View Input As"
-                                  style="width: 150px;margin-right:10px">
+                                <el-input v-show="currentValue == 'Default View'" style="width: 85vw;" :rows="4"
+                                  type="textarea" :disabled="true"
+                                  :placeholder="decOrHexFlag == 'hex' ? `${functionName}\n\n${methodId}\n${methodParams}` : `${functionName}\n\n${methodIdDec}\n${methodParamsDec}`">
+                                </el-input>
+                                <el-select v-model="value" placeholder="View Input As"
+                                  style="width: 110px;margin-right:10px;" @change="valueChange(value)">
                                   <el-option v-for="item in options" :key="item.value" :label="item.label"
                                     :value="item.value" />
                                 </el-select>
-                                <el-button icon="Menu">Decode Input Data</el-button>
+                                <el-button v-show="currentValue == 'Default View'" type="primary"
+                                  @click="baseConversion(10)">Dec</el-button>
+                                <el-button v-show="currentValue == 'Default View'" type="success"
+                                  @click="baseConversion(16)">Hex</el-button>
+                                <!-- <el-button icon="Menu">Decode Input Data</el-button>
                                 <el-button icon="Position">Advanced Filter</el-button> -->
                               </div>
                             </el-descriptions-item>
@@ -320,8 +328,8 @@
                 </el-tab-pane>
                 <el-tab-pane label="Internal Txns" name="internalTxns">
                   <el-row class="box-table">
-                    <el-table v-loading="loading" :data="tableData" style="width: 100%" size="default"
-                      :row-style="{ height: '70px' }">
+                    <el-table v-loading="loading" :data="tableData" style="width: 100%; border-radius: 15px;"
+                      size="default" :row-style="{ height: '70px' }">
                       <el-table-column prop="transactionhash" label="TrsHash" width="110">
                         <template v-slot="scope">
                           <el-tooltip :content="scope.row.transactionhash">
@@ -445,14 +453,14 @@
                               </el-descriptions-item>
                               <el-descriptions-item label="Topics:" label-align="center" align="left"
                                 label-class-name="my-label" class-name="my-content" label-width="30%">
-                                <div class="block_height" style="margin-bottom: 6px;">
+                                <div class="block_height topics-one" style="margin-bottom: 6px;">
                                   <div style="display:flex; align-items: center" v-if="item.methodHash">
-                                    <el-tag type="succes">0:</el-tag><span class="skyblue-text ellipsis-text">{{
+                                    <el-tag type="success">0:</el-tag><span class="skyblue-text ellipsis-text">{{
                                       item.methodHash }}
                                     </span>
                                   </div>
                                 </div>
-                                <div class="block_height" style="margin-left: 196px;">
+                                <div class="block_height" style="margin-left: 19%;">
                                   <div style="display:flex; align-items: center" v-if="item.from">
                                     <el-tag type="warning">1:</el-tag><router-link class="skyblue-text ellipsis-text"
                                       :to="{
@@ -462,7 +470,7 @@
                                     </router-link>
                                   </div>
                                 </div>
-                                <div class="block_heights" style="margin-left: 196px;">
+                                <div class="block_heights" style="margin-left: 19%;">
                                   <div style="display:flex; align-items: center" v-if="item.to">
                                     <el-tag type="info">2:</el-tag><router-link class="skyblue-text ellipsis-text" :to="{
                                         name: 'address',
@@ -479,8 +487,8 @@
                                     <el-input type="textarea" v-model="item.value" autosize disabled
                                       style="width: 100%;height:auto"></el-input>
                                     <div class="input_button">
-                                      <el-button type="primary" @click="decadecimal(item.value,index)">Dec</el-button>
-                                      <el-button type="success" @click="hexadecimal(item.value,index)">Hex</el-button>
+                                      <el-button type="primary" @click="decadecimal(index)">Dec</el-button>
+                                      <el-button type="success" @click="hexadecimal(index)">Hex</el-button>
                                     </div>
                                   </div>
                                 </div>
@@ -506,13 +514,12 @@
 <script setup>
 import { ref, onMounted, computed, reactive, watch } from 'vue'
 import { ElMessage } from 'element-plus';
-import { getTransactionDetail, getTransactionLogs, getTransactionInternal, getInternalTransactionTest } from '@/api/transaction';
+import { getTransactionDetail, getTransactionLogs, getTransactionInternal, getInternalTransactionTest, getTransactionFunctionName } from '@/api/transaction';
 import { ethers,formatUnits } from "ethers";
 import {config} from '@/config/config'
 import moment from 'moment'
 import { getBlockPage } from '@/api/block';
 const tableData = ref([])
-const activeNames = ref([])
 const transDetails = ref({})
 const transLogs = ref([])
 const total = ref(0)
@@ -531,10 +538,6 @@ const options = [
     label: 'Default View',
   },
   {
-    value: 'UTF-8',
-    label: 'UTF-8',
-  },
-  {
     value: 'Original',
     label: 'Original',
   },
@@ -545,13 +548,6 @@ const { hash } = defineProps({
     required: true,
   }
 });
-const handleClick = (tab) => {
-  if (tab.props.name === "overview") {
-    // fetchTransactionDetails();
-  }else if(tab.props.name === "logs"){
-    // fetchTransactionLogs();
-  }
-}
 const timestamps = () => {
   const currentTime = Math.floor(Date.now() / 1000);
   const timestamp = transDetails.value.timestamp;
@@ -573,12 +569,13 @@ const timestamps = () => {
   }
   transDetails.value.formattedTime = formattedTime;
 }
+let inputData = ref('')
 const fetchTransactionDetails = async () => {
   try {
     if (hash !== null) {
       const response = await getTransactionDetail(hash);
-      // console.log(response);
       transDetails.value = response.data;
+      inputData.value = transDetails.value.data
       const results = formatUnits(transDetails.value.value.toString(), 18)
       transDetails.value.value = results;
       const gaspricetotal = computed(() => {
@@ -603,26 +600,36 @@ const fetchTransactionLogs = async () => {
   try {
     if (hash !== null) {
       const response = await getTransactionLogs(hash,page.value,pageSize.value);
-      console.log(response);
-      transLogs.value = response.data.list;
+      transLogs.value = response.data.list || [];
       total.value = response.data.total;
     }
   } catch (error) {
     console.error('Error fetching block details:', error);
   }
 }
-const decadecimal = (value,index)=>{
-  const decimal = parseInt(value,16)
-  transLogs.value[index].value = decimal
+function detectNumberBase(numberString) {
+    numberString = numberString.toString();
+    if (numberString.startsWith("0x")) {
+        return 16;
+    }
+    return 10;
 }
-const hexadecimal =(value,index)=>{
-  const hex = value.toString(16);
-  transLogs.value[index].value = hex
+const decadecimal = (index)=>{
+  const base = detectNumberBase(transLogs.value[index].value)
+  if (base == 16) {
+    transLogs.value[index].value = parseInt(transLogs.value[index].value.substring(2), 16)
+  } else {
+    return
+  }
 }
-const handleChange = (val) => {
-  // console.log(val)
+const hexadecimal =(index)=>{
+  const base = detectNumberBase(transLogs.value[index].value)
+  if (base == 10) {
+    transLogs.value[index].value = '0x' + transLogs.value[index].value.toString(16)
+  } else {
+    return
+  }
 }
-// .
 function copyToClipboard(text) {
   transDetails.value.istoCopied = true;
   setTimeout(() => { transDetails.value.istoCopied = false; }, 2000);
@@ -709,7 +716,6 @@ const getInterTransactions = async () => {
       tableData.value = data;
     } else {
       let {data} = await getInternalTransactionTest(hash)
-      console.log('8888888', data);
       tableData.value = data;
     }
 
@@ -736,7 +742,72 @@ const getInterTransactions = async () => {
     })
     loading.value = false
   } catch (error) {
-    console.log(error);
+    console.error(error);
+  }
+}
+let currentValue = ref('Default View')
+function valueChange (v) {
+  currentValue.value = v
+}
+
+let methodId = computed(() => {
+  let MethodId = inputData.value.substring(0, 10)
+  return 'MethodId: ' + MethodId
+})
+let methodParams = computed(() => {
+  let startIndex = 0;
+  let indexSize = 64;
+  let MethodParams = inputData.value.substring(10)
+  let resultArry = []
+  while (startIndex < MethodParams.length) {
+    let subStr = MethodParams.substring(startIndex, startIndex + indexSize)
+    startIndex += indexSize
+    resultArry.push(subStr)
+  }
+  for (let i=0; i<resultArry.length; i++) {
+    resultArry[i] = `[${i}]: ${resultArry[i]}`
+  }
+  let resStr = resultArry.join('\n')
+  return resStr
+})
+let decOrHexFlag = ref('hex')
+function baseConversion (v) {
+  if (v == 10) {
+    decOrHexFlag.value = 'dec'
+  } else {
+    decOrHexFlag.value = 'hex'
+  }
+}
+
+let methodIdDec = computed(() => {
+  let methodId = inputData.value.substring(0, 10)
+  let MethodId = parseInt(methodId.substring(2), 16)
+  return 'MethodId: ' + MethodId
+})
+let methodParamsDec = computed(() => {
+  let startIndex = 0;
+  let indexSize = 64;
+  let MethodParams = inputData.value.substring(10)
+  let resultArry = []
+  while (startIndex < MethodParams.length) {
+    let subStr = MethodParams.substring(startIndex, startIndex + indexSize)
+    startIndex += indexSize
+    resultArry.push(subStr)
+  }
+  for (let i = 0; i < resultArry.length; i++) {
+    resultArry[i] = `[${i}]: ${parseInt(resultArry[i], 16)}`
+  }
+  let resStr = resultArry.join('\n')
+  return resStr
+})
+let functionName = ref('')
+async function getFunctionName() {
+  try {
+    let MethodId = inputData.value.substring(0, 10)
+    let { data } = await getTransactionFunctionName(MethodId)
+    functionName.value = data.method
+  } catch (error) {
+    console.error('Error in obtaining method name:', error);
   }
 }
 onMounted(async () => {
@@ -744,6 +815,7 @@ onMounted(async () => {
   await fetchTransactionLogs();
   await getLastestHeight();
   await getInterTransactions();
+  getFunctionName()
 })
 let ratioValue = computed(()=>{
   let res = (transDetails.value.gasUsed / transDetails.value.gasLimit) * 100
@@ -922,6 +994,9 @@ body {
     /* padding: 0; */
     margin: 0;
   }
+  .topics-one {
+    margin-left: 19%;
+  }
 }
 :deep(.el-descriptions__label:not(.is-bordered-label)) {
     font-size: 14.4992px;
@@ -934,7 +1009,7 @@ body {
 }
 .demo-tabs {
   border-radius: 15px;
-  border: 2px solid #dcdfe6;
+  border: 1px solid #dcdfe6;
 }
 .box-table {
   background-color: #fff;

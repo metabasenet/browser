@@ -8,7 +8,8 @@ const API = {
     TRANSACTION_COUNT_URL: '/market/lastedTranscationCount',
     TRANSACTION_INTERNAL_URL: '/transaction/getPlatformTransactionInfo',
     TRANSACTION_PLATFORM_URL: '/transaction/getPlatformTransactionByAddress',
-    TRANSATION_INTERNALTEST_URL: '/transaction/getInternalTransactionInfo'
+    TRANSATION_INTERNALTEST_URL: '/transaction/getInternalTransactionInfo',
+    TRANSATION_FUNCTIONNAME_URL: '/transaction/getMethdNameByHash'
   }
 export const getTransactionPage = (page, pageSize, timeout = 10000) => { 
     const url = `${API.TRANSACION_PAGE_URL}?page=${page}&pageSize=${pageSize}`;
@@ -47,5 +48,9 @@ export const getTransactionPlaform = (address, currentPage, pageSize) => {
 }
 export const getInternalTransactionTest = (transactionHash) => {
   const url = `${API.TRANSATION_INTERNALTEST_URL}?transactionHash=${transactionHash}`
+  return request.get(url);
+}
+export const getTransactionFunctionName = (transactionHash) => {
+  const url = `${API.TRANSATION_FUNCTIONNAME_URL}?hash=${transactionHash}`
   return request.get(url);
 }
