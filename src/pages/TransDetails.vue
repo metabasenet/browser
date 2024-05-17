@@ -816,7 +816,7 @@ onMounted(async () => {
   getFunctionName()
 })
 let ratioValue = computed(()=>{
-  let res = (transDetails.value.gasUsed / transDetails.value.gasLimit) * 100
+  let res = transDetails.value.gasLimit == 0 ? 0 : (transDetails.value.gasUsed / transDetails.value.gasLimit) * 100
   return res.toFixed(2)
 })
 
