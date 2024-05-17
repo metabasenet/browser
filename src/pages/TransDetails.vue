@@ -270,12 +270,14 @@
                             <el-descriptions-item label-class-name="my-label" label="Input Data:" label-align="center"
                               align="left">
                               <div class="block_height">
-                                <el-input v-show="currentValue == 'Original'" style="width: 85vw;" :rows="4 "
-                                  type="textarea" :disabled="true" :placeholder="transDetails.data">
+                                <el-input v-show="currentValue == 'Original'" style="width: 85vw; font-size: 14.4492px;"
+                                  :rows="4 " type="textarea" :disabled="true" :placeholder="transDetails.data"
+                                  >
                                 </el-input>
-                                <el-input v-show="currentValue == 'Default View'" style="width: 85vw;" :rows="4"
-                                  type="textarea" :disabled="true"
-                                  :placeholder="decOrHexFlag == 'hex' ? `${functionName}\n\n${methodId}\n${methodParams}` : `${functionName}\n\n${methodId}\n${methodParamsDec}`">
+                                <el-input v-show="currentValue == 'Default View'"
+                                  style="width: 85vw; font-size: 14.4992px;" :rows="4" type="textarea" :disabled="true"
+                                  :placeholder="decOrHexFlag == 'hex' ? `${functionName}\n\n${methodId}\n${methodParams}` : `${functionName}\n\n${methodId}\n${methodParamsDec}`"
+                                  >
                                 </el-input>
                                 <el-select v-model="value" placeholder="View Input As"
                                   style="width: 110px;margin-right:10px;" @change="valueChange(value)">
@@ -1021,4 +1023,5 @@ body {
   justify-content: center;
   flex-wrap: wrap;
 }
+
 </style>
