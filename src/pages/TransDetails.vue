@@ -275,7 +275,7 @@
                                 </el-input>
                                 <el-input v-show="currentValue == 'Default View'" style="width: 85vw;" :rows="4"
                                   type="textarea" :disabled="true"
-                                  :placeholder="decOrHexFlag == 'hex' ? `${functionName}\n\n${methodId}\n${methodParams}` : `${functionName}\n\n${methodIdDec}\n${methodParamsDec}`">
+                                  :placeholder="decOrHexFlag == 'hex' ? `${functionName}\n\n${methodId}\n${methodParams}` : `${functionName}\n\n${methodId}\n${methodParamsDec}`">
                                 </el-input>
                                 <el-select v-model="value" placeholder="View Input As"
                                   style="width: 110px;margin-right:10px;" @change="valueChange(value)">
@@ -779,11 +779,7 @@ function baseConversion (v) {
   }
 }
 
-let methodIdDec = computed(() => {
-  let methodId = inputData.value.substring(0, 10)
-  let MethodId = parseInt(methodId.substring(2), 16)
-  return 'MethodId: ' + MethodId
-})
+
 let methodParamsDec = computed(() => {
   let startIndex = 0;
   let indexSize = 64;
