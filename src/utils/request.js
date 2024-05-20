@@ -4,18 +4,11 @@ import pinia from '@/store'
 import { useUserStore } from '@/store/user'
 import { config } from '@/config/config'
 //import.meta.env.VITE_APP_API_URL
-//location.hostname == config.main_url?config.main_url:config.test_url
-// const flag = sessionStorage.getItem('flag') || 1
 let request = axios.create({
     baseURL: location.hostname == config.domainUser_url?config.main_url:config.test_url,
-    // baseURL: config.main_url,
     timeout: 15000,
 });
 request.interceptors.request.use((config) => {
-
-    // let userStore = useUserStore();
-    // config.headers['token'] = userStore.token;
-    // config.headers.token = localStorage.getItem('token');
     return config
 });
 

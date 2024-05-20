@@ -1,7 +1,6 @@
 <template>
     <div class="footer">
         <el-container class="container-xxl">
-            <!-- <el-aside class="responsive-aside"></el-aside> -->
             <el-main>
                 <el-row class="footer-box">
                     <el-col :span="24">
@@ -87,7 +86,6 @@
                     </el-col>
                 </el-row>
             </el-main>
-            <!-- <el-aside class="responsive-aside"></el-aside> -->
         </el-container>
     </div>
 </template>

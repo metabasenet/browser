@@ -1,7 +1,6 @@
 <template>
   <div class="box">
     <el-container class="container-xxl">
-      <!-- <el-aside class="responsive-aside"></el-aside> -->
       <el-main>
         <el-row>
           <el-col :span="24">
@@ -113,7 +112,6 @@
           </div>
         </el-row>
       </el-main>
-      <!-- <el-aside class="responsive-aside"></el-aside> -->
     </el-container>
   </div>
 </template>
@@ -188,9 +186,6 @@ const addGaspriceTotalToTableData = () => {
 const handleSizeChange = (val) => {
   getBlockPageData()
 }
-// const handleCurrentChange = (val) => {
-//   getBlockPageData()
-// }
 function copyToClipboard(text,row) {
   row.istoCopied = true;
   setTimeout(() => { row.istoCopied = false; }, 2000);

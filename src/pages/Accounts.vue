@@ -1,7 +1,6 @@
 <template>
     <div class="box">
         <el-container class="container-xxl">
-            <!-- <el-aside class="responsive-aside"></el-aside> -->
             <el-main>
                 <el-row>
                     <el-col :span="24">
@@ -26,7 +25,6 @@
                                     {{ scope.row.address }}</router-link>
                             </template>
                         </el-table-column>
-                        <!-- <el-table-column prop="percentage" label="Name Tag" align="center"></el-table-column> -->
                         <el-table-column style="font-size: 100px;" prop="balance" label="Balance" >
                             <template v-slot="scope">
                                 <span style="font-size: 14.4992px; color: #212529;">{{ scope.row.balance }}</span>
@@ -52,7 +50,6 @@
                     </div>
                 </el-row>
             </el-main>
-            <!-- <el-aside class="responsive-aside"></el-aside> -->
         </el-container>
     </div>
 </template>

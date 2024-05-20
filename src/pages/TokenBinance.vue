@@ -1302,26 +1302,14 @@ const connectWallet = async () => {
         const result = firstPart + "..." + lastPart;
         results.value = result;
       }
-
-      // const provider = new ethers.providers.Web3Provider(window.ethereum);
-      // const provider = new ethers.BrowserProvider(window.ethereum,"https://test.metabasenet.site/rpc");
-      // // const provider = new ethers.JsonRpcProvider("https://test.metabasenet.site/rpc");
-      // let byteCode = await provider.getCode(contractAddress);
-      // return byteCode;
-      // }
       const provider = new ethers.BrowserProvider(window.ethereum);
-      // const provider = new ethers.BrowserProvider(window.ethereum, "https://test2.metabasenet.site/rpc");
       const signer = await provider.getSigner();
       const contract = new ethers.Contract(
         contractSource.value.contractaddress,
         contractSource.value.abi,
         signer
       );
-
-      //  const amountInWei = ethers.utils.parseEther(amountInEther);
-      // const balance = await contract.provider.getBalance(account);
       const balance = await provider.getBalance(account);
-      // const balance = await contract.balanceOf(account);
 
       const totalSupply = await contract.totalSupply();
 

@@ -1,7 +1,6 @@
 <template>
   <div class="box">
     <el-container class="container-xxl">
-      <!-- <el-aside class="responsive-aside"></el-aside> -->
       <el-main>
         <el-row>
           <el-col :span="24">
@@ -141,7 +140,6 @@
           </el-col>
         </el-row>
       </el-main>
-      <!-- <el-aside class="responsive-aside"></el-aside> -->
     </el-container>
   </div>
 </template>

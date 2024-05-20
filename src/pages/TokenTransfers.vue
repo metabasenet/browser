@@ -1,7 +1,6 @@
 <template>
     <div class="box">
         <el-container class="container-xxl">
-            <!-- <el-aside class="responsive-aside"></el-aside> -->
             <el-main>
                 <el-row>
                     <el-col :span="24">
@@ -93,7 +92,7 @@
                         <el-table-column prop="value" label="Value">
                             <template v-slot="scope">
                                 <el-tooltip :content="`${scope.row.value}`" placement="top">
-                                    <span class="ellipsis-text">{{ scope.row.value }}</span>
+                                    <span class="ellipsis-text">{{ scope.row.value }}<span style="font-size: 12px; color: #212529;">(MNT)</span></span>
                                 </el-tooltip>
                             </template>
                         </el-table-column>
@@ -107,7 +106,6 @@
                     </div>
                 </el-row>
             </el-main>
-            <!-- <el-aside class="responsive-aside"></el-aside> -->
         </el-container>
     </div>
 </template>

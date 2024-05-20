@@ -172,7 +172,7 @@
                                 <el-button type="success" icon="Check" circle />
                               </el-tooltip>
                             </div>
-                            <!-- <div class="TransactionAction">
+                            <div class="TransactionAction">
                 <el-icon>
                   <Money />
                 </el-icon><span>Transfer 0.004435244050238826 MNT</span> <span>From</span>
@@ -201,7 +201,7 @@
                     <div class=" mb-2 truncate"></div>
                   </router-link>
                 </el-tooltip>
-              </div> -->
+              </div>
                           </div>
 
                         </el-descriptions-item>
@@ -231,7 +231,7 @@
                           label-class-name="my-label">
                           <div class="block_height"><span style="font-size: 14.4992px; color:#212529;"> {{
                               transDetails.gasPrice }}
-                              <!-- ({{ transDetails.gasPrice }})MNT -->
+                              ({{ transDetails.gasPrice }})<span style="font-size: 12px; color: #212529;">MNT</span>
                             </span>
                           </div>
 
@@ -270,14 +270,14 @@
                             <el-descriptions-item label-class-name="my-label" label="Input Data:" label-align="center"
                               align="left">
                               <div class="block_height">
-                                <el-input v-show="currentValue == 'Original'" style="width: 85vw; font-size: 14.4492px;"
-                                  :rows="4 " type="textarea" :disabled="true" :placeholder="transDetails.data"
-                                  >
+                                <el-input v-show="currentValue == 'Original'"
+                                  style="width: 85vw; font-size: 14.4492px; color: red;" :rows="4 " type="textarea"
+                                  :disabled="true" :placeholder="transDetails.data">
                                 </el-input>
                                 <el-input v-show="currentValue == 'Default View'"
-                                  style="width: 85vw; font-size: 14.4992px;" :rows="4" type="textarea" :disabled="true"
-                                  :placeholder="decOrHexFlag == 'hex' ? `${functionName}\n\n${methodId}\n${methodParams}` : `${functionName}\n\n${methodId}\n${methodParamsDec}`"
-                                  >
+                                  style="width: 85vw; font-size: 14.4992px; color: red;" :rows="4" type="textarea"
+                                  :disabled="true"
+                                  :placeholder="decOrHexFlag == 'hex' ? `${functionName}\n\n${methodId}\n${methodParams}` : `${functionName}\n\n${methodId}\n${methodParamsDec}`">
                                 </el-input>
                                 <el-select v-model="value" placeholder="View Input As"
                                   style="width: 110px;margin-right:10px;" @change="valueChange(value)">

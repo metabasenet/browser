@@ -180,29 +180,12 @@ const getSearch = async () => {
       router.push({ name: 'tx', params: { hash: hash } });
       homeSearch.value = '';
     } else if (response.data.address || response.data.contract) {
-      // if(response.data.contract){
-      //   let contractaddress = response.data.contract.contractaddress
-      //   let contract = Object.keys(response.data)[0]
-      //   console.log(contract);
-      //   router.push({ name: 'address', params: { address: contractaddress },query:{contract} });
-      //   homeSearch.value = '';
-      // }else{
-      //   let address = response.data.address.address
-      //   let contract = Object.keys(response.data)[0]
-      //   router.push({ name: 'address', params: { address: address },query:{contract} });
-      //   homeSearch.value = '';
-      // }
       let address = response.data.address ? response.data.address.address : response.data.contract.contractaddress
       router.push({ name: 'address', params: { address: address } });
       homeSearch.value = '';
     } else {
       ElMessage.warning('No data found')
     }
-    // else if (response.data.contract) {
-    //   let contractAddress = response.data.contract.contractaddress
-    //   router.push({ name: 'token', params: { address: contractAddress } });
-    //   homeSearch.value = '';
-    // } 
   } catch (error) {
 
   }

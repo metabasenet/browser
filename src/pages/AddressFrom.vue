@@ -1,7 +1,6 @@
 <template>
   <div class="box">
     <el-container class="container-xxl">
-      <!-- <el-aside class="responsive-aside"></el-aside> -->
       <el-main>
         <el-row>
           <el-col :span="24">
@@ -1115,7 +1114,6 @@
           </el-col>
         </el-row>
       </el-main>
-      <!-- <el-aside class="responsive-aside"></el-aside> -->
     </el-container>
   </div>
 </template>
@@ -1395,15 +1393,8 @@ const connectWallet = async () => {
         const result = firstPart + "..." + lastPart;
         results.value = result;
       }
-
-      // const provider = new ethers.providers.Web3Provider(window.ethereum);
-      // const provider = new ethers.BrowserProvider(window.ethereum,"https://test.metabasenet.site/rpc");
-      // // const provider = new ethers.JsonRpcProvider("https://test.metabasenet.site/rpc");
-      // let byteCode = await provider.getCode(contractAddress);
-      // return byteCode;
-      // }
       const provider = new ethers.BrowserProvider(window.ethereum);
-      // const provider = new ethers.BrowserProvider(window.ethereum, "https://test2.metabasenet.site/rpc");
+     
       const signer = await provider.getSigner();
       const contract = new ethers.Contract(
         contractSource.value.contractaddress,
@@ -1411,28 +1402,24 @@ const connectWallet = async () => {
         signer
       );
 
-      //  const amountInWei = ethers.utils.parseEther(amountInEther);
-      // const balance = await contract.provider.getBalance(account);
-      const balance = await provider.getBalance(account);
-      // const balance = await contract.balanceOf(account);
 
-      // console.log("Balance:", ethers.utils.formatEther(balance));
+      const balance = await provider.getBalance(account);
+
+
+
       const totalSupply = await contract.totalSupply();
-      // console.log("Total Token Supply:", ethers.utils.formatEther(totalSupply));
+     
 
 
       const allowance = await contract.allowance(account, anotherAccount);
 
-      // console.log(
-      //   "Allowance for anotherAccount:",
-      //   ethers.formatEther(allowance)
-      // );
+
       const approveTxn = await contract.approve(anotherAccount, amountInEther);
       const receipt = await approveTxn.wait();
-      // console.log("Approval Transaction:", receipt);
+
       const transferTxn = await contract.transfer(address, amountInEther);
       const transferReceipt = await transferTxn.wait();
-      // console.log("Transfer Transaction:", transferReceipt);
+
       const transferFromTxn = await contract
         .connect(signer)
         .transferFrom(fromAccount, address, amountInEther);
@@ -1488,10 +1475,8 @@ const openWeb = () => {
 };
 const handleClicks = (tab, event) => {
   if (tab.props.name === "first") {
-    // getContactList();
   } else if (tab.props.name === "second") {
   } else if (tab.props.name === "third") {
-    // getContractList()
   }
 };
 const openDialog = (functionIndex, inputIndex) => {
