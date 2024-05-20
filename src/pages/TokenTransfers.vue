@@ -92,7 +92,7 @@
                         <el-table-column prop="value" label="Value">
                             <template v-slot="scope">
                                 <el-tooltip :content="`${scope.row.value}`" placement="top">
-                                    <span class="ellipsis-text">{{ scope.row.value }}<span style="font-size: 12px; color: #212529;">(MNT)</span></span>
+                                    <span class="ellipsis-text">{{ scope.row.value }}</span>
                                 </el-tooltip>
                             </template>
                         </el-table-column>
