@@ -831,7 +831,7 @@ let tableDatass = ref([
 
 async function decodeDataFn () {
   let toAddressAbi = []
-  let res = await getContractDetail('0x3056ed8057dA4eFB828321E308fa400EB7ACAF7D')
+  let res = await getContractDetail(toAddress.value)
   toAddressAbi = res.data ? JSON.parse(res.data.abi) : ''
   let functionNameN = ''
   if (functionName.value.indexOf('(') != -1) {
@@ -840,19 +840,22 @@ async function decodeDataFn () {
   let fnItem = toAddressAbi.filter(
     item => item.name == functionNameN
   )
+  let typeArry = []
+  let flag = 0
+  fnItem[0].inputs.forEach((item) => {
+    typeArry[flag] = item.type
+    flag++
+  })
   let MethodParams = inputData.value.substring(10)
   const coder = ethers.AbiCoder.defaultAbiCoder();
-  const decodeRes = coder.decode([fnItem[0].inputs[0].type, fnItem[0].inputs[1].type], `0x${MethodParams}`);
-  console.log(decodeRes)
+  const decodeRes = coder.decode(typeArry, `0x${MethodParams}`);
+  let decodeResFlag = 0
   fnItem[0].inputs.forEach((item) => {
     let obj = {}
     obj.name = item.name
     obj.type = item.type
-    if(item.type == 'uint256') {
-      obj.data = decodeRes[1]
-    } else {
-      obj.data = decodeRes[0]
-    }
+    obj.data = decodeRes[decodeResFlag]
+    decodeResFlag++
     tableDatass.value.push(obj)
   })
 }
