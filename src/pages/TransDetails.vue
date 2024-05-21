@@ -291,7 +291,8 @@
                                   type="primary" @click="baseConversion(10)">Dec</el-button>
                                 <el-button v-show="currentValue == 'Default View' && isZeroAddress == false"
                                   type="success" @click="baseConversion(16)">Hex</el-button>
-                                <el-button icon="HelpFilled" @click="decodeShow = true" v-if="isZeroAddress == false">Decode
+                                <el-button icon="HelpFilled" @click="decodeShow = true"
+                                  v-if="isZeroAddress == false">Decode
                                   Input Data</el-button>
                               </div>
                               <div v-show="decodeShow == true">
@@ -466,14 +467,15 @@
                               </el-descriptions-item>
                               <el-descriptions-item label="Topics:" label-align="center" align="left"
                                 label-class-name="my-label" class-name="my-content" label-width="30%">
-                                <div class="block_height topics-one" style="margin-bottom: 6px;">
+                                <br />
+                                <div class="block_height topics-one" style="margin-bottom: 6px; margin-left: 14.8%;">
                                   <div style="display:flex; align-items: center" v-if="item.methodHash">
                                     <el-tag type="success">0:</el-tag><span class="skyblue-text ellipsis-text">{{
                                       item.methodHash }}
                                     </span>
                                   </div>
-                                </div>
-                                <div class="block_height" style="margin-left: 19%;">
+                                </div><br />
+                                <div class="block_height" style="margin-left: 14.8%;">
                                   <div style="display:flex; align-items: center" v-if="item.from">
                                     <el-tag type="warning">1:</el-tag><router-link class="skyblue-text ellipsis-text"
                                       :to="{
@@ -482,8 +484,8 @@
                                         }">{{ item.from }}
                                     </router-link>
                                   </div>
-                                </div>
-                                <div class="block_heights" style="margin-left: 19%;">
+                                </div><br />
+                                <div class="block_heights" style="margin-left: 14.8%;">
                                   <div style="display:flex; align-items: center" v-if="item.to">
                                     <el-tag type="info">2:</el-tag><router-link class="skyblue-text ellipsis-text" :to="{
                                         name: 'address',
@@ -497,7 +499,10 @@
                                 label-class-name="my-label" class-name="my-content" label-width="30%">
                                 <div class="block_heightz">
                                   <div class="input_div">
-                                    <el-input type="textarea" v-model="item.value" autosize disabled
+                                    <el-input v-show="logBaseShow[index] == true" type="textarea" v-model="item.value"
+                                      autosize disabled style="width: 100%;height:auto"></el-input>
+                                    <el-input v-show="logBaseShow[index] == false" type="textarea"
+                                      v-model="transLogsValueArry[index]" autosize disabled
                                       style="width: 100%;height:auto"></el-input>
                                     <div class="input_button">
                                       <el-button type="primary" @click="decadecimal(index)">Dec</el-button>
@@ -546,7 +551,7 @@ const page = ref(1)
 const pageSize = ref(100)
 let loading = ref(false)
 let decodeShow = ref(false)
-
+let logBaseShow = ref([])
 const options = [
   {
     value: 'Default View',
@@ -617,39 +622,59 @@ const fetchTransactionDetails = async () => {
     console.error('Error fetching block details:', error);
   }
 }
+let transLogsValueArry = ref([])
 const fetchTransactionLogs = async () => {
   try {
     if (hash !== null) {
       const response = await getTransactionLogs(hash,page.value,pageSize.value);
       transLogs.value = response.data.list || [];
+      for (let key in transLogs.value) {
+        logBaseShow.value[key] = false
+        let itemValue = transLogs.value[key].value.substring(2);
+        let startIndex = 0;
+        let indexSize = 64;
+        let subStrArr = []
+        while (startIndex < itemValue.length) {
+          let subStr = itemValue.substring(startIndex, indexSize + startIndex);
+          startIndex += indexSize
+          subStrArr.push(subStr)
+        }
+        for (let i = 0; i < subStrArr.length; i++) {
+          let itemArry = parseInt(subStrArr[i], 16).toString()
+          subStrArr[i] = `[${i}]: ${itemArry}`
+        }
+        transLogsValueArry.value[key] = subStrArr.join('\n')
+      }
       total.value = response.data.total;
     }
   } catch (error) {
     console.error('Error fetching block details:', error);
   }
 }
-function detectNumberBase(numberString) {
+function detectNumberBase (numberString) {
     numberString = numberString.toString();
     if (numberString.startsWith("0x")) {
         return 16;
     }
     return 10;
 }
-const decadecimal = (index)=>{
-  const base = detectNumberBase(transLogs.value[index].value)
-  if (base == 16) {
-    transLogs.value[index].value = parseInt(transLogs.value[index].value.substring(2), 16)
-  } else {
-    return
-  }
+const decadecimal = (index) => {
+  logBaseShow.value[index] = false
+  // const base = detectNumberBase(transLogs.value[index].value)
+  // if (base == 16) {
+  //   transLogs.value[index].value = parseInt(transLogs.value[index].value.substring(2), 16)
+  // } else {
+  //   return
+  // }
 }
-const hexadecimal =(index)=>{
-  const base = detectNumberBase(transLogs.value[index].value)
-  if (base == 10) {
-    transLogs.value[index].value = '0x' + transLogs.value[index].value.toString(16)
-  } else {
-    return
-  }
+const hexadecimal = (index) => {
+  logBaseShow.value[index] = true
+  // const base = detectNumberBase(transLogs.value[index].value)
+  // if (base == 10) {
+  //   transLogs.value[index].value = '0x' + transLogs.value[index].value.toString(16)
+  // } else {
+  //   return
+  // }
 }
 function copyToClipboard(text) {
   transDetails.value.istoCopied = true;
@@ -831,8 +856,8 @@ let tableDatass = ref([
 
 async function decodeDataFn () {
   let toAddressAbi = []
-  let res = await getContractDetail(toAddress.value)
-  toAddressAbi = res.data ? JSON.parse(res.data.abi) : ''
+  const res = await getContractDetail(toAddress.value)
+  toAddressAbi = res.data ? JSON.parse(res.data.abi) : []
   let functionNameN = ''
   if (functionName.value.indexOf('(') != -1) {
     functionNameN = functionName.value.substring(0, functionName.value.indexOf('('))
