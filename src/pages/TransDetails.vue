@@ -1,7 +1,6 @@
 <template>
   <div class="box">
     <el-container class="container-xxl">
-      <!-- <el-aside class="responsive-aside"></el-aside> -->
       <el-main>
         <el-row>
           <el-col :span="24">
@@ -172,7 +171,7 @@
                                 <el-button type="success" icon="Check" circle />
                               </el-tooltip>
                             </div>
-                            <div class="TransactionAction">
+                            <!-- <div class="TransactionAction">
                 <el-icon>
                   <Money />
                 </el-icon><span>Transfer 0.004435244050238826 MNT</span> <span>From</span>
@@ -186,8 +185,8 @@
                     <div class=" mb-2 truncate">BSC: System Reward</div>
                   </router-link>
                 </el-tooltip>
-              </div>
-              <div class="TransactionAction">
+              </div> -->
+                            <!-- <div class="TransactionAction">
                 <el-icon>
                   <Money />
                 </el-icon><span>Transfer 0.007096390480382122 MNT From</span>
@@ -201,7 +200,7 @@
                     <div class=" mb-2 truncate"></div>
                   </router-link>
                 </el-tooltip>
-              </div>
+              </div> -->
                           </div>
 
                         </el-descriptions-item>
@@ -269,27 +268,38 @@
                             </el-descriptions-item>
                             <el-descriptions-item label-class-name="my-label" label="Input Data:" label-align="center"
                               align="left">
-                              <div class="block_height">
+                              <div class="block_height" v-show="decodeShow == false">
                                 <el-input v-show="currentValue == 'Original'"
-                                  style="width: 85vw; font-size: 14.4492px; color: red;" :rows="4 " type="textarea"
+                                  style="width: 85vw; font-size: 14.4492px; color: red;" :rows="5" type="textarea"
                                   :disabled="true" :placeholder="transDetails.data">
                                 </el-input>
-                                <el-input v-show="currentValue == 'Default View'"
-                                  style="width: 85vw; font-size: 14.4992px; color: red;" :rows="4" type="textarea"
+                                <el-input v-show="currentValue == 'Default View' && isZeroAddress == false"
+                                  style="width: 85vw; font-size: 14.4992px; color: red;" :rows="5" type="textarea"
                                   :disabled="true"
                                   :placeholder="decOrHexFlag == 'hex' ? `${functionName}\n\n${methodId}\n${methodParams}` : `${functionName}\n\n${methodId}\n${methodParamsDec}`">
+                                </el-input>
+                                <el-input v-show="currentValue == 'Default View' && isZeroAddress == true"
+                                  style="width: 85vw; font-size: 14.4992px; color: red;" :rows="5" type="textarea"
+                                  :disabled="true" :placeholder="transDetails.data">
                                 </el-input>
                                 <el-select v-model="value" placeholder="View Input As"
                                   style="width: 110px;margin-right:10px;" @change="valueChange(value)">
                                   <el-option v-for="item in options" :key="item.value" :label="item.label"
                                     :value="item.value" />
                                 </el-select>
-                                <el-button v-show="currentValue == 'Default View'" type="primary"
-                                  @click="baseConversion(10)">Dec</el-button>
-                                <el-button v-show="currentValue == 'Default View'" type="success"
-                                  @click="baseConversion(16)">Hex</el-button>
-                                <!-- <el-button icon="Menu">Decode Input Data</el-button>
-                                <el-button icon="Position">Advanced Filter</el-button> -->
+                                <el-button v-show="currentValue == 'Default View' && isZeroAddress == false"
+                                  type="primary" @click="baseConversion(10)">Dec</el-button>
+                                <el-button v-show="currentValue == 'Default View' && isZeroAddress == false"
+                                  type="success" @click="baseConversion(16)">Hex</el-button>
+                                <el-button icon="HelpFilled" @click="decodeShow = true">Decode Input Data</el-button>
+                              </div>
+                              <div v-show="decodeShow == true">
+                                <el-table :data="tableDatass" style="width: 100%;" empty-text="No Data">
+                                  <el-table-column prop="name" label="Name" width="180" />
+                                  <el-table-column prop="type" label="Type" width="180" />
+                                  <el-table-column prop="data" label="Data" />
+                                </el-table>
+                                <el-button icon="RefreshLeft" @click="decodeShow = false">Switch Back</el-button>
                               </div>
                             </el-descriptions-item>
                           </el-descriptions>
@@ -508,7 +518,6 @@
           </el-col>
         </el-row>
       </el-main>
-      <!-- <el-aside class="responsive-aside"></el-aside> -->
     </el-container>
   </div>
 </template>
@@ -521,6 +530,7 @@ import { ethers,formatUnits } from "ethers";
 import {config} from '@/config/config'
 import moment from 'moment'
 import { getBlockPage } from '@/api/block';
+import { getContractDetail } from '@/api/verifyContract'
 const tableData = ref([])
 const transDetails = ref({})
 const transLogs = ref([])
@@ -534,6 +544,8 @@ const activeName = ref('overView')
 const page = ref(1)
 const pageSize = ref(100)
 let loading = ref(false)
+let decodeShow = ref(false)
+
 const options = [
   {
     value: 'Default View',
@@ -572,11 +584,17 @@ const timestamps = () => {
   transDetails.value.formattedTime = formattedTime;
 }
 let inputData = ref('')
+let toAddress = ref('')
+let isZeroAddress = ref(false)
 const fetchTransactionDetails = async () => {
   try {
     if (hash !== null) {
       const response = await getTransactionDetail(hash);
       transDetails.value = response.data;
+      toAddress.value = transDetails.value.to
+      if (toAddress.value == ethers.ZeroAddress) {
+        isZeroAddress.value = true
+      }
       inputData.value = transDetails.value.data
       const results = formatUnits(transDetails.value.value.toString(), 18)
       transDetails.value.value = results;
@@ -781,7 +799,6 @@ function baseConversion (v) {
   }
 }
 
-
 let methodParamsDec = computed(() => {
   let startIndex = 0;
   let indexSize = 64;
@@ -803,17 +820,48 @@ async function getFunctionName() {
   try {
     let MethodId = inputData.value.substring(0, 10)
     let { data } = await getTransactionFunctionName(MethodId)
-    functionName.value = data.method
+    functionName.value = data ? data.method : ''
   } catch (error) {
     console.error('Error in obtaining method name:', error);
   }
+}
+let tableDatass = ref([
+])
+
+async function decodeDataFn () {
+  let toAddressAbi = []
+  let res = await getContractDetail('0x3056ed8057dA4eFB828321E308fa400EB7ACAF7D')
+  toAddressAbi = res.data ? JSON.parse(res.data.abi) : ''
+  let functionNameN = ''
+  if (functionName.value.indexOf('(') != -1) {
+    functionNameN = functionName.value.substring(0, functionName.value.indexOf('('))
+  }
+  let fnItem = toAddressAbi.filter(
+    item => item.name == functionNameN
+  )
+  let MethodParams = inputData.value.substring(10)
+  const coder = ethers.AbiCoder.defaultAbiCoder();
+  const decodeRes = coder.decode([fnItem[0].inputs[0].type, fnItem[0].inputs[1].type], `0x${MethodParams}`);
+  console.log(decodeRes)
+  fnItem[0].inputs.forEach((item) => {
+    let obj = {}
+    obj.name = item.name
+    obj.type = item.type
+    if(item.type == 'uint256') {
+      obj.data = decodeRes[1]
+    } else {
+      obj.data = decodeRes[0]
+    }
+    tableDatass.value.push(obj)
+  })
 }
 onMounted(async () => {
   await fetchTransactionDetails();
   await fetchTransactionLogs();
   await getLastestHeight();
   await getInterTransactions();
-  getFunctionName()
+  await getFunctionName()
+  decodeDataFn()
 })
 let ratioValue = computed(()=>{
   let res = transDetails.value.gasLimit == 0 ? 0 : (transDetails.value.gasUsed / transDetails.value.gasLimit) * 100
