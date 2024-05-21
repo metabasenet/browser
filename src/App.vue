@@ -1,8 +1,8 @@
 <template>
   <div>
     <HeaderWrapper v-if="!shouldHideHeader"></HeaderWrapper>
-     <router-view/>
-  <FooterWrapper v-if="!shouldHideFooter"></FooterWrapper>
+    <router-view :key="$route.fullPath" />
+    <FooterWrapper v-if="!shouldHideFooter"></FooterWrapper>
   </div>
 </template>
 
@@ -17,10 +17,10 @@ export default {
   },
   computed: {
     shouldHideHeader() {
-      return this.$route.meta.hideHeader || this.$route.path === '/404'|| this.$route.name === 'bytecode';
+      return this.$route.meta.hideHeader || this.$route.path === '/404' || this.$route.name === 'bytecode';
     },
     shouldHideFooter() {
-      return this.$route.meta.hideFooter || this.$route.path === '/404'|| this.$route.name === 'bytecode';
+      return this.$route.meta.hideFooter || this.$route.path === '/404' || this.$route.name === 'bytecode';
     },
   },
 
@@ -28,8 +28,8 @@ export default {
 </script>
 
 <style>
-body{
-  font-family: "Roboto",system-ui,-apple-system,"Segoe UI","Helvetica Neue","Noto Sans","Liberation Sans",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+body {
+  font-family: "Roboto", system-ui, -apple-system, "Segoe UI", "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   font-size: 0.835rem;
   font-weight: 400;
   line-height: 1.5;
