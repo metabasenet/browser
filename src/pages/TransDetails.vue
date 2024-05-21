@@ -291,7 +291,8 @@
                                   type="primary" @click="baseConversion(10)">Dec</el-button>
                                 <el-button v-show="currentValue == 'Default View' && isZeroAddress == false"
                                   type="success" @click="baseConversion(16)">Hex</el-button>
-                                <el-button icon="HelpFilled" @click="decodeShow = true">Decode Input Data</el-button>
+                                <el-button icon="HelpFilled" @click="decodeShow = true" v-if="isZeroAddress == false">Decode
+                                  Input Data</el-button>
                               </div>
                               <div v-show="decodeShow == true">
                                 <el-table :data="tableDatass" style="width: 100%;" empty-text="No Data">
