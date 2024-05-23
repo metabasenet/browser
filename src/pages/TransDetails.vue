@@ -53,125 +53,127 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <div class=" grid-content_h1">
-              <el-tabs v-model="activeName" class="demo-tabs">
-                <el-tab-pane label="OverView" name="overView">
-                  <el-row class="grid-content_row">
-                    <el-col :span="24" :xs="24">
-                      <el-descriptions class="grid-content_h2 grid-content_h1" size="default" v-model="transDetails"
-                        :column="1" align="center">
-                        <el-descriptions-item label="Transaction Hash:" label-align="center" align="left"
-                          label-class-name="my-label" class-name="my-content ellipsis-text" label-width="30%">
-                          <div class="block_height"> <span v-if="transDetails && typeof transDetails.hash === 'string'"
-                              style="font-size: 14.4992px; color: #212529;">{{
-                              transDetails.hash }}</span>
-                            <span v-else>N/A</span>
-                            <el-tooltip v-if="!transDetails.istoCopied" content="Copy TxHash to clipboard"
-                              placement="top"><el-button text icon="CopyDocument"
-                                @click="copyToClipboard(transDetails.hash)">
+            <div class=" grid-content_h1" style="padding: 0;">
+              <div style="display: flex; justify-content: flex-start; margin-bottom: 16px; margin-top: 16px;">
+                <div :class="optionBtnOne" @click="switchOption(0)">Overview</div>
+                <div :class="optionBtnTwo" @click="switchOption(1)">Internal Txns</div>
+                <div :class="optionBtnThree" @click="switchOption(2)">Logs ({{total}})</div>
+              </div>
+              <div v-show="optionBtnOne == 'optionBtn_selected'">
+                <el-row class="grid-content_row">
+                  <el-col :span="24" :xs="24">
+                    <el-descriptions class="grid-content_h2 grid-content_h1" size="default" v-model="transDetails"
+                      :column="1" align="center">
+                      <el-descriptions-item label="Transaction Hash:" label-align="center" align="left"
+                        label-class-name="my-label" class-name="my-content ellipsis-text" label-width="30%">
+                        <div class="block_height"> <span v-if="transDetails && typeof transDetails.hash === 'string'"
+                            style="font-size: 14.4992px; color: #212529;">{{
+                            transDetails.hash }}</span>
+                          <span v-else>N/A</span>
+                          <el-tooltip v-if="!transDetails.istoCopied" content="Copy TxHash to clipboard"
+                            placement="top"><el-button text icon="CopyDocument"
+                              @click="copyToClipboard(transDetails.hash)">
+                            </el-button>
+                          </el-tooltip>
+                          <el-tooltip v-else content="Copied!" placement="top">
+                            <el-button text icon="Check" @click="copyToClipboard(transDetails.hash)">
+                            </el-button>
+                          </el-tooltip>
+                        </div>
+                      </el-descriptions-item>
+                      <el-descriptions-item label="Status:" label-align="center" align="left"
+                        label-class-name="my-label">
+                        <div class="block_height"><el-button v-if="transDetails.status == 1" type="success"
+                            style="border-radius: 6px;" plain><el-icon>
+                              <CircleCheckFilled />
+                            </el-icon>Success</el-button>
+                          <el-button v-else type="danger" plain><el-icon>
+                              <CloseBold />
+                            </el-icon>Lose</el-button>
+                        </div>
+
+                      </el-descriptions-item>
+                      <el-descriptions-item label="Block:" label-align="center" align="left"
+                        label-class-name="my-label">
+                        <div class="block_height">
+                          <div style="display: flex;  align-items: center;">
+                            <router-link class="skyblue-text" to="/block">
+                              <div class=" mb-2 truncate">
+                                <span style="font-size: 14.4992px; color: #0784C3;"> {{ transDetails.blockNumber
+                                  }}</span>
+                              </div>
+                            </router-link>
+                            <el-tooltip content="Number of blocks validated since" placement="top">
+                              <el-button style="padding: 5px; border-radius: 6px; font-size: 10.8744px; color: #000;">{{
+                                blockHeightDiff }} Block Confirmations</el-button>
+                            </el-tooltip>
+                          </div>
+                        </div>
+                      </el-descriptions-item>
+                      <el-descriptions-item label="Timestamp:" label-align="center" align="left"
+                        label-class-name="my-label">
+                        <div class="block_height" style="font-size: 14.4992px; color: #212529;">
+                          <el-icon style="vertical-align: middle; margin-bottom: 2px;">
+                            <Timer />
+                          </el-icon>
+                          {{ transDetails.formattedTime }} ({{ greenwichTime }})
+                        </div>
+                      </el-descriptions-item>
+                      <el-descriptions-item label="Transaction Action:" label-align="center" align="left"
+                        label-class-name="my-label">
+                        <div class="block_height" style="font-size: 14.4992px; color: #212529;">{{
+                          transDetails.transactionActions }}</div>
+                      </el-descriptions-item>
+                      <el-descriptions-item label="From:" label-align="center" align="left" label-class-name="my-label">
+                        <div class="block_height">
+                          <div class="TransactionAction">
+                            <router-link class="skyblue-text ellipsis-text" :to="{
+            name: 'address',
+            params: { address: transDetails.from },
+          }" style="font-size: 14.4992px; color: #0784C3;">{{ transDetails.from }}
+                            </router-link>
+                            <el-tooltip v-if="!transDetails.istoCopieds" content="Copy Address"
+                              placement="top"><el-button style="margin-left:5px" text icon="CopyDocument"
+                                @click="copyToClipboards(transDetails.from)">
                               </el-button>
                             </el-tooltip>
                             <el-tooltip v-else content="Copied!" placement="top">
-                              <el-button text icon="Check" @click="copyToClipboard(transDetails.hash)">
+                              <el-button text icon="Check" @click="copyToClipboards(transDetails.hash)">
                               </el-button>
                             </el-tooltip>
                           </div>
-                        </el-descriptions-item>
-                        <el-descriptions-item label="Status:" label-align="center" align="left"
-                          label-class-name="my-label">
-                          <div class="block_height"><el-button v-if="transDetails.status == 1" type="success"
-                              style="border-radius: 6px;" plain><el-icon>
-                                <CircleCheckFilled />
-                              </el-icon>Success</el-button>
-                            <el-button v-else type="danger" plain><el-icon>
-                                <CloseBold />
-                              </el-icon>Lose</el-button>
-                          </div>
+                        </div>
+                      </el-descriptions-item>
+                      <el-descriptions-item label="To:" label-align="center" align="left" label-class-name="my-label">
+                        <div class="block_height">
+                          <div class="TransactionAction">
+                            <el-tooltip content="Contract" placement="top">
+                              <el-icon>
+                                <Document />
+                              </el-icon>
+                            </el-tooltip>
+                            <router-link class="skyblue-text ellipsis-text" :to="{
+            name: 'address',
+            params: { address: transDetails.to },
+          }">
+                              <div class=" mb-2 truncate" style="font-size: 14.4992px; color: #0784C3;">{{
+                                transDetails.to }}</div>
+                            </router-link>
 
-                        </el-descriptions-item>
-                        <el-descriptions-item label="Block:" label-align="center" align="left"
-                          label-class-name="my-label">
-                          <div class="block_height">
-                            <div style="display: flex;  align-items: center;">
-                              <router-link class="skyblue-text" to="/block">
-                                <div class=" mb-2 truncate">
-                                  <span style="font-size: 14.4992px; color: #0784C3;"> {{ transDetails.blockNumber
-                                    }}</span>
-                                </div>
-                              </router-link>
-                              <el-tooltip content="Number of blocks validated since" placement="top">
-                                <el-button
-                                  style="padding: 5px; border-radius: 6px; font-size: 10.8744px; color: #000;">{{
-                                  blockHeightDiff }} Block Confirmations</el-button>
-                              </el-tooltip>
-                            </div>
+                            <el-tooltip v-if="!transDetails.istoCopiedd" content="Copy Address" placement="top">
+                              <el-button style="margin-left:5px" text icon="CopyDocument"
+                                @click="copyToClipboardd(transDetails.to)">
+                              </el-button>
+                            </el-tooltip>
+                            <el-tooltip v-else content="Copied!" placement="top">
+                              <el-button text icon="Check" @click="copyToClipboardd(transDetails.hash)">
+                              </el-button>
+                            </el-tooltip>
+                            <el-tooltip content="Contract Execution Completed" placement="top">
+                              <el-button type="success" icon="Check" circle />
+                            </el-tooltip>
                           </div>
-                        </el-descriptions-item>
-                        <el-descriptions-item label="Timestamp:" label-align="center" align="left"
-                          label-class-name="my-label">
-                          <div class="block_height" style="font-size: 14.4992px; color: #212529;">
-                            <el-icon style="vertical-align: middle; margin-bottom: 2px;">
-                              <Timer />
-                            </el-icon>
-                            {{ transDetails.formattedTime }} ({{ greenwichTime }})
-                          </div>
-                        </el-descriptions-item>
-                        <el-descriptions-item label="Transaction Action:" label-align="center" align="left"
-                          label-class-name="my-label">
-                          <div class="block_height" style="font-size: 14.4992px; color: #212529;">{{
-                            transDetails.transactionActions }}</div>
-                        </el-descriptions-item>
-                        <el-descriptions-item label="From:" label-align="center" align="left"
-                          label-class-name="my-label">
-                          <div class="block_height">
-                            <div class="TransactionAction">
-                              <router-link class="skyblue-text ellipsis-text" :to="{
-                                name: 'address',
-                                params: { address: transDetails.from },
-                              }" style="font-size: 14.4992px; color: #0784C3;">{{ transDetails.from }}
-                              </router-link>
-                              <el-tooltip v-if="!transDetails.istoCopieds" content="Copy Address"
-                                placement="top"><el-button style="margin-left:5px" text icon="CopyDocument"
-                                  @click="copyToClipboards(transDetails.from)">
-                                </el-button>
-                              </el-tooltip>
-                              <el-tooltip v-else content="Copied!" placement="top">
-                                <el-button text icon="Check" @click="copyToClipboards(transDetails.hash)">
-                                </el-button>
-                              </el-tooltip>
-                            </div>
-                          </div>
-                        </el-descriptions-item>
-                        <el-descriptions-item label="To:" label-align="center" align="left" label-class-name="my-label">
-                          <div class="block_height">
-                            <div class="TransactionAction">
-                              <el-tooltip content="Contract" placement="top">
-                                <el-icon>
-                                  <Document />
-                                </el-icon>
-                              </el-tooltip>
-                              <router-link class="skyblue-text ellipsis-text" :to="{
-                                name: 'address',
-                                params: { address: transDetails.to },
-                              }">
-                                <div class=" mb-2 truncate" style="font-size: 14.4992px; color: #0784C3;">{{
-                                  transDetails.to }}</div>
-                              </router-link>
-
-                              <el-tooltip v-if="!transDetails.istoCopiedd" content="Copy Address" placement="top">
-                                <el-button style="margin-left:5px" text icon="CopyDocument"
-                                  @click="copyToClipboardd(transDetails.to)">
-                                </el-button>
-                              </el-tooltip>
-                              <el-tooltip v-else content="Copied!" placement="top">
-                                <el-button text icon="Check" @click="copyToClipboardd(transDetails.hash)">
-                                </el-button>
-                              </el-tooltip>
-                              <el-tooltip content="Contract Execution Completed" placement="top">
-                                <el-button type="success" icon="Check" circle />
-                              </el-tooltip>
-                            </div>
-                            <!-- <div class="TransactionAction">
+                          <!-- <div class="TransactionAction">
                 <el-icon>
                   <Money />
                 </el-icon><span>Transfer 0.004435244050238826 MNT</span> <span>From</span>
@@ -186,7 +188,7 @@
                   </router-link>
                 </el-tooltip>
               </div> -->
-                            <!-- <div class="TransactionAction">
+                          <!-- <div class="TransactionAction">
                 <el-icon>
                   <Money />
                 </el-icon><span>Transfer 0.007096390480382122 MNT From</span>
@@ -201,325 +203,321 @@
                   </router-link>
                 </el-tooltip>
               </div> -->
-                          </div>
+                        </div>
 
-                        </el-descriptions-item>
-                        <el-descriptions-item label="Value:" label-align="center" align="left"
-                          label-class-name="my-label">
-                          <div class="block_height">
-                            <el-icon
-                              style="font-size: 14.4992px; color: #212529; vertical-align: middle; margin-bottom: 3px">
-                              <Timer />
-                            </el-icon>
-                            <span style="font-size: 14.4992px; color: #212529;"> {{ transDetails.value }}
-                              <!-- ($43.24) -->
-                            </span>
-                          </div>
+                      </el-descriptions-item>
+                      <el-descriptions-item label="Value:" label-align="center" align="left"
+                        label-class-name="my-label">
+                        <div class="block_height">
+                          <el-icon
+                            style="font-size: 14.4992px; color: #212529; vertical-align: middle; margin-bottom: 3px">
+                            <Timer />
+                          </el-icon>
+                          <span style="font-size: 14.4992px; color: #212529;"> {{ transDetails.value }}
+                            <!-- ($43.24) -->
+                          </span>
+                        </div>
 
-                        </el-descriptions-item>
-                        <el-descriptions-item label="Transaction Fee:" label-align="center" align="left"
-                          label-class-name="my-label">
-                          <div class="block_height"> <span style="font-size: 14.4992px; color:#212529;">{{
-                              transDetails.TransactionFee }} MNT
-                              <!-- (${{ transDetails.TransactionFee }}) -->
-                            </span>
-                          </div>
+                      </el-descriptions-item>
+                      <el-descriptions-item label="Transaction Fee:" label-align="center" align="left"
+                        label-class-name="my-label">
+                        <div class="block_height"> <span style="font-size: 14.4992px; color:#212529;">{{
+                            transDetails.TransactionFee }} MNT
+                            <!-- (${{ transDetails.TransactionFee }}) -->
+                          </span>
+                        </div>
 
-                        </el-descriptions-item>
-                        <el-descriptions-item label="Gas Price:" label-align="center" align="left"
-                          label-class-name="my-label">
-                          <div class="block_height"><span style="font-size: 14.4992px; color:#212529;"> {{
-                              transDetails.gasPrice }}
-                              ({{ transDetails.gasPrice }})<span style="font-size: 12px; color: #212529;">MNT</span>
-                            </span>
-                          </div>
+                      </el-descriptions-item>
+                      <el-descriptions-item label="Gas Price:" label-align="center" align="left"
+                        label-class-name="my-label">
+                        <div class="block_height"><span style="font-size: 14.4992px; color:#212529;"> {{
+                            transDetails.gasPrice }}
+                            ({{ transDetails.gasPrice }})<span style="font-size: 12px; color: #212529;">MNT</span>
+                          </span>
+                        </div>
 
-                        </el-descriptions-item>
-                      </el-descriptions>
-                    </el-col>
-                  </el-row>
-                  <el-row class="grid-content_h2">
-                    <el-col :span="24" :xs="24">
-                      <el-collapse>
-                        <el-collapse-item title="More Details:" name="1">
-                          <el-descriptions class="grid-content" :column="1" align="left" v-model="transDetails">
-                            <el-descriptions-item label-class-name="my-label" label="Gas Limit & Usage by Txn:"
-                              label-align="center" align="left" width="500px" class-name="my-content">
-                              <div class="block_height"><span style="font-size: 14.4992px; color: #212529;">{{
-                                  transDetails.gasUsed }} | {{ transDetails.gasLimit }}
-                                  ({{ ratioValue }}%)</span></div>
-                            </el-descriptions-item>
-                            <el-descriptions-item label-class-name="my-label" label="Burnt Fees:" label-align="center"
-                              align="left">
-                              <div class="block_height"><span
-                                  style="font-size: 14.4992px; color: #212529;">0.005224500901272524 MNT
-                                  ($3.15)</span></div>
-                            </el-descriptions-item>
-                            <el-descriptions-item label-class-name="my-label" label="Other Attributes:"
-                              label-align="center" align="left">
+                      </el-descriptions-item>
+                    </el-descriptions>
+                  </el-col>
+                </el-row>
+                <el-row class="grid-content_h2">
+                  <el-col :span="24" :xs="24">
+                    <el-collapse>
+                      <el-collapse-item title="More Details:" name="1">
+                        <el-descriptions class="grid-content" :column="1" align="left" v-model="transDetails">
+                          <el-descriptions-item label-class-name="my-label" label="Gas Limit & Usage by Txn:"
+                            label-align="center" align="left" width="500px" class-name="my-content">
+                            <div class="block_height"><span style="font-size: 14.4992px; color: #212529;">{{
+                                transDetails.gasUsed }} | {{ transDetails.gasLimit }}
+                                ({{ ratioValue }}%)</span></div>
+                          </el-descriptions-item>
+                          <el-descriptions-item label-class-name="my-label" label="Burnt Fees:" label-align="center"
+                            align="left">
+                            <div class="block_height"><span
+                                style="font-size: 14.4992px; color: #212529;">0.005224500901272524 MNT
+                                ($3.15)</span></div>
+                          </el-descriptions-item>
+                          <el-descriptions-item label-class-name="my-label" label="Other Attributes:"
+                            label-align="center" align="left">
+                            <div class="block_height">
+                              <el-button
+                                style="width: 98.3px; height: 24.88px; font-size: 10.8744px; color: #6C757D; border-radius: 6px;">Nonce:&nbsp;<span
+                                  style="font-size: 10.8744px; color: #000;">1607650</span></el-button>
+                              <el-button
+                                style="width: 123.9px; height: 24.88px; font-size: 10.8744px; color: #6C757D; border-radius: 6px;">Position
+                                In Block:&nbsp;<span style="font-size: 10.8744px; color: #000;">208</span></el-button>
+                            </div>
+                          </el-descriptions-item>
+                          <el-descriptions-item label-class-name="my-label" label="Input Data:" label-align="center"
+                            align="left">
+                            <div class="block_height" v-show="decodeShow == false">
+                              <el-input v-show="currentValue == 'Original'"
+                                style="width: 85vw; font-size: 14.4492px; color: red;" :rows="5" type="textarea"
+                                :disabled="true" :placeholder="transDetails.data">
+                              </el-input>
+                              <el-input v-show="currentValue == 'Default View' && isZeroAddress == false"
+                                style="width: 85vw; font-size: 14.4992px; color: red;" :rows="5" type="textarea"
+                                :disabled="true"
+                                :placeholder="decOrHexFlag == 'hex' ? `${functionName}\n\n${methodId}\n${methodParams}` : `${functionName}\n\n${methodId}\n${methodParamsDec}`">
+                              </el-input>
+                              <el-input v-show="currentValue == 'Default View' && isZeroAddress == true"
+                                style="width: 85vw; font-size: 14.4992px; color: red;" :rows="5" type="textarea"
+                                :disabled="true" :placeholder="transDetails.data">
+                              </el-input>
+                              <el-select v-model="value" placeholder="View Input As"
+                                style="width: 110px;margin-right:10px;" @change="valueChange(value)">
+                                <el-option v-for="item in options" :key="item.value" :label="item.label"
+                                  :value="item.value" />
+                              </el-select>
+                              <el-button v-show="currentValue == 'Default View' && isZeroAddress == false"
+                                type="primary" @click="baseConversion(10)">Dec</el-button>
+                              <el-button v-show="currentValue == 'Default View' && isZeroAddress == false"
+                                type="success" @click="baseConversion(16)">Hex</el-button>
+                              <el-button icon="HelpFilled" @click="decodeShow = true"
+                                v-if="isZeroAddress == false">Decode
+                                Input Data</el-button>
+                            </div>
+                            <div v-show="decodeShow == true">
+                              <el-table :data="tableDatass" style="width: 100%;" empty-text="No Data">
+                                <el-table-column prop="name" label="Name" width="180" />
+                                <el-table-column prop="type" label="Type" width="180" />
+                                <el-table-column prop="data" label="Data" />
+                              </el-table>
+                              <el-button icon="RefreshLeft" @click="decodeShow = false">Switch Back</el-button>
+                            </div>
+                          </el-descriptions-item>
+                        </el-descriptions>
+                      </el-collapse-item>
+                    </el-collapse>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="24" :xs="24">
+                    <el-descriptions class="grid-content_h2 grid-content" :column="1" align="center">
+                      <el-descriptions-item label="Private Note:" label-align="center" align="left"
+                        label-class-name="my-label" class-name="my-content" label-width="30%">
+                        <div class="block_height">
+                          <span style="font-size: 14.4992px; color: #212529; ">To access the
+                            <span style="font-size: 14.4992px; color: #000;">Private Note</span>
+                            feature, you must be
+                            <span style="font-size: 14.4992px; color: #0784C3;">Logged In</span>
+                          </span>
+                        </div>
+                      </el-descriptions-item>
+
+                    </el-descriptions>
+                  </el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="24" :xs="24" class="grid-content_h1 grid_content">
+                    <span style="font-size: 12.5625px; color: #6C757D">
+                      <el-icon style="vertical-align: middle;">
+                        <Loading />
+                      </el-icon>
+                      A transaction is a cryptographically signed instruction that changes the blockchain state. Block
+                      explorers
+                      track the details of all transactions in the network. Learn more about transactions in our
+                      <span style="font-size: 12.5625px; color: #0784C3">Knowledge Base.</span>
+                    </span>
+                  </el-col>
+                </el-row>
+              </div>
+              <div v-show="optionBtnTwo == 'optionBtn_selected'">
+                <el-row class="box-table">
+                  <el-table v-loading="loading" :data="tableData" style="width: 100%; border-radius: 15px;"
+                    size="default" :row-style="{ height: '70px' }">
+                    <el-table-column prop="transactionhash" label="TrsHash" width="110">
+                      <template v-slot="scope">
+                        <el-tooltip :content="scope.row.transactionhash">
+                          <span style="font-size: 14.4992px; color: #0784C3;">{{
+                            scope.row.transactionhash.substring(0, 8) + '...' }}</span>
+                        </el-tooltip>
+                      </template>
+                    </el-table-column>
+                    <el-table-column prop="utc" label="Age" width="128">
+                      <template v-slot="scope">
+                        <span style="font-size: 14.4992px; color: #212529;">{{ scope.row.utc }}</span>
+                      </template>
+                    </el-table-column>
+                    <el-table-column prop="from" label="From" width="250" align="center">
+                      <template v-slot="scope">
+                        <div class="router_box">
+                          <el-tooltip :content="scope.row.from" placement="top">
+                            <router-link :to="{ name: 'address', params: { address: scope.row.from } }"
+                              style="font-size: 14.4992px; color: #0784C3">
+                              {{ scope.row.from.substring(0, 10) + '...' }}
+                            </router-link>
+                          </el-tooltip>
+                          <el-tooltip v-if="!scope.row.isCopied" content="Copy Address" placement="top">
+                            <el-button text icon="CopyDocument"
+                              @click="copyFormClipboardInternal(scope.row.from, scope.row)">
+                            </el-button>
+                          </el-tooltip>
+                          <el-tooltip v-else content="Copied!" placement="top">
+                            <el-button text icon="Check" @click="copyFormClipboardInternal(scope.row.from, scope.row)">
+                            </el-button>
+                          </el-tooltip>
+                          <el-button style="margin-left: 1rem" type="success" icon="right" circle plain />
+                        </div>
+                      </template>
+                    </el-table-column>
+                    <el-table-column prop="to" label="To" width="200" align="center">
+                      <template v-slot="scope">
+                        <div class="router_box">
+                          <el-tooltip content="Contract" placement="top">
+                            <el-button
+                              style="margin-right: 5px; margin-top: 4px; width: 12.69px; height: 15px; border-radius: 5px;"
+                              icon="Document">
+                            </el-button>
+                          </el-tooltip>
+                          <el-tooltip :content="scope.row.to" placement="top">
+                            <router-link class="skyblue-text ellipsis-text"
+                              :to="{ name: 'address', params: { address: scope.row.to } }"
+                              style="font-size: 14.4992px; color: #0784C3">
+                              {{ scope.row.to.substring(0, 10) + '...' }}
+                            </router-link>
+                          </el-tooltip>
+                          <el-tooltip v-if="!scope.row.istoCopied" content="Copy Address" placement="top">
+                            <el-button text icon="CopyDocument"
+                              @click="copyToClipboardInternal(scope.row.to, scope.row)">
+                            </el-button>
+                          </el-tooltip>
+                          <el-tooltip v-else content="Copied!" placement="top">
+                            <el-button text icon="Check" @click="copyToClipboardInternal(scope.row.to, scope.row)">
+                            </el-button>
+                          </el-tooltip>
+                        </div>
+                      </template>
+                    </el-table-column>
+                    <el-table-column prop="value" label="Value" align="center">
+                      <template v-slot="scope">
+                        <el-tooltip :content="`${scope.row.value}`" placement="top">
+                          <span style="font-size: 14.4992px; color: #212529;">{{ scope.row.value }}<span
+                              style="font-size: 12px;">(MNT)</span></span>
+                        </el-tooltip>
+                      </template>
+                    </el-table-column>
+                  </el-table>
+                </el-row>
+              </div>
+              <div v-show="optionBtnThree == 'optionBtn_selected'">
+                <el-row class="grid-content_row">
+                  <el-col :span="24" :xs="24">
+                    <ul>
+                      <h3>Transaction Receipt Event Logs</h3>
+                      <li class="log_li" v-for="(item, index) in transLogs" :key="index">
+                        <div>
+                          <el-tag type="success" size="large" effect="dark" round><span style="color:#fff">{{ item.index
+                              }}</span></el-tag>
+                        </div>
+                        <div style="width: 100%;">
+                          <el-descriptions class="grid-content_h2 grid-content_h1" size="default" v-model="transDetails"
+                            :column="1" align="center">
+                            <el-descriptions-item label="Adddress:" label-align="center" align="left"
+                              label-class-name="my-label" class-name="my-content ellipsis-text" label-width="30%">
+                              <template #label>
+                                <h3>Adddress:</h3>
+                              </template>
                               <div class="block_height">
-                                <el-button
-                                  style="width: 98.3px; height: 24.88px; font-size: 10.8744px; color: #6C757D; border-radius: 6px;">Nonce:&nbsp;<span
-                                    style="font-size: 10.8744px; color: #000;">1607650</span></el-button>
-                                <el-button
-                                  style="width: 123.9px; height: 24.88px; font-size: 10.8744px; color: #6C757D; border-radius: 6px;">Position
-                                  In Block:&nbsp;<span style="font-size: 10.8744px; color: #000;">208</span></el-button>
+                                <div class="log_address">
+                                  <el-tooltip effect="dark" :content="item.contractAddress" placement="top">
+                                    <router-link class="skyblue-text ellipsis-text" :to="{
+            name: 'address',
+            params: { address: item.contractAddress },
+          }">{{ item.contractAddress }}
+                                    </router-link>
+                                  </el-tooltip>
+                                  <el-tooltip v-if="!istoCopiedsd" content="Copy contractaddress to clipboard"
+                                    placement="top"><el-button text icon="CopyDocument"
+                                      @click="copyToClipboardss(item.contractAddress)">
+                                    </el-button>
+                                  </el-tooltip>
+                                  <el-tooltip v-else content="Copied!" placement="top">
+                                    <el-button text icon="Check" @click="copyToClipboardss(item.contractAddress)">
+                                    </el-button>
+                                  </el-tooltip>
+                                </div>
                               </div>
                             </el-descriptions-item>
-                            <el-descriptions-item label-class-name="my-label" label="Input Data:" label-align="center"
-                              align="left">
-                              <div class="block_height" v-show="decodeShow == false">
-                                <el-input v-show="currentValue == 'Original'"
-                                  style="width: 85vw; font-size: 14.4492px; color: red;" :rows="5" type="textarea"
-                                  :disabled="true" :placeholder="transDetails.data">
-                                </el-input>
-                                <el-input v-show="currentValue == 'Default View' && isZeroAddress == false"
-                                  style="width: 85vw; font-size: 14.4992px; color: red;" :rows="5" type="textarea"
-                                  :disabled="true"
-                                  :placeholder="decOrHexFlag == 'hex' ? `${functionName}\n\n${methodId}\n${methodParams}` : `${functionName}\n\n${methodId}\n${methodParamsDec}`">
-                                </el-input>
-                                <el-input v-show="currentValue == 'Default View' && isZeroAddress == true"
-                                  style="width: 85vw; font-size: 14.4992px; color: red;" :rows="5" type="textarea"
-                                  :disabled="true" :placeholder="transDetails.data">
-                                </el-input>
-                                <el-select v-model="value" placeholder="View Input As"
-                                  style="width: 110px;margin-right:10px;" @change="valueChange(value)">
-                                  <el-option v-for="item in options" :key="item.value" :label="item.label"
-                                    :value="item.value" />
-                                </el-select>
-                                <el-button v-show="currentValue == 'Default View' && isZeroAddress == false"
-                                  type="primary" @click="baseConversion(10)">Dec</el-button>
-                                <el-button v-show="currentValue == 'Default View' && isZeroAddress == false"
-                                  type="success" @click="baseConversion(16)">Hex</el-button>
-                                <el-button icon="HelpFilled" @click="decodeShow = true"
-                                  v-if="isZeroAddress == false">Decode
-                                  Input Data</el-button>
+                            <el-descriptions-item label="Name:" label-align="center" align="left"
+                              label-class-name="my-label" class-name="my-content" label-width="30%">
+                              <div class="block_height">
+                                <span>{{ item.method }}</span>
+
                               </div>
-                              <div v-show="decodeShow == true">
-                                <el-table :data="tableDatass" style="width: 100%;" empty-text="No Data">
-                                  <el-table-column prop="name" label="Name" width="180" />
-                                  <el-table-column prop="type" label="Type" width="180" />
-                                  <el-table-column prop="data" label="Data" />
-                                </el-table>
-                                <el-button icon="RefreshLeft" @click="decodeShow = false">Switch Back</el-button>
+                            </el-descriptions-item>
+                            <el-descriptions-item label="Topics:" label-align="center" align="left"
+                              label-class-name="my-label" class-name="my-content" label-width="30%">
+                              <br />
+                              <div class="block_height topics-one" style="margin-bottom: 6px; margin-left: 14.8%;">
+                                <div style="display:flex; align-items: center" v-if="item.methodHash">
+                                  <el-tag type="success">0:</el-tag><span class="skyblue-text ellipsis-text">{{
+                                    item.methodHash }}
+                                  </span>
+                                </div>
+                              </div><br />
+                              <div class="block_height" style="margin-left: 14.8%;">
+                                <div style="display:flex; align-items: center" v-if="item.from">
+                                  <el-tag type="warning">1:</el-tag><router-link class="skyblue-text ellipsis-text" :to="{
+            name: 'address',
+            params: { address: item.from },
+          }">{{ item.from }}
+                                  </router-link>
+                                </div>
+                              </div><br />
+                              <div class="block_heights" style="margin-left: 14.8%;">
+                                <div style="display:flex; align-items: center" v-if="item.to">
+                                  <el-tag type="info">2:</el-tag><router-link class="skyblue-text ellipsis-text" :to="{
+            name: 'address',
+            params: { address: item.to },
+          }">{{ item.to }}
+                                  </router-link>
+                                </div>
+                              </div>
+                            </el-descriptions-item>
+                            <el-descriptions-item label="Data:" label-align="center" align="left"
+                              label-class-name="my-label" class-name="my-content" label-width="30%">
+                              <div class="block_heightz">
+                                <div class="input_div">
+                                  <el-input v-show="logBaseShow[index] == true" type="textarea" v-model="item.value"
+                                    autosize disabled style="width: 100%;height:auto"></el-input>
+                                  <el-input v-show="logBaseShow[index] == false" type="textarea"
+                                    v-model="transLogsValueArry[index]" autosize disabled
+                                    style="width: 100%;height:auto"></el-input>
+                                  <div class="input_button">
+                                    <el-button type="primary" @click="decadecimal(index)">Dec</el-button>
+                                    <el-button type="success" @click="hexadecimal(index)">Hex</el-button>
+                                  </div>
+                                </div>
                               </div>
                             </el-descriptions-item>
                           </el-descriptions>
-                        </el-collapse-item>
-                      </el-collapse>
-                    </el-col>
-                  </el-row>
-                  <el-row>
-                    <el-col :span="24" :xs="24">
-                      <el-descriptions class="grid-content_h2 grid-content" :column="1" align="center">
-                        <el-descriptions-item label="Private Note:" label-align="center" align="left"
-                          label-class-name="my-label" class-name="my-content" label-width="30%">
-                          <div class="block_height">
-                            <span style="font-size: 14.4992px; color: #212529; ">To access the
-                              <span style="font-size: 14.4992px; color: #000;">Private Note</span>
-                              feature, you must be
-                              <span style="font-size: 14.4992px; color: #0784C3;">Logged In</span>
-                            </span>
-                          </div>
-                        </el-descriptions-item>
-
-                      </el-descriptions>
-                    </el-col>
-                  </el-row>
-                  <el-row>
-                    <el-col :span="24" :xs="24" class="grid-content_h1 grid_content">
-                      <span style="font-size: 12.5625px; color: #6C757D">
-                        <el-icon style="vertical-align: middle;">
-                          <Loading />
-                        </el-icon>
-                        A transaction is a cryptographically signed instruction that changes the blockchain state. Block
-                        explorers
-                        track the details of all transactions in the network. Learn more about transactions in our
-                        <span style="font-size: 12.5625px; color: #0784C3">Knowledge Base.</span>
-                      </span>
-                    </el-col>
-                  </el-row>
-                </el-tab-pane>
-                <el-tab-pane label="Internal Txns" name="internalTxns">
-                  <el-row class="box-table">
-                    <el-table v-loading="loading" :data="tableData" style="width: 100%; border-radius: 15px;"
-                      size="default" :row-style="{ height: '70px' }">
-                      <el-table-column prop="transactionhash" label="TrsHash" width="110">
-                        <template v-slot="scope">
-                          <el-tooltip :content="scope.row.transactionhash">
-                            <span style="font-size: 14.4992px; color: #0784C3;">{{
-                              scope.row.transactionhash.substring(0,8) + '...' }}</span>
-                          </el-tooltip>
-                        </template>
-                      </el-table-column>
-                      <el-table-column prop="utc" label="Age" width="128">
-                        <template v-slot="scope">
-                          <span style="font-size: 14.4992px; color: #212529;">{{ scope.row.utc }}</span>
-                        </template>
-                      </el-table-column>
-                      <el-table-column prop="from" label="From" width="250" align="center">
-                        <template v-slot="scope">
-                          <div class="router_box">
-                            <el-tooltip :content="scope.row.from" placement="top">
-                              <router-link :to="{name: 'address', params: { address: scope.row.from }}"
-                                style="font-size: 14.4992px; color: #0784C3">
-                                {{ scope.row.from.substring(0,10) + '...'}}
-                              </router-link>
-                            </el-tooltip>
-                            <el-tooltip v-if="!scope.row.isCopied" content="Copy Address" placement="top">
-                              <el-button text icon="CopyDocument"
-                                @click="copyFormClipboardInternal(scope.row.from, scope.row)">
-                              </el-button>
-                            </el-tooltip>
-                            <el-tooltip v-else content="Copied!" placement="top">
-                              <el-button text icon="Check"
-                                @click="copyFormClipboardInternal(scope.row.from, scope.row)">
-                              </el-button>
-                            </el-tooltip>
-                            <el-button style="margin-left: 1rem" type="success" icon="right" circle plain />
-                          </div>
-                        </template>
-                      </el-table-column>
-                      <el-table-column prop="to" label="To" width="200" align="center">
-                        <template v-slot="scope">
-                          <div class="router_box">
-                            <el-tooltip content="Contract" placement="top">
-                              <el-button
-                                style="margin-right: 5px; margin-top: 4px; width: 12.69px; height: 15px; border-radius: 5px;"
-                                icon="Document">
-                              </el-button>
-                            </el-tooltip>
-                            <el-tooltip :content="scope.row.to" placement="top">
-                              <router-link class="skyblue-text ellipsis-text"
-                                :to="{ name: 'address', params: { address: scope.row.to }}"
-                                style="font-size: 14.4992px; color: #0784C3">
-                                {{ scope.row.to.substring(0, 10) + '...'}}
-                              </router-link>
-                            </el-tooltip>
-                            <el-tooltip v-if="!scope.row.istoCopied" content="Copy Address" placement="top">
-                              <el-button text icon="CopyDocument"
-                                @click="copyToClipboardInternal(scope.row.to, scope.row)">
-                              </el-button>
-                            </el-tooltip>
-                            <el-tooltip v-else content="Copied!" placement="top">
-                              <el-button text icon="Check" @click="copyToClipboardInternal(scope.row.to, scope.row)">
-                              </el-button>
-                            </el-tooltip>
-                          </div>
-                        </template>
-                      </el-table-column>
-                      <el-table-column prop="value" label="Value" align="center">
-                        <template v-slot="scope">
-                          <el-tooltip :content="`${scope.row.value}`" placement="top">
-                            <span style="font-size: 14.4992px; color: #212529;">{{ scope.row.value }}<span
-                                style="font-size: 12px;">(MNT)</span></span>
-                          </el-tooltip>
-                        </template>
-                      </el-table-column>
-                    </el-table>
-                  </el-row>
-                </el-tab-pane>
-                <el-tab-pane :label="`Logs(${ total })`" name="logs">
-                  <el-row class="grid-content_row">
-                    <el-col :span="24" :xs="24">
-                      <ul>
-                        <h3>Transaction Receipt Event Logs</h3>
-                        <li class="log_li" v-for="(item, index) in transLogs" :key="index">
-                          <div>
-                            <el-tag type="success" size="large" effect="dark" round><span
-                                style="color:#fff">{{item.index}}</span></el-tag>
-                          </div>
-                          <div style="width: 100%;">
-                            <el-descriptions class="grid-content_h2 grid-content_h1" size="default"
-                              v-model="transDetails" :column="1" align="center">
-                              <el-descriptions-item label="Adddress:" label-align="center" align="left"
-                                label-class-name="my-label" class-name="my-content ellipsis-text" label-width="30%">
-                                <template #label>
-                                  <h3>Adddress:</h3>
-                                </template>
-                                <div class="block_height">
-                                  <div class="log_address">
-                                    <el-tooltip effect="dark" :content="item.contractAddress" placement="top">
-                                      <router-link class="skyblue-text ellipsis-text" :to="{
-                                        name: 'address',
-                                        params: { address: item.contractAddress },
-                                      }">{{ item.contractAddress }}
-                                      </router-link>
-                                    </el-tooltip>
-                                    <el-tooltip v-if="!istoCopiedsd" content="Copy contractaddress to clipboard"
-                                      placement="top"><el-button text icon="CopyDocument"
-                                        @click="copyToClipboardss(item.contractAddress)">
-                                      </el-button>
-                                    </el-tooltip>
-                                    <el-tooltip v-else content="Copied!" placement="top">
-                                      <el-button text icon="Check" @click="copyToClipboardss(item.contractAddress)">
-                                      </el-button>
-                                    </el-tooltip>
-                                  </div>
-                                </div>
-                              </el-descriptions-item>
-                              <el-descriptions-item label="Name:" label-align="center" align="left"
-                                label-class-name="my-label" class-name="my-content" label-width="30%">
-                                <div class="block_height">
-                                  <span>{{ item.method }}</span>
-
-                                </div>
-                              </el-descriptions-item>
-                              <el-descriptions-item label="Topics:" label-align="center" align="left"
-                                label-class-name="my-label" class-name="my-content" label-width="30%">
-                                <br />
-                                <div class="block_height topics-one" style="margin-bottom: 6px; margin-left: 14.8%;">
-                                  <div style="display:flex; align-items: center" v-if="item.methodHash">
-                                    <el-tag type="success">0:</el-tag><span class="skyblue-text ellipsis-text">{{
-                                      item.methodHash }}
-                                    </span>
-                                  </div>
-                                </div><br />
-                                <div class="block_height" style="margin-left: 14.8%;">
-                                  <div style="display:flex; align-items: center" v-if="item.from">
-                                    <el-tag type="warning">1:</el-tag><router-link class="skyblue-text ellipsis-text"
-                                      :to="{
-                                          name: 'address',
-                                          params: { address: item.from },
-                                        }">{{ item.from }}
-                                    </router-link>
-                                  </div>
-                                </div><br />
-                                <div class="block_heights" style="margin-left: 14.8%;">
-                                  <div style="display:flex; align-items: center" v-if="item.to">
-                                    <el-tag type="info">2:</el-tag><router-link class="skyblue-text ellipsis-text" :to="{
-                                        name: 'address',
-                                        params: { address: item.to },
-                                      }">{{ item.to }}
-                                    </router-link>
-                                  </div>
-                                </div>
-                              </el-descriptions-item>
-                              <el-descriptions-item label="Data:" label-align="center" align="left"
-                                label-class-name="my-label" class-name="my-content" label-width="30%">
-                                <div class="block_heightz">
-                                  <div class="input_div">
-                                    <el-input v-show="logBaseShow[index] == true" type="textarea" v-model="item.value"
-                                      autosize disabled style="width: 100%;height:auto"></el-input>
-                                    <el-input v-show="logBaseShow[index] == false" type="textarea"
-                                      v-model="transLogsValueArry[index]" autosize disabled
-                                      style="width: 100%;height:auto"></el-input>
-                                    <div class="input_button">
-                                      <el-button type="primary" @click="decadecimal(index)">Dec</el-button>
-                                      <el-button type="success" @click="hexadecimal(index)">Hex</el-button>
-                                    </div>
-                                  </div>
-                                </div>
-                              </el-descriptions-item>
-                            </el-descriptions>
-                          </div>
-                        </li>
-                      </ul>
-                    </el-col>
-                  </el-row>
-                </el-tab-pane>
-                <!-- <el-tab-pane label="State" name="state">State</el-tab-pane> -->
-              </el-tabs>
+                        </div>
+                      </li>
+                    </ul>
+                  </el-col>
+                </el-row>
+              </div>
             </div>
           </el-col>
         </el-row>
@@ -529,7 +527,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, reactive, watch } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import { ElMessage } from 'element-plus';
 import { getTransactionDetail, getTransactionLogs, getTransactionInternal, getInternalTransactionTest, getTransactionFunctionName } from '@/api/transaction';
 import { ethers,formatUnits } from "ethers";
@@ -546,7 +544,6 @@ const value = ref('')
 const copiedText = ref('');
 const greenwichTime = ref('')
 const lastestBlock = ref();
-const activeName = ref('overView')
 const page = ref(1)
 const pageSize = ref(100)
 let loading = ref(false)
@@ -884,6 +881,27 @@ async function decodeDataFn () {
     tableDatass.value.push(obj)
   })
 }
+let optionBtnOne = ref('optionBtn_selected')
+let optionBtnTwo = ref('optionBtn')
+let optionBtnThree = ref('optionBtn')
+function switchOption (v) {
+  if (v == 0) {
+    optionBtnOne.value = 'optionBtn'
+    optionBtnTwo.value = 'optionBtn'
+    optionBtnThree.value = 'optionBtn'
+    optionBtnOne.value = 'optionBtn_selected'
+  } else if (v == 1) {
+    optionBtnOne.value = 'optionBtn'
+    optionBtnTwo.value = 'optionBtn'
+    optionBtnThree.value = 'optionBtn'
+    optionBtnTwo.value = 'optionBtn_selected'
+  } else if (v == 2) {
+    optionBtnOne.value = 'optionBtn'
+    optionBtnTwo.value = 'optionBtn'
+    optionBtnThree.value = 'optionBtn'
+    optionBtnThree.value = 'optionBtn_selected'
+  }
+}
 onMounted(async () => {
   await fetchTransactionDetails();
   await fetchTransactionLogs();
@@ -953,10 +971,10 @@ body {
 }
 
 .grid-content_h2 {
-  margin: 5px 1rem;
+  margin: 5px 0;
   padding: 19px 20px;
   background-color: #fff;
-  border: 1px solid #dcdfe6;
+  border: 1px solid #fff;
   border-radius: 10px;
 }
 
@@ -1100,5 +1118,22 @@ body {
   justify-content: center;
   flex-wrap: wrap;
 }
-
+.optionBtn {
+  font-size: 12.5625px;
+  color: #081D35;
+  padding: 4.8px 9.6px;
+  background-color: #E9ECEF;
+  border-radius: 8px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+.optionBtn_selected {
+  font-size: 12.5625px;
+  color: #fff;
+  padding: 4.8px 9.6px;
+  background-color: #0784C3;
+  border-radius: 8px;
+  margin-right: 5px;
+  cursor: pointer;
+}
 </style>
