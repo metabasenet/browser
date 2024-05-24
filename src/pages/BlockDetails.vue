@@ -64,27 +64,20 @@
             </el-tooltip>
             <span> in 3 secs</span>
             </div> -->
+                <div class="block_height">
+                  <router-link style="font-size: 14.4992px; color: #0784C3;"
+                    :to="{ name: 'address', params: { address: blockDetails.miner }}">{{ blockDetails.miner
+                    }}</router-link>
+                </div>
               </el-descriptions-item>
               <el-descriptions-item label="Block Reward:" label-align="center" align="left" label-class-name="my-label">
                 <div class="block_height">
-                  <span>0.13084382351199558 MNT</span>
+                  <span style="font-size: 14.4992px; color: #212529">0.13084382351199558 MNT</span>
                 </div>
               </el-descriptions-item>
               <el-descriptions-item label="Difficulty:" label-align="center" align="left" label-class-name="my-label">
                 <div class="block_height"> <span style="font-size: 14.4992px; color: #212529;">{{
                     blockDetails.difficulty }}</span></div>
-
-              </el-descriptions-item>
-              <el-descriptions-item label="Total Difficulty:" label-align="center" align="left"
-                label-class-name="my-label">
-                <div class="block_height"><span></span> </div>
-
-              </el-descriptions-item>
-              <el-descriptions-item label="Size:" label-align="center" align="left" label-class-name="my-label">
-                <div class="block_height"><span>
-                    <!-- 39,635 bytes -->
-                    <!-- {{ blockDetails.gasused }} -->
-                  </span></div>
 
               </el-descriptions-item>
               <el-descriptions-item label="Gas Used:" label-align="center" align="left" label-class-name="my-label">
@@ -102,6 +95,13 @@
                 icon="Share"></el-button></el-tooltip></div> -->
                 <div class="block_height"><span style="font-size: 14.4992px; color: #212529;">{{
                     blockDetails.gaspriceTotal }}MNT</span></div>
+              </el-descriptions-item>
+              <el-descriptions-item label="Burnt Fees:" label-align="center" align="left" label-class-name="my-label">
+                <div class="block_height">
+                  <span style="font-size: 14.4992px; color: #212529;">
+                    {{ burntFees }}MNT
+                  </span>
+                </div>
               </el-descriptions-item>
               <el-descriptions-item label="Extra Data:" label-align="center" align="left" label-class-name="my-label">
                 <el-input style="height:auto" type="textarea" :disabled="true" :placeholder="blockDetails.extradata">
@@ -159,7 +159,7 @@ import { ref, onMounted, computed, reactive } from "vue";
 import { useRouter } from "vue-router";
 import { ElMessage } from 'element-plus';
 import { getBlockDetail } from '@/api/block';
-import { ethers } from "ethers";
+import { ethers, formatUnits } from "ethers";
 import moment from 'moment'
 const blockDetails = ref({});
 const copiedText = ref('');
@@ -177,11 +177,13 @@ const blockNumberAsNumber = computed(() => {
   const num = parseFloat(blockNumber);
   return isNaN(num) ? null : num;
 });
+let burntFees = ref('')
 const fetchBlockDetails = async () => {
   try {
     if (blockNumberAsNumber.value !== null) {
       const response = await getBlockDetail(blockNumberAsNumber.value);
       blockDetails.value = response.data;
+      burntFees.value = Number(formatUnits(blockDetails.value.transactionGasFees.toString(), 18)) + 0.13084382351199558
       const gaspricetotal = computed(() => {
         const gasused = parseFloat(blockDetails.value.gasused);
           const gasprice = blockDetails.value.gasprice || 0;
@@ -254,16 +256,16 @@ function copyToClipboard(text) {
       ElMessage.error('Copy failed, please copy manually!');
     });
 }
-onMounted(async () => {
-  await fetchBlockDetails();
-})
-function goTransactionPage () {
+function goTransactionPage() {
   if (blockDetails.value.transactioncount == 0) {
     return
   } else {
-    router.push({ name: 'txs', params: { block: blockDetails.value.hash}})
+    router.push({ name: 'txs', params: { block: blockDetails.value.hash } })
   }
 }
+onMounted(async () => {
+  await fetchBlockDetails();
+})
 </script>
 
 <style scoped>

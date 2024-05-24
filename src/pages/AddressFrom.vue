@@ -147,18 +147,22 @@
                         address.substring(0, 30) + '...'
                         }}</router-link>
                     </el-tooltip>
-                    <!-- <span class="content-item">from 12 hrs ago</span> -->
                   </div>
                 </li>
                 <li class="over_li" v-else>
                   <p class="title-item">CONTRACTCREATOR:</p>
                   <div class="over_div">
-                    <el-tooltip :content="contractMessage.creator"><span
-                        style="font-size: 14.4992px; color: #0784C3; cursor: pointer;">{{
-                        contractMessage.creator.substring(0, 17) + '...'
-                        }}</span></el-tooltip> at txn <el-tooltip :content="contractMessage.transactionHash"><span
-                        style="font-size: 14.4992px; color: #0784C3; cursor: pointer; ">{{
-                        contractMessage.transactionHash.substring(0, 18) + '...' }}</span></el-tooltip>
+                    <el-tooltip :content="contractMessage.creator">
+                        <span style="font-size: 14.4992px; color: #0784C3; cursor: pointer;" @click="addPageGo">{{
+                          contractMessage.creator.substring(0, 17) + '...'
+                          }}</span>
+                    </el-tooltip>
+                    at txn
+                    <el-tooltip :content="contractMessage.transactionHash">
+                        <span style="font-size: 14.4992px; color: #0784C3; cursor: pointer; " @click="txPageGo(contractMessage.transactionHash)">{{
+            contractMessage.transactionHash.substring(0, 18) + '...' }}
+                        </span>
+                    </el-tooltip>
                     <!-- <el-tooltip class="box-item" effect="dark" :content="address" placement="top-start">
                       <router-link style="font-size: 14.4992px; color: #0784C3;" class="skyblue-text ellipsis-text"
                         :to="{ name: 'address', params: { address: address } }">{{
@@ -244,7 +248,7 @@
               <div :class="tagOptionThree" @click="optionSwitch(2)">Token Transfers(ERC-20)</div>
               <div v-if="ifContract" style="display: flex; justify-content: flex-start;">
                 <div v-if="!verifystatused" :class="tagOptionFour" @click="optionSwitch(3)">Contract</div>
-                <div  v-else style="position: relative;">
+                <div v-else style="position: relative;">
                   <div :class="tagOptionFive" @click="optionSwitch(4)">Contract</div>
                   <div style="position: absolute; right: 0; top: -10px;"><el-badge value="√" class="item"
                       type="success"></el-badge></div>
@@ -1121,7 +1125,7 @@
 
 <script setup>
 import { ref, onMounted, reactive, computed } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { ElMessage } from "element-plus";
 import { ethers, formatUnits } from "ethers";
 import { config } from '@/config/config'
@@ -1139,6 +1143,7 @@ import { useUserStore } from '@/store/user'
 import pinia from '@/store';
 import { getTokenInquire } from '@/api/toTokens'
 const user = useUserStore(pinia)
+const router = useRouter()
 const { address } = defineProps({
   address: {
     type: [String],
@@ -1210,7 +1215,6 @@ let rulesRead = reactive({
   value: [{ required: true, message: 'Please input address', trigger: 'blur' }],
 })
 const handleClick = (tab, event) => {
-  console.log(tab.props.name);
   if (tab.props.name === "tab1") {
     getAddressList();
   } else if (tab.props.name === "tab2") {
@@ -1324,11 +1328,9 @@ const getContactDetail = async () => {
             })
           }
         })
-        console.log('read',viewFunctions.value)
         writeContract.value = abi.filter( 
             (item) => item.type === "function" && (item.stateMutability === "nonpayable" || item.stateMutability == 'payable')
         );
-        console.log('write',writeContract.value)
         writeContract.value.forEach((item) => {
           writeShow[item.name] = ''
           successDetail[item.name] = ''
@@ -1425,7 +1427,6 @@ const connectWallet = async () => {
         .connect(signer)
         .transferFrom(fromAccount, address, amountInEther);
       const transferFromReceipt = await transferFromTxn.wait();
-      // console.log("Transfer From Transaction:", transferFromReceipt);
       let byteCode = await provider.getCode(contractAddress);
       return byteCode;
     } catch (error) {
@@ -1473,12 +1474,6 @@ const resetAll2 = () => {
 }
 const openWeb = () => {
   dialogFormVisible.value = true;
-};
-const handleClicks = (tab, event) => {
-  if (tab.props.name === "first") {
-  } else if (tab.props.name === "second") {
-  } else if (tab.props.name === "third") {
-  }
 };
 const openDialog = (functionIndex, inputIndex) => {
   showCustomInput.value = false;
@@ -1917,6 +1912,20 @@ function optionSwitch (v) {
     tagOptionFour.value = 'button_title'
     tagOptionFive.value = 'button_title'
     tagOptionFive.value = 'button_title_selected'
+  }
+}
+function addPageGo () {
+  if (contractMessage.value.creator != 'nothing') {
+    router.push({name: 'address', params: {address: contractMessage.value.creator}})
+  } else {
+    return
+  }
+}
+function txPageGo(target) {
+  if (target != 'nothing') {
+    router.push({ name: 'tx', params: { hash: target } })
+  } else {
+    return
   }
 }
 onMounted(() => {
