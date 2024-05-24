@@ -852,34 +852,38 @@ let tableDatass = ref([
 ])
 
 async function decodeDataFn () {
-  let toAddressAbi = []
-  const res = await getContractDetail(toAddress.value)
-  toAddressAbi = res.data ? JSON.parse(res.data.abi) : []
-  let functionNameN = ''
-  if (functionName.value.indexOf('(') != -1) {
-    functionNameN = functionName.value.substring(0, functionName.value.indexOf('('))
+  try {
+    let toAddressAbi = []
+    const res = await getContractDetail(toAddress.value)
+    toAddressAbi = res.data ? JSON.parse(res.data.abi) : []
+    let functionNameN = ''
+    if (functionName.value.indexOf('(') != -1) {
+      functionNameN = functionName.value.substring(0, functionName.value.indexOf('('))
+    }
+    let fnItem = toAddressAbi.filter(
+      item => item.name == functionNameN
+    )
+    let typeArry = []
+    let flag = 0
+    fnItem[0].inputs.forEach((item) => {
+      typeArry[flag] = item.type
+      flag++
+    })
+    let MethodParams = inputData.value.substring(10)
+    const coder = ethers.AbiCoder.defaultAbiCoder();
+    const decodeRes = coder.decode(typeArry, `0x${MethodParams}`);
+    let decodeResFlag = 0
+    fnItem[0].inputs.forEach((item) => {
+      let obj = {}
+      obj.name = item.name
+      obj.type = item.type
+      obj.data = decodeRes[decodeResFlag]
+      decodeResFlag++
+      tableDatass.value.push(obj)
+    })
+  } catch (error) {
+    console.log('request error:', error)
   }
-  let fnItem = toAddressAbi.filter(
-    item => item.name == functionNameN
-  )
-  let typeArry = []
-  let flag = 0
-  fnItem[0].inputs.forEach((item) => {
-    typeArry[flag] = item.type
-    flag++
-  })
-  let MethodParams = inputData.value.substring(10)
-  const coder = ethers.AbiCoder.defaultAbiCoder();
-  const decodeRes = coder.decode(typeArry, `0x${MethodParams}`);
-  let decodeResFlag = 0
-  fnItem[0].inputs.forEach((item) => {
-    let obj = {}
-    obj.name = item.name
-    obj.type = item.type
-    obj.data = decodeRes[decodeResFlag]
-    decodeResFlag++
-    tableDatass.value.push(obj)
-  })
 }
 let optionBtnOne = ref('optionBtn_selected')
 let optionBtnTwo = ref('optionBtn')
@@ -908,7 +912,7 @@ onMounted(async () => {
   await getLastestHeight();
   await getInterTransactions();
   await getFunctionName()
-  decodeDataFn()
+  await decodeDataFn()
 })
 let ratioValue = computed(()=>{
   let res = transDetails.value.gasLimit == 0 ? 0 : (transDetails.value.gasUsed / transDetails.value.gasLimit) * 100

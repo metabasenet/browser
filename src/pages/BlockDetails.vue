@@ -5,14 +5,16 @@
         <el-row>
           <el-col :span="24">
             <div class="grid-content_h3">
-              <h3 style="font-size: 18.75px; color: #212529; font-weight: 500;">Block<span class="header_span">#{{ blockNumber }}</span></h3>
+              <h3 style="font-size: 18.75px; color: #212529; font-weight: 500;">Block<span class="header_span">#{{
+                  blockNumber }}</span></h3>
             </div>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24">
             <div class="grid-content_h0">
-              <el-button style="width: 70.73px; height:  28.44px; background-color: #0784C3; font-size: 12.5625px; color: #fff; border-radius: 8px" >OverView</el-button>
+              <el-button
+                style="width: 70.73px; height:  28.44px; background-color: #0784C3; font-size: 12.5625px; color: #fff; border-radius: 8px">OverView</el-button>
             </div>
           </el-col>
         </el-row>
@@ -21,8 +23,8 @@
             <el-descriptions v-model="blockDetails" size="default" class="grid-content_h2 " :column="1" align="left">
               <el-descriptions-item label="Block Height:" label-align="left" label-class-name="my-label"
                 class-name="my-content" label-width="30%">
-                <div class="block_height"> 
-                  <span style="margin-right:5px; font-size: 14.4992px; color: #212529;" >{{ blockDetails.number }}</span>
+                <div class="block_height">
+                  <span style="margin-right:5px; font-size: 14.4992px; color: #212529;">{{ blockDetails.number }}</span>
                   <el-tooltip content="View previous block" placement="top">
                     <el-button icon="ArrowLeft" @click="ArrowLeft" />
                   </el-tooltip>
@@ -32,18 +34,21 @@
                 </div>
               </el-descriptions-item>
               <el-descriptions-item label=" Timestamp:" label-align="center" align="left" label-class-name="my-label">
-                <div class="block_height" >
+                <div class="block_height">
                   <el-icon style="vertical-align: middle;">
                     <Timer />
-                  </el-icon> 
-                  <span style="vertical-align: middle; font-size: 14.4992px; color: #212529;">{{ blockDetails.formattedTime }} ({{ greenwichTime }})</span>
+                  </el-icon>
+                  <span style="vertical-align: middle; font-size: 14.4992px; color: #212529;">{{
+                    blockDetails.formattedTime }} ({{ greenwichTime }})</span>
                 </div>
               </el-descriptions-item>
               <el-descriptions-item label="Transactions:" label-align="center" align="left" label-class-name="my-label">
                 <div class="block_height">
-                  <el-tooltip :content="`${blockDetails.transactioncount}`" placement="top"><div
-                      class="skyblue-text" style="cursor: pointer;" @click="goTransactionPage">
-                      <span>{{ blockDetails.transactioncount }}</span></div></el-tooltip>
+                  <el-tooltip :content="`${blockDetails.transactioncount}`" placement="top">
+                    <div class="skyblue-text" style="cursor: pointer;" @click="goTransactionPage">
+                      <span>{{ blockDetails.transactioncount }}</span>
+                    </div>
+                  </el-tooltip>
                 </div>
                 <!-- <span>and </span>
             <el-tooltip content="Copy Address" placement="top"><router-link class="skyblue-text" to="/address">29
@@ -62,11 +67,12 @@
               </el-descriptions-item>
               <el-descriptions-item label="Block Reward:" label-align="center" align="left" label-class-name="my-label">
                 <div class="block_height">
-                  <span></span>
+                  <span>0.13084382351199558 MNT</span>
                 </div>
               </el-descriptions-item>
               <el-descriptions-item label="Difficulty:" label-align="center" align="left" label-class-name="my-label">
-                <div class="block_height"> <span style="font-size: 14.4992px; color: #212529;">{{ blockDetails.difficulty }}</span></div>
+                <div class="block_height"> <span style="font-size: 14.4992px; color: #212529;">{{
+                    blockDetails.difficulty }}</span></div>
 
               </el-descriptions-item>
               <el-descriptions-item label="Total Difficulty:" label-align="center" align="left"
@@ -82,17 +88,20 @@
 
               </el-descriptions-item>
               <el-descriptions-item label="Gas Used:" label-align="center" align="left" label-class-name="my-label">
-                <div class="block_height"><span  style="font-size: 14.4992px; color: #212529;">{{ blockDetails.gasused }}</span></div>
+                <div class="block_height"><span style="font-size: 14.4992px; color: #212529;">{{ blockDetails.gasused
+                    }}</span></div>
               </el-descriptions-item>
               <el-descriptions-item label="Gas Limit:" label-align="center" align="left" label-class-name="my-label">
-                <div class="block_height"><span  style="font-size: 14.4992px; color: #212529;">{{ blockDetails.gaslimit }}</span></div>
+                <div class="block_height"><span style="font-size: 14.4992px; color: #212529;">{{ blockDetails.gaslimit
+                    }}</span></div>
 
               </el-descriptions-item>
               <el-descriptions-item label="Fees:" label-align="center" align="left" label-class-name="my-label">
                 <!-- <div class="block_height"><span style="margin-right:5px">0.004062755588941122 MNT</span>
             <el-tooltip content="open fee burn transaction" placement="top"><el-button
                 icon="Share"></el-button></el-tooltip></div> -->
-                <div class="block_height"><span  style="font-size: 14.4992px; color: #212529;">{{ blockDetails.gaspriceTotal }}MNT</span></div>
+                <div class="block_height"><span style="font-size: 14.4992px; color: #212529;">{{
+                    blockDetails.gaspriceTotal }}MNT</span></div>
               </el-descriptions-item>
               <el-descriptions-item label="Extra Data:" label-align="center" align="left" label-class-name="my-label">
                 <el-input style="height:auto" type="textarea" :disabled="true" :placeholder="blockDetails.extradata">
@@ -108,7 +117,8 @@
                 <el-descriptions class="grid-content" :column="1" align="left" v-model="blockDetails">
                   <el-descriptions-item label="Hash:" label-align="left" align="left" label-class-name="my-label"
                     class-name="my-content">
-                    <div class="block_height"><span style="font-size: 14.4992px; color: #212529">{{ blockDetails.hash }}</span></div>
+                    <div class="block_height"><span style="font-size: 14.4992px; color: #212529">{{ blockDetails.hash
+                        }}</span></div>
                   </el-descriptions-item>
                   <el-descriptions-item label="Parent Hash:" label-align="center" align="left"
                     label-class-name="my-label">

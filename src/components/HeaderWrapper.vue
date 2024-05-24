@@ -154,7 +154,6 @@ import { config } from '@/config/config';
 import { useUserStore } from '@/store/user'
 import pinia from '@/store';
 const homeSearch = ref('')
-const select = ref('');
 const headerPrice = ref('')
 const gasPrice = ref()
 const user = useUserStore(pinia)
