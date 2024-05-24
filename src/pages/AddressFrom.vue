@@ -265,7 +265,7 @@
                     :page-sizes="[10, 20, 30, 40]" background layout=" sizes, prev, pager, next, " :total="total" small
                     @size-change="handleSizeChange1" @current-change="getAddressList" />
                 </div>
-                <el-table v-loading="loading" :data="tableData" style="width: 100%" size="default"
+                <el-table  v-loading="loading" :data="tableData" style="width: 100%" size="default"
                   :row-style="{ height: '70px' }">
                   <el-table-column prop="hash" label="Transaction Hash" width="125">
                     <template v-slot="scope">
@@ -1693,6 +1693,7 @@ const getAddressList = async (pager = 1) => {
         // const values = item.value || 0;
         // item.value = Number(formatUnits(item.value.toString(), 18)).toFixed(8);
         item.value = formatUnits(BigInt(item.value), 18);
+        item.to = item.to || ''
       });
     }
     loading.value = false
