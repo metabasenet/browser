@@ -1,7 +1,6 @@
 <template>
   <div>
     <el-container class="container-xxl">
-      <!-- <el-aside class="responsive-aside"></el-aside> -->
       <el-main style="padding-bottom: 0;">
         <div class="fixed-header">
           <div style="display: flex; align-items: center; padding: 0 20px; ">
@@ -94,6 +93,17 @@
               <el-menu-item index="/tokentxns" class="font-item">Token Transfers
                 <span class="font-item">(ERC-20)</span></el-menu-item>
             </el-sub-menu>
+            <el-sub-menu index="4" class="mainTestChain">
+              <template #title><span class="font-item">Explorers</span></template>
+              <el-menu-item class="font-item">
+                <span @click="chainSelect(1)"
+                  :class="localDomain == config.domainUser_url ? 'chainSelected' : 'chainSelect'">MNT Mainnet</span>
+              </el-menu-item>
+              <el-menu-item class="font-item">
+                <span @click="chainSelect(0)"
+                  :class="localDomain == config.domainUser_url ? 'chainSelect' : 'chainSelected'">MNT Testnet</span>
+              </el-menu-item>
+            </el-sub-menu>
             <el-menu-item index="/login" class="font-item">
               <el-icon>
                 <User />
@@ -137,7 +147,6 @@
           </el-row> -->
         </div>
       </el-main>
-      <!-- <el-aside class="responsive-aside"></el-aside> -->
     </el-container>
 
   </div>
@@ -350,5 +359,13 @@ onMounted(()=>{
 }
 .chainSelected {
   color: #0784c3;
+}
+.mainTestChain {
+  display: none;
+}
+@media (max-width: 768px) {
+  .mainTestChain {
+      display: block;
+  }
 }
 </style>

@@ -1813,6 +1813,7 @@ const getTransactionPlaforms = async (pager = 1) => {
     }
     const currentTime = Math.floor(Date.now() / 1000);
     tableDataInternal.value.forEach((item) => {
+      item.value = formatUnits(item.value, 18)
       const timestamp = item.utc;
       const timeDifferenceInSeconds = currentTime - timestamp;
       let formattedTime;

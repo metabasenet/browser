@@ -761,8 +761,8 @@ const getInterTransactions = async () => {
       let {data} = await getInternalTransactionTest(hash)
       tableData.value = data;
     }
-
     tableData.value.forEach(item => {
+      item.value = formatUnits(item.value, 18)
       item.value = ethers.formatUnits(parseInt(item.value, 16).toString(), 18);
       const currentTime = Math.floor(Date.now() / 1000);
       const timestamp = item.utc;
