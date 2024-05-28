@@ -36,164 +36,83 @@
                                                 Endpoint</p>
                                         </el-alert>
                                     </el-col>
-                                    <el-col :xs="24" :sm="24" :md="24" :lg="24">
-                                        <el-form :inline="true" :model="formInline" class="demo-form-inline"
-                                            label-position="top">
-                                            <el-col :xs="24" :sm="24" :md="24" :lg="7">
-                                                <el-form-item label="Contract Address">
-                                                    <el-input v-model="formInline.contractaddress" disabled />
-                                                </el-form-item>
-                                            </el-col>
-                                            <el-col :xs="24" :sm="24" :md="24" :lg="7">
-                                                <el-form-item label="contractname">
-                                                    <el-input v-model="formInline.contractname" />
-                                                </el-form-item>
-                                            </el-col>
-                                            <el-col :xs="24" :sm="24" :md="24" :lg="7">
-                                                <el-form-item label="Compiler">
-                                                    <el-select class="demo_select" v-model="formInline.compilerversion"
-                                                        disabled>
-
-                                                    </el-select>
-                                                    <!-- <el-select v-model="formInline.compilerversion"
-                                                        placeholder="[please select]" style="width: 28rem;">
-                                                        <el-option label="v0.8.25+commit.b61c2a91" value="0.8.25" />
-                                                        <el-option label="v0.8.24+commit.e11b9ed9" value="0.8.24" />
-                                                        <el-option label="v0.8.23+commit.f704f362" value="0.8.23" />
-                                                        <el-option label="v0.8.22+commit.4fc1097e" value="0.8.22" />
-                                                        <el-option label="v0.8.21+commit.d9974bed" value="0.8.21" />
-                                                        <el-option label="v0.8.20+commit.a1b79de6" value="0.8.20" />
-                                                        <el-option label="v0.8.19+commit.7dd6d404" value="0.8.19" />
-                                                        <el-option label="v0.8.18+commit.87f61d96" value="0.8.18" />
-                                                        <el-option label="v0.8.17+commit.8df45f5f" value="0.8.17" />
-                                                        <el-option label="v0.8.16+commit..07a7930e" value="0.8.16" />
-                                                        <el-option label="v0.8.15+commit..e14f2714" value="0.8.15" />
-                                                        <el-option label="v0.8.14+commit.80d49f37" value="0.8.14" />
-                                                        <el-option label="v0.8.13+commit.abaa5c0e" value="0.8.13" />
-                                                        <el-option label="v0.8.12+commit..f00d7308" value="0.8.12" />
-                                                        <el-option label="v0.8.11+commit.d7f03943" value="0.8.11" />
-                                                        <el-option label="v0.8.10+commit..fc410830" value="0.8.10" />
-                                                        <el-option label="v0.8.9+commit.e5eed63a" value="0.8.9" />
-                                                        <el-option label="v0.8.8+commit.dddeac2f" value="0.8.8" />
-                                                        <el-option label="v0.8.7+commit.e28d00a7" value="0.8.7" />
-                                                        <el-option label="v0.8.6+commit.11564f7e" value="0.8.6" />
-                                                        <el-option label="v0.8.5+commit.a4f2e591" value="0.8.5" />
-                                                        <el-option label="v0.8.4+commit.c7e474f2" value="0.8.4" />
-                                                        <el-option label="v0.8.3+commit.8d00100c" value="0.8.3" />
-                                                        <el-option label="v0.8.2+commit..661d1103" value="0.8.2" />
-                                                        <el-option label="v0.8.1+commit.df193b15" value="0.8.1" />
-                                                        <el-option label="v0.8.0+commit.c7dfd78e" value="0.8.0" />
-                                                        <el-option label="v0.7.6+commit..7338295f" value="0.7.6" />
-                                                        <el-option label="v0.7.5+commit.eb77ed08" value="0.7.5" />
-                                                        <el-option label="v0.7.4+commit.3f05b770" value="0.7.4" />
-                                                        <el-option label="v0.7.3+commit.9bfce1f6" value="0.7.3" />
-                                                        <el-option label="v0.7.2+commit.51b20bc0" value="0.7.2" />
-                                                        <el-option label="v0.7.1+commit.f4a555be" value="0.7.1" />
-                                                        <el-option label="v0.7.0+commit.9e61f92b" value="0.7.0" />
-                                                        <el-option label="v0.6.12+commit.27d51765" value="0.6.12" />
-                                                        <el-option label="v0.6.11+commit.5ef660b1" value="0.6.11" />
-                                                        <el-option label="v0.6.10+commit.00c0fcaf" value="0.6.10" />
-                                                        <el-option label="v0.6.9+commit.3e3065ac" value="0.6.9" />
-                                                        <el-option label="v0.6.8+commit.0bbfe453" value="0.6.8" />
-                                                        <el-option label="v0.6.7+commit.b8d736ae" value="0.6.7" />
-                                                        <el-option label="v0.6.6+commit.6c089d02" value="0.6.6" />
-                                                        <el-option label="v0.6.5+commit.f956cc89" value="0.6.5" />
-                                                        <el-option label="v0.6.4+commit.1dca32f3" value="0.6.4" />
-                                                        <el-option label="v0.6.3+commit.8dda9521" value="0.6.3" />
-                                                        <el-option label="v0.6.2+commit.bacdbe57" value="0.6.2" />
-                                                        <el-option label="v0.6.1+commit.e6f7d5a4" value="0.6.1" />
-                                                        <el-option label="v0.6.0+commit..26b70077" value="0.6.0" />
-                                                        <el-option label="v0.5.17+commit.d19bba13" value="0.5.17" />
-                                                        <el-option label="v0.5.16+commit.9c3226ce" value="0.5.16" />
-                                                        <el-option label="v0.5.15+commit.6a57276f" value="0.5.15" />
-                                                        <el-option label="v0.5.14+commit.01f1aaa4" value="0.5.14" />
-                                                        <el-option label="v0.5.13+commit.5b0b510c" value="0.5.13" />
-                                                        <el-option label="v0.5.12+commit.7709ece9" value="0.5.12" />
-                                                        <el-option label="v0.5.11+commit.22be8592" value="0.5.11" />
-                                                        <el-option label="v0.5.11+commit.c082d0b4" value="0.5.11" />
-                                                        <el-option label="v0.5.10+commit.5a6ea5b1" value="0.5.10" />
-                                                        <el-option label="v0.5.9+commit.c68bc34e" value="0.5.9" />
-                                                        <el-option label="v0.5.9+commit.e560f70d" value="0.5.9" />
-                                                        <el-option label="v0.5.8+commit.23d335f2" value="0.5.8" />
-                                                        <el-option label="v0.5.7+commit.6da8b019" value="0.5.7" />
-                                                        <el-option label="v0.5.6+commit.b259423e" value="0.5.6" />
-                                                        <el-option label="v0.5.5+commit.47a71e8f" value="0.5.5" />
-                                                        <el-option label="v0.5.4+commit.9549d8ff" value="0.5.4" />
-                                                        <el-option label="v0.5.3+commit.10d17f24" value="0.5.3" />
-                                                        <el-option label="v0.5.2+commit.1df8f40c" value="0.5.2" />
-                                                        <el-option label="v0.5.1+commit.c8a2cb62" value="0.5.1" />
-                                                        <el-option label="v0.5.0+commit.1d4f565a" value="0.5.0" />
-                                                        <el-option label="v0.4.26+commit.4563c3fc" value="0.4.26" />
-                                                        <el-option label="v0.4.25+commit.59dbf8f1" value="0.4.25" />
-                                                        <el-option label="v0.4.24+commit.e67f0147" value="0.4.24" />
-                                                        <el-option label="v0.4.23+commit.124ca40d" value="0.4.23" />
-                                                        <el-option label="v0.4.22+commit.4cb486ee" value="0.4.22" />
-                                                        <el-option label="v0.4.21+commit.dfe3193c" value="0.4.21" />
-                                                        <el-option label="v0.4.20+commit.3155dd80" value="0.4.20" />
-                                                        <el-option label="v0.4.19+commit.c4cbbb05" value="0.4.19" />
-                                                        <el-option label="v0.4.18+commit.9cf6e910" value="0.4.18" />
-                                                        <el-option label="v0.4.17+commit.bdeb9e52" value="0.4.17" />
-                                                        <el-option label="v0.4.16+commit.d7661dd9" value="0.4.16" />
-                                                        <el-option label="v0.4.15+commit.8b45bddb" value="0.4.15" />
-                                                        <el-option label="v0.4.15+commit.bbb8e64f" value="0.4.14" />
-                                                        <el-option label="v0.4.14+commit..c2215d46" value="0.4.14" />
-                                                        <el-option label="v0.4.13+commit.0fb4cb1a" value="0.4.13" />
-                                                        <el-option label="v0.4.12+commit.194ff033" value="0.4.12" />
-                                                        <el-option label="v0.4.11+commit.68ef5810" value="0.4.11" />
-                                                    </el-select> -->
-                                                </el-form-item>
-                                            </el-col>
-                                            <el-col :xs="24" :sm="24" :md="24" :lg="3">
-                                                <el-form-item label="Optimization">
-                                                    <el-select v-model="formInline.optimization" clearable>
-                                                        <el-option label="Yes" value="1" />
-                                                        <el-option label="No" value="0" />
-                                                    </el-select>
-                                                </el-form-item>
-                                            </el-col>
-                                            <el-col :span="24">
-                                                <el-form-item>
-                                                    <template #label>
-                                                        <!-- :auto-upload="false" -->
-                                                        <el-upload action="#" :before-upload="beforeUpload"
-                                                            show-file-list :http-request="uploadFiles"
-                                                            :before-remove="beforeRemove" :file-list="fileList"
-                                                            :auto-upload="true">
-
-                                                            <el-button :disabled="(formInline.contractname &&
-                    formInline.optimization) ? false : true" size="small" type="primary">Select
-                                                                file</el-button>
-                                                            <template #tip>
-                                                                <div class="el-upload__tip">
-                                                                    Only.sol files can be uploaded
-                                                                </div>
-                                                            </template>
-                                                        </el-upload>
-                                                        <!-- <el-button type="primary" @click="submitForm">UPLOAD</el-button> -->
-                                                        <!-- <el-button type="primary" @click="deleteUploaded">Delete server
-                                                            files</el-button> -->
-                                                    </template>
-                                                    <div v-for="(item, index) in formInline.testfile" :key="index"
-                                                        class="verify_file">
-                                                        <span>File {{ index + 1 }} of {{ formInline.testfile.length
-                                                            }}:</span>
-                                                        <span>{{ item.fileName || item.name }}</span>
-                                                        <el-input v-model="item.sourceCode" type="textarea" disabled
-                                                            :rows="8" />
-                                                    </div>
-                                                </el-form-item>
-                                            </el-col>
-                                            <el-col :span="24" class="verify_button">
-                                                <el-form-item>
-                                                    <el-button type="primary" size="large" @click="onSubmit">Verify and
-                                                        Publish</el-button>
-                                                    <el-button type="info" size="large"
-                                                        @click="resetForm(formInline)">Reset</el-button>
-                                                    <el-button type="info" size="large" @click="returnHome">Return to
-                                                        main</el-button>
-                                                </el-form-item>
-                                            </el-col>
-                                        </el-form>
+                                </el-row>
+                                <div style="height: 30px;"></div>
+                                <el-row justify="space-between">
+                                    <el-col :xs="24" :sm="24" :md="24" :lg="8">
+                                        <h3 style="font-size: 12px; color: #909399">Contract Address</h3>
+                                        <el-input v-model="formInline.contractaddress" disabled size="large" />
+                                    </el-col>
+                                    <el-col :xs="24" :sm="24" :md="24" :lg="5">
+                                        <h3 style="font-size: 12px; color: #909399">Contract Name</h3>
+                                        <div style="position: relative;" @mouseleave="arrowShow = false">
+                                            <el-input v-model="formInline.contractname" size="large" />
+                                            <ul v-show="arrowShow"
+                                                style="position: absolute; top: 100%; background-color: #fff; width: 100%; border-radius: 4px; padding: 8px 0; border: #ecf5ff 1px solid; box-sizing: border-box;"
+                                                >
+                                                <li v-for="(item, index) in contractNameArr" :key="index"
+                                                    @click="handleItemClick(item)"
+                                                    style="padding: 5px 0; text-align: center; color: #626266; border-radius: 5px;"
+                                                    class="liStyle">
+                                                    {{ item }}</li>
+                                            </ul>
+                                            <div style="position: absolute; right: 5%; top: 30%; width: 10%; height: 50%; text-align: right;"
+                                                v-show="contractNameArr.length != 0"
+                                                @click="arrowShow = !arrowShow">
+                                                <el-icon>
+                                                    <ArrowDown />
+                                                </el-icon>
+                                            </div>
+                                        </div>
+                                    </el-col>
+                                    <el-col :xs="24" :sm="24" :md="24" :lg="5">
+                                        <h3 style="font-size: 12px; color: #909399">Compiler</h3>
+                                        <el-select class="demo_select" v-model="formInline.compilerversion" disabled>
+                                        </el-select>
+                                    </el-col>
+                                    <el-col :xs="24" :sm="24" :md="24" :lg="3">
+                                        <h3 style="font-size: 12px; color: #909399">Optimization</h3>
+                                        <el-select v-model="formInline.optimization" clearable>
+                                            <el-option label="Yes" value="1" />
+                                            <el-option label="No" value="0" />
+                                        </el-select>
+                                    </el-col>
+                                </el-row>
+                                <div style="height: 30px;"></div>
+                                <el-row>
+                                    <el-col :span="24">
+                                        <el-upload action="#" :before-upload="beforeUpload" show-file-list
+                                            :http-request="uploadFiles" :before-remove="beforeRemove"
+                                            :file-list="fileList" :auto-upload="true" :limit="1">
+                                            <el-button size="small" type="primary">Select
+                                                file
+                                            </el-button>
+                                            <!-- :disabled="(formInline.contractname &&
+                                            formInline.optimization) ? false : true" -->
+                                            <template #tip>
+                                                <div class="el-upload__tip">
+                                                    Only.sol files can be uploaded
+                                                </div>
+                                            </template>
+                                        </el-upload>
+                                        <div v-for="(item, index) in formInline.testfile" :key="index"
+                                            class="verify_file">
+                                            <span>File {{ index + 1 }} of {{ formInline.testfile.length
+                                                }}:</span>
+                                            <span>{{ item.fileName || item.name }}</span>
+                                            <el-input v-model="item.sourceCode" type="textarea" disabled :rows="8" />
+                                        </div>
+                                    </el-col>
+                                </el-row>
+                                <div style="height: 30px;"></div>
+                                <el-row>
+                                    <el-col :span="24">
+                                        <el-button type="primary" size="default" @click="onSubmit">Verify and
+                                            Publish</el-button>
+                                        <el-button type="info" size="default"
+                                            @click="resetForm(formInline)">Reset</el-button>
+                                        <el-button type="info" size="default" @click="returnHome">Return to
+                                            main</el-button>
                                     </el-col>
                                 </el-row>
                             </div>
@@ -233,7 +152,9 @@ const formInline = ref({
     fileName: '',
     compiletype: compiletype,
 })
+
 const fileList = ref([])
+let arrowShow = ref(false)
 const rules = ref({
     files: [
         { required: true, message: 'Required', trigger: 'change' },
@@ -276,13 +197,16 @@ const getContactDetail = async () => {
         console.error("Error fetching block details:", error);
     }
 };
+let contractNameArr = ref([])
 const getFileInfos = async () => {
     try {
         if (address !== null) {
             const response = await getFileInfo(
                 address
             );
-            console.log(response);
+            if (response) {
+                contractNameArr.value = response[0].contractName || []
+            }
             formInline.value.testfile = response
             fileList.value = response.map((item) => {
                 return {
@@ -322,15 +246,9 @@ const beforeUpload = (file) => {
     if (!isSol) {
         ElMessage.error('You can only upload.sol files!');
         return false;
-    } else if (formInline.value.contractname && formInline.value.contractaddress && formInline.value.compilerversion && formInline.value.optimization) {
-        formInline.value.files = file;
-        return true;
-
     } else {
-        ElMessage.warning('Please fill in the contract name, contract address, and choose whether to file!');
-        return false
+        return true
     }
-
 };
 
 const handleUploadError = (err, file, fileList) => {
@@ -339,6 +257,7 @@ const handleUploadError = (err, file, fileList) => {
 const submitForm = async (file, fileList) => {
         try {
             const uploadResponse = await getVertityUpload(formInline.value.contractname, formInline.value.contractaddress, file);
+            console.log(uploadResponse,'[[[[[[[[[[[[[[]]]]]]]]]]]]]]');
             if (uploadResponse.data === 'upload success') {
                 getFileInfos();
                 ElMessage.success('Upload successfully');
@@ -355,6 +274,7 @@ const beforeRemove = async (file, fileList) => {
         if (address !== null & file.name !== null) {
             const response = await deleteFile(address, file.name);
             ElMessage.success('Successfully deleted');
+            contractNameArr.value = []
             formInline.value.testfile = fileList
             // formInline.value.testfile = '';
             // formInline.value.fileName = '';
@@ -364,23 +284,14 @@ const beforeRemove = async (file, fileList) => {
     }
     // return ElMessage.success('Successfully deleted');
 };
-// const deleteUploaded = async (fileName, fileList) => {
-//     try {
-//         if (address !== null & fileName !== null) {
-//             const response = await deleteFile(address, fileName);
-//             ElMessage.success('Successfully deleted');
-//             formInline.value.testfile = fileList
-//             // formInline.value.testfile = '';
-//             // formInline.value.fileName = '';
-//         }
-//     } catch (error) {
-//         console.error("Error fetching block details:", error);
-//     }
-// }
+
+function handleItemClick(option) {
+    formInline.value.contractname = option
+    arrowShow.value = false
+}
 
 onMounted(() => {
-    // getContactDetail();
-    
+
 });
 </script>
 
@@ -456,5 +367,8 @@ onMounted(() => {
     font-size: 14px;
     color: #6c757d;
 
+}
+.liStyle:hover {
+    background-color: #f5f7fa;
 }
 </style>
