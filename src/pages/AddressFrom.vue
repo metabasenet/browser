@@ -1708,6 +1708,7 @@ const getBalanceList = async () => {
     if (address !== null) {
       const response = await getBalanceAddress(address);
       getByBalance.value = response.data[0] || {};
+      getByBalance.value.balance = formatUnits(getByBalance.value.balance.toString(), 18)
     }
   } catch (error) {
     console.error("Error fetching details:", error);

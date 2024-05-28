@@ -222,7 +222,7 @@
                       <el-descriptions-item label="Transaction Fee:" label-align="center" align="left"
                         label-class-name="my-label">
                         <div class="block_height"> <span style="font-size: 14.4992px; color:#212529;">{{
-                            transDetails.TransactionFee }} MNT
+                            transDetails.TransactionFee }} 
                             <!-- (${{ transDetails.TransactionFee }}) -->
                           </span>
                         </div>
@@ -232,7 +232,7 @@
                         label-class-name="my-label">
                         <div class="block_height"><span style="font-size: 14.4992px; color:#212529;"> {{
                             transDetails.gasPrice }}
-                            <span style="font-size: 12px; color: #212529;">MNT</span>
+                            <span style="font-size: 12px; color: #212529;">GWei</span>
                           </span>
                         </div>
 
@@ -590,6 +590,8 @@ const fetchTransactionDetails = async () => {
     if (hash !== null) {
       const response = await getTransactionDetail(hash);
       transDetails.value = response.data;
+      transDetails.value.gasPrice = formatUnits(transDetails.value.gasPrice.toString(), 9)
+      console.log(transDetails.value,';;;;;;;;;;;;;;;;;;');
       toAddress.value = transDetails.value.to
       if (toAddress.value == ethers.ZeroAddress) {
         isZeroAddress.value = true
