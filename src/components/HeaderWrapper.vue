@@ -6,11 +6,11 @@
           <div style="display: flex; align-items: center; padding: 0 20px; ">
             <span>MNT Price:</span>&nbsp;
             <span style="color: #0784c3;">${{ headerPrice }}
-              <span style="color:#00a186">(+0.49%)</span>
+              <!-- <span style="color:#00a186">(+0.49%)</span> -->
             </span>&nbsp;&nbsp;&nbsp;&nbsp;
             <svg-icon name="refuel" width=".85rem" height=".85rem" />&nbsp;
             <span>Gas:</span>&nbsp;
-            <span style="color: #0784c3;">{{ gasPrice }} GWei</span>
+            <span style="color: #0784c3;">10 GWei</span>
           </div>
           <div style="display: flex; align-items: center; padding: 5px 10px;">
             <el-input v-model="homeSearch" style="height: 40px; width: 485.5px;"
@@ -104,47 +104,13 @@
                   :class="localDomain == config.domainUser_url ? 'chainSelect' : 'chainSelected'">MNT Testnet</span>
               </el-menu-item>
             </el-sub-menu>
-            <el-menu-item index="/login" class="font-item">
+            <!-- <el-menu-item index="/login" class="font-item">
               <el-icon>
                 <User />
               </el-icon>
               Sign In
-            </el-menu-item>
+            </el-menu-item> -->
           </el-menu>
-          <!-- <el-row :gutter="10">
-            <el-col :span="24">
-              <el-menu ellipsis class="el-menu-popper-demo" router mode="horizontal" :popper-offset="16">
-                <el-menu-item index="/">
-                  <div class="el-img">
-                    <img width="40" height="37" src="/header_img.png" alt="" />
-                    <span style="font-size:1.4rem;color:#00a186">MNT</span>
-                  </div>
-                </el-menu-item>
-                <div class="el_menu">
-                  <el-menu-item index="/" class="font-item">Home</el-menu-item>
-                  <el-sub-menu index="2">
-                    <template #title><span class="font-item">Blockchain</span></template>
-                    <el-menu-item index="/blocks" class="font-item">View Blocks</el-menu-item>
-                    <el-menu-item index="/txs/home" class="font-item">Transactions</el-menu-item>
-                    <el-menu-item index="/accounts" class="font-item">Top Accounts</el-menu-item>
-                  </el-sub-menu>
-                  <el-sub-menu index="3" :popper-offset="8">
-                    <template #title><span class="font-item">Tokens</span></template>
-                    <el-menu-item index="/tokens" class="font-item">Top Tokens<span
-                        class="font-item">(ERC-20)</span></el-menu-item>
-                    <el-menu-item index="/tokentxns" class="font-item">Token Transfers
-                      <span class="font-item">(ERC-20)</span></el-menu-item>
-                  </el-sub-menu>
-                  <el-menu-item index="/login" class="font-item">
-                    <el-icon>
-                      <User />
-                    </el-icon>
-                    Sign In
-                  </el-menu-item>
-                </div>
-              </el-menu>
-            </el-col>
-          </el-row> -->
         </div>
       </el-main>
     </el-container>
@@ -208,7 +174,7 @@ const getHeaderPrice = async () => {
   }
 }
 let getGasPrice = async ()=>{
-  const provider = new ethers.JsonRpcProvider(location.hostname == config.domainUser_url ? config.mainRpc_address:config.testRpc_adress);
+  const provider = new ethers.JsonRpcProvider(location.hostname == config.domainUser_url ? import.meta.env.VITE_CHAIN_MAIN_RPC : import.meta.env.VITE_CHAIN_TEST_RPC);
   // let res = await provider.getCode('address')
   // res.length>4
   //const res = await provider.send("eth_gasPrice");

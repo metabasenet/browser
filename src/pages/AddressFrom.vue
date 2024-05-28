@@ -93,7 +93,7 @@
                 </li>
                 <li class="over_li">
                   <p class="title-item">MNT VALUE</p>
-                  <span class="content-item">{{ mntValue }}</span>
+                  <span class="content-item">${{ mntValue }}</span>
                 </li>
                 <li class="over_li">
                   <p class="title-item">TOKEN HOLDINGS</p>
@@ -153,15 +153,16 @@
                   <p class="title-item">CONTRACTCREATOR:</p>
                   <div class="over_div">
                     <el-tooltip :content="contractMessage.creator">
-                        <span style="font-size: 14.4992px; color: #0784C3; cursor: pointer;" @click="addPageGo">{{
-                          contractMessage.creator.substring(0, 17) + '...'
-                          }}</span>
+                      <span style="font-size: 14.4992px; color: #0784C3; cursor: pointer;" @click="addPageGo">{{
+                        contractMessage.creator.substring(0, 17) + '...'
+                        }}</span>
                     </el-tooltip>
                     at txn
                     <el-tooltip :content="contractMessage.transactionHash">
-                        <span style="font-size: 14.4992px; color: #0784C3; cursor: pointer; " @click="txPageGo(contractMessage.transactionHash)">{{
-            contractMessage.transactionHash.substring(0, 18) + '...' }}
-                        </span>
+                      <span style="font-size: 14.4992px; color: #0784C3; cursor: pointer; "
+                        @click="txPageGo(contractMessage.transactionHash)">{{
+                        contractMessage.transactionHash.substring(0, 18) + '...' }}
+                      </span>
                     </el-tooltip>
                     <!-- <el-tooltip class="box-item" effect="dark" :content="address" placement="top-start">
                       <router-link style="font-size: 14.4992px; color: #0784C3;" class="skyblue-text ellipsis-text"
@@ -265,7 +266,7 @@
                     :page-sizes="[10, 20, 30, 40]" background layout=" sizes, prev, pager, next, " :total="total" small
                     @size-change="handleSizeChange1" @current-change="getAddressList" />
                 </div>
-                <el-table  v-loading="loading" :data="tableData" style="width: 100%" size="default"
+                <el-table v-loading="loading" :data="tableData" style="width: 100%" size="default"
                   :row-style="{ height: '70px' }">
                   <el-table-column prop="hash" label="Transaction Hash" width="125">
                     <template v-slot="scope">
@@ -458,7 +459,7 @@
                       <el-tooltip :content="`${scope.row.value}`" placement="top">
                         <span class="ellipsis-text" style="font-size: 14.4992px; color: #212529;">{{
                           scope.row.value
-                          }}</span>
+                          }} <span style="font-size: 12px; color:  #212529;">(MNT)</span></span>
                       </el-tooltip>
                     </template>
                   </el-table-column>
@@ -1359,9 +1360,9 @@ const connectWallet = async () => {
       dialogFormVisible.value = false;
       const providers = ethereum;
       let chainName = location.hostname == config.domainUser_url ? 'MNT Mainnet' : 'MNT Testnet';
-      const chainId = location.hostname == config.domainUser_url ? '0x2277' : '0x66';
+      const chainId = location.hostname == config.domainUser_url ? import.meta.env.VITE_METABASE_MAINCHAIN_ID : import.meta.env.VITE_METABASE_MAINCHAIN_ID;
       const blockExplorerUrls = location.hostname == config.domainUser_url ? 'https://main.metabasenet.site/' : 'https://test.metabasenet.site/'
-      const rpcUrl = location.hostname == config.domainUser_url ? config.rpc_testAdress : config.rpc_TestAddress;
+      const rpcUrl = location.hostname == config.domainUser_url ? import.meta.env.VITE_METABASE_MAIN_RPC : import.meta.env.VITE_METABASE_TEST_RPC;
       try {
         await providers.request({ method: 'wallet_switchEthereumChain', params: [{ chainId }] });
       } catch (error) {
@@ -1686,8 +1687,9 @@ const getAddressList = async (pager = 1) => {
       tableData = response.data.list;
       total.value = response.data.total;
       timestamps();
+      console.log(tableData,'.....................');
       tableData.forEach((item) => {
-        item.TransactionFee = formatUnits((item.cumulativeGasUsed * item.effectiveGasPrice).toString(), 18);
+        item.TransactionFee = formatUnits((item.cumulativeGasUsed * item.effectiveGasPrice).toString(), 9);
         item.method = item.method || item.methodHash;
         // const decimals = item.decimals || 0;
         // const values = item.value || 0;
@@ -1728,7 +1730,7 @@ let contractMessage = ref({
   ercSymbol: ''
 })
 const getContractOrAddress = async () => {
-  const provider = new ethers.JsonRpcProvider(location.hostname == config.domainUser_url ? config.mainRpc_address : config.testRpc_adress);
+  const provider = new ethers.JsonRpcProvider(location.hostname == config.domainUser_url ? import.meta.env.VITE_CHAIN_MAIN_RPC : import.meta.env.VITE_CHAIN_TEST_RPC);
   try {
     provider.getCode(address).then(async (code) => {
       if (code.length > 4) {

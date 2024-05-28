@@ -38,23 +38,26 @@
                     </el-col>
                     <el-col :span="6" :xs="12" :sm="12" :md="6" :lg="6">
                         <div class="grid-content ep-bg-purple footer-center">
-                            <h4 style="font-size: 14.4992px; color: #212529; font-weight: 500;">Company</h4>
-                            <el-link href="https://element-plus.org" :underline="false">Delegate to MntScan</el-link>
-                            <el-link href="https://element-plus.org" :underline="false">Brand Assets</el-link>
-                            <el-link href="https://element-plus.org" :underline="false">Contact Us</el-link>
-                            <el-link href="https://element-plus.org" :underline="false">Terms & Privacy </el-link>
-                            <el-link href="https://element-plus.org" :underline="false">Bug Bounty<el-icon>
-                                    <Promotion />
-                                </el-icon> </el-link>
+                            <h4 style="font-size: 14.4992px; color: #212529; font-weight: 500;">Connect Us</h4>
+                            <!-- <el-link href="https://element-plus.org" :underline="false">Delegate to MntScan</el-link> -->
+                            <!-- <el-link href="https://element-plus.org" :underline="false">Brand Assets</el-link> -->
+                            <el-link href="https://t.me/www_metabasenet_club" :underline="false">
+                                TeleGram
+                            </el-link>
+                            <el-link href="https://x.com/Jkaorr?t=Lb8tUaBP1m701lSfx7KGOQ&s=09" :underline="false">
+                                Twitter </el-link>
+                            <el-link
+                                href="https://www.facebook.com/people/Mnt-Metabasenet/pfbid0fBbidcqNcjHJbYMT3tbdXLHdbVUU9XEKJMTvNYFGEGPDbKmcwuLYQ8znCBddvm8ol/?mibextid=ZbWKwL"
+                                :underline="false">FaceBook</el-link>
                         </div>
                     </el-col>
                     <el-col :span="6" :xs="12" :sm="12" :md="6" :lg="6">
                         <div class="grid-content ep-bg-purple footer-center">
                             <h4 style="font-size: 14.4992px; color: #212529; font-weight: 500;">Community</h4>
-                            <el-link href="https://element-plus.org" :underline="false">API Documentation</el-link>
+                            <!-- <el-link href="https://element-plus.org" :underline="false">API Documentation</el-link>
                             <el-link href="https://element-plus.org" :underline="false">Knowledge Base</el-link>
-                            <el-link href="https://element-plus.org" :underline="false">Network Status</el-link>
-                            <el-link href="https://element-plus.org" :underline="false">Learn MNT <el-icon>
+                            <el-link href="https://element-plus.org" :underline="false">Network Status</el-link> -->
+                            <el-link href="https://github.com/metabasenet" :underline="false">GitHub <el-icon>
                                     <Promotion />
                                 </el-icon> </el-link>
                         </div>
@@ -62,7 +65,7 @@
                     <el-col :span="6" :xs="12" :sm="12" :md="6" :lg="6">
                         <div class="grid-content ep-bg-purple footer-center footer-Products">
                             <h4 style="font-size: 14.4992px; color: #212529; font-weight: 500;">Products & Services</h4>
-                            <el-link href="https://element-plus.org" :underline="false">Advertise<el-icon>
+                            <!-- <el-link href="https://element-plus.org" :underline="false">Advertise<el-icon>
                                     <Position />
                                 </el-icon></el-link>
                             <el-link href="https://element-plus.org" :underline="false">Explorer-as-a-Service
@@ -70,10 +73,13 @@
                                     <Position />
                                 </el-icon></el-link>
                             <el-link href="https://element-plus.org" :underline="false">API Plans </el-link>
-                            <el-link href="https://element-plus.org" :underline="false">Priority Support</el-link>
-                            <el-link href="https://element-plus.org" :underline="false">Blockscan <el-icon>
-                                    <Promotion />
-                                </el-icon> </el-link>
+                            <el-link href="https://element-plus.org" :underline="false">Priority Support</el-link> -->
+                            <el-link href="https://swap.metabasenet.site/swap" :underline="false">MNT Decentralized
+                                Exchange
+                                <el-icon>
+                                    <Flag />
+                                </el-icon>
+                            </el-link>
                         </div>
                     </el-col>
                 </el-row>
@@ -97,9 +103,10 @@ async function addWork() {
         if (typeof ethereum !== 'undefined') {
             const provider = ethereum;
             let chainName = location.hostname == config.domainUser_url ? 'MNT Mainnet' : 'MNT Testnet';
-            const chainId = location.hostname == config.domainUser_url ? '0x2277' : '0x66';
+            // const chainId = location.hostname == config.domainUser_url ? '0x2277' : '0x66';
+            const chainId = location.hostname == config.domainUser_url ? import.meta.env.VITE_METABASE_MAINCHAIN_ID : import.meta.env.VITE_METABASE_MAINCHAIN_ID;
             const blockExplorerUrls = location.hostname == config.domainUser_url ? 'https://main.metabasenet.site/' : 'https://test.metabasenet.site/'
-            const rpcUrl = location.hostname == config.domainUser_url ? config.rpc_testAdress : config.rpc_TestAddress;
+            const rpcUrl = location.hostname == config.domainUser_url ? import.meta.env.VITE_METABASE_MAIN_RPC : import.meta.env.VITE_METABASE_TEST_RPC;
             await provider.request({
                 method: 'wallet_addEthereumChain',
                 params: [

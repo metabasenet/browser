@@ -5,7 +5,7 @@ import { useUserStore } from '@/store/user'
 import { config } from '@/config/config'
 //import.meta.env.VITE_APP_API_URL
 let request = axios.create({
-    baseURL: location.hostname == config.domainUser_url?config.main_url:config.test_url,
+    baseURL: location.hostname == config.domainUser_url?import.meta.env.VITE_MAIN_BASE_URL:import.meta.env.VITE_TEST_BASE_URL,
     timeout: 15000,
 });
 request.interceptors.request.use((config) => {

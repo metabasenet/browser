@@ -2,7 +2,6 @@
   <div class="common-layout">
     <el-container class="container-xxl">
       <div class="container_bgc"></div>
-      <!-- <el-aside class="responsive-aside"></el-aside> -->
       <el-main>
         <div class="container">
           <el-row justify="center" class="homeOne-itemone">
@@ -34,7 +33,7 @@
             <el-col :span="24" style="text-align: center">
               <span class="input-bottom" style="font-size: 14.4992px; color: #fff;">Featured: Mntscan API - Need higher
                 call rates ?
-                <el-link style="color:#0784c3" href="#" target="_blank">Sign-up for a dedicated plan today!</el-link>
+                <el-link style="color:#0784c3"  target="_blank">Sign-up for a dedicated plan today!</el-link>
               </span>
             </el-col>
           </el-row>
@@ -260,7 +259,6 @@
           </div>
         </div>
       </el-main>
-      <!-- <el-aside class="responsive-aside"></el-aside> -->
     </el-container>
   </div>
 </template>
@@ -404,7 +402,7 @@ const getTransAction = async (pager = 1) => {
   }
 }
 let getGasPrice = async ()=>{
-  const provider = new ethers.JsonRpcProvider(location.hostname == config.domainUser_url ? config.mainRpc_address : config.testRpc_adress);
+  const provider = new ethers.JsonRpcProvider(location.hostname == config.domainUser_url ? import.meta.env.VITE_CHAIN_MAIN_RPC : import.meta.env.VITE_CHAIN_TEST_RPC);
   const bn = await provider.getCode('0xbbc6596be645b2eb35215edb2bea6cd8a2fc48e3');
   console.log('================',bn);
   //const res = await provider.send("eth_gasPrice");
@@ -475,7 +473,7 @@ onMounted(() => {
   // userStore.userInfo()
 })
 async function getLastestHeight() {
-  const provider = new ethers.JsonRpcProvider(location.hostname == config.domainUser_url ? config.mainRpc_address : config.testRpc_adress);
+  const provider = new ethers.JsonRpcProvider(location.hostname == config.domainUser_url ? import.meta.env.VITE_CHAIN_MAIN_RPC : import.meta.env.VITE_CHAIN_TEST_RPC);
   const blockNumber = await provider.getBlockNumber()
   lastestBlock.value = blockNumber
 }

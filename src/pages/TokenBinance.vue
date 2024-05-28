@@ -1270,9 +1270,9 @@ const connectWallet = async () => {
       dialogFormVisible.value = false;
       const providers = ethereum;
       let chainName = location.hostname == config.domainUser_url ? 'MNT Mainnet' : 'MNT Testnet';
-      const chainId = location.hostname == config.domainUser_url ? '0x2277' : '0x66';
+      const chainId = location.hostname == config.domainUser_url ? import.meta.env.VITE_METABASE_MAINCHAIN_ID : import.meta.env.VITE_METABASE_MAINCHAIN_ID;
       const blockExplorerUrls = location.hostname == config.domainUser_url ? 'https://main.metabasenet.site/' : 'https://test.metabasenet.site/'  
-      const rpcUrl = location.hostname == config.domainUser_url ? config.rpc_testAdress: config.rpc_TestAddress;
+      const rpcUrl = location.hostname == config.domainUser_url ? import.meta.env.VITE_METABASE_MAIN_RPC : import.meta.env.VITE_METABASE_TEST_RPC;
       try {
         await providers.request({ method: 'wallet_switchEthereumChain', params: [{ chainId }] });
       } catch (error) {

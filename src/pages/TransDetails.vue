@@ -232,7 +232,7 @@
                         label-class-name="my-label">
                         <div class="block_height"><span style="font-size: 14.4992px; color:#212529;"> {{
                             transDetails.gasPrice }}
-                            ({{ transDetails.gasPrice }})<span style="font-size: 12px; color: #212529;">MNT</span>
+                            <span style="font-size: 12px; color: #212529;">MNT</span>
                           </span>
                         </div>
 
@@ -278,7 +278,7 @@
                               <el-input v-show="currentValue == 'Default View' && isZeroAddress == false"
                                 style="width: 85vw; font-size: 14.4992px; color: red;" :rows="5" type="textarea"
                                 :disabled="true"
-                                :placeholder="decOrHexFlag == 'hex' ? `${functionName}\n\n${methodId}\n${methodParams}` : `${functionName}\n\n${methodId}\n${methodParamsDec}`">
+                                :placeholder="`${functionName}\n\n${methodId}\n${methodParams}`">
                               </el-input>
                               <el-input v-show="currentValue == 'Default View' && isZeroAddress == true"
                                 style="width: 85vw; font-size: 14.4992px; color: red;" :rows="5" type="textarea"
@@ -289,10 +289,6 @@
                                 <el-option v-for="item in options" :key="item.value" :label="item.label"
                                   :value="item.value" />
                               </el-select>
-                              <el-button v-show="currentValue == 'Default View' && isZeroAddress == false"
-                                type="primary" @click="baseConversion(10)">Dec</el-button>
-                              <el-button v-show="currentValue == 'Default View' && isZeroAddress == false"
-                                type="success" @click="baseConversion(16)">Hex</el-button>
                               <el-button icon="HelpFilled" @click="decodeShow = true"
                                 v-if="isZeroAddress == false">Decode
                                 Input Data</el-button>
@@ -813,31 +809,6 @@ let methodParams = computed(() => {
   let resStr = resultArry.join('\n')
   return resStr
 })
-let decOrHexFlag = ref('hex')
-function baseConversion (v) {
-  if (v == 10) {
-    decOrHexFlag.value = 'dec'
-  } else {
-    decOrHexFlag.value = 'hex'
-  }
-}
-
-let methodParamsDec = computed(() => {
-  let startIndex = 0;
-  let indexSize = 64;
-  let MethodParams = inputData.value.substring(10)
-  let resultArry = []
-  while (startIndex < MethodParams.length) {
-    let subStr = MethodParams.substring(startIndex, startIndex + indexSize)
-    startIndex += indexSize
-    resultArry.push(subStr)
-  }
-  for (let i = 0; i < resultArry.length; i++) {
-    resultArry[i] = `[${i}]: ${parseInt(resultArry[i], 16)}`
-  }
-  let resStr = resultArry.join('\n')
-  return resStr
-})
 let functionName = ref('')
 async function getFunctionName() {
   try {
@@ -920,7 +891,7 @@ let ratioValue = computed(()=>{
 })
 
 async function getLastestHeight () {
-  const provider = new ethers.JsonRpcProvider(location.hostname == config.domainUser_url ? config.mainRpc_address : config.testRpc_adress);
+  const provider = new ethers.JsonRpcProvider(location.hostname == config.domainUser_url ? import.meta.env.VITE_CHAIN_MAIN_RPC : import.meta.env.VITE_CHAIN_TEST_RPC);
   const blockNumber =  await provider.getBlockNumber()
   lastestBlock.value = blockNumber
 }

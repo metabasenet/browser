@@ -96,7 +96,8 @@
                 <div class="block_height"><span style="font-size: 14.4992px; color: #212529;">{{
                     blockDetails.gaspriceTotal }}MNT</span></div>
               </el-descriptions-item>
-              <el-descriptions-item label="Burnt Fees:" label-align="center" align="left" label-class-name="my-label">
+              <el-descriptions-item label="Block revenue:" label-align="center" align="left"
+                label-class-name="my-label">
                 <div class="block_height">
                   <span style="font-size: 14.4992px; color: #212529;">
                     {{ burntFees }}MNT
