@@ -363,7 +363,7 @@
                       <el-tooltip :content="`${scope.row.value}`" placement="top">
                         <span class="ellipsis-text">{{
                           scope.row.value
-                        }}MNT</span>
+                        }}&nbsp;MNT</span>
                       </el-tooltip>
                     </template>
                   </el-table-column>

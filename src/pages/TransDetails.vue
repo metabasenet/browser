@@ -216,7 +216,7 @@
                           <!-- <el-tooltip content="Number of blocks validated since" placement="top">
                             
                           </el-tooltip> -->
-                          <span style="font-size: 14.4992px; color: #212529;"> {{ transDetails.value }}MNT
+                          <span style="font-size: 14.4992px; color: #212529;"> {{ transDetails.value }}&nbsp;MNT
                           </span>
                         </div>
 
