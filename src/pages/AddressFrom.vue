@@ -1555,6 +1555,7 @@ const submitWrite = async (item) => {
 
 }
 const handleQuery = async (functionItem) => {
+  console.log(functionItem);
   readShow[functionItem.name] = functionItem.name;
   try {
     const provider = new ethers.BrowserProvider(window.ethereum);
@@ -1749,6 +1750,7 @@ const getContractOrAddress = async () => {
   const provider = new ethers.JsonRpcProvider(location.hostname == config.domainUser_url ? import.meta.env.VITE_CHAIN_MAIN_RPC : import.meta.env.VITE_CHAIN_TEST_RPC);
   try {
     provider.getCode(address).then(async (code) => {
+      console.log(code.length);
       if (code.length > 4) {
         contract.value = "Contract"
         ifContract.value = true
@@ -1822,13 +1824,13 @@ const getTransactionPlaforms = async (pager = 1) => {
   try {
     loading2.value = true
     currentPageInternal.value = pager
-    if (location.hostname == config.domainUser_url) {
-      let { data: { list } } = await getTransactionPlaform(address, currentPageInternal.value, pageSizeInternal.value)
-      tableDataInternal.value = list;
-    } else {
-      let { data: { list } } = await getInternalTxnTest(address, currentPageInternal.value, pageSizeInternal.value)
-      tableDataInternal.value = list;
-    }
+    // if (location.hostname == config.domainUser_url) {
+    // let { data: { list } } = await getTransactionPlaform(address, currentPageInternal.value, pageSizeInternal.value)
+    // tableDataInternal.value = list;
+    // } else {
+    let { data: { list } } = await getInternalTxnTest(address, currentPageInternal.value, pageSizeInternal.value)
+    tableDataInternal.value = list;
+    // }
     const currentTime = Math.floor(Date.now() / 1000);
     tableDataInternal.value.forEach((item) => {
       item.value = formatUnits(item.value, 18)

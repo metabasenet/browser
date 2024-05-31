@@ -769,13 +769,13 @@ function copyToClipboardInternal(text, row) {
 const getInterTransactions = async () => {
   try {
     loading.value = true
-    if (location.hostname == config.domainUser_url) {
-      let { data } = await getTransactionInternal(hash);
-      tableData.value = data;
-    } else {
-      let { data } = await getInternalTransactionTest(hash)
-      tableData.value = data;
-    }
+    // if (location.hostname == config.domainUser_url) {
+    //   let { data } = await getTransactionInternal(hash);
+    //   tableData.value = data;
+    // } else {
+    let { data } = await getInternalTransactionTest(hash)
+    tableData.value = data;
+    // }
     tableData.value.forEach(item => {
       item.value = formatUnits(item.value, 18)
       item.value = ethers.formatUnits(parseInt(item.value, 16).toString(), 18);
@@ -910,6 +910,7 @@ let ratioValue = computed(() => {
 })
 
 async function getLastestHeight() {
+  // const provider = new ethers.JsonRpcProvider(location.hostname == config.domainUser_url ? import.meta.env.VITE_CHAIN_MAIN_RPC : import.meta.env.VITE_CHAIN_TEST_RPC);
   const provider = new ethers.JsonRpcProvider(location.hostname == config.domainUser_url ? import.meta.env.VITE_CHAIN_MAIN_RPC : import.meta.env.VITE_CHAIN_TEST_RPC);
   const blockNumber = await provider.getBlockNumber()
   lastestBlock.value = blockNumber
