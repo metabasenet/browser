@@ -5,18 +5,23 @@
                 <el-row>
                     <el-col :span="24">
                         <div class="grid-content_h3">
-                            <h3 style="font-size: 18.75px; color: #212529; font-weight: 500;">Top Accounts by MNT Balance</h3>
+                            <h3 style="font-size: 18.75px; color: #212529; font-weight: 500;">Top Accounts by MNT
+                                Balance</h3>
                         </div>
                     </el-col>
                 </el-row>
                 <el-row class="box-table">
                     <div class="demo-pagination-block box-table_header">
                         <div class="demonstration">
-                            <p style="font-size: 14.4992px; color: #212529;">More than <span style="font-size: 14.4992px; color: #0784C3;">{{ total }} accounts found</span> (24,058,964.14 MNT)</p>
-                            <span style="font-size: 12.6868px; color: 6C757D">(Showing the last 10,000 top accounts only)</span>
+                            <p style="font-size: 14.4992px; color: #212529;">More than <span
+                                    style="font-size: 14.4992px; color: #0784C3;">{{ total }} accounts found</span>
+                                (24,058,964.14 MNT)</p>
+                            <span style="font-size: 12.6868px; color: 6C757D">(Showing the last 10,000 top accounts
+                                only)</span>
                         </div>
                     </div>
-                    <el-table v-loading="loading" :data="tableData" style="width: 100%" size="default" :row-style="{ height: '70px' }">
+                    <el-table v-loading="loading" :data="tableData" style="width: 100%" size="default"
+                        :row-style="{ height: '70px' }">
                         <el-table-column type="index" label="#" />
                         <el-table-column prop="address" label="Address" show-overflow-tooltip width="450">
                             <template v-slot="scope">
@@ -25,7 +30,7 @@
                                     {{ scope.row.address }}</router-link>
                             </template>
                         </el-table-column>
-                        <el-table-column style="font-size: 100px;" prop="balance" label="Balance" >
+                        <el-table-column style="font-size: 100px;" prop="balance" label="Balance">
                             <template v-slot="scope">
                                 <span style="font-size: 14.4992px; color: #212529;">{{ scope.row.balance }}</span>
                             </template>
@@ -35,7 +40,7 @@
                                 <span style="font-size: 14.4992px; color: #212529;">{{ scope.row.percentage }}%</span>
                             </template>
                         </el-table-column>
-                        <el-table-column prop="txnCount" label="Txn Count" >
+                        <el-table-column prop="txnCount" label="Txn Count">
                             <template v-slot="scope">
                                 <span style="font-size: 14.4992px; color: #212529;">{{ scope.row.txnCount }}</span>
                             </template>
@@ -55,7 +60,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted,computed } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { ElMessage } from 'element-plus';
 import { getBalancePage } from '@/api/accounts';
 
@@ -72,14 +77,13 @@ const getBalancePageData = async (pager = 1) => {
         const response = await getBalancePage(currentPage4.value, pageSize4.value)
         tableData.value = response.data.list;
         tableData.value.forEach(item => {
-        const balance = item.balance || 0;
-        if(!isNaN(balance)){
-            const result = parseFloat(balance) / 10 ** 18;
-           item.balance =  0 ? '0' : result.toFixed(6);
-        }
-    })
+            const balance = item.balance || 0;
+            if (!isNaN(balance)) {
+                const result = parseFloat(balance) / 10 ** 18;
+                item.balance = 0 ? '0' : result.toFixed(6);
+            }
+        })
         total.value = response.data.total;
-        console.log(tableData.value);
         const currentTime = Math.floor(Date.now() / 1000);
         tableData.value.forEach(item => {
             const timestamp = item.timestamp;
@@ -98,7 +102,7 @@ const getBalancePageData = async (pager = 1) => {
                 const days = Math.floor(timeDifferenceInSeconds / 86400);
                 formattedTime = `${days} days ago`;
             }
-          
+
             item.formattedTime = formattedTime;
         });
         loading.value = false
@@ -229,9 +233,10 @@ onMounted(() => {
     color: #0784C3;
     font-size: 14.4992px;
 }
+
 :deep(.el-table--default .cell) {
-  font-size: 12.5625px;
-  color: #212529;
-  font-weight: 500;
+    font-size: 12.5625px;
+    color: #212529;
+    font-weight: 500;
 }
 </style>

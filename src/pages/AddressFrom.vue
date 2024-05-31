@@ -360,7 +360,7 @@
                   </el-table-column>
                   <el-table-column prop="value" label="Value">
                     <template v-slot="scope">
-                      <el-tooltip :content="`${scope.row.value}`" placement="top">
+                      <el-tooltip :content="`${scope.row.valueTootle} MNT`" placement="top">
                         <span class="ellipsis-text">{{
                           scope.row.value
                         }}&nbsp;MNT</span>
@@ -1688,7 +1688,6 @@ const getAddressList = async (pager = 1) => {
       tableData = response.data.list;
       total.value = response.data.total;
       timestamps();
-      // console.log(tableData, '.....................');
       tableData.forEach((item) => {
         item.TransactionFee = formatUnits((item.cumulativeGasUsed * item.effectiveGasPrice).toString(), 9);
         item.method = item.method || item.methodHash;
@@ -1696,6 +1695,7 @@ const getAddressList = async (pager = 1) => {
         // const values = item.value || 0;
         // item.value = Number(formatUnits(item.value.toString(), 18)).toFixed(8);
         let formattedValue = formatUnits(BigInt(item.value), 18);
+        item.valueTootle = formattedValue;
         let parts = formattedValue.split(".");
         let integerPart = parts[0];
         let decimalPart = parts[1];
@@ -1749,7 +1749,6 @@ const getContractOrAddress = async () => {
   const provider = new ethers.JsonRpcProvider(location.hostname == config.domainUser_url ? import.meta.env.VITE_CHAIN_MAIN_RPC : import.meta.env.VITE_CHAIN_TEST_RPC);
   try {
     provider.getCode(address).then(async (code) => {
-      console.log(code.length);
       if (code.length > 4) {
         contract.value = "Contract"
         ifContract.value = true

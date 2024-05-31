@@ -213,11 +213,10 @@
                             style="font-size: 14.4992px; color: #212529; vertical-align: middle; margin-bottom: 3px">
                             <Timer />
                           </el-icon>
-                          <!-- <el-tooltip content="Number of blocks validated since" placement="top">
-                            
-                          </el-tooltip> -->
-                          <span style="font-size: 14.4992px; color: #212529;"> {{ transDetails.value }}&nbsp;MNT
-                          </span>
+                          <el-tooltip :content="`${valueTootle} MNT`" placement="top">
+                            <span style="font-size: 14.4992px; color: #212529;"> {{ transDetails.value }}&nbsp;MNT
+                            </span>
+                          </el-tooltip>
                         </div>
 
                       </el-descriptions-item>
@@ -588,6 +587,7 @@ const timestamps = () => {
 let inputData = ref('')
 let toAddress = ref('')
 let isZeroAddress = ref(false)
+let valueTootle = ref('')
 const fetchTransactionDetails = async () => {
   try {
     if (hash !== null) {
@@ -602,6 +602,7 @@ const fetchTransactionDetails = async () => {
       inputData.value = transDetails.value.data
       // const results = formatUnits(transDetails.value.value.toString(), 18)
       let formattedValue = formatUnits(BigInt(transDetails.value.value), 18);
+      valueTootle.value = formattedValue;
       let parts = formattedValue.split(".");
       let integerPart = parts[0];
       let decimalPart = parts[1];
