@@ -1361,7 +1361,7 @@ const connectWallet = async () => {
       dialogFormVisible.value = false;
       const providers = ethereum;
       let chainName = location.hostname == config.domainUser_url ? 'MNT Mainnet' : 'MNT Testnet';
-      const chainId = location.hostname == config.domainUser_url ? import.meta.env.VITE_METABASE_MAINCHAIN_ID : import.meta.env.VITE_METABASE_MAINCHAIN_ID;
+      const chainId = location.hostname == config.domainUser_url ? import.meta.env.VITE_METABASE_MAINCHAIN_ID : import.meta.env.VITE_METABASE_TESTCHAIN_ID;
       const blockExplorerUrls = location.hostname == config.domainUser_url ? 'https://main.metabasenet.site/' : 'https://test.metabasenet.site/'
       const rpcUrl = location.hostname == config.domainUser_url ? import.meta.env.VITE_METABASE_MAIN_RPC : import.meta.env.VITE_METABASE_TEST_RPC;
       try {
@@ -1555,7 +1555,6 @@ const submitWrite = async (item) => {
 
 }
 const handleQuery = async (functionItem) => {
-  console.log(functionItem);
   readShow[functionItem.name] = functionItem.name;
   try {
     const provider = new ethers.BrowserProvider(window.ethereum);
@@ -1587,7 +1586,7 @@ const handleQuery = async (functionItem) => {
       }
     }
     let res = await contract[functionItem.name](...valuesArray);
-    queryResult.value[functionItem.name] = res.JSON.stringify(res, (key, value) => {
+    queryResult.value[functionItem.name] = JSON.stringify(res, (key, value) => {
       if (typeof value === 'bigint') {
         return value.toString();
       }
