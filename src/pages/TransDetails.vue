@@ -23,31 +23,31 @@
                       <el-dropdown-item>Action 5</el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
-                </el-dropdown>
-                <el-dropdown style="margin-right:5px">
-                  <el-button type="primary">
-                    Play<el-icon class="el-icon--right"><arrow-down /></el-icon>
-                  </el-button>
-                  <template #dropdown>
+</el-dropdown>
+<el-dropdown style="margin-right:5px">
+  <el-button type="primary">
+    Play<el-icon class="el-icon--right"><arrow-down /></el-icon>
+  </el-button>
+  <template #dropdown>
                     <el-dropdown-menu>
                       <el-dropdown-item>Action 1</el-dropdown-item>
                       <el-dropdown-item>Action 2</el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
-                </el-dropdown>
-                <el-dropdown>
-                  <el-button type="primary">
-                    Gaming<el-icon class="el-icon--right"><arrow-down /></el-icon>
-                  </el-button>
-                  <template #dropdown>
+</el-dropdown>
+<el-dropdown>
+  <el-button type="primary">
+    Gaming<el-icon class="el-icon--right"><arrow-down /></el-icon>
+  </el-button>
+  <template #dropdown>
                     <el-dropdown-menu>
                       <el-dropdown-item>Action 1</el-dropdown-item>
                       <el-dropdown-item>Action 2</el-dropdown-item>
                       <el-dropdown-item>Action 2</el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
-                </el-dropdown>
-              </div> -->
+</el-dropdown>
+</div> -->
             </div>
           </el-col>
         </el-row>
@@ -57,7 +57,7 @@
               <div style="display: flex; justify-content: flex-start; margin-bottom: 16px; margin-top: 16px;">
                 <div :class="optionBtnOne" @click="switchOption(0)">Overview</div>
                 <div :class="optionBtnTwo" @click="switchOption(1)">Internal Txns</div>
-                <div :class="optionBtnThree" @click="switchOption(2)">Logs ({{total}})</div>
+                <div :class="optionBtnThree" @click="switchOption(2)">Logs ({{ total }})</div>
               </div>
               <div v-show="optionBtnOne == 'optionBtn_selected'">
                 <el-row class="grid-content_row">
@@ -68,7 +68,7 @@
                         label-class-name="my-label" class-name="my-content ellipsis-text" label-width="30%">
                         <div class="block_height"> <span v-if="transDetails && typeof transDetails.hash === 'string'"
                             style="font-size: 14.4992px; color: #212529;">{{
-                            transDetails.hash }}</span>
+                              transDetails.hash }}</span>
                           <span v-else>N/A</span>
                           <el-tooltip v-if="!transDetails.istoCopied" content="Copy TxHash to clipboard"
                             placement="top"><el-button text icon="CopyDocument"
@@ -128,9 +128,9 @@
                         <div class="block_height">
                           <div class="TransactionAction">
                             <router-link class="skyblue-text ellipsis-text" :to="{
-            name: 'address',
-            params: { address: transDetails.from },
-          }" style="font-size: 14.4992px; color: #0784C3;">{{ transDetails.from }}
+                              name: 'address',
+                              params: { address: transDetails.from },
+                            }" style="font-size: 14.4992px; color: #0784C3;">{{ transDetails.from }}
                             </router-link>
                             <el-tooltip v-if="!transDetails.istoCopieds" content="Copy Address"
                               placement="top"><el-button style="margin-left:5px" text icon="CopyDocument"
@@ -153,9 +153,9 @@
                               </el-icon>
                             </el-tooltip>
                             <router-link class="skyblue-text ellipsis-text" :to="{
-            name: 'address',
-            params: { address: transDetails.to },
-          }">
+                              name: 'address',
+                              params: { address: transDetails.to },
+                            }">
                               <div class=" mb-2 truncate" style="font-size: 14.4992px; color: #0784C3;">{{
                                 transDetails.to }}</div>
                             </router-link>
@@ -213,8 +213,10 @@
                             style="font-size: 14.4992px; color: #212529; vertical-align: middle; margin-bottom: 3px">
                             <Timer />
                           </el-icon>
-                          <span style="font-size: 14.4992px; color: #212529;"> {{ transDetails.value }}
-                            <!-- ($43.24) -->
+                          <!-- <el-tooltip content="Number of blocks validated since" placement="top">
+                            
+                          </el-tooltip> -->
+                          <span style="font-size: 14.4992px; color: #212529;"> {{ transDetails.value }}MNT
                           </span>
                         </div>
 
@@ -222,7 +224,7 @@
                       <el-descriptions-item label="Transaction Fee:" label-align="center" align="left"
                         label-class-name="my-label">
                         <div class="block_height"> <span style="font-size: 14.4992px; color:#212529;">{{
-                            transDetails.TransactionFee }} 
+                          transDetails.TransactionFee }}
                             <!-- (${{ transDetails.TransactionFee }}) -->
                           </span>
                         </div>
@@ -231,7 +233,7 @@
                       <el-descriptions-item label="Gas Price:" label-align="center" align="left"
                         label-class-name="my-label">
                         <div class="block_height"><span style="font-size: 14.4992px; color:#212529;"> {{
-                            transDetails.gasPrice }}
+                          transDetails.gasPrice }}
                             <span style="font-size: 12px; color: #212529;">GWei</span>
                           </span>
                         </div>
@@ -248,13 +250,14 @@
                           <el-descriptions-item label-class-name="my-label" label="Gas Limit & Usage by Txn:"
                             label-align="center" align="left" width="500px" class-name="my-content">
                             <div class="block_height"><span style="font-size: 14.4992px; color: #212529;">{{
-                                transDetails.gasUsed }} | {{ transDetails.gasLimit }}
+                              transDetails.gasUsed }} | {{ transDetails.gasLimit }}
                                 ({{ ratioValue }}%)</span></div>
                           </el-descriptions-item>
                           <el-descriptions-item label-class-name="my-label" label="Burnt Fees:" label-align="center"
                             align="left">
                             <div class="block_height"><span
-                                style="font-size: 14.4992px; color: #212529;">0.005224500901272524 MNT
+                                style="font-size: 14.4992px; color: #212529;">0.005224500901272524
+                                MNT
                                 ($3.15)</span></div>
                           </el-descriptions-item>
                           <el-descriptions-item label-class-name="my-label" label="Other Attributes:"
@@ -277,8 +280,7 @@
                               </el-input>
                               <el-input v-show="currentValue == 'Default View' && isZeroAddress == false"
                                 style="width: 85vw; font-size: 14.4992px; color: red;" :rows="5" type="textarea"
-                                :disabled="true"
-                                :placeholder="`${functionName}\n\n${methodId}\n${methodParams}`">
+                                :disabled="true" :placeholder="`${functionName}\n\n${methodId}\n${methodParams}`">
                               </el-input>
                               <el-input v-show="currentValue == 'Default View' && isZeroAddress == true"
                                 style="width: 85vw; font-size: 14.4992px; color: red;" :rows="5" type="textarea"
@@ -438,9 +440,9 @@
                                 <div class="log_address">
                                   <el-tooltip effect="dark" :content="item.contractAddress" placement="top">
                                     <router-link class="skyblue-text ellipsis-text" :to="{
-            name: 'address',
-            params: { address: item.contractAddress },
-          }">{{ item.contractAddress }}
+                                      name: 'address',
+                                      params: { address: item.contractAddress },
+                                    }">{{ item.contractAddress }}
                                     </router-link>
                                   </el-tooltip>
                                   <el-tooltip v-if="!istoCopiedsd" content="Copy contractaddress to clipboard"
@@ -475,18 +477,18 @@
                               <div class="block_height" style="margin-left: 14.8%;">
                                 <div style="display:flex; align-items: center" v-if="item.from">
                                   <el-tag type="warning">1:</el-tag><router-link class="skyblue-text ellipsis-text" :to="{
-            name: 'address',
-            params: { address: item.from },
-          }">{{ item.from }}
+                                    name: 'address',
+                                    params: { address: item.from },
+                                  }">{{ item.from }}
                                   </router-link>
                                 </div>
                               </div><br />
                               <div class="block_heights" style="margin-left: 14.8%;">
                                 <div style="display:flex; align-items: center" v-if="item.to">
                                   <el-tag type="info">2:</el-tag><router-link class="skyblue-text ellipsis-text" :to="{
-            name: 'address',
-            params: { address: item.to },
-          }">{{ item.to }}
+                                    name: 'address',
+                                    params: { address: item.to },
+                                  }">{{ item.to }}
                                   </router-link>
                                 </div>
                               </div>
@@ -526,8 +528,8 @@
 import { ref, onMounted, computed, watch } from 'vue'
 import { ElMessage } from 'element-plus';
 import { getTransactionDetail, getTransactionLogs, getTransactionInternal, getInternalTransactionTest, getTransactionFunctionName } from '@/api/transaction';
-import { ethers,formatUnits } from "ethers";
-import {config} from '@/config/config'
+import { ethers, formatUnits } from "ethers";
+import { config } from '@/config/config'
 import moment from 'moment'
 import { getBlockPage } from '@/api/block';
 import { getContractDetail } from '@/api/verifyContract'
@@ -545,6 +547,7 @@ const pageSize = ref(100)
 let loading = ref(false)
 let decodeShow = ref(false)
 let logBaseShow = ref([])
+let isMnt = ref(false)
 const options = [
   {
     value: 'Default View',
@@ -591,14 +594,28 @@ const fetchTransactionDetails = async () => {
       const response = await getTransactionDetail(hash);
       transDetails.value = response.data;
       transDetails.value.gasPrice = formatUnits(transDetails.value.gasPrice.toString(), 9)
-      console.log(transDetails.value,';;;;;;;;;;;;;;;;;;');
+      // console.log(transDetails.value, ';;;;;;;;;;;;;;;;;;');
       toAddress.value = transDetails.value.to
       if (toAddress.value == ethers.ZeroAddress) {
         isZeroAddress.value = true
       }
       inputData.value = transDetails.value.data
-      const results = formatUnits(transDetails.value.value.toString(), 18)
-      transDetails.value.value = results;
+      // const results = formatUnits(transDetails.value.value.toString(), 18)
+      let formattedValue = formatUnits(BigInt(transDetails.value.value), 18);
+      let parts = formattedValue.split(".");
+      let integerPart = parts[0];
+      let decimalPart = parts[1];
+
+      if (decimalPart) {
+        decimalPart = decimalPart.slice(0, 8);
+        decimalPart = decimalPart.replace(/0+$/, '');
+        if (decimalPart === '') {
+          formattedValue = integerPart;
+        } else {
+          formattedValue = integerPart + "." + decimalPart;
+        }
+      }
+      transDetails.value.value = formattedValue;
       const gaspricetotal = computed(() => {
         const gasused = parseFloat(transDetails.value.gasUsed);
         const gasprice = transDetails.value.effectiveGasPrice || 0;
@@ -621,7 +638,7 @@ let transLogsValueArry = ref([])
 const fetchTransactionLogs = async () => {
   try {
     if (hash !== null) {
-      const response = await getTransactionLogs(hash,page.value,pageSize.value);
+      const response = await getTransactionLogs(hash, page.value, pageSize.value);
       transLogs.value = response.data.list || [];
       for (let key in transLogs.value) {
         logBaseShow.value[key] = false
@@ -646,12 +663,12 @@ const fetchTransactionLogs = async () => {
     console.error('Error fetching block details:', error);
   }
 }
-function detectNumberBase (numberString) {
-    numberString = numberString.toString();
-    if (numberString.startsWith("0x")) {
-        return 16;
-    }
-    return 10;
+function detectNumberBase(numberString) {
+  numberString = numberString.toString();
+  if (numberString.startsWith("0x")) {
+    return 16;
+  }
+  return 10;
 }
 const decadecimal = (index) => {
   logBaseShow.value[index] = false
@@ -698,7 +715,7 @@ function copyToClipboards(text) {
     });
 }
 function copyToClipboardss(text) {
- istoCopiedsd.value = true;
+  istoCopiedsd.value = true;
   setTimeout(() => { istoCopiedsd.value = false; }, 2000);
   copiedText.value = text;
   navigator.clipboard.writeText(text)
@@ -752,11 +769,11 @@ function copyToClipboardInternal(text, row) {
 const getInterTransactions = async () => {
   try {
     loading.value = true
-    if(location.hostname == config.domainUser_url) {
-      let {data} = await getTransactionInternal(hash);
+    if (location.hostname == config.domainUser_url) {
+      let { data } = await getTransactionInternal(hash);
       tableData.value = data;
     } else {
-      let {data} = await getInternalTransactionTest(hash)
+      let { data } = await getInternalTransactionTest(hash)
       tableData.value = data;
     }
     tableData.value.forEach(item => {
@@ -787,7 +804,7 @@ const getInterTransactions = async () => {
   }
 }
 let currentValue = ref('Default View')
-function valueChange (v) {
+function valueChange(v) {
   currentValue.value = v
 }
 
@@ -805,7 +822,7 @@ let methodParams = computed(() => {
     startIndex += indexSize
     resultArry.push(subStr)
   }
-  for (let i=0; i<resultArry.length; i++) {
+  for (let i = 0; i < resultArry.length; i++) {
     resultArry[i] = `[${i}]: ${resultArry[i]}`
   }
   let resStr = resultArry.join('\n')
@@ -824,7 +841,7 @@ async function getFunctionName() {
 let tableDatass = ref([
 ])
 
-async function decodeDataFn () {
+async function decodeDataFn() {
   try {
     let toAddressAbi = []
     const res = await getContractDetail(toAddress.value)
@@ -861,7 +878,7 @@ async function decodeDataFn () {
 let optionBtnOne = ref('optionBtn_selected')
 let optionBtnTwo = ref('optionBtn')
 let optionBtnThree = ref('optionBtn')
-function switchOption (v) {
+function switchOption(v) {
   if (v == 0) {
     optionBtnOne.value = 'optionBtn'
     optionBtnTwo.value = 'optionBtn'
@@ -887,17 +904,17 @@ onMounted(async () => {
   await getFunctionName()
   await decodeDataFn()
 })
-let ratioValue = computed(()=>{
+let ratioValue = computed(() => {
   let res = transDetails.value.gasLimit == 0 ? 0 : (transDetails.value.gasUsed / transDetails.value.gasLimit) * 100
   return res.toFixed(2)
 })
 
-async function getLastestHeight () {
+async function getLastestHeight() {
   const provider = new ethers.JsonRpcProvider(location.hostname == config.domainUser_url ? import.meta.env.VITE_CHAIN_MAIN_RPC : import.meta.env.VITE_CHAIN_TEST_RPC);
-  const blockNumber =  await provider.getBlockNumber()
+  const blockNumber = await provider.getBlockNumber()
   lastestBlock.value = blockNumber
 }
-let blockHeightDiff = computed(()=>{
+let blockHeightDiff = computed(() => {
   return lastestBlock.value - transDetails.value.blockNumber
 })
 </script>
@@ -962,9 +979,10 @@ body {
 /* .grid-content_row {
   background-color: #f9fafc;
 } */
-.log_address{
+.log_address {
   display: flex;
 }
+
 :deep(.my-label) {
   width: 130px;
   display: inline-block;
@@ -1015,18 +1033,22 @@ body {
   margin-top: 8px;
   margin-left: 9.1rem;
 }
+
 .block_heightz {
   display: inline-block;
   width: 85%;
 }
-.input_div{
+
+.input_div {
   display: flex;
   width: 100%;
 }
-.input_button{
+
+.input_button {
   display: flex;
   margin-left: 10px;
 }
+
 @media (max-width: 768px) {
   .block_height {
     display: block;
@@ -1045,6 +1067,7 @@ body {
     margin-left: 0;
   }
 }
+
 @media (max-width: 768px) {
   body {
     font-size: 14px;
@@ -1053,48 +1076,59 @@ body {
   .grid-content_row {
     flex-direction: column;
   }
-  .block_heights{
+
+  .block_heights {
     margin-left: 0px;
   }
-  .input_div{
+
+  .input_div {
     display: flex;
     flex-direction: column;
   }
-  .grid-content_h1{
+
+  .grid-content_h1 {
     /* padding: 0; */
     margin: 0;
   }
+
   .topics-one {
     margin-left: 19%;
   }
 }
+
 :deep(.el-descriptions__label:not(.is-bordered-label)) {
-    font-size: 14.4992px;
-    color: #6C757D;
-    width: 180px;
+  font-size: 14.4992px;
+  color: #6C757D;
+  width: 180px;
 }
+
 :deep(.el-collapse-item__header) {
   font-size: 14.4992px;
   color: #6C757D;
 }
+
 .demo-tabs {
   border-radius: 15px;
   border: 1px solid #dcdfe6;
 }
+
 .box-table {
   background-color: #fff;
   border-radius: 15px;
 }
+
 :deep(.el-table--default .cell) {
   font-size: 12.5625px;
   color: #212529;
   font-weight: 500;
 }
+
 .router_box {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 }
+
 .optionBtn {
   font-size: 12.5625px;
   color: #081D35;
@@ -1104,6 +1138,7 @@ body {
   margin-right: 5px;
   cursor: pointer;
 }
+
 .optionBtn_selected {
   font-size: 12.5625px;
   color: #fff;
