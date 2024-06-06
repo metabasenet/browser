@@ -1532,7 +1532,7 @@ const getFileInfos = async () => {
     console.error("Error fetching block details:", error);
   }
 };
-
+getFileInfos();
 
 const getBalanceList = async (pager = 1) => {
   try {

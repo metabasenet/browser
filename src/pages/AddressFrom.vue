@@ -643,7 +643,6 @@
                             style="margin-right: 5px"></svg-icon><span>Contract Source Code Verified </span><span
                             style="color: #6c757d">(Exact Match)</span>
                         </div>
-
                       </template>
                       <el-descriptions-item label="Contract Name:" label-class-name="my-label">
                         <div class="block_height">
@@ -729,12 +728,11 @@
                         </div>
                       </el-col>
                       <el-col :span="24">
-                        <div v-for="(item, index) in contractSource.sourceCode ? contractSource.sourceCode : []"
-                          :key="index">
+                        <div v-for="(item, index) in sourceCodeLIst ? sourceCodeLIst : [] " :key="index">
                           <div class="grid-content_h2 grid-contents">
                             <div>
                               <span>File {{ index + 1 }} of {{
-                                contractSource.sourceCode.length }}:</span> <span>{{ item.fileName }}</span>
+                                sourceCodeLIst.length }}:</span> <span>{{ item.fileName }}</span>
                             </div>
                             <div>
                               <el-button type="info" icon="Edit" />
@@ -1230,13 +1228,17 @@ const handleClick = (tab, event) => {
     }
   }
 };
+const sourceCodeLIst = ref([])
 const getFileInfos = async () => {
+  console.log('123231123');
   try {
     if (address !== null) {
       const response = await getFileInfo(address);
+      console.log(response);
       if (response && response.length > 0) {
-        contractSource.value = contractSource.value || {};
-        contractSource.value.sourceCode = response;
+        // contractSource.value = contractSource.value || {};
+        sourceCodeLIst.value = response;
+        console.log(sourceCodeLIst.value);
       } else {
         console.warn('getFileInfo did not return any data or was invalid.');
       }
@@ -1245,6 +1247,7 @@ const getFileInfos = async () => {
     console.error("Error fetching block details:", error);
   }
 };
+getFileInfos();
 const handleSelectChange = (value) => {
   if (value === 'Custom') {
     showCustomInput.value = true;
@@ -1634,13 +1637,12 @@ const getContractList = async (pager = 1) => {
         currentPage4.value,
         pageSize4.value
       );
-
       tableDatas = response.data.list;
       tableDatas.forEach((item) => {
         item.method = item.method || item.methodHash;
         const decimals = item.decimals || 0;
         const values = item.value || 0;
-        item.value = formatUnits(parseInt(values, 16).toString(), decimals);
+        item.value = formatUnits(parseInt(values, decimals));
       });
       totals.value = response.data.total;
       const currentTime = Math.floor(Date.now() / 1000);
@@ -1675,6 +1677,7 @@ const getContractList = async (pager = 1) => {
     console.error("Error fetching details:", error);
   }
 };
+getContractList();
 const getAddressList = async (pager = 1) => {
   try {
     loading.value = true

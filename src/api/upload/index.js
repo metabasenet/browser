@@ -1,13 +1,13 @@
-import request from '@/utils/request'
+import request from "@/utils/request";
 const API = {
-  VERTITY_UPLOAD_URL: '/contractVertify/uploadFiles',
-  GET_FILE_URL: '/contractVertify/getFileInfo',
-  DELETE_FILE_URL: '/contractVertify/deleteFile',
-  SUBMIT_FILE_URL: '/contractVertify/updateContractCompileInfo',
-}
+  VERTITY_UPLOAD_URL: "/contractVertify/uploadFiles",
+  GET_FILE_URL: "/contractVertify/getFileInfo",
+  DELETE_FILE_URL: "/contractVertify/deleteFile",
+  SUBMIT_FILE_URL: "/contractVertify/updateContractCompileInfo",
+};
 export const getVertityUpload = (contractName, address, files) => {
   const formData = new FormData();
-  formData.append('files', files.file);
+  formData.append("files", files.file);
   const url = `${API.VERTITY_UPLOAD_URL}?contractName=${contractName}&contractAddress=${address}`;
   return request.post(url, formData);
 };
