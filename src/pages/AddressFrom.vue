@@ -1737,6 +1737,24 @@ const getSelectList = async () => {
     if (address !== null) {
       const response = await getselectAddress(address);
       cities.value = response.data || [];
+      cities.value.forEach((item) => {
+        let formattedValue = formatUnits(item.balance, 18);
+        item.valueTootle = formattedValue;
+        let parts = formattedValue.split(".");
+        let integerPart = parts[0];
+        let decimalPart = parts[1];
+
+        if (decimalPart) {
+          decimalPart = decimalPart.slice(0, 8);
+          decimalPart = decimalPart.replace(/0+$/, '');
+          if (decimalPart === '') {
+            formattedValue = integerPart;
+          } else {
+            formattedValue = integerPart + "." + decimalPart;
+          }
+        }
+        item.balance = formattedValue;
+      });
     }
   } catch (error) {
     console.error("Error fetching details:", error);

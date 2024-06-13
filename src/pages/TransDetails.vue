@@ -778,8 +778,22 @@ const getInterTransactions = async () => {
     tableData.value = data;
     // }
     tableData.value.forEach(item => {
-      item.value = formatUnits(item.value, 18)
-      item.value = ethers.formatUnits(parseInt(item.value, 16).toString(), 18);
+      let formattedValue = formatUnits(item.value, 18);
+      item.valueTootle = formattedValue;
+      let parts = formattedValue.split(".");
+      let integerPart = parts[0];
+      let decimalPart = parts[1];
+
+      if (decimalPart) {
+        decimalPart = decimalPart.slice(0, 8);
+        decimalPart = decimalPart.replace(/0+$/, '');
+        if (decimalPart === '') {
+          formattedValue = integerPart;
+        } else {
+          formattedValue = integerPart + "." + decimalPart;
+        }
+      }
+      item.value = formattedValue;
       const currentTime = Math.floor(Date.now() / 1000);
       const timestamp = item.utc;
       const timeDifferenceInSeconds = currentTime - timestamp;
