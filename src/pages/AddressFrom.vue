@@ -87,7 +87,7 @@
                 <span>{{ individualQueryDetails.totalsupply }}</span>
               </el-tooltip> -->
                   <!-- <span style="font-weight: bold;"> ETH </span> -->
-                  <el-tooltip class="box-item" effect="dark" content="CSupply: 551,557.859909" placement="top-start">
+                  <el-tooltip class="box-item" effect="dark" :content="getByBalance.balance" placement="top-start">
                     <span class="content-item">{{ getByBalance.balance || 0 }}</span>
                   </el-tooltip>
                 </li>
@@ -1743,7 +1743,6 @@ const getSelectList = async () => {
         let parts = formattedValue.split(".");
         let integerPart = parts[0];
         let decimalPart = parts[1];
-
         if (decimalPart) {
           decimalPart = decimalPart.slice(0, 8);
           decimalPart = decimalPart.replace(/0+$/, '');

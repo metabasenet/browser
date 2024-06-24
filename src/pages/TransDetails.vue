@@ -641,6 +641,7 @@ const fetchTransactionLogs = async () => {
     if (hash !== null) {
       const response = await getTransactionLogs(hash, page.value, pageSize.value);
       transLogs.value = response.data.list || [];
+      console.log(transLogs.value);
       for (let key in transLogs.value) {
         logBaseShow.value[key] = false
         let itemValue = transLogs.value[key].value.substring(2);
@@ -653,10 +654,13 @@ const fetchTransactionLogs = async () => {
           subStrArr.push(subStr)
         }
         for (let i = 0; i < subStrArr.length; i++) {
-          let itemArry = parseInt(subStrArr[i], 16).toString()
+          // let itemArry = parseInt(subStrArr[i], 16).toString()
+          const hexString = subStrArr[i].replace('0x', '');
+          const itemArry = BigInt('0x' + hexString).toString();
           subStrArr[i] = `[${i}]: ${itemArry}`
         }
         transLogsValueArry.value[key] = subStrArr.join('\n')
+        console.log(transLogsValueArry.value[key]);
       }
       total.value = response.data.total;
     }
