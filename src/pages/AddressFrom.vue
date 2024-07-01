@@ -1493,11 +1493,12 @@ const payableDialog = (functionIndex) => {
   form.value.region = '';
   dialogFormVisibles.value = true;
   FunctionIndex.value = functionIndex;
-  InputIndex.value = '';
+  // InputIndex.value = '';
+  InputIndex.value = 999;
 }
 const addSelect = (value) => {
   dialogFormVisibles.value = false;
-  if (!InputIndex.value) {
+  if (InputIndex.value == 999) {
     writePayable[writeContract.value[FunctionIndex.value].name] = writePayable[writeContract.value[FunctionIndex.value].name] || 1
     writePayable[writeContract.value[FunctionIndex.value].name] *= form.value.region.toString();
   } else {
