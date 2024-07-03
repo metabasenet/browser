@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite --open --host",
     "build": "vite build",
+    "test:build": "vue-cli-service build --mode test",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -28,7 +28,7 @@
                   <li class="switch-chain"
                     style="font-size: 12.5625px; color: #212529; cursor: pointer; border-radius: 3px;"
                     @click="chainSelect(1)">
-                    <span :class="localDomain == config.domainUser_url ? 'chainSelected' :'chainSelect'">MNT
+                    <span :class="localDomain == config.domainUser_url ? 'chainSelected' : 'chainSelect'">MNT
                       Mainnet</span>
                   </li>
                   <li style="height: 1px; background-color: #adb5bd; margin: 15px 0;"></li>
@@ -165,41 +165,45 @@ const getSearch = async () => {
   }
 }
 const getHeaderPrice = async () => {
-  try {
-    const response = await getPriceInfo()
-    headerPrice.value = response.price;
-    user.set_mntPrice(response.price)
-  } catch (error) {
-    console.error('Error fetching data:', error)
+  if (location.hostname == config.domainUser_url) {
+    try {
+      const response = await getPriceInfo()
+      headerPrice.value = response.price;
+      user.set_mntPrice(response.price)
+    } catch (error) {
+      console.error('Error fetching data:', error)
+    }
   }
+
 }
-let getGasPrice = async ()=>{
+let getGasPrice = async () => {
   const provider = new ethers.JsonRpcProvider(location.hostname == config.domainUser_url ? import.meta.env.VITE_CHAIN_MAIN_RPC : import.meta.env.VITE_CHAIN_TEST_RPC);
   // let res = await provider.getCode('address')
   // res.length>4
   //const res = await provider.send("eth_gasPrice");
   //gasPrice.value = formatUnits(parseInt(res, 16), 9)
 }
-function chainSelect (v) {
+function chainSelect(v) {
   // sessionStorage.setItem("flag", v)
   location.href = v == 1 ? config.domain_url : config.dev_url
   showBox.value = false
 }
-function close () {
+function close() {
   if (showBox.value == true) {
     showBox.value = false
   }
 }
-onMounted(()=>{
+onMounted(() => {
   getHeaderPrice()
   getGasPrice()
 })
 </script>
 
 <style scoped>
-:deep(.el-menu--horizontal){
+:deep(.el-menu--horizontal) {
   justify-content: space-between;
 }
+
 .container-xxl {
   border-bottom: 1px solid #e8e8e8;
 }
@@ -289,22 +293,27 @@ onMounted(()=>{
 :deep(.el-input-group--append>.el-input__wrapper) {
   background-color: #f8f9fa;
 }
+
 .font-item {
   font-size: 14.4992px;
   color: #000;
 }
+
 :deep(.el-main) {
   padding: 0;
 }
+
 @media (max-width: 768px) {
   .fixed-header {
     display: none;
     height: 0;
   }
+
   .header-menu {
     margin-top: 0;
   }
 }
+
 .hide-box {
   width: 100px;
   height: 90px;
@@ -314,24 +323,30 @@ onMounted(()=>{
   right: 1px;
   padding: 20px 10px;
 }
+
 .switch-chain:hover {
   background-color: #adb5bd;
 }
+
 .switch-chain span:hover {
   color: #0784c3;
 }
+
 .chainSelect {
   color: #212529;
 }
+
 .chainSelected {
   color: #0784c3;
 }
+
 .mainTestChain {
   display: none;
 }
+
 @media (max-width: 768px) {
   .mainTestChain {
-      display: block;
+    display: block;
   }
 }
 </style>

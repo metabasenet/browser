@@ -478,11 +478,14 @@ async function getLastestHeight() {
   lastestBlock.value = blockNumber
 }
 async function getMNtPrice() {
-  try {
-    const response = await getPriceInfo()
-    headerPrice.value = response.price;
-  } catch (error) {
-    console.error('Error fetching data:', error)
+  if (location.hostname == config.domainUser_url) {
+    try {
+      const response = await getPriceInfo()
+      headerPrice.value = response.price;
+      user.set_mntPrice(response.price)
+    } catch (error) {
+      console.error('Error fetching data:', error)
+    }
   }
 }
 function goTransactionPage(count, hash) {
