@@ -33,7 +33,7 @@
             <el-col :span="24" style="text-align: center">
               <span class="input-bottom" style="font-size: 14.4992px; color: #fff;">Featured: Mntscan API - Need higher
                 call rates ?
-                <el-link style="color:#0784c3"  target="_blank">Sign-up for a dedicated plan today!</el-link>
+                <el-link style="color:#0784c3" target="_blank">Sign-up for a dedicated plan today!</el-link>
               </span>
             </el-col>
           </el-row>
@@ -118,8 +118,7 @@
                   <Grid />
                 </el-icon>Customize</el-button> -->
             </div>
-            <el-table v-loading="loading" :data="tableData" style="width: 100%"
-              :row-style="{ height: '70px' }">
+            <el-table v-loading="loading" :data="tableData" style="width: 100%" :row-style="{ height: '70px' }">
               <el-table-column prop="number">
                 <template v-slot="scope">
                   <div style="display:flex;align-items: center;">
@@ -160,7 +159,7 @@
                     <!-- :to="{ name: 'txs', params: { block: scope.row.hash }}" -->
                     <span style="font-size: 14.4992px; color: #0784C3; cursor: pointer;"
                       @click="goTransactionPage(scope.row.transactioncount, scope.row.hash)">{{
-                      scope.row.transactioncount}}
+                        scope.row.transactioncount }}
                       txns</span>&nbsp;
                     <span style="font-size: 12.6868px; color: #6C757D;">in 3 secs</span>
                   </div>
@@ -264,7 +263,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, reactive} from 'vue'
+import { onMounted, ref, reactive } from 'vue'
 import router from '@/router'
 import { getSearchInfo } from '@/api/home';
 import { getBlockPage } from '@/api/block';
@@ -311,7 +310,7 @@ const getSearch = async () => {
       homeSearch.value = '';
     } else if (response.data.address || response.data.contract) {
 
-      let address = response.data.address ? response.data.address.address:response.data.contract.contractaddress
+      let address = response.data.address ? response.data.address.address : response.data.contract.contractaddress
       router.push({ name: 'address', params: { address: address } });
       homeSearch.value = '';
     } else {
@@ -401,10 +400,11 @@ const getTransAction = async (pager = 1) => {
     console.error('Error fetching data:', error)
   }
 }
-let getGasPrice = async ()=>{
+let getGasPrice = async () => {
+  // location.hostname == config.domainUser_url ? import.meta.env.VITE_CHAIN_MAIN_RPC : import.meta.env.VITE_CHAIN_TEST_RPC
   const provider = new ethers.JsonRpcProvider(location.hostname == config.domainUser_url ? import.meta.env.VITE_CHAIN_MAIN_RPC : import.meta.env.VITE_CHAIN_TEST_RPC);
   const bn = await provider.getCode('0xbbc6596be645b2eb35215edb2bea6cd8a2fc48e3');
-  console.log('================',bn);
+  console.log('================', bn);
   //const res = await provider.send("eth_gasPrice");
   //gasPrice.value = formatUnits(parseInt(res, 16), 9)
 }
@@ -412,7 +412,7 @@ let getTransationCords = async () => {
   transationHistory = await getTransactionRecords();
   let xdata = []
   let ydata = []
-  for (let i=0;i<transationHistory.length;i++) {
+  for (let i = 0; i < transationHistory.length; i++) {
     ydata.push(transationHistory[i].count)
     xdata.push(transationHistory[i].date)
   }
@@ -428,7 +428,7 @@ let getTransationCords = async () => {
       top: '20%',    // 设置 Y 轴顶部留白的高度，可以是像素值，也可以是百分比
       bottom: '20%',  // 设置 Y 轴底部留白的高度，同样可以是像素值或百分比
       left: '10%',    // 设置 X 轴左侧留白的宽度，可以是像素值，也可以是百分比
-      right: '10%' 
+      right: '10%'
     },
     tooltip: {
       trigger: 'axis',
@@ -456,10 +456,10 @@ let getTransationCords = async () => {
     ]
   };
   myChart.setOption(option)
-  
+
 }
 let getTransactionCounts = async () => {
-  let {data} = await getTransactionCount()
+  let { data } = await getTransactionCount()
   transactionCount.value = data[2].count
 }
 onMounted(() => {
@@ -477,7 +477,7 @@ async function getLastestHeight() {
   const blockNumber = await provider.getBlockNumber()
   lastestBlock.value = blockNumber
 }
-async function getMNtPrice () {
+async function getMNtPrice() {
   try {
     const response = await getPriceInfo()
     headerPrice.value = response.price;
@@ -485,11 +485,11 @@ async function getMNtPrice () {
     console.error('Error fetching data:', error)
   }
 }
-function goTransactionPage (count, hash) {
+function goTransactionPage(count, hash) {
   if (count == 0) {
     return
   } else {
-    router.push({ name: 'txs', params: { block: hash}})
+    router.push({ name: 'txs', params: { block: hash } })
   }
 }
 </script>
@@ -536,7 +536,7 @@ function goTransactionPage (count, hash) {
   height: 45vh;
   /* background: linear-gradient(45deg, #fff, #000, #000, #fff); */
   background-color: #131313
-  /* background: linear-gradient(45deg,#fff,#0c9482, #0c9482, #fff); */
+    /* background: linear-gradient(45deg,#fff,#0c9482, #0c9482, #fff); */
 }
 
 .el-link {
@@ -641,8 +641,8 @@ function goTransactionPage (count, hash) {
 }
 
 .card_p {
-  font-size: 12px; 
-  color:#6C757D;
+  font-size: 12px;
+  color: #6C757D;
 }
 
 .card-header {
@@ -711,7 +711,7 @@ function goTransactionPage (count, hash) {
   text-align: center;
   border: 1px solid #e6e6e6;
   border-radius: 8px;
-  font-size:  10.8744px;
+  font-size: 10.8744px;
   color: #000;
 }
 
@@ -725,7 +725,7 @@ function goTransactionPage (count, hash) {
   color: #6c757d;
   font-size: 16px;
   background-color: #f8f9fa;
-  border-radius:  0 0 15px 15px;
+  border-radius: 0 0 15px 15px;
 }
 
 .container {
@@ -752,7 +752,7 @@ function goTransactionPage (count, hash) {
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 14.4992px;
-  
+
 }
 
 
@@ -760,90 +760,111 @@ function goTransactionPage (count, hash) {
 .homeOne-itemone {
   margin-bottom: 12px;
 }
+
 .home-title {
   font-size: 19.6875px;
   color: #fff;
 }
+
 .homeOne-itemtwo {
   margin-bottom: 5px;
 }
+
 .cardOne-top {
   display: flex;
 }
+
 .homeTwo {
   padding: 15px;
   background-color: #fff;
   border-radius: 15px;
   border: 1px solid #dee2e6;
 }
+
 .cardOne-top-img {
   margin-right: 12px;
-} 
+}
+
 .cardOne-bottom {
   display: flex;
 }
+
 .cardTwo-top {
   display: flex;
   justify-content: space-between;
 }
+
 .cardTwo-topLeft {
   display: flex;
 }
+
 .cardTwo-topLeft-img {
   margin-right: 12px;
 }
+
 .cardTwo-bottom {
   display: flex;
   justify-content: space-between;
 }
+
 .cardTwo-topRight {
   text-align: center;
 }
+
 .line {
   width: 95%;
   height: 1px;
   background-color: #ccc;
   margin: 24px 0;
 }
+
 @media (max-width: 768px) {
   .divder {
     display: none;
   }
+
   .homeTwo-one {
     margin-bottom: 60px;
   }
+
   .homeTwo-two {
     margin-bottom: 60px;
   }
 }
+
 .homeThree {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
 }
+
 .homeThree-one {
   width: 49%;
   border-radius: 15px;
   background-color: #fff;
   border: 1px solid #dee2e6;
 }
+
 .homeThree-two {
   width: 49%;
   border-radius: 15px;
   background-color: #fff;
   border: 1px solid #dee2e6;
 }
+
 @media (max-width: 768px) {
- .homeThree-one {
-  width: 100%;
-  margin-bottom: 1.25rem;
-}
-.homeThree-two {
-  width: 100%;
-}
-.input-bottom {
-  display: none;
-}
+  .homeThree-one {
+    width: 100%;
+    margin-bottom: 1.25rem;
+  }
+
+  .homeThree-two {
+    width: 100%;
+  }
+
+  .input-bottom {
+    display: none;
+  }
 }
 
 .input {
@@ -856,12 +877,14 @@ function goTransactionPage (count, hash) {
   justify-content: space-between;
   align-items: center;
 }
+
 :deep(.el-select__wrapper) {
   height: 35px;
   border-radius: 10px;
   border: 1px solid #fff;
   box-shadow: none;
 }
+
 .input_item {
   width: 100%;
   height: 32px;
@@ -870,6 +893,7 @@ function goTransactionPage (count, hash) {
   box-shadow: none;
   padding-left: 10px;
 }
+
 .input_item_selected {
   width: 100%;
   height: 32px;
@@ -879,9 +903,11 @@ function goTransactionPage (count, hash) {
   padding-left: 10px;
   transition: 0.6s;
 }
+
 input:focus {
   outline-color: #fff;
 }
+
 .select {
   width: 100px;
   margin-right: 4px;

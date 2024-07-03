@@ -104,8 +104,7 @@ async function addWork() {
             const provider = ethereum;
             let chainName = location.hostname == config.domainUser_url ? 'MNT Mainnet' : 'MNT Testnet';
             // const chainId = location.hostname == config.domainUser_url ? '0x2277' : '0x66';
-            const chainId = location.hostname == config.domainUser_url ? import.meta.env.VITE_METABASE_MAINCHAIN_ID : import.meta.env.VITE_METABASE_MAINCHAIN_ID;
-            console.log(chainId);
+            const chainId = location.hostname == config.domainUser_url ? import.meta.env.VITE_METABASE_MAINCHAIN_ID : import.meta.env.VITE_METABASE_TESTCHAIN_ID;
             const blockExplorerUrls = location.hostname == config.domainUser_url ? 'https://main.metabasenet.site/' : 'https://test.metabasenet.site/'
             const rpcUrl = location.hostname == config.domainUser_url ? import.meta.env.VITE_METABASE_MAIN_RPC : import.meta.env.VITE_METABASE_TEST_RPC;
             await provider.request({
